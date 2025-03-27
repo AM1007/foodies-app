@@ -1,5 +1,5 @@
 {
-  "name": "foodies_app",
+  "name": "test_app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AM1007/foodies_app.git"
+    "url": "git+https://github.com/AM1007/test_app.git"
   },
   "author": "Andrew Motko",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AM1007/foodies_app/issues"
+    "url": "https://github.com/AM1007/test_app/issues"
   },
-  "homepage": "https://github.com/AM1007/foodies_app#readme",
+  "homepage": "https://github.com/AM1007/test_app#readme",
   "devDependencies": {
     "nodemon": "^3.1.9"
   },
