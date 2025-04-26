@@ -1,0 +1,76 @@
+├── .gitignore
+    ├── README.md
+    ├── app.js
+    ├── backend.txt
+    ├── constants
+    │   ├── auth.js
+    │   ├── recepies.js
+    │   └── users.js
+    ├── controllers
+    │   ├── areasControllers.js
+    │   ├── authControllers.js
+    │   ├── categoriesControllers.js
+    │   ├── ingredientsControllers.js
+    │   ├── recipesControllers.js
+    │   ├── testimonialControllers.js
+    │   └── usersControllers.js
+    ├── db
+    │   ├── models
+    │   │   ├── Area.js
+    │   │   ├── Category.js
+    │   │   ├── Favorite.js
+    │   │   ├── Follower.js
+    │   │   ├── Ingredient.js
+    │   │   ├── Recipe.js
+    │   │   ├── RecipeIngredient.js
+    │   │   ├── Testimonial.js
+    │   │   └── User.js
+    │   └── sequelize.js
+    ├── decorators
+    │   ├── ctrlWrapper.js
+    │   └── validateBody.js
+    ├── helpers
+    │   ├── HttpError.js
+    │   ├── createEmailTemplates.js
+    │   ├── jwt.js
+    │   └── sendEmail.js
+    ├── middlewares
+    │   ├── authenticate.js
+    │   └── upload.js
+    ├── mockData
+    │   ├── areas.json
+    │   ├── categories.json
+    │   ├── ingredients.json
+    │   ├── recipes.json
+    │   ├── testimonials.json
+    │   └── users.json
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    │   ├── avatars
+    │   │   └── .gitkeep
+    │   └── recipeImages
+    │   │   └── .gitkeep
+    ├── routes
+    │   ├── areasRouter.js
+    │   ├── authRouter.js
+    │   ├── categoriesRouter.js
+    │   ├── ingredientsRouter.js
+    │   ├── recipesRouter.js
+    │   ├── testimonialRouter.js
+    │   └── usersRouter.js
+    ├── schemas
+    │   ├── authSchemas.js
+    │   ├── recipeSchemas.js
+    │   └── userSchemas.js
+    ├── services
+    │   ├── areasServices.js
+    │   ├── authServices.js
+    │   ├── categoriesServices.js
+    │   ├── ingredientsServices.js
+    │   ├── recipesServices.js
+    │   ├── testimonialServices.js
+    │   └── usersServices.js
+    ├── tech_task.md
+    └── temp
+    │   └── .gitkeep
