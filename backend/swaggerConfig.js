@@ -2,9 +2,12 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const { APP_DOMAIN = 'http://localhost:3000' } = process.env;
 
 const options = {
   definition: {
@@ -20,12 +23,8 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
-      {
-        url: 'https://example.com/api/v1',
-        description: 'Production server',
+        url: APP_DOMAIN,
+        description: 'Server',
       },
     ],
     components: {
@@ -38,7 +37,13 @@ const options = {
       },
     },
   },
-  apis: ['./routes/*.js', './schemas/*.js', './app.js'],
+  apis: [
+    './routes/*.js',
+    './schemas/*.js',
+    './swagger/paths/*.yaml',
+    './swagger/components/**/*.yaml',
+    './app.js',
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -53,7 +58,7 @@ const setup = app => {
     res.send(swaggerSpec);
   });
 
-  console.log('Swagger documentation available at /api-docs');
+  console.log(`Swagger documentation available at ${APP_DOMAIN}/api-docs`);
 };
 
 export default { setup };
