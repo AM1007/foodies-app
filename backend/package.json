@@ -8,7 +8,9 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'Build step completed'"
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "@redocly/cli": "^1.34.2",
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.9"
   }

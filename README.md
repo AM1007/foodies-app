@@ -5,3 +5,5 @@
 ### [**BACKEND**](./backend/README.md)
 
 ### [**FRONTEND**](./frontend/README.md)
+
+### [Як працювати з репозіторієм](https://youtu.be/AEILO61wdn4)
