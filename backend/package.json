@@ -6,20 +6,20 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "start:dev": "nodemon app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo 'Build step completed'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AM1007/test_app.git"
+    "url": "git+https://github.com/AM1007/foodies_app.git"
   },
   "author": "Frontend Lovers",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AM1007/test_app/issues"
+    "url": "https://github.com/AM1007/foodies_app/issues"
   },
-  "homepage": "https://github.com/AM1007/test_app#readme",
+  "homepage": "https://github.com/AM1007/foodies_app#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
