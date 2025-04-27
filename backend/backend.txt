@@ -1,4 +1,5 @@
- ├── .gitignore
+ ├── .env.example
+    ├── .gitignore
     ├── README.md
     ├── app.js
     ├── backend.txt
@@ -29,6 +30,9 @@
     ├── decorators
     │   ├── ctrlWrapper.js
     │   └── validateBody.js
+    ├── docs
+    │   ├── index.html
+    │   └── openapi.yaml
     ├── helpers
     │   ├── HttpError.js
     │   ├── createEmailTemplates.js
@@ -51,6 +55,7 @@
     │   │   └── .gitkeep
     │   └── recipeImages
     │   │   └── .gitkeep
+    ├── redocly.yaml
     ├── routes
     │   ├── areasRouter.js
     │   ├── authRouter.js
@@ -71,6 +76,11 @@
     │   ├── recipesServices.js
     │   ├── testimonialServices.js
     │   └── usersServices.js
+    ├── swagger
+    │   ├── components
+    │   │   └── .gitkeep
+    │   └── paths
+    │   │   └── .gitkeep
     ├── tech_task.md
     └── temp
     │   └── .gitkeep
