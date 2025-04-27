@@ -1,3 +1,4 @@
+//this_is_a_temporary_comment
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -5,6 +6,7 @@ import 'dotenv/config';
 
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
+import swaggerConfig from './swaggerConfig.js';
 
 const app = express();
 

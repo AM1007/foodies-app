@@ -1,4 +1,4 @@
- ├── .env.example
+    ├── .env.example
     ├── .gitignore
     ├── README.md
     ├── app.js
@@ -40,6 +40,8 @@
     │   └── sendEmail.js
     ├── middlewares
     │   ├── authenticate.js
+    │   ├── errorHandler.js
+    │   ├── notFoundHandler.js
     │   └── upload.js
     ├── mockData
     │   ├── areas.json
