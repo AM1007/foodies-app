@@ -1,0 +1,18 @@
+User:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 1
+    username:
+      type: string
+      example: 'johndoe'
+    email:
+      type: string
+      format: email
+      example: 'john@example.com'
+    avatar:
+      type: string
+      format: uri
+      example: 'https://example.com/avatars/johndoe.jpg'
