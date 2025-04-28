@@ -1,4 +1,4 @@
-    ├── .env.example
+├── .env.example
     ├── .gitignore
     ├── README.md
     ├── app.js
@@ -80,9 +80,14 @@
     │   └── usersServices.js
     ├── swagger
     │   ├── components
-    │   │   └── .gitkeep
+    │   │   ├── .gitkeep
+    │   │   ├── schemas
+    │   │   │   └── User.yaml
+    │   │   └── securitySchemes
+    │   │   │   └── bearerAuth.yaml
     │   └── paths
-    │   │   └── .gitkeep
+    │   │   └── root.yaml
+    ├── swaggerConfig.js
     ├── tech_task.md
     └── temp
     │   └── .gitkeep

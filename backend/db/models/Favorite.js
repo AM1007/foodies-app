@@ -1,1 +1,15 @@
-//this_is_a_temporary_comment
+import { DataTypes } from 'sequelize';
+import sequelize from '../sequelize.js';
+
+const Favorite = sequelize.define(
+  'Favorite',
+  {
+    // Цей модель буде використовуватися як проміжна таблиця
+    // і матиме лише зв'язки з User та Recipe
+  },
+  {
+    timestamps: true,
+  },
+);
+
+export default Favorite;
