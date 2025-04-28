@@ -1,6 +1,6 @@
 # React + Vite
 
-# Згодом тут буде нормальний опис фронтенду
+# Згодом тут буде нормальний опис фронтенду (Спроба 2)
 
 This template provides a minimal setup to get React working in Vite with HMR and
 some ESLint rules.
