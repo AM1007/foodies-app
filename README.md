@@ -6,4 +6,4 @@
 
 ### [**FRONTEND**](./frontend/README.md)
 
-### [Як працювати з репозіторієм](https://youtu.be/AEILO61wdn4)
+### [Як працювати з репозіторієм](https://youtu.be/K8adk11kwqw)
