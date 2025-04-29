@@ -52,24 +52,10 @@
 
 .recipePreviewCardActions {
   display: flex;
-  flex-direction: column;
   gap: 4px;
   margin-left: 16px;
 }
 
-
-.recipePreviewCardDelete {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  transition: background 0.2s ease;
-}
 
 .recipePreviewCardLink:hover,
 .recipePreviewCardDelete:hover {

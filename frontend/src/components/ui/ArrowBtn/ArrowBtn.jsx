@@ -5,7 +5,7 @@ function ArrowBtn({ to, ariaLabel = 'Go' }) {
   return (
     <div className={css.arrowBtnLink}>
       <Link to={to} aria-label={ariaLabel}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <svg viewBox="0 0 24 20" fill="none">
           <path
             d="M5 12h14M13 5l7 7-7 7"
             stroke="currentColor"
