@@ -1,6 +1,6 @@
 import * as authServices from '../services/authServices.js';
 import { HTTP_STATUS } from '../constants/auth.js';
-import ctrlWrapper from '../decorators/ctrlWrapper.js';
+// import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
 const register = async (req, res) => {
   const user = await authServices.register(req.body);
