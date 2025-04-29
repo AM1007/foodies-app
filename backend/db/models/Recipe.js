@@ -30,6 +30,18 @@ const Recipe = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    categoryId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  areaId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  owner: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
     // Зовнішні ключі будуть додані після створення асоціацій
   },
   {
@@ -37,4 +49,5 @@ const Recipe = sequelize.define(
   },
 );
 
+// Recipe.sync();
 export default Recipe;
