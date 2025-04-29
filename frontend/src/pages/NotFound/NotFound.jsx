@@ -1,8 +1,13 @@
+import { Helmet } from 'react-helmet-async';
+
 const NotFound = () => {
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>NotFound</title>
+      </Helmet>
       <p>NotFound</p>
-    </div>
+    </>
   );
 };
 
