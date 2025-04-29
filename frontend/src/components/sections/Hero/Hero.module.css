@@ -1,0 +1,94 @@
+/* Hero.module.css */
+.hero {
+  position: relative;
+  width: 1400px;
+  height: 970px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.textContainer {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  text-align: center;
+  z-index: 2;
+}
+
+.mainTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 800;
+  font-size: 90px;
+  line-height: 90px;
+  letter-spacing: -2%;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -2%;
+  color: #ffffff;
+  margin: 0 auto 40px;
+  max-width: 577px;
+}
+
+.button {
+  width: auto;
+  height: 56px;
+  padding: 16px 32px;
+  background: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 30px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.imagesWrapper {
+  position: relative;
+  height: 100%;
+}
+
+.image1 {
+  position: absolute;
+  top: 621px;
+  left: 599px;
+  width: 302px;
+  height: 273px;
+  border-radius: 30px;
+
+  object-fit: cover;
+  z-index: 1;
+}
+
+.image2 {
+  position: absolute;
+  top: 697px;
+  left: 471px;
+  width: 128px;
+  height: 116px;
+  border-radius: 15px;
+
+  object-fit: cover;
+  z-index: 2;
+}
