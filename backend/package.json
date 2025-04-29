@@ -10,7 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build-docs",
     "build-docs": "redocly bundle --ext json -o docs/swagger.json",
-    "preview-docs": "redocly preview-docs"
+    "preview-docs": "redocly preview-docs",
+    "seed:users": "node scripts/seedUsers.js",
+    "seed:recipes": "node scripts/seedRecipes.js",
+    "seed:areas": "node scripts/seedAreas.js",
+    "seed:categories": "node scripts/seedCategories.js",
+    "seed:ingredients": "node scripts/seedIngredients.js"
   },
   "repository": {
     "type": "git",
