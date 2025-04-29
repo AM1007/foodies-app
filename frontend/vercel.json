@@ -1,12 +1,3 @@
 {
-  "github": {
-    "silent": true
-  },
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/index.html"
-    }
-  ],
-  "cleanUrls": true
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
