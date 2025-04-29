@@ -12,10 +12,10 @@ import swaggerConfig from './swaggerConfig.js';
 // import authRouter from './routes/authRouter.js';
 // import usersRouter from './routes/usersRouter.js';
 // import recipesRouter from './routes/recipesRouter.js';
-// import categoriesRouter from './routes/categoriesRouter.js';
-// import areasRouter from './routes/areasRouter.js';
-// import ingredientsRouter from './routes/ingredientsRouter.js';
-// import testimonialRouter from './routes/testimonialRouter.js';
+import categoriesRouter from './routes/categoriesRouter.js';
+import areasRouter from './routes/areasRouter.js';
+import ingredientsRouter from './routes/ingredientsRouter.js';
+import testimonialRouter from './routes/testimonialRouter.js';
 
 const app = express();
 
