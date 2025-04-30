@@ -10,7 +10,7 @@ import Hero from '../../components/sections/Hero/Hero';
 // import { fetchCategories } from '../redux/categories/operations';
 // import { selectIsCategoriesVisible } from '../redux/categories/selectors';
 
-const HomePage = () => {
+const Home = () => {
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 
@@ -27,4 +27,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
