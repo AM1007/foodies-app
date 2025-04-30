@@ -18,13 +18,13 @@ const updateAvatarController = async (req, res) => {
       .status(HTTP_STATUS.BAD_REQUEST)
       .json({ message: 'Please attach the file' });
   }
-  const { email } = req.user;
+  const { id } = req.user;
   const avatarUrl = req.file?.path;
 
   if (!avatarUrl) {
     throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Image upload failed');
   }
-  await usersServices.updateUserAvatar(email, avatarUrl);
+  await usersServices.updateUserAvatar(id, avatarUrl);
   res.json({ avatar: avatarUrl, message: 'Avatar was successfully updated' });
 };
 
