@@ -9,7 +9,9 @@ import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import { selectIsCategoriesVisible } from '../../redux/categories/selectors';
 
 const Home = () => {
+
   console.log('Home component rendered');
+
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 

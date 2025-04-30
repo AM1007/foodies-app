@@ -31,18 +31,35 @@ const Recipe = sequelize.define(
       allowNull: true,
     },
     categoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  areaId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  owner: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-    // Зовнішні ключі будуть додані після створення асоціацій
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Categories',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+    areaId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Areas',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+    owner: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
   },
   {
     timestamps: true,

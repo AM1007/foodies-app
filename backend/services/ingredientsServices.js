@@ -1,1 +1,5 @@
-//this_is_a_temporary_comment
+import Ingredient from '../db/models/Ingredient.js';
+
+export const getAllIngredients = async () => {
+  return await Ingredient.findAll();
+};
