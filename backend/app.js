@@ -11,7 +11,7 @@ import swaggerConfig from './swaggerConfig.js';
 // Імпорт маршрутів (будуть додані пізніше)
 import authRouter from './routes/authRouter.js';
 import usersRouter from './routes/usersRouter.js';
-// import recipesRouter from './routes/recipesRouter.js';
+import recipesRouter from './routes/recipesRouter.js';
 import categoriesRouter from './routes/categoriesRouter.js';
 import areasRouter from './routes/areasRouter.js';
 import ingredientsRouter from './routes/ingredientsRouter.js';
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 // Підключення маршрутів
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
-// app.use('/api/recipes', recipesRouter);
+app.use('/api/recipes', recipesRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/areas', areasRouter);
 app.use('/api/ingredients', ingredientsRouter);

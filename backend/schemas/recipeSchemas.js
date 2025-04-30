@@ -1,1 +1,66 @@
-//this_is_a_temporary_comment
+import Joi from 'joi';
+
+// Schema for recipe ingredient
+const ingredientSchema = Joi.object({
+  ingredientId: Joi.number().required().messages({
+    'any.required': 'Ingredient ID is required',
+  }),
+  measure: Joi.string().allow('', null),
+});
+
+// Schema for creating a new recipe
+const createRecipeSchema = Joi.object({
+  title: Joi.string().required().messages({
+    'any.required': 'Title is required',
+    'string.empty': 'Title cannot be empty',
+  }),
+  description: Joi.string().allow('', null),
+  instructions: Joi.string().required().messages({
+    'any.required': 'Instructions are required',
+    'string.empty': 'Instructions cannot be empty',
+  }),
+  time: Joi.number().min(0).default(0),
+  categoryId: Joi.number().required().messages({
+    'any.required': 'Category ID is required',
+  }),
+  areaId: Joi.number().required().messages({
+    'any.required': 'Area ID is required',
+  }),
+  ingredients: Joi.array().items(ingredientSchema).min(1).required().messages({
+    'any.required': 'At least one ingredient is required',
+    'array.min': 'At least one ingredient is required',
+  }),
+  thumb: Joi.string().allow('', null),
+  preview: Joi.string().allow('', null),
+});
+
+// Schema for updating an existing recipe
+const updateRecipeSchema = Joi.object({
+  title: Joi.string(),
+  description: Joi.string().allow('', null),
+  instructions: Joi.string(),
+  time: Joi.number().min(0),
+  categoryId: Joi.number(),
+  areaId: Joi.number(),
+  ingredients: Joi.array().items(ingredientSchema).min(1),
+  thumb: Joi.string().allow('', null),
+  preview: Joi.string().allow('', null),
+}).min(1); // At least one field must be updated
+
+// Schema for recipe search/filtering
+const recipeQuerySchema = Joi.object({
+  page: Joi.number().min(1).default(1),
+  limit: Joi.number().min(1).max(100).default(10),
+  title: Joi.string(),
+  category: Joi.number(), // Category ID
+  area: Joi.number(), // Area ID
+  ingredient: Joi.number(), // Ingredient ID
+  time: Joi.number(), // Cooking time (less than or equal)
+  sort: Joi.string().valid('title', 'time', 'createdAt', '-title', '-time', '-createdAt'),
+});
+
+export default {
+  createRecipeSchema,
+  updateRecipeSchema,
+  recipeQuerySchema,
+};
