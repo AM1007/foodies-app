@@ -1,6 +1,6 @@
 .footer {
-  /* max-width: 375px;
-  margin: 0 auto; */
+  max-width: 375px;
+  margin: 0 auto;
   background-color: var(--white);
   padding: 40px 0;
 }
@@ -18,8 +18,9 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
     height: 1px;
     background-color: var(--light-gray);
   }
@@ -40,12 +41,11 @@
 }
 
 @media (min-width: 768px) {
-  .socialList {
-    gap: 16px;
+  .copyright {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.32px;
   }
 }
 @media (min-width: 1440px) {
-  .socialList {
-    gap: 16px;
-  }
 }
