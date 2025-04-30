@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import css from './RecipePreview.module.css';
 
-import ArrowBtn from '../ArrowBtn/ArrowBtn';
-import DeleteBtn from '../DeleteBtn/DeleteBtn';
+import ArrowBtn from '../ui/ArrowBtn/ArrowBtn';
+import DeleteBtn from '../ui/DeleteBtn/DeleteBtn';
 
 function RecipePreview({ recipe, onDelete }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -29,7 +29,7 @@ function RecipePreview({ recipe, onDelete }) {
 
       <div className={css.recipePreviewCardContent}>
         <div className={css.recipePreviewCardInfo}>
-          <h2 className={css.recipePreviewCardTitle}>Salmon Avocado Salad</h2>
+          <p className={css.recipePreviewCardTitle}>Salmon Avocado Salad</p>
           <p className={css.recipePreviewCardDescription}>
             Mix the dressing ingredients in a small bowl and season with salt
             and pepper. Set aside. Cook the pasta according to the packet

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation/Navigation.jsx';
 import styles from './Header.module.css';
 
 const Header = () => {

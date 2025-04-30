@@ -4,12 +4,37 @@ import sequelize from '../sequelize.js';
 const Follower = sequelize.define(
   'Follower',
   {
-    // Цей модель буде використовуватися як проміжна таблиця
-    // для зв'язку "хто на кого підписаний"
+    followerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    followingId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
   },
+
   {
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['followerId', 'followingId'],
+      },
+    ],
   },
 );
+
+// Follower.sync({ force: true });
 
 export default Follower;

@@ -38,7 +38,7 @@ html {
 }
 
 body {
-  min-height: 100dvh;
+  min-height: 100%;
   line-height: 1.5;
   margin: 0;
 }
@@ -83,8 +83,10 @@ button {
 }
 .container {
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
   max-width: 375px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media screen and (min-width: 768px) {
@@ -97,5 +99,6 @@ button {
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
+    padding: 0 80px;
   }
 }
