@@ -1,1 +1,5 @@
-//this_is_a_temporary_comment
+import User from '../db/models/User.js';
+
+const findUser = async query => User.findOne({ where: query });
+
+export default { findUser };
