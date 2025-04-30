@@ -1,8 +1,9 @@
 import { Op } from 'sequelize';
 import models from '../db/associations.js';
 import paginationHelper from '../helpers/paginationHelper.js';
+import HttpError from '../helpers/HttpError.js';
 
-const { Recipe, Category, Area, User, Ingredient, sequelize } = models;
+const { Recipe, Category, Area, User, Ingredient, Favorite, sequelize,  } = models;
 
 /**
  * Search for recipes with filters and pagination
@@ -135,7 +136,51 @@ const getRecipeById = async (recipeId) => {
   }
 };
 
+const addRecipeToFavorites = async (userId, recipeId) => {
+  const recipe = await Recipe.findByPk(recipeId);
+  if (!recipe) throw HttpError(404, 'Recipe not found');
+
+  const [favorite, created] = await Favorite.findOrCreate({
+    where: { userId, recipeId },
+  });
+
+  if (!created) throw HttpError(409, 'Recipe already in favorites');
+  return { message: 'Recipe added to favorites' };
+};
+
+const removeRecipeFromFavorites = async (userId, recipeId) => {
+  const deleted = await Favorite.destroy({ where: { userId, recipeId } });
+  if (!deleted) throw HttpError(404, 'Recipe not found in favorites');
+  return { message: 'Recipe removed from favorites' };
+};
+
+const getFavoriteRecipes = async (userId, query) => {
+  const { limit, offset } = paginationHelper.getPaginationOptions(query);
+
+  const { count, rows } = await Recipe.findAndCountAll({
+    include: [
+      {
+        model: User,
+        as: 'favoritedBy',
+        where: { id: userId },
+        attributes: [],
+        through: { attributes: [] },
+      },
+      { model: Category, as: 'category' },
+      { model: Area, as: 'area' },
+    ],
+    limit,
+    offset,
+    distinct: true,
+  });
+
+  return paginationHelper.paginateResponse({ count, rows }, query);
+};
+
 export default {
    getRecipeById,
    getAllRecipes,
+   addRecipeToFavorites,
+   removeRecipeFromFavorites,
+   getFavoriteRecipes,
 };
