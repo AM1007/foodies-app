@@ -1,3 +1,13 @@
+.darkTheme {
+  --bg-color: var(--black);
+  --text-color: var(--white);
+}
+
+.lightTheme {
+  --bg-color: var(--white);
+  --text-color: var(--black);
+}
+
 .headerContainer {
   max-width: 375px;
   margin: 0 auto;
@@ -20,17 +30,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 24px;
   margin: 8px 8px 0 8px;
-  padding: 16px 16px 0 16px;
+  padding: 16px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: var(--black);
+  background-color: var(--bg-color);
 }
 
 @media screen and (min-width: 768px) {
   .headerWrapper {
     margin: 16px 16px 0 16px;
-    padding: 20px 32px 0 32px;
+    padding: 20px 32px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
   }
@@ -39,7 +50,7 @@
 @media screen and (min-width: 1440px) {
   .headerWrapper {
     margin: 20px 20px 0 20px;
-    padding: 20px 60px 0 60px;
+    padding: 20px 60px;
   }
 }
 
@@ -53,8 +64,10 @@
 .signIn {
   padding: 10px 16px;
   font-size: 12px;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 @media screen and (min-width: 768px) {
   .signIn {
@@ -68,6 +81,7 @@
   font-size: 12px;
   line-height: 1.5;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
   color: var(--white);
   background-color: var(--black);
 }
