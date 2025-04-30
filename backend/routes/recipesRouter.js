@@ -10,4 +10,11 @@ const router = express.Router();
  */
 router.get('/', recipesControllers.searchRecipes);
 
+/**
+ * @route GET /api/recipes/:id
+ * @desc Get detailed recipe information by ID
+ * @access Public
+ */
+router.get('/:id', recipesControllers.getRecipeById);
+
 export default router;
