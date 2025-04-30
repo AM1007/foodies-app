@@ -22,7 +22,7 @@ const RecipeIngredient = sequelize.define(
   {
     timestamps: true,
     tableName: 'RecipeIngredients',
-  }
+  },
 );
 
 // RecipeIngredient.sync()

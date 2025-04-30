@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
+import icons from '../../icons/sprite.svg';
 import styles from './Logo.module.css';
-import logo from '/public/logo.svg';
+
+
+import logo from '/assets/logo.svg';
 // import icons from '../../icons/sprite.svg';
+
 
 const Logo = () => {
   return (
     <Link to="/" className="flex items-center">
-      <img src={logo} alt="Site logo" className={styles.logo} />
-      {/* <svg width="136" height="16">
-          <use href={`${icons}#logo`} />
-        </svg> */}
+      <svg className={styles.logo}>
+        <use href={`${icons}#logo`} />
+      </svg>
     </Link>
   );
 };

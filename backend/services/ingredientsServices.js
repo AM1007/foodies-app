@@ -1,1 +1,6 @@
-//this_is_a_temporary_comment
+import models from '../db/associations.js';
+const { Ingredient } = models;
+
+export const getAllIngredients = async () => {
+  return await Ingredient.findAll();
+};

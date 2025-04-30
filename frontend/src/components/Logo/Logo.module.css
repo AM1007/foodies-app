@@ -1,0 +1,19 @@
+.logo {
+  width: 69px;
+  height: 24px;
+  fill: var(--black);
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    width: 83px;
+    height: 28px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .logo {
+    width: 83px;
+    height: 28px;
+  }
+}
