@@ -1,16 +1,15 @@
+import Hero from '../../components/sections/Hero/Hero';
+import Categories from '../../components/sections/Categories/Categories';
+import Testimonials from '../../components/sections/Testimonials/Testimonials';
+// import Recipes from '../../components/sections/Recipes/Recipes';
+
 // import { useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   Hero,
-//   Categories,
-//   Recipes,
-//   Testimonials,
-// } from '../../components/sections';
-import Hero from '../../components/sections/Hero/Hero';
-// import { fetchCategories } from '../redux/categories/operations';
-// import { selectIsCategoriesVisible } from '../redux/categories/selectors';
+// import { fetchCategories } from '../../redux/categories/operations';
+// import { selectIsCategoriesVisible } from '../../redux/categories/selectors';
 
-const HomePage = () => {
+const Home = () => {
+  console.log('Home component rendered');
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 
@@ -21,10 +20,11 @@ const HomePage = () => {
   return (
     <main>
       <Hero />
+      <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
-      {/* <Testimonials /> */}
+      <Testimonials />
     </main>
   );
 };
 
-export default HomePage;
+export default Home;
