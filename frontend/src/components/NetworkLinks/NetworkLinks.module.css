@@ -1,7 +1,6 @@
 .socialList {
   max-width: 140px;
   display: flex;
-  padding: 8px;
   align-items: flex-start;
   gap: 10px;
   flex-shrink: 0;
@@ -12,7 +11,7 @@
   justify-content: center;
   align-items: center;
 
-  padding: 8px;
+  padding: 7px;
   background-color: #fff;
   border: 1px solid #bfbebe;
   border-radius: 100px;
@@ -27,9 +26,12 @@
   .socialList {
     gap: 16px;
   }
+  .socialLink {
+    padding: 9px;
+  }
 }
 @media (min-width: 1440px) {
   .socialList {
-    gap: 16px;
+    gap: 9px;
   }
 }
