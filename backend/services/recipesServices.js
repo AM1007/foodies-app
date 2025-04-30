@@ -92,6 +92,50 @@ const getAllRecipes = async (query = {}) => {
   }
 };
 
+/**
+ * Get detailed recipe information by ID
+ * @param {number|string} recipeId - ID of the recipe to retrieve
+ * @returns {Object} Recipe with detailed information
+ */
+const getRecipeById = async (recipeId) => {
+  try {
+    const recipe = await Recipe.findByPk(Number(recipeId), {
+      include: [
+        { model: Category, as: 'category' },
+        { model: Area, as: 'area' },
+        { 
+          model: User, 
+          as: 'user', 
+          attributes: ['id', 'name', 'email', 'avatar'] 
+        },
+        {
+          model: Ingredient,
+          as: 'ingredients',
+          through: { attributes: ['measure'] },
+        },
+      ],
+    });
+
+    if (!recipe) {
+      throw HttpError(HTTP_STATUS.NOT_FOUND, 'Recipe not found');
+    }
+
+    return recipe;
+  } catch (error) {
+    // If error is already an HttpError, rethrow it
+    if (error.status) {
+      throw error;
+    }
+    
+    // Log original error for debugging
+    console.error('Error fetching recipe by ID:', error);
+    
+    // Convert to appropriate HTTP error
+    throw HttpError(HTTP_STATUS.INTERNAL_SERVER_ERROR, 'Failed to retrieve recipe');
+  }
+};
+
 export default {
-  getAllRecipes,
+   getRecipeById,
+   getAllRecipes,
 };

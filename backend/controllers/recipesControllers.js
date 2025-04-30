@@ -12,6 +12,18 @@ const searchRecipes = async (req, res) => {
   res.status(HTTP_STATUS.OK).json(searchResults);
 };
 
+/**
+ * Controller for getting detailed recipe information by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipesServices.getRecipeById(id);
+  res.status(HTTP_STATUS.OK).json(recipe);
+};
+
 export default {
-  searchRecipes: ctrlWrapper(searchRecipes),
+   searchRecipes: ctrlWrapper(searchRecipes),
+   getRecipeById: ctrlWrapper(getRecipeById),
 };
