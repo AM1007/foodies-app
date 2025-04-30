@@ -8,10 +8,23 @@ const Testimonial = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    owner: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
   },
+
   {
     timestamps: true,
   },
 );
+
+// Testimonial.sync({ force: true });
 
 export default Testimonial;
