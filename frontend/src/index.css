@@ -83,7 +83,7 @@ button {
 }
 .container {
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
   max-width: 375px;
   width: 100%;
   box-sizing: border-box;
@@ -99,6 +99,6 @@ button {
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
-    padding: 0 100px;
+    padding: 0 80px;
   }
 }
