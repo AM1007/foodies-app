@@ -9,13 +9,13 @@ import errorHandler from './middlewares/errorHandler.js';
 import swaggerConfig from './swaggerConfig.js';
 
 // Імпорт маршрутів (будуть додані пізніше)
-// import authRouter from './routes/authRouter.js';
-// import usersRouter from './routes/usersRouter.js';
+import authRouter from './routes/authRouter.js';
+import usersRouter from './routes/usersRouter.js';
 // import recipesRouter from './routes/recipesRouter.js';
-// import categoriesRouter from './routes/categoriesRouter.js';
-// import areasRouter from './routes/areasRouter.js';
-// import ingredientsRouter from './routes/ingredientsRouter.js';
-// import testimonialRouter from './routes/testimonialRouter.js';
+import categoriesRouter from './routes/categoriesRouter.js';
+import areasRouter from './routes/areasRouter.js';
+import ingredientsRouter from './routes/ingredientsRouter.js';
+import testimonialRouter from './routes/testimonialRouter.js';
 
 const app = express();
 
@@ -24,7 +24,12 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS
-app.use(cors());
+const corsOptions = {
+  origin: ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Парсери для обробки JSON та URL-encoded даних
 app.use(express.json());
@@ -48,13 +53,13 @@ app.get('/', (req, res) => {
 });
 
 // Підключення маршрутів
-// app.use('/api/auth', authRouter);
-// app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 // app.use('/api/recipes', recipesRouter);
-// app.use('/api/categories', categoriesRouter);
-// app.use('/api/areas', areasRouter);
-// app.use('/api/ingredients', ingredientsRouter);
-// app.use('/api/testimonials', testimonialRouter);
+app.use('/api/categories', categoriesRouter);
+app.use('/api/areas', areasRouter);
+app.use('/api/ingredients', ingredientsRouter);
+app.use('/api/testimonials', testimonialRouter);
 
 // Обробка неіснуючих маршрутів
 app.use(notFoundHandler);

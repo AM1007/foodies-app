@@ -1,0 +1,17 @@
+.arrowBtnLink {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+svg {
+  height: 16px;
+  width: 16px;
+}

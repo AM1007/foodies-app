@@ -1,1 +1,5 @@
-//this_is_a_temporary_comment
+import Area from '../db/models/Area.js';
+
+export const getAllAreas = async () => {
+  return await Area.findAll();
+};

@@ -1,29 +1,33 @@
-// Hero.jsx
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuth';
 import styles from './Hero.module.css';
+import MainTitle from '../../sharedTitle/MainTitle/MainTitle';
+import Subtitle from '../../sharedTitle/SubTitle/Subtitle';
 
 const Hero = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const handleAddRecipe = () => {
-    navigate('/add-recipe');
+    if (isAuthenticated) {
+      navigate('/recipe/add');
+    } else {
+      alert('Please sign in to add a recipe.');
+    }
   };
 
   return (
     <section className={styles.hero}>
-      <div className={styles.textContainer}>
-        <h1 className={styles.mainTitle}>Improve Your Culinary Talents</h1>
-
-        <p className={styles.subtitle}>
+      <div>
+        <MainTitle>Improve Your Culinary Talents</MainTitle>
+        <Subtitle>
           Amazing recipes for beginners in the world of cooking, enveloping you
           in the aromas and tastes of various cuisines.
-        </p>
-
+        </Subtitle>
         <button className={styles.button} onClick={handleAddRecipe}>
           ADD RECIPE
         </button>
       </div>
-
       <div className={styles.imagesWrapper}>
         <img
           src="/image_hero/image_hero_dish1_1x.png"
