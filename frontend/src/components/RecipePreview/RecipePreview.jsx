@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import css from './RecipePreview.module.css';
 
-import ArrowBtn from '../ArrowBtn/ArrowBtn';
-import DeleteBtn from '../DeleteBtn/DeleteBtn';
+import ArrowBtn from '../ui/ArrowBtn/ArrowBtn';
+import DeleteBtn from '../ui/DeleteBtn/DeleteBtn';
 
 function RecipePreview({ recipe, onDelete }) {
   const [isVisible, setIsVisible] = useState(true);
