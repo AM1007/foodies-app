@@ -1,19 +1,97 @@
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
 
-const { User } = models;
+const { User, Follower } = models;
 
-const findUser = async query => await User.findOne({ where: query });
+const getAllUsers = async () => {
+  return await User.findAll({
+    attributes: ['id', 'name', 'email'],
+  });
+};
 
-const updateUserAvatar = async (email, avatar) => {
-  if (avatar === undefined) {
-    throw HttpError(400, 'Please provide an avatar');
-  }
-  const user = await findUser({ email });
+const findUser = async query => {
+  const user = await User.findOne({ where: query });
   if (!user) {
     throw HttpError(404, 'User not found');
   }
+  return user;
+};
+
+const updateUserAvatar = async (userId, avatar) => {
+  if (avatar === undefined) {
+    throw HttpError(400, 'Please provide an avatar');
+  }
+  const user = await findUser({ id: userId });
   await user.update({ avatar });
 };
 
-export default { findUser, updateUserAvatar };
+const verifyUsersConnection = async (followerId, followingId) => {
+  return await Follower.findOne({
+    where: {
+      followerId,
+      followingId,
+    },
+  });
+};
+
+const followUser = async (followerId, followingId) => {
+  if (followerId === Number(followingId)) {
+    throw HttpError(400, "You can't follow yourself");
+  }
+  await findUser({ id: followerId });
+  await findUser({ id: followingId });
+  const existingFollow = await verifyUsersConnection(followerId, followingId);
+
+  if (existingFollow) {
+    throw HttpError(400, 'User already being followed');
+  }
+
+  await Follower.create({
+    followerId,
+    followingId,
+  });
+};
+
+const unfollowUser = async (followerId, followingId) => {
+  await findUser({ id: followerId });
+  await findUser({ id: followingId });
+
+  const existingFollow = await verifyUsersConnection(followerId, followingId);
+
+  if (!existingFollow) {
+    throw HttpError(400, "You can't unfollow user that you are not following");
+  }
+
+  await Follower.destroy({
+    where: {
+      followerId,
+      followingId,
+    },
+  });
+};
+
+const getFollowedUsers = async followerId => {
+  const user = await findUser({ id: followerId });
+  return await user.getFollowing({
+    attributes: ['id', 'name', 'email'],
+    joinTableAttributes: [],
+  });
+};
+
+const getFollowingUsers = async userId => {
+  const user = await findUser({ id: userId });
+  return await user.getFollowers({
+    attributes: ['id', 'name', 'email'],
+    joinTableAttributes: [],
+  });
+};
+
+export default {
+  findUser,
+  updateUserAvatar,
+  followUser,
+  unfollowUser,
+  getFollowedUsers,
+  getFollowingUsers,
+  getAllUsers,
+};
