@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import 'modern-normalize';
+
 import Layout from './components/Layout/Layout';
 import Loader from './components/Loader/Loader';
 
