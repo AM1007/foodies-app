@@ -24,7 +24,15 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'https://foodies-app-pke3.onrender.com',
+    'http://localhost:3000', // для локальної розробки
+  ],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Парсери для обробки JSON та URL-encoded даних
 app.use(express.json());
