@@ -1,0 +1,122 @@
+.card {
+    background-color: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  .card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    flex-grow: 1;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--black);
+  }
+  
+  .description {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  
+  .footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .author {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .heart, .arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--gray);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+  
+  .heart:hover, .arrow:hover {
+    border-color: var(--black);
+  }
+  
+  .active {
+    background-color: var(--red);
+    border-color: var(--red);
+  }
+  
+  .active svg path {
+    fill: white;
+  }
+  
+  @media (min-width: 768px) {
+    .image {
+      height: 220px;
+    }
+  
+    .title {
+      font-size: 20px;
+    }
+  
+    .description {
+      font-size: 15px;
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .image {
+      height: 240px;
+    }
+  
+    .title {
+      font-size: 22px;
+    }
+  
+    .description {
+      font-size: 16px;
+    }
+  }
