@@ -14,7 +14,7 @@ const NetworkLinks = () => {
             className={styles.socialLink}
           >
             <svg>
-              <use href={`/icons/sprite.svg#${icon}`} />
+              <use href={icon} />
             </svg>
           </a>
         </li>
