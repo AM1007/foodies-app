@@ -2,16 +2,34 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  border: 1px solid var(--gray);
+  background-color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333;
+  color: var(--dark-gray);
   transition: background 0.2s ease;
+}
+
+.deleteBtn:hover {
+  background-color: var(--black);
+  color: var(--white);
+  cursor: pointer;
 }
 
 svg {
   height: 16px;
   width: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .deleteBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  svg {
+    height: 18px;
+    width: 18px;
+  }
 }

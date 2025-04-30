@@ -1,10 +1,10 @@
-import RecipePreview from "../../components/ui/RecipePreview/RecipePreview";
+import RecipePreview from '../../components/RecipePreview/RecipePreview';
 
 const Profile = () => {
   return (
     <>
       <p>Profile</p>
-      <RecipePreview/>
+      <RecipePreview />
     </>
   );
 };
