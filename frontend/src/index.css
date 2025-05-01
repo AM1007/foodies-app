@@ -15,7 +15,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   --black: #050505;
@@ -84,7 +83,6 @@ button {
 .container {
   margin: 0 auto;
   padding: 0 16px;
-  /* max-width: 375px; */
   width: 100%;
 }
 

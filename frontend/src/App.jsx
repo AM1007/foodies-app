@@ -33,14 +33,15 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
+          <Route path="/user/" element={<Profile />} />
+          {/* <Route
             path="/user/:id"
             element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route path="/recipe/:id" element={<Recipe />} />
           <Route path="*" element={<NotFound />} />
         </Route>
