@@ -1,5 +1,5 @@
 import Hero from '../../components/sections/Hero/Hero';
-// import Categories from '../../components/sections/Categories/Categories';
+import Categories from '../../components/sections/Categories/Categories';
 // import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import Recipes from '../../components/sections/Recipes/Recipes';
 
@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <main>
       {<Hero />}
-      {/* <Categories /> */}
+      <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
       {/* <Testimonials /> */}
     </main>
