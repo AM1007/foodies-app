@@ -1,10 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Logo from '../../Logo/Logo.jsx';
-import Navigation from '../../Navigation/Navigation.jsx';
+import Navigation from '../Navigation/Navigation.jsx';
 import styles from './Header.module.css';
-import Button from '../../Button/Button.jsx';
-import { useModal } from '../../../hooks/useModal.js';
+import Button from '../Button/Button';
+import { useModal } from '../../hooks/useModal.js';
 
 const Header = () => {
   const { openModal } = useModal();
@@ -16,7 +15,6 @@ const Header = () => {
     <>
       <header className={`${styles.headerContainer} ${headerThemeClass}`}>
         <div className={styles.headerWrapper}>
-          <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
           <Navigation isLightTheme={!isHomePage} />
           <div className={styles.buttons}>
             <Button
