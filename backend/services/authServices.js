@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import gravatar from 'gravatar';
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
-import { HTTP_STATUS } from '../constants/auth.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 import jwtHelpers from '../helpers/jwt.js';
 import { token } from 'morgan';
 
@@ -45,11 +45,11 @@ const signInUser = async userData => {
   const { email, password } = userData;
   const user = await findUser({ email });
   if (!user) {
-    throw HttpError(401, 'Email or password is wrong');
+    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {
-    throw HttpError(401, 'Email or password is wrong');
+    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
   const payload = { email };
 
@@ -65,26 +65,27 @@ const signInUser = async userData => {
 
 const refreshUserToken = async refreshToken => {
   if (!refreshToken) {
-    throw HttpError(401, 'Not authorized');
+    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Not authorized');
   }
   const { payload, error } = jwtHelpers.verifyToken(refreshToken);
 
   if (error) {
-    throw HttpError(403, 'Invalid if expired refresh token');
+    throw HttpError(HTTP_STATUS.FORBIDDEN, 'Invalid if expired refresh token');
   }
 
   const user = await findUser({ email: payload.email });
   if (!user || user.refreshToken !== refreshToken) {
-    throw HttpError(403, 'Refresh token mismatch');
+    throw HttpError(HTTP_STATUS.FORBIDDEN, 'Refresh token mismatch');
   }
   const newAccessToken = jwtHelpers.generateToken({ email: user.email });
+  await user.update({ token: newAccessToken });
   return { token: newAccessToken };
 };
 
 const invalidateUserToken = async userId => {
   const user = await findUser({ id: userId });
   if (!user || !user.token) {
-    throw HttpError(401, 'Not authorized');
+    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Not authorized');
   }
   await user.update({ token: null, refreshToken: null });
   return user;

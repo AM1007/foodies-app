@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Header from '../Header/Header';
+import Header from '../sections/Header/Header';
 import Footer from '../sections/Footer/Footer';
 
 import SignUpModal from '../SignUpModal/SignUpModal';

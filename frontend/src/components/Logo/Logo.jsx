@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 import icons from '../../icons/sprite.svg';
 import styles from './Logo.module.css';
 
-// import logo from '/assets/logo.svg';
-
-const Logo = () => {
+const Logo = ({ className }) => {
   return (
     <Link to="/" className="flex items-center">
-      <svg className={styles.logo}>
+      <svg className={clsx(styles.logo, className)}>
         <use href={`${icons}#logo`} />
       </svg>
     </Link>

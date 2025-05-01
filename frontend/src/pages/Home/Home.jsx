@@ -1,4 +1,4 @@
-// import Hero from '../../components/sections/Hero/Hero';
+import Hero from '../../components/sections/Hero/Hero';
 // import Categories from '../../components/sections/Categories/Categories';
 // import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import Recipes from '../../components/sections/Recipes/Recipes';
@@ -9,8 +9,6 @@
 // import { selectIsCategoriesVisible } from '../../redux/categories/selectors';
 
 const Home = () => {
-  console.log('Home component rendered');
-
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 
@@ -18,22 +16,14 @@ const Home = () => {
   //   dispatch(fetchCategories());
   // }, [dispatch]);
 
-  // return (
-  // <main>
-  {
-    /* <Hero /> */
-  }
-  {
-    /* <Categories /> */
-  }
-  {
-    /* {showCategories ? <Categories /> : <Recipes />} */
-  }
-  {
-    /* <Testimonials /> */
-  }
-  // </main>
-  // );
+  return (
+    <main>
+      {<Hero />}
+      {/* <Categories /> */}
+      {/* {showCategories ? <Categories /> : <Recipes />} */}
+      {/* <Testimonials /> */}
+    </main>
+  );
 };
 
 export default Home;

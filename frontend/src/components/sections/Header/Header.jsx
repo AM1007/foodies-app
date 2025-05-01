@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Navigation from '../Navigation/Navigation.jsx';
+import Navigation from '../../Navigation/Navigation.jsx';
 import styles from './Header.module.css';
-import Button from '../Button/Button';
-import { useModal } from '../../context/ModalContext';
+import Button from '../../Button/Button.jsx';
+import { useModal } from '../../../context/ModalContext.jsx';
 
 const Header = () => {
   const { openModal } = useModal();
