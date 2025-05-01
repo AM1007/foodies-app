@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import 'modern-normalize';
 import './index.css';
 import App from './App.jsx';
-import { ModalProvider } from './context/ModalContext.jsx';
+import { ModalProvider } from './context/ModalProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

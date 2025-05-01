@@ -14,7 +14,7 @@
       <path d="M20.693 1.92h1.28v4.8h-1.6c-.64 0-1.28 0-1.6.32-.32.32-.32.64-.32 1.387v1.707h3.52v4.053h-3.52v17.6h-5.44V14.08h-2.88v-4.053h2.88V8.64c0-2.347.32-4.053.96-4.8.96-1.387 2.88-2.027 5.76-2.027.32.107.64.107.96.107z"/>
     </symbol>
     <symbol id="burger" viewBox="0 0 32 32">
-      <path fill="none" stroke="var(--color1, #fff)" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.286" d="M28 13.333H4M28 8H4M28 18.667H4M28 24H4"/>
+      <path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="2.286" d="M28 13.333H4M28 8H4M28 18.667H4M28 24H4"/>
     </symbol>
     <symbol id="up" viewBox="0 0 32 32">
       <path stroke-linejoin="round" stroke-linecap="round" stroke-width="3.2" d="M8 20l8-8 8 8"/>
@@ -81,6 +81,9 @@
     </symbol>
     <symbol id="close" viewBox="0 0 32 32">
       <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.667" d="M24 8L8 24M8 8l16 16"/>
+    </symbol>
+    <symbol id="quote" viewBox="0 0 39 32">
+      <path d="M0 32V21.294c0-4 .704-7.686 2.113-11.059S5.909 3.451 9.275 0l6.105 4.824c-1.957 1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514V32H-.002zm22.896 0V21.294c0-4 .704-7.686 2.113-11.059S28.805 3.451 32.171 0l6.105 4.824c-1.957 1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514V32H22.894z"/>
     </symbol>
   </defs>
 </svg>

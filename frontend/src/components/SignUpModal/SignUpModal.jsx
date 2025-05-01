@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
-// import SignUpForm from '../SignUpForm/SignUpForm';
+import SignUpForm from '../SignUpForm/SignUpForm';
 import styles from './SignUpModal.module.css';
 
 const SignUpModal = ({ onClose }) => {
@@ -8,8 +8,8 @@ const SignUpModal = ({ onClose }) => {
     <Modal isOpen={true} onClose={onClose}>
       <div className={styles.container}>
         <h2 className={styles.title}>Sign Up</h2>
-        {/* Закриваємо модалку після успішної реєстрації */}
         <SignUpForm onSuccess={onClose} />
+        <p>I already have an account? Sign in</p>
       </div>
     </Modal>
   );

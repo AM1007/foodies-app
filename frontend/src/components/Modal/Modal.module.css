@@ -1,0 +1,35 @@
+/* Modal.module.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* <-- достатньо велике, щоби бути над усім іншим */
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+  z-index: 1001; /* <-- щоб «поверх» .overlay > .backdrop */
+}
+
+.contentWrapper {
+  margin-top: 1rem;
+}
