@@ -2,6 +2,7 @@ import { Op } from 'sequelize';
 import models from '../db/associations.js';
 import paginationHelper from '../helpers/paginationHelper.js';
 import HttpError from '../helpers/HttpError.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 
 const { Recipe, Category, Area, User, Ingredient, Favorite, sequelize,  } = models;
 
