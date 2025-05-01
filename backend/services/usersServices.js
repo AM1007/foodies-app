@@ -1,7 +1,7 @@
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
 
-const { User, Follower } = models;
+const { User, Follower, Recipe } = models;
 
 const getAllUsers = async () => {
   return await User.findAll({
@@ -70,20 +70,47 @@ const unfollowUser = async (followerId, followingId) => {
   });
 };
 
-const getFollowedUsers = async followerId => {
-  const user = await findUser({ id: followerId });
+const getUsersIFollow = async id => {
+  const user = await findUser({ id });
   return await user.getFollowing({
     attributes: ['id', 'name', 'email'],
     joinTableAttributes: [],
   });
 };
 
-const getFollowingUsers = async userId => {
-  const user = await findUser({ id: userId });
+const getUsersFollowingMe = async id => {
+  const user = await findUser({ id });
   return await user.getFollowers({
     attributes: ['id', 'name', 'email'],
     joinTableAttributes: [],
   });
+};
+
+const getUserDetailedInfo = async (userId, { isSelf = false } = {}) => {
+  const user = await findUser({ id: userId });
+
+  const recipesCount = await user.countRecipes();
+  const followersCount = await user.countFollowers();
+
+  const profile = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    avatar: user.avatar,
+    stats: {
+      recipes: recipesCount,
+      followers: followersCount,
+    },
+  };
+
+  if (isSelf) {
+    const favoriteCount = await user.countFavorites();
+    const followingCount = await user.countFollowing();
+
+    profile.stats.favorites = favoriteCount;
+    profile.stats.following = followingCount;
+  }
+  return profile;
 };
 
 export default {
@@ -91,7 +118,8 @@ export default {
   updateUserAvatar,
   followUser,
   unfollowUser,
-  getFollowedUsers,
-  getFollowingUsers,
+  getUsersIFollow,
+  getUsersFollowingMe,
   getAllUsers,
+  getUserDetailedInfo,
 };

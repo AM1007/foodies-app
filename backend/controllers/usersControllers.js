@@ -7,6 +7,16 @@ const getUserInfoController = async (req, res) => {
   res.status(HTTP_STATUS.OK).json({ user: req.user });
 };
 
+const getUserDetailedInfoController = async (req, res) => {
+  const { id: currentUserId } = req.user;
+  const { id: targetUserId } = req.params;
+  const isSelf = currentUserId === Number(targetUserId);
+  const userInfo = await usersServices.getUserDetailedInfo(targetUserId, {
+    isSelf,
+  });
+  res.status(200).json(userInfo);
+};
+
 const getAllUsersController = async (req, res) => {
   const users = await usersServices.getAllUsers();
   res.status(HTTP_STATUS.OK).json({ users });
@@ -32,7 +42,7 @@ const followUserController = async (req, res) => {
   const { id: currentUserId } = req.user;
   const { id: targetUserId } = req.params;
 
-  await usersServices.followUser(currentUserId, targetUserId);
+  await usersServices.followUser(currentUserId, Number(targetUserId));
   res.status(200).json({ message: 'Followed user successfully' });
 };
 
@@ -40,19 +50,19 @@ const unfollowUserController = async (req, res) => {
   const { id: currentUserId } = req.user;
   const { id: targetUserId } = req.params;
 
-  await usersServices.unfollowUser(currentUserId, targetUserId);
+  await usersServices.unfollowUser(currentUserId, Number(targetUserId));
   res.status(200).json({ message: 'Unfollowed user successfully' });
 };
 
-const getFollowedUsersController = async (req, res) => {
-  const { id: followerId } = req.user;
-  const response = await usersServices.getFollowedUsers(followerId);
+const getFollowingUsersController = async (req, res) => {
+  const { id } = req.user;
+  const response = await usersServices.getUsersIFollow(id);
   res.status(200).json({ response });
 };
 
-const getFollowingUsersController = async (req, res) => {
-  const { id: userId } = req.user;
-  const response = await usersServices.getFollowingUsers(userId);
+const getFollowersController = async (req, res) => {
+  const { id } = req.user;
+  const response = await usersServices.getUsersFollowingMe(id);
   res.status(200).json({ response });
 };
 
@@ -62,6 +72,7 @@ export default {
   getUserInfoController: ctrlWrapper(getUserInfoController),
   followUserController: ctrlWrapper(followUserController),
   unfollowUserController: ctrlWrapper(unfollowUserController),
-  getFollowedUsersController: ctrlWrapper(getFollowedUsersController),
+  getFollowersController: ctrlWrapper(getFollowersController),
   getFollowingUsersController: ctrlWrapper(getFollowingUsersController),
+  getUserDetailedInfoController: ctrlWrapper(getUserDetailedInfoController),
 };
