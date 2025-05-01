@@ -14,7 +14,7 @@ const getUserDetailedInfoController = async (req, res) => {
   const userInfo = await usersServices.getUserDetailedInfo(targetUserId, {
     isSelf,
   });
-  res.status(200).json(userInfo);
+  res.status(HTTP_STATUS.OK).json(userInfo);
 };
 
 const getAllUsersController = async (req, res) => {
@@ -43,7 +43,7 @@ const followUserController = async (req, res) => {
   const { id: targetUserId } = req.params;
 
   await usersServices.followUser(currentUserId, Number(targetUserId));
-  res.status(200).json({ message: 'Followed user successfully' });
+  res.status(HTTP_STATUS.OK).json({ message: 'Followed user successfully' });
 };
 
 const unfollowUserController = async (req, res) => {
@@ -51,19 +51,19 @@ const unfollowUserController = async (req, res) => {
   const { id: targetUserId } = req.params;
 
   await usersServices.unfollowUser(currentUserId, Number(targetUserId));
-  res.status(200).json({ message: 'Unfollowed user successfully' });
+  res.status(HTTP_STATUS.OK).json({ message: 'Unfollowed user successfully' });
 };
 
 const getFollowingUsersController = async (req, res) => {
   const { id } = req.user;
   const response = await usersServices.getUsersIFollow(id);
-  res.status(200).json({ response });
+  res.status(HTTP_STATUS.OK).json({ response });
 };
 
 const getFollowersController = async (req, res) => {
   const { id } = req.user;
   const response = await usersServices.getUsersFollowingMe(id);
-  res.status(200).json({ response });
+  res.status(HTTP_STATUS.OK).json({ response });
 };
 
 export default {

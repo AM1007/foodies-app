@@ -1,5 +1,6 @@
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 
 const { User, Follower, Recipe } = models;
 
@@ -12,14 +13,14 @@ const getAllUsers = async () => {
 const findUser = async query => {
   const user = await User.findOne({ where: query });
   if (!user) {
-    throw HttpError(404, 'User not found');
+    throw HttpError(HTTP_STATUS.NOT_FOUND, 'User not found');
   }
   return user;
 };
 
 const updateUserAvatar = async (userId, avatar) => {
   if (avatar === undefined) {
-    throw HttpError(400, 'Please provide an avatar');
+    throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Please provide an avatar');
   }
   const user = await findUser({ id: userId });
   await user.update({ avatar });
@@ -36,14 +37,14 @@ const verifyUsersConnection = async (followerId, followingId) => {
 
 const followUser = async (followerId, followingId) => {
   if (followerId === Number(followingId)) {
-    throw HttpError(400, "You can't follow yourself");
+    throw HttpError(HTTP_STATUS.BAD_REQUEST, "You can't follow yourself");
   }
   await findUser({ id: followerId });
   await findUser({ id: followingId });
   const existingFollow = await verifyUsersConnection(followerId, followingId);
 
   if (existingFollow) {
-    throw HttpError(400, 'User already being followed');
+    throw HttpError(HTTP_STATUS.BAD_REQUEST, 'User already being followed');
   }
 
   await Follower.create({
@@ -59,7 +60,10 @@ const unfollowUser = async (followerId, followingId) => {
   const existingFollow = await verifyUsersConnection(followerId, followingId);
 
   if (!existingFollow) {
-    throw HttpError(400, "You can't unfollow user that you are not following");
+    throw HttpError(
+      HTTP_STATUS.BAD_REQUEST,
+      "You can't unfollow user that you are not following",
+    );
   }
 
   await Follower.destroy({
