@@ -1,0 +1,12 @@
+.burgerIcon {
+  width: 28px;
+  height: 28px;
+}
+
+.burgerLight {
+  stroke: var(--black);
+}
+
+.burgerDark {
+  stroke: var(--white);
+}

@@ -51,6 +51,14 @@
   }
 }
 
+.logoLight {
+  fill: var(--black);
+}
+
+.logoDark {
+  fill: var(--white);
+}
+
 .buttons {
   display: flex;
   border-radius: 30px;

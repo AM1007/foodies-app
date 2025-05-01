@@ -1,0 +1,19 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  max-width: 375px;
+  background-color: var(--black);
+  color: var(--white);
+}
+@media screen and (min-width: 778px) {
+  .overlay {
+    display: none;
+  }
+}
