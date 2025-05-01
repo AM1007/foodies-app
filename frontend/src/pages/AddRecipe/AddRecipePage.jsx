@@ -4,8 +4,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PathInfo from '../../components/ui/PathInfo/PathInfo';
-import MainTitle from '../../components/MainTitle/MainTitle';
-import Subtitle from '../../components/Subtitle/Subtitle';
+import MainTitle from '../../components/ui/MainTitle/MainTitle';
+import Subtitle from '../../components/ui/Subtitle/Subtitle';
 import AddRecipeForm from '../../components/AddRecipeForm/AddRecipeForm';
 
 const AddRecipePage = () => {
