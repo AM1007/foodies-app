@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import CloseBtn from '../ui/CloseBtn/CloseBtn';
+import useScrollLock from '../../hooks/useScrollLock';
 import styles from './MobileMenu.module.css';
 
 const MobileMenu = ({ isOpen, onClose }) => {
+  useScrollLock(isOpen);
   if (!isOpen) return null;
 
   return (
