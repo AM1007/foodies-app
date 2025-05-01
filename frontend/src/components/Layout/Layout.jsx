@@ -23,7 +23,6 @@ const Layout = () => {
       </main>
 
       <Footer />
-      <Button>test</Button>
 
       {activeModal === 'signup' && <SignUpModal onClose={closeModal} />}
       {activeModal === 'signin' && <SignInModal onClose={closeModal} />}
