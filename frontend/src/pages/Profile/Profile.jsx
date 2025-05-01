@@ -10,11 +10,8 @@ const Profile = () => {
   return (
     <>
       <p>Profile</p>
-<<<<<<< HEAD
       <UserInfo/>
-=======
       <Button onClick={() => openModal('logout')}>Log Out</Button>
->>>>>>> 5d21ccea536db12d259733d1658f4c41974cd90a
       <RecipePreview />
     </>
   );
