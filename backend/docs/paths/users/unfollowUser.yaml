@@ -1,0 +1,43 @@
+post:
+  tags:
+    - Users
+  summary: Відписка від користувача
+  description:
+    Приватний ендпоінт для відписки поточного користувача від іншого
+    користувача.
+  parameters:
+    - name: id
+      in: path
+      description: ID користувача, від якого потрібно відписатися
+      required: true
+      schema:
+        type: integer
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Успішна відписка від користувача
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/users/FollowResponse.yaml'
+    '400':
+      description:
+        Неправильний запит (наприклад, спроба відписатися від користувача, на
+        якого не підписаний)
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '401':
+      description: Неавторизований доступ
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '404':
+      description: Користувача не знайдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

@@ -1,10 +1,11 @@
-├── .env.example
+  ├── .env.example
     ├── .gitignore
     ├── README.md
     ├── app.js
     ├── backend.txt
     ├── constants
     │   ├── auth.js
+    │   ├── httpStatus.js
     │   ├── recepies.js
     │   └── users.js
     ├── controllers
@@ -16,6 +17,7 @@
     │   ├── testimonialControllers.js
     │   └── usersControllers.js
     ├── db
+    │   ├── associations.js
     │   ├── models
     │   │   ├── Area.js
     │   │   ├── Category.js
@@ -29,7 +31,8 @@
     │   └── sequelize.js
     ├── decorators
     │   ├── ctrlWrapper.js
-    │   └── validateBody.js
+    │   ├── validateBody.js
+    │   └── validateQuery.js
     ├── docs
     │   ├── index.html
     │   └── openapi.yaml
@@ -37,6 +40,7 @@
     │   ├── HttpError.js
     │   ├── createEmailTemplates.js
     │   ├── jwt.js
+    │   ├── paginationHelper.js
     │   └── sendEmail.js
     ├── middlewares
     │   ├── authenticate.js
@@ -70,10 +74,18 @@
     │   ├── authSchemas.js
     │   ├── recipeSchemas.js
     │   └── userSchemas.js
+    ├── scripts
+    │   ├── seedAreas.js
+    │   ├── seedCategories.js
+    │   ├── seedIngredients.js
+    │   ├── seedRecipes.js
+    │   ├── seedTestimonials.js
+    │   └── seedUsers.js
     ├── services
     │   ├── areasServices.js
     │   ├── authServices.js
     │   ├── categoriesServices.js
+    │   ├── cloudinary.js
     │   ├── ingredientsServices.js
     │   ├── recipesServices.js
     │   ├── testimonialServices.js
@@ -89,5 +101,12 @@
     │   │   └── root.yaml
     ├── swaggerConfig.js
     ├── tech_task.md
-    └── temp
+    ├── temp
     │   └── .gitkeep
+    └── todelete
+    │   ├── areas.json
+    │   ├── categories.json
+    │   ├── ingredients.json
+    │   ├── recipes.json
+    │   ├── testimonials.json
+    │   └── users.json

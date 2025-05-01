@@ -1,44 +1,43 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuth } from '../../../hooks/useAuth';
 import styles from './Hero.module.css';
-import MainTitle from '../../sharedTitle/MainTitle/MainTitle';
-import Subtitle from '../../sharedTitle/SubTitle/Subtitle';
 
 const Hero = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  // const navigate = useNavigate();
+  // const { isAuthenticated } = useAuth();
 
-  const handleAddRecipe = () => {
-    if (isAuthenticated) {
-      navigate('/recipe/add');
-    } else {
-      alert('Please sign in to add a recipe.');
-    }
-  };
+  // const handleAddRecipe = () => {
+  //   if (isAuthenticated) {
+  //     navigate('/recipe/add');
+  //   } else {
+  //     alert('Please sign in to add a recipe.');
+  //   }
+  // };
 
   return (
-    <section className={styles.hero}>
-      <div>
-        <MainTitle>Improve Your Culinary Talents</MainTitle>
-        <Subtitle>
-          Amazing recipes for beginners in the world of cooking, enveloping you
-          in the aromas and tastes of various cuisines.
-        </Subtitle>
-        <button className={styles.button} onClick={handleAddRecipe}>
-          ADD RECIPE
-        </button>
-      </div>
-      <div className={styles.imagesWrapper}>
-        <img
-          src="/image_hero/image_hero_dish1_1x.png"
-          alt="Dish1"
-          className={styles.image1}
-        />
-        <img
-          src="/image_hero/image_hero_dish2_1x.png"
-          alt="Dish2"
-          className={styles.image2}
-        />
+    <section className={styles.container}>
+      <div className={styles.heroSection}>
+        <div className={styles.textWrapper}>
+          <h1 className={styles.title}>Improve Your Culinary Talents</h1>
+          <p className={styles.subtitle}>
+            Amazing recipes for beginners in the world of cooking, enveloping
+            you in the aromas and tastes of various cuisines.
+          </p>
+          <button className={styles.heroButton}>Add Recipe</button>
+        </div>
+
+        <div className={styles.imageWrapper}>
+          <img
+            src="/image/hero/image_hero_dish2_1x.png"
+            alt="Dish large"
+            className={styles.imageSmall}
+          />
+          <img
+            src="/image/hero/image_hero_dish1_1x.png"
+            alt="Dish small"
+            className={styles.imageLarge}
+          />
+        </div>
       </div>
     </section>
   );

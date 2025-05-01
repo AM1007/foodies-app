@@ -1,0 +1,52 @@
+.wrapper {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase;
+  }
+  
+  @media (min-width: 768px) {
+    .title {
+      font-size: 24px;
+    }
+  }
+  
+  .text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    white-space: pre-line;
+  }
+  
+  @media (min-width: 768px) {
+    .text {
+      font-size: 18px;
+    }
+  }
+  
+  .favoriteBtn {
+    align-self: start;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border: 1px solid var(--gray);
+    border-radius: 28px;
+    color: var(--black);
+    background-color: transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .favoriteBtn:hover {
+    background-color: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  

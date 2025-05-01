@@ -1,0 +1,31 @@
+# docs/paths/auth/register.yaml
+post:
+  tags:
+    - Auth
+  summary: Реєстрація нового користувача
+  description: Створення нового облікового запису користувача
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/auth/RegisterRequest.yaml'
+  responses:
+    '201':
+      description: Користувач успішно зареєстрований
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/auth/RegisterResponse.yaml'
+    '400':
+      description: Неправильні дані запиту
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '409':
+      description: Користувач з таким email вже існує
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

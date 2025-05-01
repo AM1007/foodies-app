@@ -1,6 +1,6 @@
 import Hero from '../../components/sections/Hero/Hero';
 import Categories from '../../components/sections/Categories/Categories';
-import Testimonials from '../../components/sections/Testimonials/Testimonials';
+// import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import Recipes from '../../components/sections/Recipes/Recipes';
 
 // import { useEffect } from 'react';
@@ -9,9 +9,6 @@ import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import { selectIsCategoriesVisible } from '../../redux/categories/selectors';
 
 const Home = () => {
-
-  console.log('Home component rendered');
-
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 
@@ -21,10 +18,10 @@ const Home = () => {
 
   return (
     <main>
-      <Hero />
+      {<Hero />}
       <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
-      <Testimonials />
+      {/* <Testimonials /> */}
     </main>
   );
 };
