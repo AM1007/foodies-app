@@ -1,8 +1,12 @@
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../../Navigation/Navigation.jsx';
 import styles from './Header.module.css';
+import Button from '../../Button/Button.jsx';
+import { useModal } from '../../../context/ModalContext.jsx';
 
 const Header = () => {
+  const { openModal } = useModal();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -13,14 +17,21 @@ const Header = () => {
         <div className={styles.headerWrapper}>
           <Navigation isLightTheme={!isHomePage} />
           <div className={styles.buttons}>
-            <button className={`${styles.button} ${styles.signIn}`}>
+            <Button
+              className={`${styles.button} ${styles.signIn}`}
+              onClick={() => openModal('signin')}
+            >
               SIGN IN
-            </button>
-            <button className={`${styles.button} ${styles.signUp}`}>
+            </Button>
+            <Button
+              className={`${styles.button} ${styles.signUp}`}
+              onClick={() => openModal('signup')}
+            >
               SIGN UP
-            </button>
+            </Button>
           </div>
         </div>
+        {/* <Button onClick={() => openModal('logout')}>Log Out</Button> */}
       </header>
     </>
   );
