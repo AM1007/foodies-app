@@ -12,8 +12,8 @@
   align-items: center;
 
   padding: 7px;
-  background-color: #fff;
-  border: 1px solid #bfbebe;
+  background-color: var(--white);
+  border: 1px solid var(--gray);
   border-radius: 100px;
   transition: background-color 0.3s ease;
 }
