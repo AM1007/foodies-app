@@ -18,7 +18,7 @@ const Navigation = ({ isLightTheme }) => {
           isLightTheme ? styles.lightNav : styles.darkNav,
         )}
       >
-        <Logo />
+        <Logo className={isLightTheme ? styles.logoLight : styles.logoDark} />
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <NavLink className={generateActiveClass} to="/">
