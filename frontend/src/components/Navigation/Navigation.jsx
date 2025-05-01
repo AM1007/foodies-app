@@ -1,9 +1,13 @@
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import clsx from 'clsx';
-import Logo from '../Logo/Logo';
+import BurgerBtn from '../ui/BurgerBtn/BurgerBtn';
+import MobileMenu from '../MobileMenu/MobileMenu';
 import styles from './Navigation.module.css';
 
 const Navigation = ({ isLightTheme }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const generateActiveClass = ({ isActive }) =>
     clsx(
       styles.link,
@@ -18,7 +22,6 @@ const Navigation = ({ isLightTheme }) => {
           isLightTheme ? styles.lightNav : styles.darkNav,
         )}
       >
-        <Logo className={isLightTheme ? styles.logoLight : styles.logoDark} />
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <NavLink className={generateActiveClass} to="/">
@@ -31,6 +34,11 @@ const Navigation = ({ isLightTheme }) => {
             </NavLink>
           </li>
         </ul>
+        <BurgerBtn
+          onClick={() => setIsMenuOpen(true)}
+          isLightTheme={isLightTheme}
+        />
+        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       </nav>
     </>
   );

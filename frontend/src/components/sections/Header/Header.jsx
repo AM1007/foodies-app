@@ -1,12 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import AuthBar from '../../AuthBar/AuthBar.jsx';
+import Logo from '../../Logo/Logo.jsx';
 import Navigation from '../../Navigation/Navigation.jsx';
 import styles from './Header.module.css';
-import Button from '../../Button/Button.jsx';
-import { useModal } from '../../../hooks/useModal.js';
 
 const Header = () => {
-  const { openModal } = useModal();
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -15,23 +14,10 @@ const Header = () => {
     <>
       <header className={`${styles.headerContainer} ${headerThemeClass}`}>
         <div className={styles.headerWrapper}>
+          <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
           <Navigation isLightTheme={!isHomePage} />
-          <div className={styles.buttons}>
-            <Button
-              className={`${styles.button} ${styles.signIn}`}
-              onClick={() => openModal('signin')}
-            >
-              SIGN IN
-            </Button>
-            <Button
-              className={`${styles.button} ${styles.signUp}`}
-              onClick={() => openModal('signup')}
-            >
-              SIGN UP
-            </Button>
-          </div>
+          <AuthBar />
         </div>
-        {/* <Button onClick={() => openModal('logout')}>Log Out</Button> */}
       </header>
     </>
   );

@@ -4,18 +4,6 @@
   align-items: center;
 }
 
-@media screen and (min-width: 768px) {
-  .nav {
-    gap: 177px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .nav {
-    gap: 455px;
-  }
-}
-
 .lightNav {
   color: var(--black);
 }
@@ -72,12 +60,4 @@
 .darkActive {
   border: 1px solid var(--white);
   border-radius: 30px;
-}
-
-.logoLight {
-  fill: var(--black);
-}
-
-.logoDark {
-  fill: var(--white);
 }
