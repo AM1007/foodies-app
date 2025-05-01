@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import Logo from '../Logo/Logo';
+import CloseBtn from '../ui/CloseBtn/CloseBtn';
 import styles from './MobileMenu.module.css';
 
 const MobileMenu = ({ isOpen, onClose }) => {
@@ -7,18 +8,40 @@ const MobileMenu = ({ isOpen, onClose }) => {
 
   return (
     <div className={styles.overlay}>
-      <button onClick={onClose} className={styles.closeBtn}>
-        ×
-      </button>
-      <Logo className={styles.logo} style={{ fill: '#ffffff' }} />
+      <div className={styles.wrapper}>
+        <Logo className={styles.logoWhite} />
+        <CloseBtn onClick={onClose} />
+      </div>
       <nav className={styles.nav}>
-        <NavLink to="/" onClick={onClose}>
-          Home
-        </NavLink>
-        <NavLink to="/add" onClick={onClose}>
-          Add recipe
-        </NavLink>
+        <ul className={styles.list}>
+          <li>
+            <NavLink className={styles.link} to="/" onClick={onClose}>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={styles.link} to="/add" onClick={onClose}>
+              Add recipe
+            </NavLink>
+          </li>
+        </ul>
       </nav>
+      <div className={styles.imageWrapper}>
+        <img
+          src="/image/hero/image_hero_dish2_1x.png"
+          srcSet="/image/hero/image_hero_dish2_1x.png 1x, /image/hero/image_hero_dish2_2x.png 2x"
+          alt="Beef Wellington"
+          width="77"
+          height="70"
+        />
+        <img
+          src="/image/hero/image_hero_dish1_1x.png"
+          srcSet="/image/hero/image_hero_dish1_1x.png 1x, /image/hero/image_hero_dish1_2x.png 2x"
+          alt="Dish"
+          width="190"
+          height="172"
+        />
+      </div>
     </div>
   );
 };
