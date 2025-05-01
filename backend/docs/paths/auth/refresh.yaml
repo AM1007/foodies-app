@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Auth
+  summary: Оновлення токену
+  description: Оновлення JWT токену за допомогою refresh токену
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/auth/RefreshTokenRequest.yaml'
+  responses:
+    '200':
+      description: Токен успішно оновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/auth/RefreshTokenResponse.yaml'
+    '401':
+      description: Невірний refresh токен
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Auth
+  summary: Вхід в систему
+  description: Автентифікація користувача та отримання токену
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/auth/LoginRequest.yaml'
+  responses:
+    '200':
+      description: Успішна автентифікація
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/auth/LoginResponse.yaml'
+    '400':
+      description: Неправильні дані запиту
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '401':
+      description: Невірний email чи пароль
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

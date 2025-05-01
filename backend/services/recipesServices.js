@@ -4,7 +4,8 @@ import paginationHelper from '../helpers/paginationHelper.js';
 import HttpError from '../helpers/HttpError.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 
-const { Recipe, Category, Area, User, Ingredient, Favorite, sequelize,  } = models;
+const { Recipe, Category, Area, User, Ingredient, Favorite, sequelize } =
+  models;
 
 /**
  * Search for recipes with filters and pagination
@@ -88,7 +89,7 @@ const getAllRecipes = async (query = {}) => {
   } catch (error) {
     // Log the error for debugging
     console.error('Error fetching recipes:', error);
-    
+
     // Re-throw the error to be handled by the controller wrapper
     throw error;
   }
@@ -99,16 +100,16 @@ const getAllRecipes = async (query = {}) => {
  * @param {number|string} recipeId - ID of the recipe to retrieve
  * @returns {Object} Recipe with detailed information
  */
-const getRecipeById = async (recipeId) => {
+const getRecipeById = async recipeId => {
   try {
     const recipe = await Recipe.findByPk(Number(recipeId), {
       include: [
         { model: Category, as: 'category' },
         { model: Area, as: 'area' },
-        { 
-          model: User, 
-          as: 'user', 
-          attributes: ['id', 'name', 'email', 'avatar'] 
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email', 'avatar'],
         },
         {
           model: Ingredient,
@@ -128,12 +129,15 @@ const getRecipeById = async (recipeId) => {
     if (error.status) {
       throw error;
     }
-    
+
     // Log original error for debugging
     console.error('Error fetching recipe by ID:', error);
-    
+
     // Convert to appropriate HTTP error
-    throw HttpError(HTTP_STATUS.INTERNAL_SERVER_ERROR, 'Failed to retrieve recipe');
+    throw HttpError(
+      HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      'Failed to retrieve recipe',
+    );
   }
 };
 
@@ -178,10 +182,257 @@ const getFavoriteRecipes = async (userId, query) => {
   return paginationHelper.paginateResponse({ count, rows }, query);
 };
 
+/**
+ * Get popular recipes based on how many users added them to favorites
+ * @param {Object} query - Query parameters for pagination
+ * @returns {Object} Popular recipes with pagination metadata
+ */
+const getPopularRecipes = async (query = {}) => {
+  const { limit, offset } = paginationHelper.getPaginationOptions(query);
+
+  try {
+    // Find recipes and count their favorites
+    const recipes = await Recipe.findAll({
+      attributes: {
+        include: [
+          [
+            sequelize.literal(
+              '(SELECT COUNT(*) FROM "Favorites" WHERE "Favorites"."recipeId" = "Recipe"."id")',
+            ),
+            'favoritesCount',
+          ],
+        ],
+      },
+      include: [
+        { model: Category, as: 'category' },
+        { model: Area, as: 'area' },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email', 'avatar'],
+        },
+      ],
+      order: [[sequelize.literal('favoritesCount'), 'DESC']],
+      limit,
+      offset,
+    });
+
+    // Get total count for pagination
+    const count = await Recipe.count();
+
+    // Format response with pagination
+    return paginationHelper.paginateResponse(
+      {
+        count,
+        rows: recipes,
+      },
+      query,
+    );
+  } catch (error) {
+    console.error('Error fetching popular recipes:', error);
+    throw error;
+  }
+};
+
+/**
+ * Create a new recipe with ingredients
+ * @param {Object} recipeData - Recipe data including ingredients
+ * @param {number} userId - ID of the user creating the recipe
+ * @param {Object} files - Uploaded image files (thumb and preview)
+ * @returns {Object} Created recipe
+ */
+const createRecipe = async (recipeData, userId, files = {}) => {
+  // Start database transaction
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { ingredients, ...recipeDetails } = recipeData;
+
+    // Set owner to current user
+    recipeDetails.owner = userId;
+
+    // Add image paths if provided
+    if (files.thumb) {
+      recipeDetails.thumb = files.thumb.path;
+    }
+    if (files.preview) {
+      recipeDetails.preview = files.preview.path;
+    }
+
+    // Create recipe
+    const recipe = await Recipe.create(recipeDetails, { transaction });
+
+    // Add ingredients to recipe
+    if (ingredients && ingredients.length > 0) {
+      const recipeIngredients = ingredients.map(ingredient => ({
+        recipeId: recipe.id,
+        ingredientId: ingredient.ingredientId,
+        measure: ingredient.measure || '',
+      }));
+
+      await RecipeIngredient.bulkCreate(recipeIngredients, { transaction });
+    }
+
+    // Commit transaction
+    await transaction.commit();
+
+    // Return created recipe with all details
+    return await getRecipeById(recipe.id);
+  } catch (error) {
+    // Rollback transaction if error occurs
+    await transaction.rollback();
+    console.error('Error creating recipe:', error);
+
+    // Handle validation errors
+    if (error.name === 'SequelizeValidationError') {
+      throw HttpError(HTTP_STATUS.BAD_REQUEST, error.message);
+    }
+
+    // Handle unique constraint errors
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      throw HttpError(
+        HTTP_STATUS.CONFLICT,
+        'Recipe with this title already exists',
+      );
+    }
+
+    // Re-throw other errors
+    throw error;
+  }
+};
+
+/**
+ * Delete a recipe after verifying ownership
+ * @param {number} recipeId - ID of the recipe to delete
+ * @param {number} userId - ID of the user attempting to delete
+ * @returns {Object} Success message
+ */
+const deleteRecipe = async (recipeId, userId) => {
+  // Find the recipe and check if it exists
+  const recipe = await Recipe.findByPk(recipeId);
+
+  if (!recipe) {
+    throw HttpError(HTTP_STATUS.NOT_FOUND, 'Recipe not found');
+  }
+
+  // Check if the user is the owner of the recipe
+  if (recipe.owner !== userId) {
+    throw HttpError(
+      HTTP_STATUS.FORBIDDEN,
+      'You can only delete your own recipes',
+    );
+  }
+
+  // Start a transaction
+  const transaction = await sequelize.transaction();
+
+  try {
+    // First delete associated records in RecipeIngredient
+    await RecipeIngredient.destroy({
+      where: { recipeId },
+      transaction,
+    });
+
+    // Then delete the recipe itself
+    await recipe.destroy({ transaction });
+
+    // Commit the transaction
+    await transaction.commit();
+
+    return { message: 'Recipe deleted successfully' };
+  } catch (error) {
+    // Rollback in case of error
+    await transaction.rollback();
+    console.error('Error deleting recipe:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get recipes created by the user
+ * @param {number} userId - ID of the user
+ * @param {Object} query - Query parameters for pagination and filtering
+ * @returns {Object} User's recipes with pagination metadata
+ */
+const getUserRecipes = async (userId, query = {}) => {
+  const { title, category, area, time, sort } = query;
+
+  // Prepare filter conditions - always filter by owner
+  const whereConditions = {
+    owner: userId,
+  };
+
+  const includeOptions = [
+    { model: Category, as: 'category' },
+    { model: Area, as: 'area' },
+    {
+      model: Ingredient,
+      as: 'ingredients',
+      through: { attributes: ['measure'] },
+    },
+  ];
+
+  // Add title filter if provided
+  if (title) {
+    whereConditions.title = { [Op.iLike]: `%${title}%` };
+  }
+
+  // Add category filter if provided
+  if (category) {
+    whereConditions.categoryId = category;
+  }
+
+  // Add area filter if provided
+  if (area) {
+    whereConditions.areaId = area;
+  }
+
+  // Add time filter if provided
+  if (time) {
+    whereConditions.time = { [Op.lte]: time };
+  }
+
+  // Handle sorting
+  const order = [];
+  if (sort) {
+    const sortDirection = sort.startsWith('-') ? 'DESC' : 'ASC';
+    const sortField = sort.startsWith('-') ? sort.substring(1) : sort;
+    order.push([sortField, sortDirection]);
+  } else {
+    // Default sort by createdAt descending (newest first)
+    order.push(['createdAt', 'DESC']);
+  }
+
+  // Get pagination options
+  const { limit, offset } = paginationHelper.getPaginationOptions(query);
+
+  try {
+    // Get recipes with filters and pagination
+    const result = await Recipe.findAndCountAll({
+      where: whereConditions,
+      include: includeOptions,
+      order,
+      limit,
+      offset,
+      distinct: true,
+    });
+
+    // Format response with pagination metadata
+    return paginationHelper.paginateResponse(result, query);
+  } catch (error) {
+    console.error('Error fetching user recipes:', error);
+    throw error;
+  }
+};
+
 export default {
-   getRecipeById,
-   getAllRecipes,
-   addRecipeToFavorites,
-   removeRecipeFromFavorites,
-   getFavoriteRecipes,
+  getRecipeById,
+  getAllRecipes,
+  addRecipeToFavorites,
+  removeRecipeFromFavorites,
+  getFavoriteRecipes,
+  getPopularRecipes,
+  createRecipe,
+  deleteRecipe,
+  getUserRecipes,
 };

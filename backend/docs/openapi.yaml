@@ -1,23 +1,49 @@
+# docs/openapi.yaml
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Students app
+  title: Foodies API
+  description: API для кулінарних рецептів та соціальної взаємодії користувачів
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: >
-    This is a documentation of students app
-tags:
-  - name: Students
-    description: Operations about users.
-  - name: Auth
-    description: Auth operations.
+    name: ISC
+    url: https://opensource.org/licenses/ISC
+
 servers:
-  - url: http://localhost:3000
-  - url: https://example.com/api/v1
-paths: {}
+  - url: /api
+    description: API сервер
+
+tags:
+  - name: Auth
+    description: Авторизація та автентифікація
+  - name: Users
+    description: Операції з користувачами
+  - name: Recipes
+    description: Операції з рецептами
+  - name: Categories
+    description: Категорії рецептів
+  - name: Areas
+    description: Регіони походження страв
+  - name: Ingredients
+    description: Інгредієнти для рецептів
+  - name: Testimonials
+    description: Відгуки користувачів
+
+# Оголошення компонентів (схеми, запити, відповіді)
 components:
   securitySchemes:
     bearerAuth:
-      type: http
-      scheme: bearer
+      $ref: './components/securitySchemes/bearerAuth.yaml'
+
+# Шляхи API (ендпоінти)
+paths:
+  # Посилання на шляхи Auth
+  /auth/register:
+    $ref: './paths/auth/register.yaml'
+  /auth/login:
+    $ref: './paths/auth/login.yaml'
+  /auth/logout:
+    $ref: './paths/auth/logout.yaml'
+  /auth/refresh:
+    $ref: './paths/auth/refresh.yaml'
+
+  # Інші шляхи будуть додані пізніше
