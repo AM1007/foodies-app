@@ -36,7 +36,6 @@
 .userStatItem {
   margin: 4px 0;
   font-size: 14px;
-  color: var(--text-color, #333);
 }
 
 @media (min-width: 768px) {
