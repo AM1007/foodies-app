@@ -1,7 +1,7 @@
 import RecipePreview from '../../components/RecipePreview/RecipePreview';
 import React from 'react';
 import Button from '../../components/Button/Button';
-import { useModal } from '../../context/ModalContext';
+import { useModal } from '../../hooks/useModal';
 
 const Profile = () => {
   const { openModal } = useModal();

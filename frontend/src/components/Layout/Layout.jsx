@@ -7,10 +7,7 @@ import Footer from '../sections/Footer/Footer';
 import SignUpModal from '../SignUpModal/SignUpModal';
 import SignInModal from '../SignInModal/SignInModal';
 import LogOutModal from '../LogOutModal/LogOutModal';
-import { useModal } from '../../context/ModalContext';
-
-import Button from '../Button/Button';
-// import Modal from '../Modal/Modal';
+import { useModal } from '../../hooks/useModal';
 
 const Layout = () => {
   const { activeModal, closeModal } = useModal();
