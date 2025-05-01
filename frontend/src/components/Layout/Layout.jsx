@@ -11,6 +11,7 @@ import { useModal } from '../../hooks/useModal';
 
 const Layout = () => {
   const { activeModal, closeModal } = useModal();
+  console.log('activeModal =', activeModal);
 
   return (
     <>
