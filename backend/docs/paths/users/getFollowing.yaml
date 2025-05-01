@@ -1,0 +1,22 @@
+get:
+  tags:
+    - Users
+  summary: Отримання списку підписок
+  description:
+    Приватний ендпоінт для отримання списку користувачів, на яких підписаний
+    поточний користувач.
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Успішний запит, повертає список підписок
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/users/FollowingResponse.yaml'
+    '401':
+      description: Неавторизований доступ
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

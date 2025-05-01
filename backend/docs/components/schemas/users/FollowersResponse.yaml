@@ -1,0 +1,28 @@
+type: object
+properties:
+  response:
+    type: array
+    description: Масив користувачів, які підписані на поточного користувача
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Унікальний ідентифікатор користувача
+          example: 2
+        name:
+          type: string
+          description: Ім'я користувача
+          example: 'Олена Коваленко'
+        email:
+          type: string
+          format: email
+          description: Email користувача
+          example: 'olena@example.com'
+        avatar:
+          type: string
+          format: uri
+          description: URL аватару користувача
+          example: 'https://example.com/avatars/olena.jpg'
+required:
+  - response
