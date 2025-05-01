@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Recipe = lazy(() => import('./pages/Recipe/Recipe'));
+const AddRecipe = lazy(() => import('./pages/AddRecipe/AddRecipe'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
@@ -17,10 +18,18 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route
-            path="/recipe/add"
+            path="/recipe"
             element={
               <PrivateRoute>
                 <Recipe />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/recipe/add"
+            element={
+              <PrivateRoute>
+                <AddRecipe />
               </PrivateRoute>
             }
           />
