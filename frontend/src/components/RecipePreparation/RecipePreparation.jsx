@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './RecipePreparation.module.css';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 // import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 

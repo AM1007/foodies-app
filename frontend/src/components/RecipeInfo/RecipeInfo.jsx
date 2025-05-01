@@ -1,7 +1,7 @@
 import React from 'react';
-import RecipeMainInfo from './RecipeInfo/RecipeMainInfo';
-import RecipeIngredients from './RecipeInfo/RecipeIngredients';
-import RecipePreparation from './RecipeInfo/RecipePreparation';
+import RecipeMainInfo from '../RecipeMainInfo/RecipeMainInfo';
+import RecipeIngredients from '../RecipeIngredients/RecipeIngredients';
+import RecipePreparation from '../RecipePreparation/RecipePreparation';
 
 const RecipeInfo = ({ recipe, favoriteRecipes }) => {
   const isFavorite = favoriteRecipes.some((r) => r._id === recipe._id);

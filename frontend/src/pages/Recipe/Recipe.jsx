@@ -125,8 +125,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeDetails, fetchPopularRecipes } from '../../redux/recipes/recipesSlice';
 import Loader from '../../components/Loader/Loader';
 import PathInfo from '../../components/ui/PathInfo/PathInfo';
-import RecipeInfo from '../../components/RecipePage/RecipeInfo';
-import PopularRecipes from '../../components/RecipePage/PopularRecipes';
+import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
+import PopularRecipes from '../../components/PopularRecipes/PopularRecipes';
 
 const RecipePage = () => {
   const { id } = useParams();
