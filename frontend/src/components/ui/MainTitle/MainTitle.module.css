@@ -1,8 +1,6 @@
 .title {
+  color: var(--black);
   font-size: 28px;
   font-weight: 800;
-  line-height: 1.14;
-  padding-top: 32px;
-  padding-bottom: 16px;
   text-transform: uppercase;
 }
