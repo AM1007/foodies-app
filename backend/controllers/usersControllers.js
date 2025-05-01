@@ -1,7 +1,7 @@
 import usersServices from '../services/usersServices.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 import HttpError from '../helpers/HttpError.js';
-import { HTTP_STATUS } from '../constants/auth.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 
 const getUserInfoController = async (req, res) => {
   res.status(HTTP_STATUS.OK).json({ user: req.user });

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import gravatar from 'gravatar';
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
-import { HTTP_STATUS } from '../constants/auth.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 import jwtHelpers from '../helpers/jwt.js';
 import { token } from 'morgan';
 

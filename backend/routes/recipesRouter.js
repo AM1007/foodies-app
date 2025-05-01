@@ -11,7 +11,6 @@ const router = express.Router();
  * @desc Search recipes with filters and pagination
  * @access Public
  */
-router.get('/', recipesControllers.searchRecipes);
 router.get('/', validateQuery(recipeSchemas.recipeQuerySchema), recipesControllers.searchRecipes);
 /**
  * @route GET /api/recipes/:id

@@ -1,5 +1,5 @@
 import recipesServices from '../services/recipesServices.js';
-import { HTTP_STATUS } from '../constants/auth.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
 
