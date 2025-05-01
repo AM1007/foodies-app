@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './RecipeMainInfo.module.css';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const RecipeMainInfo = ({ preview, title, category, description, author }) => {
