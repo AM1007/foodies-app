@@ -1,0 +1,14 @@
+type: object
+properties:
+  avatar:
+    type: string
+    format: uri
+    description: URL нового аватару користувача
+    example: 'https://example.com/avatars/ivan_new.jpg'
+  message:
+    type: string
+    description: Повідомлення про успішне оновлення аватару
+    example: 'Аватар було успішно оновлено'
+required:
+  - avatar
+  - message

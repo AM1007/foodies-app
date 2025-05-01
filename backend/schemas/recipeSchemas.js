@@ -56,7 +56,14 @@ const recipeQuerySchema = Joi.object({
   area: Joi.number(), // Area ID
   ingredient: Joi.number(), // Ingredient ID
   time: Joi.number(), // Cooking time (less than or equal)
-  sort: Joi.string().valid('title', 'time', 'createdAt', '-title', '-time', '-createdAt'),
+  sort: Joi.string().valid(
+    'title',
+    'time',
+    'createdAt',
+    '-title',
+    '-time',
+    '-createdAt',
+  ),
 });
 
 export default {

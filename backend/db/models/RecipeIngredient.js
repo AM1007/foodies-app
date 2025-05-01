@@ -8,11 +8,23 @@ const RecipeIngredient = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: 'Recipes',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     ingredientId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: 'Ingredients',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     },
     measure: {
       type: DataTypes.STRING,
@@ -25,5 +37,5 @@ const RecipeIngredient = sequelize.define(
   },
 );
 
-// RecipeIngredient.sync()
+// RecipeIngredient.sync();
 export default RecipeIngredient;

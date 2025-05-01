@@ -1,0 +1,20 @@
+get:
+  tags:
+    - Users
+  summary: Отримання списку всіх користувачів
+  description: Отримання списку всіх зареєстрованих користувачів системи.
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Успішний запит, повертає список користувачів
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/users/UsersList.yaml'
+    '401':
+      description: Неавторизований доступ
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

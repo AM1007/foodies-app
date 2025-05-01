@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Recipe = lazy(() => import('./pages/Recipe/Recipe'));
-const AddRecipe = lazy(() => import('./pages/AddRecipe/AddRecipe'));
+const AddRecipe = lazy(() => import('./pages/AddRecipe/AddRecipePage'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
