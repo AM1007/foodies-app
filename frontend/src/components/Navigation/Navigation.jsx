@@ -26,7 +26,7 @@ const Navigation = ({ isLightTheme }) => {
             </NavLink>
           </li>
           <li className={styles.navItem}>
-            <NavLink className={generateActiveClass} to="/add">
+            <NavLink className={generateActiveClass} to="recipe/add">
               Add recipe
             </NavLink>
           </li>
