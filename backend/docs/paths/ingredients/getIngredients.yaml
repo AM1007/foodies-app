@@ -1,0 +1,16 @@
+get:
+  tags:
+    - Ingredients
+  summary: Отримання списку інгредієнтів
+  description:
+    Публічний ендпоінт для отримання повного списку інгредієнтів, доступних в
+    системі
+  responses:
+    '200':
+      description: Успішне отримання списку інгредієнтів
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../components/schemas/ingredients/Ingredient.yaml'

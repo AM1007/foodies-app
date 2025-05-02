@@ -1,4 +1,3 @@
-# docs/openapi.yaml
 openapi: 3.1.0
 info:
   version: 1.0.0
@@ -33,10 +32,65 @@ components:
   securitySchemes:
     bearerAuth:
       $ref: './components/securitySchemes/bearerAuth.yaml'
+  schemas:
+    Error:
+      $ref: './components/schemas/Error.yaml'
+    # Auth schemas
+    LoginRequest:
+      $ref: './components/schemas/auth/LoginRequest.yaml'
+    LoginResponse:
+      $ref: './components/schemas/auth/LoginResponse.yaml'
+    RegisterRequest:
+      $ref: './components/schemas/auth/RegisterRequest.yaml'
+    RegisterResponse:
+      $ref: './components/schemas/auth/RegisterResponse.yaml'
+    RefreshTokenRequest:
+      $ref: './components/schemas/auth/RefreshTokenRequest.yaml'
+    RefreshTokenResponse:
+      $ref: './components/schemas/auth/RefreshTokenResponse.yaml'
+    # User schemas
+    UserProfile:
+      $ref: './components/schemas/users/UserProfile.yaml'
+    UserDetailedInfo:
+      $ref: './components/schemas/users/UserDetailedInfo.yaml'
+    UsersList:
+      $ref: './components/schemas/users/UsersList.yaml'
+    UpdateAvatarRequest:
+      $ref: './components/schemas/users/UpdateAvatarRequest.yaml'
+    UpdateAvatarResponse:
+      $ref: './components/schemas/users/UpdateAvatarResponse.yaml'
+    FollowResponse:
+      $ref: './components/schemas/users/FollowResponse.yaml'
+    FollowersResponse:
+      $ref: './components/schemas/users/FollowersResponse.yaml'
+    FollowingResponse:
+      $ref: './components/schemas/users/FollowingResponse.yaml'
+    # Recipe schemas
+    RecipePreview:
+      $ref: './components/schemas/recipes/RecipePreview.yaml'
+    RecipeDetail:
+      $ref: './components/schemas/recipes/RecipeDetail.yaml'
+    CreateRecipeRequest:
+      $ref: './components/schemas/recipes/CreateRecipeRequest.yaml'
+    # Category schemas
+    Category:
+      $ref: './components/schemas/categories/Category.yaml'
+    # Area schemas
+    Area:
+      $ref: './components/schemas/areas/Area.yaml'
+    # Ingredient schemas
+    Ingredient:
+      $ref: './components/schemas/ingredients/Ingredient.yaml'
+    # Testimonial schemas
+    Testimonial:
+      $ref: './components/schemas/testimonials/Testimonial.yaml'
+    # Common schemas
+    Pagination:
+      $ref: './components/schemas/Pagination.yaml'
 
 # Шляхи API (ендпоінти)
 paths:
-  # Посилання на шляхи Auth
+  # Шляхи Auth
   /auth/register:
     $ref: './paths/auth/register.yaml'
   /auth/login:
@@ -46,4 +100,501 @@ paths:
   /auth/refresh:
     $ref: './paths/auth/refresh.yaml'
 
-  # Інші шляхи будуть додані пізніше
+  # Шляхи Users
+  /users/current:
+    $ref: './paths/users/getCurrentUser.yaml'
+  /users/{id}:
+    $ref: './paths/users/getUserById.yaml'
+  /users/avatar:
+    $ref: './paths/users/updateAvatar.yaml'
+  /users:
+    $ref: './paths/users/getAllUsers.yaml'
+  /users/{id}/follow:
+    $ref: './paths/users/followUser.yaml'
+  /users/{id}/unfollow:
+    $ref: './paths/users/unfollowUser.yaml'
+  /users/followers:
+    $ref: './paths/users/getFollowers.yaml'
+  /users/following:
+    $ref: './paths/users/getFollowing.yaml'
+
+  # Шляхи Categories
+  /categories:
+    get:
+      $ref: './paths/categories/getCategories.yaml'
+
+  # Шляхи Areas
+  /areas:
+    get:
+      $ref: './paths/areas/getAreas.yaml'
+
+  # Шляхи Ingredients
+  /ingredients:
+    get:
+      $ref: './paths/ingredients/getIngredients.yaml'
+
+  # Шляхи Testimonials
+  /testimonials:
+    get:
+      $ref: './paths/testimonials/getTestimonials.yaml'
+
+  # Шляхи Recipes
+  /recipes:
+    get:
+      tags:
+        - Recipes
+      summary: Пошук рецептів
+      description:
+        Пошук рецептів за категорією, інгредієнтом, регіоном походження та
+        іншими фільтрами з підтримкою пагінації
+      parameters:
+        - name: page
+          in: query
+          description: Номер сторінки для пагінації
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Кількість результатів на сторінці
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+        - name: title
+          in: query
+          description: Пошук за назвою рецепта
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: ID категорії рецепта
+          schema:
+            type: integer
+        - name: area
+          in: query
+          description: ID регіону походження рецепта
+          schema:
+            type: integer
+        - name: ingredient
+          in: query
+          description: ID інгредієнта
+          schema:
+            type: integer
+        - name: time
+          in: query
+          description: Максимальний час приготування в хвилинах
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description:
+            Поле для сортування (префікс - для сортування за спаданням)
+          schema:
+            type: string
+            enum: [title, time, createdAt, -title, -time, -createdAt]
+      responses:
+        '200':
+          description: Успішний пошук рецептів
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecipePreview'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          description: Неправильні параметри запиту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Recipes
+      summary: Створення нового рецепту
+      description:
+        Приватний ендпоінт для створення власного рецепту авторизованим
+        користувачем
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateRecipeRequest'
+      responses:
+        '201':
+          description: Рецепт успішно створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeDetail'
+        '400':
+          description: Неправильні дані запиту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Помилка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/{id}:
+    get:
+      tags:
+        - Recipes
+      summary: Отримання детальної інформації про рецепт
+      description:
+        Отримує повну інформацію про рецепт за його ідентифікатором, включаючи
+        інгредієнти та інструкції
+      parameters:
+        - name: id
+          in: path
+          description: Ідентифікатор рецепта
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успішне отримання рецепта
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeDetail'
+        '404':
+          description: Рецепт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Recipes
+      summary: Видалення рецепту
+      description:
+        Приватний ендпоінт для видалення власного рецепту авторизованим
+        користувачем
+      parameters:
+        - name: id
+          in: path
+          description: Ідентифікатор рецепту для видалення
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Рецепт успішно видалено
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Повідомлення про успішне видалення
+                    example: 'Рецепт успішно видалено'
+                  id:
+                    type: integer
+                    description: Ідентифікатор видаленого рецепту
+                    example: 42
+                required:
+                  - message
+                  - id
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Заборонено (спроба видалити не свій рецепт)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Рецепт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/popular:
+    get:
+      tags:
+        - Recipes
+      summary: Отримання популярних рецептів
+      description:
+        Отримання списку рецептів, відсортованих за популярністю (кількістю
+        користувачів, які додали рецепт до улюблених)
+      parameters:
+        - name: page
+          in: query
+          description: Номер сторінки для пагінації
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Кількість результатів на сторінці
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Успішне отримання списку популярних рецептів
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecipePreview'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          description: Неправильні параметри запиту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/own:
+    get:
+      tags:
+        - Recipes
+      summary: Отримання власних рецептів
+      description:
+        Приватний ендпоінт для отримання списку рецептів, створених
+        авторизованим користувачем
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Номер сторінки для пагінації
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Кількість результатів на сторінці
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+        - name: sort
+          in: query
+          description:
+            Поле для сортування (префікс - для сортування за спаданням)
+          schema:
+            type: string
+            enum: [title, time, createdAt, -title, -time, -createdAt]
+      responses:
+        '200':
+          description: Успішне отримання власних рецептів
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecipePreview'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/{id}/favorite:
+    post:
+      tags:
+        - Recipes
+      summary: Додавання рецепту до улюблених
+      description:
+        Приватний ендпоінт для додавання рецепту до списку улюблених
+        авторизованого користувача
+      parameters:
+        - name: id
+          in: path
+          description: Ідентифікатор рецепту для додавання в улюблені
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Рецепт успішно додано до улюблених
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Повідомлення про успішне додавання
+                    example: 'Рецепт успішно додано до улюблених'
+                  recipeId:
+                    type: integer
+                    description: Ідентифікатор доданого рецепту
+                    example: 42
+                required:
+                  - message
+                  - recipeId
+        '400':
+          description: Неправильний запит (наприклад, рецепт вже в улюблених)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Рецепт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Recipes
+      summary: Видалення рецепту з улюблених
+      description:
+        Приватний ендпоінт для видалення рецепту зі списку улюблених
+        авторизованого користувача
+      parameters:
+        - name: id
+          in: path
+          description: Ідентифікатор рецепту для видалення з улюблених
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Рецепт успішно видалено з улюблених
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Повідомлення про успішне видалення
+                    example: 'Рецепт успішно видалено з улюблених'
+                  recipeId:
+                    type: integer
+                    description: Ідентифікатор видаленого з улюблених рецепту
+                    example: 42
+                required:
+                  - message
+                  - recipeId
+        '400':
+          description: Неправильний запит (наприклад, рецепт не був у улюблених)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Рецепт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recipes/favorites:
+    get:
+      tags:
+        - Recipes
+      summary: Отримання улюблених рецептів
+      description:
+        Приватний ендпоінт для отримання списку рецептів, доданих до улюблених
+        авторизованим користувачем
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Номер сторінки для пагінації
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Кількість результатів на сторінці
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+        - name: sort
+          in: query
+          description:
+            Поле для сортування (префікс - для сортування за спаданням)
+          schema:
+            type: string
+            enum: [title, time, createdAt, -title, -time, -createdAt]
+      responses:
+        '200':
+          description: Успішне отримання улюблених рецептів
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecipePreview'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Неавторизований доступ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

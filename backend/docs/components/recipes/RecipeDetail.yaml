@@ -1,0 +1,109 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Унікальний ідентифікатор рецепта
+    example: 1
+  title:
+    type: string
+    description: Назва рецепта
+    example: 'Борщ український'
+  description:
+    type: string
+    description: Опис рецепта
+    example: 'Традиційний український борщ з пампушками'
+  instructions:
+    type: string
+    description: Детальні інструкції з приготування
+    example: '1. Зваріть бульйон. 2. Підготуйте овочі. 3. Додайте буряк...'
+  time:
+    type: integer
+    description: Час приготування в хвилинах
+    example: 120
+  thumb:
+    type: string
+    format: uri
+    description: URL зображення-мініатюри рецепта
+    example: 'https://example.com/images/borsch_thumb.jpg'
+  preview:
+    type: string
+    format: uri
+    description: URL повнорозмірного зображення рецепта
+    example: 'https://example.com/images/borsch_preview.jpg'
+  category:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 3
+      name:
+        type: string
+        example: 'Супи'
+  area:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: 'Українська'
+  ingredients:
+    type: array
+    description: Список інгредієнтів
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Ідентифікатор інгредієнта
+          example: 12
+        name:
+          type: string
+          description: Назва інгредієнта
+          example: 'Буряк'
+        measure:
+          type: string
+          description: Кількість інгредієнта для рецепта
+          example: '300г'
+        img:
+          type: string
+          format: uri
+          description: URL зображення інгредієнта
+          example: 'https://example.com/ingredients/beet.jpg'
+  owner:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Ідентифікатор автора рецепта
+        example: 42
+      name:
+        type: string
+        description: Ім'я автора
+        example: 'Марія Іваненко'
+      avatar:
+        type: string
+        format: uri
+        description: URL аватара автора
+        example: 'https://example.com/avatars/maria.jpg'
+  favorites:
+    type: integer
+    description: Кількість користувачів, які додали рецепт в улюблені
+    example: 152
+  isFavorite:
+    type: boolean
+    description:
+      Чи додано рецепт до улюблених поточним користувачем (наявне тільки для
+      авторизованих користувачів)
+    example: true
+required:
+  - id
+  - title
+  - instructions
+  - time
+  - thumb
+  - category
+  - area
+  - ingredients
+  - owner

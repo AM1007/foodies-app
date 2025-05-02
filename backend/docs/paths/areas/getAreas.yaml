@@ -1,0 +1,16 @@
+get:
+  tags:
+    - Areas
+  summary: Отримання списку регіонів походження страв
+  description:
+    Публічний ендпоінт для отримання повного списку регіонів (кухонь), доступних
+    в системі
+  responses:
+    '200':
+      description: Успішне отримання списку регіонів
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../components/schemas/areas/Area.yaml'

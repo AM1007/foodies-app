@@ -1,0 +1,27 @@
+get:
+  tags:
+    - Recipes
+  summary: Отримання детальної інформації про рецепт
+  description:
+    Отримує повну інформацію про рецепт за його ідентифікатором, включаючи
+    інгредієнти та інструкції
+  parameters:
+    - name: id
+      in: path
+      description: Ідентифікатор рецепта
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Успішне отримання рецепта
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/recipes/RecipeDetail.yaml'
+    '404':
+      description: Рецепт не знайдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

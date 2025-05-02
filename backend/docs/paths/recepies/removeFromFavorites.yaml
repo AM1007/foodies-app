@@ -1,0 +1,53 @@
+delete:
+  tags:
+    - Recipes
+  summary: Видалення рецепту з улюблених
+  description:
+    Приватний ендпоінт для видалення рецепту зі списку улюблених авторизованого
+    користувача
+  parameters:
+    - name: id
+      in: path
+      description: Ідентифікатор рецепту для видалення з улюблених
+      required: true
+      schema:
+        type: integer
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Рецепт успішно видалено з улюблених
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Повідомлення про успішне видалення
+                example: 'Рецепт успішно видалено з улюблених'
+              recipeId:
+                type: integer
+                description: Ідентифікатор видаленого з улюблених рецепту
+                example: 42
+            required:
+              - message
+              - recipeId
+    '400':
+      description: Неправильний запит (наприклад, рецепт не був у улюблених)
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '401':
+      description: Неавторизований доступ
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '404':
+      description: Рецепт не знайдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

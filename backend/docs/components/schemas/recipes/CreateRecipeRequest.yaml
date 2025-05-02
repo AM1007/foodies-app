@@ -1,0 +1,59 @@
+type: object
+properties:
+  title:
+    type: string
+    description: Назва рецепту
+    example: 'Ризото з грибами'
+  description:
+    type: string
+    description: Опис рецепту
+    example: 'Класичне італійське ризото з білими грибами та пармезаном'
+  instructions:
+    type: string
+    description: Детальна інструкція з приготування
+    example:
+      '1. Приготуйте грибний бульйон. 2. Обсмажте гриби окремо. 3. У глибокій
+      сковороді розігрійте оливкову олію...'
+  time:
+    type: integer
+    description: Час приготування в хвилинах
+    example: 45
+  categoryId:
+    type: integer
+    description: Ідентифікатор категорії рецепту
+    example: 5
+  areaId:
+    type: integer
+    description: Ідентифікатор регіону походження страви
+    example: 2
+  ingredients:
+    type: array
+    description: Масив інгредієнтів для рецепту
+    items:
+      type: object
+      properties:
+        ingredientId:
+          type: integer
+          description: Ідентифікатор інгредієнта
+          example: 23
+        measure:
+          type: string
+          description: Кількість інгредієнта для рецепту
+          example: '200г'
+      required:
+        - ingredientId
+  thumb:
+    type: string
+    format: binary
+    description: Файл зображення-мініатюри рецепту (опціонально)
+  preview:
+    type: string
+    format: binary
+    description: Файл повнорозмірного зображення рецепту (опціонально)
+required:
+  - title
+  - instructions
+  - time
+  - categoryId
+  - areaId
+  - ingredients

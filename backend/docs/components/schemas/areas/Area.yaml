@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Унікальний ідентифікатор регіону
+    example: 1
+  name:
+    type: string
+    description: Назва регіону/кухні
+    example: 'Українська'
+required:
+  - id
+  - name
