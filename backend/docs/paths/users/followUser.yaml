@@ -4,6 +4,7 @@ post:
   summary: Підписка на користувача
   description:
     Приватний ендпоінт для підписки поточного користувача на іншого користувача.
+  operationId: followUser
   parameters:
     - name: id
       in: path

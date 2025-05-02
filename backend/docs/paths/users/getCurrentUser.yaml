@@ -5,6 +5,7 @@ get:
   description:
     Приватний ендпоінт, який повертає інформацію про поточного авторизованого
     користувача.
+  operationId: getCurrentUser
   security:
     - bearerAuth: []
   responses:

@@ -5,6 +5,7 @@ patch:
   description:
     Приватний ендпоінт для оновлення аватару поточного авторизованого
     користувача.
+  operationId: updateAvatar
   security:
     - bearerAuth: []
   requestBody:

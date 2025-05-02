@@ -35,6 +35,4 @@ const Follower = sequelize.define(
   },
 );
 
-// Follower.sync({ force: true });
-
 export default Follower;

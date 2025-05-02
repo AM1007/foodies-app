@@ -45,17 +45,17 @@ const updateRecipeSchema = Joi.object({
   ingredients: Joi.array().items(ingredientSchema).min(1),
   thumb: Joi.string().allow('', null),
   preview: Joi.string().allow('', null),
-}).min(1); // At least one field must be updated
+}).min(1);
 
 // Schema for recipe search/filtering
 const recipeQuerySchema = Joi.object({
   page: Joi.number().min(1).default(1),
   limit: Joi.number().min(1).max(100).default(10),
   title: Joi.string(),
-  category: Joi.number(), // Category ID
-  area: Joi.number(), // Area ID
-  ingredient: Joi.number(), // Ingredient ID
-  time: Joi.number(), // Cooking time (less than or equal)
+  category: Joi.number(),
+  area: Joi.number(),
+  ingredient: Joi.number(),
+  time: Joi.number(),
   sort: Joi.string().valid(
     'title',
     'time',

@@ -41,8 +41,6 @@ const registerUser = async userData => {
   };
 };
 
-// In authServices.js, modify the signInUser function:
-
 const signInUser = async userData => {
   const { email, password } = userData;
   const user = await findUser({ email });
