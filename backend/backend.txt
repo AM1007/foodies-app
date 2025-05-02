@@ -1,4 +1,4 @@
-  ├── .env.example
+   ├── .env.example
     ├── .gitignore
     ├── README.md
     ├── app.js
@@ -34,8 +34,44 @@
     │   ├── validateBody.js
     │   └── validateQuery.js
     ├── docs
+    │   ├── components
+    │   │   ├── schemas
+    │   │   │   ├── Error.yaml
+    │   │   │   ├── auth
+    │   │   │   │   ├── LoginRequest.yaml
+    │   │   │   │   ├── LoginResponse.yaml
+    │   │   │   │   ├── RefreshTokenRequest.yaml
+    │   │   │   │   ├── RefreshTokenResponse.yaml
+    │   │   │   │   ├── RegisterRequest.yaml
+    │   │   │   │   └── RegisterResponse.yaml
+    │   │   │   └── users
+    │   │   │   │   ├── FollowResponse.yaml
+    │   │   │   │   ├── FollowersResponse.yaml
+    │   │   │   │   ├── FollowingResponse.yaml
+    │   │   │   │   ├── UpdateAvatarRequest.yaml
+    │   │   │   │   ├── UpdateAvatarResponse.yaml
+    │   │   │   │   ├── UserDetailedInfo.yaml
+    │   │   │   │   ├── UserProfile.yaml
+    │   │   │   │   └── UsersList.yaml
+    │   │   └── securitySchemes
+    │   │   │   └── bearerAuth.yaml
     │   ├── index.html
-    │   └── openapi.yaml
+    │   ├── openapi.yaml
+    │   └── paths
+    │   │   ├── auth
+    │   │       ├── login.yaml
+    │   │       ├── logout.yaml
+    │   │       ├── refresh.yaml
+    │   │       └── register.yaml
+    │   │   └── users
+    │   │       ├── followUser.yaml
+    │   │       ├── getAllUsers.yaml
+    │   │       ├── getCurrentUser.yaml
+    │   │       ├── getFollowers.yaml
+    │   │       ├── getFollowing.yaml
+    │   │       ├── getUserById.yaml
+    │   │       ├── unfollowUser.yaml
+    │   │       └── updateAvatar.yaml
     ├── helpers
     │   ├── HttpError.js
     │   ├── createEmailTemplates.js

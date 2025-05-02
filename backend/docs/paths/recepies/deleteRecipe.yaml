@@ -1,0 +1,52 @@
+delete:
+  tags:
+    - Recipes
+  summary: Видалення рецепту
+  description:
+    Приватний ендпоінт для видалення власного рецепту авторизованим користувачем
+  parameters:
+    - name: id
+      in: path
+      description: Ідентифікатор рецепту для видалення
+      required: true
+      schema:
+        type: integer
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Рецепт успішно видалено
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Повідомлення про успішне видалення
+                example: 'Рецепт успішно видалено'
+              id:
+                type: integer
+                description: Ідентифікатор видаленого рецепту
+                example: 42
+            required:
+              - message
+              - id
+    '401':
+      description: Неавторизований доступ
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '403':
+      description: Заборонено (спроба видалити не свій рецепт)
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'
+    '404':
+      description: Рецепт не знайдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Error.yaml'

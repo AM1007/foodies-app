@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Унікальний ідентифікатор відгуку
+    example: 1
+  testimonial:
+    type: string
+    description: Текст відгуку
+    example:
+      'Foodies - найкращий сайт рецептів, який я знайшов! Чудовий інтерфейс і
+      різноманітні рецепти на будь-який смак.'
+  owner:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Ідентифікатор автора відгуку
+        example: 42
+      name:
+        type: string
+        description: Ім'я автора відгуку
+        example: 'Марія Іваненко'
+      avatar:
+        type: string
+        format: uri
+        description: URL аватара автора
+        example: 'https://example.com/avatars/maria.jpg'
+required:
+  - id
+  - testimonial
+  - owner

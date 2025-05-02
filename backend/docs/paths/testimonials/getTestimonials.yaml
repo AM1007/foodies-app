@@ -1,0 +1,15 @@
+get:
+  tags:
+    - Testimonials
+  summary: Отримання списку відгуків
+  description:
+    Публічний ендпоінт для отримання списку відгуків користувачів про платформу
+  responses:
+    '200':
+      description: Успішне отримання списку відгуків
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../components/schemas/testimonials/Testimonial.yaml'

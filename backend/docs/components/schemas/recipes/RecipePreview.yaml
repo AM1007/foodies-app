@@ -1,0 +1,46 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Унікальний ідентифікатор рецепта
+    example: 1
+  title:
+    type: string
+    description: Назва рецепта
+    example: 'Борщ український'
+  description:
+    type: string
+    description: Короткий опис рецепта
+    example: 'Традиційний український борщ з пампушками'
+  time:
+    type: integer
+    description: Час приготування в хвилинах
+    example: 120
+  thumb:
+    type: string
+    format: uri
+    description: URL мініатюри рецепта
+    example: 'https://example.com/images/borsch_thumb.jpg'
+  category:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 3
+      name:
+        type: string
+        example: 'Супи'
+  area:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: 'Українська'
+required:
+  - id
+  - title
+  - time
+  - thumb
