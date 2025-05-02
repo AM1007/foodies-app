@@ -5,6 +5,9 @@
 This document provides detailed information about the API endpoints available in
 the Foodies application.
 
+Документація на віддаленому сервері доступна за адресою
+[https://foodies-app-pke3.onrender.com/api-docs](https://foodies-app-pke3.onrender.com/api-docs)
+
 ## Authentication
 
 ### Registration
