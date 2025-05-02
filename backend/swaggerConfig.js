@@ -163,6 +163,8 @@ const setup = app => {
   );
 
   console.log('='.repeat(70) + '\n');
+
+  // temporary comment
 };
 
 export default { setup };
