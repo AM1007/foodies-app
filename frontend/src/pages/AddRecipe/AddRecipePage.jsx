@@ -50,7 +50,7 @@ export default AddRecipePage;
 //           <span onClick={handleHome}>HOME</span> / <span className={styles.active} >ADD RECIPE</span>
 //         </div>
 //         <h1 className={styles.title}>ADD RECIPE</h1>
-//         <p className={styles.subtitle}>
+//         <p className={styles.SubTitle}>
 //           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
 //         </p>
 //       </div>
