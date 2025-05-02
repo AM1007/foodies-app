@@ -2,9 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './RecipeCard.module.css';
-import { addToFavorites, removeFromFavorites } from '../../../redux/slices/recipesSlice';
-import { ReactComponent as HeartIcon } from '../../../assets/icons/heart.svg';
-import { ReactComponent as ArrowIcon } from '../../../assets/icons/arrow.svg';
+import { addToFavorites, removeFromFavorites } from '../../../redux/recipes/recipesSlice';
+// import { ReactComponent as HeartIcon } from '../../assets/icons/heart.svg';
+// import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
 import { useAuth } from '../../../hooks/useAuth';
 
 const RecipeCard = ({ recipe }) => {
@@ -49,10 +49,10 @@ const RecipeCard = ({ recipe }) => {
               className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
               onClick={handleFavoriteToggle}
             >
-              <HeartIcon />
+              {/* <HeartIcon /> */}
             </button>
             <button className={styles.arrow} onClick={handleViewRecipe}>
-              <ArrowIcon />
+              {/* <ArrowIcon /> */}
             </button>
           </div>
         </div>

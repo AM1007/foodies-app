@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './PopularRecipes.module.css';
-// import RecipeCard from '../../ui/RecipeCard/RecipeCard';
+import RecipeCard from '../ui/RecipeCard/RecipeCard';
 
 const PopularRecipes = ({ recipes }) => {
   if (!recipes?.length) return null;
@@ -10,12 +10,10 @@ const PopularRecipes = ({ recipes }) => {
       <div className={styles.popular}>
         <h3 className={styles.title}>Popular Recipes</h3>
         <ul className={styles.list}>
-           {/* Тимчасова заглушка: */}
-          <p style={{ textAlign: 'center', width: '100%' }}>
-            Cards will be here
-          </p>
           {recipes.map(recipe => (
-            <li key={recipe._id}>{/* <RecipeCard recipe={recipe} /> */}</li>
+            <li key={recipe._id}>
+              <RecipeCard recipe={recipe} />
+              </li>
           ))}
         </ul>
       </div>
