@@ -1,48 +1,89 @@
+import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import fs from 'fs';
-import yaml from 'js-yaml';
-import SwaggerParser from '@apidevtools/swagger-parser';
-import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const setup = async app => {
-  try {
-    // Шлях до файлу документації
-    const openapiPath = join(__dirname, 'docs', 'openapi.yaml');
-    console.log(`Loading Swagger document from: ${openapiPath}`);
+// Визначаємо домен додатку з налаштувань або використовуємо localhost за замовчуванням
+const { APP_DOMAIN = 'http://localhost:3000' } = process.env;
 
-    // Об'єднання всіх $ref посилань в один документ
-    const bundledDoc = await SwaggerParser.bundle(openapiPath);
-    console.log('OpenAPI file bundled successfully');
-
-    if (bundledDoc.paths) {
-      console.log(`Found ${Object.keys(bundledDoc.paths).length} API paths`);
-    }
-
-    // Налаштування Swagger UI
-    app.use('/api-docs', swaggerUi.serve);
-    app.get(
-      '/api-docs',
-      swaggerUi.setup(bundledDoc, {
-        explorer: true,
-        swaggerOptions: {
-          docExpansion: 'list',
-          filter: true,
-          persistAuthorization: true,
+const options = {
+  definition: {
+    openapi: '3.1.0',
+    info: {
+      title: 'Foodies API',
+      version: '1.0.0',
+      description: 'API документація для кулінарного застосунку Foodies',
+      license: {
+        name: 'ISC',
+        url: 'https://opensource.org/licenses/ISC',
+      },
+    },
+    servers: [
+      {
+        url: APP_DOMAIN,
+        description: 'Поточний сервер',
+      },
+      {
+        url: 'https://foodies-app-pke3.onrender.com',
+        description: 'Віддалений сервер',
+      },
+      {
+        url: 'http://localhost:3000',
+        description: 'Локальний сервер розробки',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         },
-      }),
-    );
+      },
+    },
+  },
+  apis: [
+    './routes/*.js',
+    './schemas/*.js',
+    './swagger/paths/*.yaml',
+    './swagger/components/**/*.yaml',
+    './docs/paths/**/*.yaml',
+    './docs/components/**/*.yaml',
+    './app.js',
+  ],
+};
 
-    console.log(
-      `Swagger documentation available at http://localhost:3000/api-docs`,
-    );
-  } catch (error) {
-    console.error('Failed to load Swagger document:', error);
-  }
+const swaggerSpec = swaggerJSDoc(options);
+
+const setup = app => {
+  // Маршрут для документації Swagger UI
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      explorer: true,
+      swaggerOptions: {
+        persistAuthorization: true,
+      },
+    }),
+  );
+
+  // Маршрут для отримання Swagger специфікації у форматі JSON
+  app.get('/api-docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+  });
+
+  console.log(
+    `Swagger документація доступна за адресою ${APP_DOMAIN}/api-docs`,
+  );
+  console.log(
+    `Віддалена Swagger документація доступна за адресою https://foodies-app-pke3.onrender.com/api-docs`,
+  );
 };
 
 export default { setup };
