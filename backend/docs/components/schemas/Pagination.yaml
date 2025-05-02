@@ -18,12 +18,12 @@ properties:
     example: 10
   nextPage:
     type: integer
-    nullable: true
+    format: nullable
     description: Номер наступної сторінки (null, якщо поточна сторінка остання)
     example: 3
   prevPage:
     type: integer
-    nullable: true
+    format: nullable
     description: Номер попередньої сторінки (null, якщо поточна сторінка перша)
     example: 1
 required:

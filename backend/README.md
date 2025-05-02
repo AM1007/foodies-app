@@ -1,82 +1,211 @@
-# Поки що примітки знаходяться тут. Потім зробимо Рідмі по-людськи
+# Foodies API 🍲
 
-## [На головну](../README.md)
+## [Back to main page...](../README.md)
 
-## [Технічне завдання](./tech_task.md)
+## [Technical Specifications](./tech_task.md)
 
-### Пояснення ключових компонентів:
+A RESTful API for a culinary social platform where users can discover, share,
+and manage recipes.
 
-1. **Моделі даних:**
-   - `User.js` - модель користувача з полями для профілю та аутентифікації
-   - `Recipe.js` - модель рецепту з усіма необхідними полями
-   - `Category.js` - категорії рецептів
-   - `Area.js` - регіони походження страв
-   - `Ingredient.js` - інгредієнти
-   - `RecipeIngredient.js` - зв'язуюча таблиця між рецептами та інгредієнтами
-   - `Favorite.js` - для збереження улюблених рецептів користувачів
-   - `Follower.js` - для відстеження підписок користувачів один на одного
-   - `Testimonial.js` - для відгуків
-2. **Контролери та роути:**
-   - Організовані відповідно до ресурсів API, які вказані в технічному завданні
-   - Кожен контролер має відповідний роутер та сервіс
-3. **Middleware:**
-   - `authenticate.js` - для автентифікації та авторизації користувачів
-   - `upload.js` - для обробки завантаження файлів (аватарки, зображення
-     рецептів)
-4. **Схеми валідації:**
-   - Розділені за основними сутностями для валідації вхідних даних
-5. **Сервісний шар:**
-   - Відокремлена бізнес-логіка для кожного ресурсу
+## 📋 Overview
 
----
+Foodies API is a backend service that powers a culinary social network
+application. It allows users to:
 
-# Основні залежності:
+- Discover recipes from various regions and categories
+- Create and share their own recipes
+- Follow other users and build a cooking community
+- Save favorite recipes for easy access
+- Explore popular recipes based on community engagement
 
-1. **express** - базовий веб-фреймворк
-2. **cors** - для налаштування Cross-Origin Resource Sharing
-3. **morgan** - для логування HTTP-запитів 4 **dotenv** - для роботи з
-   середовищними змінними
+## 🛠️ Tech Stack
 
-## База даних та ORM:
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: PostgreSQL with Sequelize ORM
+- **Authentication**: JWT (JSON Web Tokens)
+- **File Storage**: Cloudinary
+- **Validation**: Joi
+- **Documentation**: OpenAPI/Swagger
 
-1. **sequelize** - ORM для роботи з реляційними базами даних
-2. **pg** та **pg-hstore** - драйвери для PostgreSQL
+## 🔑 Key Features
 
-## Аутентифікація та безпека:
+- **User Authentication**: Registration, login, logout, and token refresh
+- **User Profiles**: View user details, update avatars, follow/unfollow users
+- **Recipe Management**: Create, search, and delete recipes
+- **Social Features**: Follow other users, favorite recipes
+- **Content Discovery**: Search recipes by category, area, ingredients, or title
+- **Documentation**: Interactive API documentation with Swagger
 
-1. **bcrypt** - для хешування паролів
-2. **jsonwebtoken** - для генерації та верифікації JWT токенів
-3. **nanoid** - для генерації унікальних ідентифікаторів
+## 🗂️ Project Structure
 
-## Валідація:
+```
+.
+├── app.js                 # Application entry point
+├── constants              # Application constants
+├── controllers            # Request handlers
+├── db                     # Database configuration and models
+│   ├── associations.js    # Sequelize associations
+│   ├── models             # Database models
+│   └── sequelize.js       # Sequelize configuration
+├── decorators             # Function wrappers
+├── docs                   # API documentation
+├── helpers                # Utility functions
+├── middlewares            # Express middlewares
+├── mockData               # Sample data for seeding
+├── routes                 # API routes
+├── schemas                # Validation schemas
+├── scripts                # Database seeding scripts
+├── services               # Business logic
+└── swagger                # Swagger configuration
+```
 
-1. **joi** - для валідації вхідних даних
+## 📝 API Endpoints
 
-## Робота з файлами:
+## [API DOCUMENTATION](./API_DOCUMENTATION.md)
 
-1. **multer** - для обробки завантаження файлів (аватарки, зображення рецептів)
-2. **gravatar** - для генерації аватарок за замовчуванням
+### Authentication
 
-## Робота з електронною поштою:
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login and receive auth tokens
+- `POST /api/auth/refresh` - Refresh authentication token
+- `POST /api/auth/logout` - Logout (invalidate token)
 
-1. **nodemailer** - для відправлення електронних листів
-2. **handlebars** - для створення шаблонів email-повідомлень
+### Users
 
-## Документація API:
+- `GET /api/users/current` - Get current user info
+- `GET /api/users/:id` - Get detailed user info
+- `PATCH /api/users/avatar` - Update user avatar
+- `GET /api/users` - Get all users
+- `POST /api/users/:id/follow` - Follow a user
+- `POST /api/users/:id/unfollow` - Unfollow a user
+- `GET /api/users/followers` - Get user's followers
+- `GET /api/users/following` - Get users followed by current user
 
-1. **swagger-ui-express** - для створення та відображення Swagger документації
-2. **swagger-jsdoc** - для генерації Swagger специфікації з коментарів у коді
+### Recipes
 
-## Утиліти:
+- `GET /api/recipes` - Search recipes with filters
+- `GET /api/recipes/:id` - Get detailed recipe info
+- `GET /api/recipes/popular` - Get popular recipes
+- `GET /api/recipes/own` - Get current user's recipes
+- `POST /api/recipes` - Create a new recipe
+- `DELETE /api/recipes/:id` - Delete a recipe
+- `POST /api/recipes/:id/favorite` - Add recipe to favorites
+- `DELETE /api/recipes/:id/favorite` - Remove recipe from favorites
+- `GET /api/recipes/favorites` - Get favorite recipes
 
-1. **sharp** - для обробки та оптимізації зображень
-2. **sanitize-html** - для очищення HTML в користувацькому контенті
-3. **lodash** - для зручних утиліт роботи з даними
-4. **moment** або **date-fns** - для роботи з датами
+### Categories, Areas, Ingredients, Testimonials
 
-## Для розробки:
+- `GET /api/categories` - Get all recipe categories
+- `GET /api/areas` - Get all cuisine regions
+- `GET /api/ingredients` - Get all ingredients
+- `GET /api/testimonials` - Get user testimonials
 
-1. **nodemon** - для автоматичного перезавантаження сервера під час розробки
-2. **cross-env** - для встановлення змінних середовища незалежно від платформи
-3. **jest** - для тестування
-4. **supertest** - для тестування HTTP запитів
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v14+)
+- PostgreSQL
+- Cloudinary account (for image uploads)
+
+### Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/yourusername/foodies-api.git
+   cd foodies-api
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file based on `.env.example`
+
+   ```
+   # Server settings
+   PORT=3000
+   NODE_ENV=development
+
+   # Database settings
+   DATABASE_DIALECT=postgres
+   DATABASE_USERNAME=your_username
+   DATABASE_PASSWORD=your_password
+   DATABASE_HOST=localhost
+   DATABASE_NAME=foodies_db
+   DATABASE_PORT=5432
+
+   # JWT settings
+   JWT_SECRET=your_secret_key
+   JWT_EXPIRES_IN=1d
+
+   # Cloudinary settings
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   ```
+
+4. Set up the database
+
+   ```bash
+   # Create database (in PostgreSQL)
+   createdb foodies_db
+
+   # Run database seeders
+   npm run seed:users
+   npm run seed:areas
+   npm run seed:categories
+   npm run seed:ingredients
+   npm run seed:recipes
+   ```
+
+5. Start the server
+
+   ```bash
+   # Development mode
+   npm run dev
+
+   # Production mode
+   npm start
+   ```
+
+6. Access API documentation at `http://localhost:3000/api-docs`
+
+## 📚 Documentation
+
+The API is documented using OpenAPI Specification. You can access the
+documentation in two formats:
+
+- Swagger UI: `http://localhost:3000/api-docs`
+
+## 📦 Database Schema
+
+## [DATABASE](./DATABASE.md)
+
+The application uses a relational database with the following main entities:
+
+- **Users**: Account information and user profiles
+- **Recipes**: Recipe details including instructions and cooking time
+- **Categories**: Classification of recipes (e.g., Soups, Desserts)
+- **Areas**: Regions/cuisines (e.g., Ukrainian, Italian)
+- **Ingredients**: Food ingredients with descriptions and images
+- **Favorites**: Junction table for users' favorite recipes
+- **Followers**: Junction table for user follows
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request

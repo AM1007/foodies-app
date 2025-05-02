@@ -121,26 +121,31 @@ paths:
   # Шляхи Categories
   /categories:
     get:
+      operationId: getCategories
       $ref: './paths/categories/getCategories.yaml'
 
   # Шляхи Areas
   /areas:
     get:
+      operationId: getAreas
       $ref: './paths/areas/getAreas.yaml'
 
   # Шляхи Ingredients
   /ingredients:
     get:
+      operationId: getIngredients
       $ref: './paths/ingredients/getIngredients.yaml'
 
   # Шляхи Testimonials
   /testimonials:
     get:
+      operationId: getTestimonials
       $ref: './paths/testimonials/getTestimonials.yaml'
 
   # Шляхи Recipes
   /recipes:
     get:
+      operationId: searchRecipes
       tags:
         - Recipes
       summary: Пошук рецептів
@@ -195,6 +200,7 @@ paths:
           schema:
             type: string
             enum: [title, time, createdAt, -title, -time, -createdAt]
+      security: []
       responses:
         '200':
           description: Успішний пошук рецептів
@@ -215,49 +221,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    post:
-      tags:
-        - Recipes
-      summary: Створення нового рецепту
-      description:
-        Приватний ендпоінт для створення власного рецепту авторизованим
-        користувачем
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateRecipeRequest'
-      responses:
-        '201':
-          description: Рецепт успішно створено
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RecipeDetail'
-        '400':
-          description: Неправильні дані запиту
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '401':
-          description: Неавторизований доступ
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Помилка сервера
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
 
   /recipes/{id}:
     get:
+      operationId: getRecipeById
       tags:
         - Recipes
       summary: Отримання детальної інформації про рецепт
@@ -271,6 +238,7 @@ paths:
           required: true
           schema:
             type: integer
+      security: [] # Явно указываем, что это публичный эндпоинт
       responses:
         '200':
           description: Успішне отримання рецепта
@@ -285,6 +253,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
+      operationId: deleteRecipe
       tags:
         - Recipes
       summary: Видалення рецепту
@@ -340,12 +309,14 @@ paths:
 
   /recipes/popular:
     get:
+      operationId: getPopularRecipes
       tags:
         - Recipes
       summary: Отримання популярних рецептів
       description:
         Отримання списку рецептів, відсортованих за популярністю (кількістю
         користувачів, які додали рецепт до улюблених)
+      security: [] # Публичный эндпоинт, не требует аутентификации
       parameters:
         - name: page
           in: query
@@ -385,6 +356,7 @@ paths:
 
   /recipes/own:
     get:
+      operationId: getUserRecipes
       tags:
         - Recipes
       summary: Отримання власних рецептів
@@ -439,6 +411,7 @@ paths:
 
   /recipes/{id}/favorite:
     post:
+      operationId: addToFavorites
       tags:
         - Recipes
       summary: Додавання рецепту до улюблених
@@ -492,6 +465,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     delete:
+      operationId: removeFromFavorites
       tags:
         - Recipes
       summary: Видалення рецепту з улюблених
@@ -547,6 +521,7 @@ paths:
 
   /recipes/favorites:
     get:
+      operationId: getFavoriteRecipes
       tags:
         - Recipes
       summary: Отримання улюблених рецептів

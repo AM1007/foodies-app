@@ -5,6 +5,7 @@ post:
   description:
     Приватний ендпоінт для відписки поточного користувача від іншого
     користувача.
+  operationId: unfollowUser
   parameters:
     - name: id
       in: path
