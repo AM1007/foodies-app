@@ -1,8 +1,7 @@
-import React from 'react';
 import styles from './Subtitle.module.css';
 
-const Subtitle = ({ text }) => {
+const SubTitle = ({ text }) => {
   return <p className={styles.subtitle}>{text}</p>;
 };
 
-export default Subtitle;
+export default SubTitle;
