@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <main>
       {<Hero />}
-      <Categories />
+      {/* <Categories /> */}
       {/* {showCategories ? <Categories /> : <Recipes />} */}
       {/* <Testimonials /> */}
     </main>
