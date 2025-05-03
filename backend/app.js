@@ -1,15 +1,12 @@
-// app.js
-import cors from 'cors';
 import express from 'express';
+import cors from 'cors';
 import morgan from 'morgan';
 import 'dotenv/config';
-import swaggerUi from 'swagger-ui-express';
 
 import { connectToDatabase } from './db/sequelize.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 import './db/associations.js';
-import swaggerDocs from './swagger/swagger.js';
 
 // Імпорт маршрутів
 import authRouter from './routes/authRouter.js';
@@ -26,50 +23,28 @@ const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
-// Налаштування CORS
-// const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
+// Налаштування CORS с проверкой источника
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3173',
+  'https://your-production-frontend.com',
+];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       console.error(`CORS заблоковано запит з: ${origin}`);
-//       callback(new Error('Не дозволено CORS політикою'));
-//     }
-//   },
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-//   exposedHeaders: ['Content-Range', 'X-Content-Range'],
-//   maxAge: 86400 // 24 години
-// };
-// const corsOptions = {
-//   origin: allowedOrigins,
-//   credentials: true
-// };
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Разрешить запросы без origin (например, мобильные приложения, REST-клиенты)
+    if (!origin) return callback(null, true);
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const allowedOrigins = ['http://localhost:5173', 'https://foodies-app-pke3.onrender.com', 'http://localhost:3000'];
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Blocked by CORS policy'));
+    }
+  },
+  credentials: true,
+};
 
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  }
-
-  // Якщо preflight запит — одразу відповідь без продовження
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
-// app.use(cors(corsOptions));
-// app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Парсери для обробки JSON та URL-encoded даних
 app.use(express.json());
@@ -84,14 +59,6 @@ connectToDatabase();
 // Базовий маршрут для перевірки роботи API
 app.get('/', (req, res) => {
   res.send('Foodies API is running!');
-});
-
-// Підключення Swagger UI
-const swaggerSpec = swaggerDocs();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.get('/api-docs.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
 });
 
 // Підключення маршрутів
@@ -115,6 +82,6 @@ const port = Number(PORT);
 app.listen(port, () => {
   console.log(`Server is running. App is listening on port ${port}`);
   console.log(
-    `Swagger документація доступна за адресою http://localhost:${port}/api-docs`,
+    `API Documentation available at http://localhost:${port}/api-docs`,
   );
 });
