@@ -27,7 +27,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS
-// const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
+const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
 
 // const corsOptions = {
 //   origin: function (origin, callback) {
@@ -45,7 +45,7 @@ app.use(morgan(formatsLogger));
 //   maxAge: 86400 // 24 години
 // };
 const corsOptions = {
-  origin: true,
+  origin: allowedOrigins,
   credentials: true
 };
 
