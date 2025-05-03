@@ -14,7 +14,7 @@ const Header = () => {
 
   const headerThemeClass = isHomePage ? styles.darkTheme : styles.lightTheme;
 
-  const isAuthenticated = true; //для тесту
+  const isAuthenticated = false; //для тесту
 
   return (
     <>
