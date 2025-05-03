@@ -10,7 +10,9 @@ const Footer = () => {
 
         <NetworkLinks />
       </div>
-      <p className={styles.copyright}>© 2024, Foodies. All rights reserved.</p>
+      <p className={styles.copyright}>
+        © {new Date().getFullYear()}, Foodies. All rights reserved.
+      </p>
     </footer>
   );
 };
