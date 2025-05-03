@@ -7,7 +7,7 @@ import ingredientsReducer from './ingredients/ingredientsSlice';
 import testimonialsReducer from './testimonials/testimonialsSlice';
 import recipesReducer from './recipes/recipesSlice';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
@@ -18,3 +18,5 @@ export const store = configureStore({
     recipes: recipesReducer,
   },
 });
+
+export default store;
