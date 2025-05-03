@@ -5,7 +5,7 @@ import BurgerBtn from '../ui/BurgerBtn/BurgerBtn';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import styles from './Navigation.module.css';
 
-const Navigation = ({ isLightTheme }) => {
+const Navigation = ({ isLightTheme, isAuthenticated }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const generateActiveClass = ({ isActive }) =>
@@ -38,7 +38,18 @@ const Navigation = ({ isLightTheme }) => {
           onClick={() => setIsMenuOpen(true)}
           isLightTheme={isLightTheme}
         />
-        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+        {isAuthenticated && (
+          <>
+            <BurgerBtn
+              onClick={() => setIsMenuOpen(true)}
+              isLightTheme={isLightTheme}
+            />
+            <MobileMenu
+              isOpen={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+            />
+          </>
+        )}
       </nav>
     </>
   );
