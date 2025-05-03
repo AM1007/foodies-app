@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../redux/users/authSlice';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
@@ -8,44 +7,40 @@ import styles from './LogOutModal.module.css';
 
 const LogOutModal = ({ onClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading } = useSelector(state => state.auth);
 
   const handleLogout = async () => {
     try {
+      console.log('🔄 Attempting to logout user...');
       await dispatch(logoutUser()).unwrap();
-      navigate('/');
-      if (onClose) {
-        onClose();
-      }
+      console.log('✅ Logout successful! User session terminated.');
+      onClose();
     } catch (error) {
-      console.error('Logout error:', error);
-      if (onClose) {
-        onClose();
-      }
+      console.log('❌ Logout failed:', error);
     }
   };
 
   return (
     <Modal isOpen={true} onClose={onClose}>
       <div className={styles.container}>
-        <h2 className={styles.title}>Are you logging out?</h2>
+        <h2 className={styles.title}>Log Out</h2>
+        <p className={styles.question}>Are you sure you want to log out?</p>
 
-        <p className={styles.question}>
-          You can always log back in at my time.
-        </p>
-
-        <div className={styles.buttonsWrapper}>
-          <Button onClick={onClose} className={styles.cancelButton}>
-            CANCEL
+        <div className={styles.buttonsContainer}>
+          <Button
+            className={styles.cancelButton}
+            onClick={onClose}
+            disabled={loading}
+          >
+            Cancel
           </Button>
 
           <Button
-            onClick={handleLogout}
             className={styles.logoutButton}
+            onClick={handleLogout}
             disabled={loading}
           >
-            {loading ? 'Logging out' : 'Logout'}
+            {loading ? 'Logging out...' : 'Log Out'}
           </Button>
         </div>
       </div>
