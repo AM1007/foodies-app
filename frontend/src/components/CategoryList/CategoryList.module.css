@@ -76,7 +76,6 @@
   background: var(--white);
 }
 
-/* Mobile */
 .small,
 .large,
 .allCategories {
@@ -85,7 +84,6 @@
   border-radius: 20px;
 }
 
-/* All categories card */
 .allCategories {
   background-color: #050505;
   color: #fff;
@@ -96,7 +94,6 @@
   font-weight: 600;
 }
 
-/* Tablet */
 @media (min-width: 768px) and (max-width: 1439px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
@@ -124,7 +121,6 @@
   }
 }
 
-/* Desktop */
 @media (min-width: 1440px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
