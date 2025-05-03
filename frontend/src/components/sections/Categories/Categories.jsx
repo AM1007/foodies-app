@@ -1,23 +1,42 @@
-import React from 'react';
-import styles from './Categories.module.css';
+import { useState } from 'react';
 import MainTitle from '../../ui/MainTitle/MainTitle';
-import Subtitle from '../../ui/SubTitle/SubTitle';
+import Subtitle from '../../ui/SubTitle/Subtitle';
+import CategoryList from '../../CategoryList/CategoryList';
+import Recipes from '../../RecipeInfo/RecipeInfo';
+import styles from './Categories.module.css';
 
-const Categories = () => {
+export default function Categories() {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategoryClick = async categoryName => {
+    try {
+      const response = await fetch(`/api/recipes?category=${categoryName}`);
+      if (!response.ok) {
+        throw new Error('Помилка при завантаженні рецептів');
+      }
+      const data = await response.json();
+      setSelectedCategory({ name: categoryName, recipes: data });
+    } catch (error) {
+      alert(error.message || 'Сталася помилка. Спробуйте ще раз!');
+    }
+  };
+
   return (
-    <section className={styles.container}>
-      <div className={styles.categoriesSection}>
-        <div className={styles.textWrapper}>
-          <MainTitle>Categories</MainTitle>
-          <Subtitle>
-            Discover a limitless world of culinary possibilities and enjoy
-            exquisite recipes that combine taste, style and the warm atmosphere
-            of the kitchen.
-          </Subtitle>
-        </div>
+    <div className={styles.container}>
+      <div className={styles.categoriesWrapper}>
+        {!selectedCategory ? (
+          <>
+            <MainTitle text="Categories" />
+            <Subtitle text="Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style, and the warm atmosphere of the kitchen." />
+            <CategoryList onCategoryClick={handleCategoryClick} />
+          </>
+        ) : (
+          <RecipeInfo
+            data={selectedCategory.recipes}
+            category={selectedCategory.name}
+          />
+        )}
       </div>
-    </section>
+    </div>
   );
-};
-
-export default Categories;
+}
