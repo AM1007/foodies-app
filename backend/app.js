@@ -1,6 +1,6 @@
 // app.js
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import morgan from 'morgan';
 import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
@@ -48,7 +48,6 @@ const corsOptions = {
   origin: true,
   credentials: true
 };
-
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));

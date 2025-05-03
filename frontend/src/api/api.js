@@ -6,6 +6,24 @@ const axiosAPI = axios.create({
 });
 console.log('🌐 API baseURL configured as:', axiosAPI.defaults.baseURL);
 
+(async () => {
+  try {
+    const categories = await axiosAPI.get('/categories');
+    console.log('📁 Категорії:', categories.data);
+
+    const areas = await axiosAPI.get('/areas');
+    console.log('🌍 Регіони:', areas.data);
+
+    const ingredients = await axiosAPI.get('/ingredients');
+    console.log('🥕 Інгредієнти:', ingredients.data);
+
+    const testimonials = await axiosAPI.get('/testimonials');
+    console.log('⭐️ Відгуки:', testimonials.data);
+  } catch (error) {
+    console.error('❌ Помилка при отриманні публічних даних:', error.message);
+  }
+})();
+
 // Масив приватних ендпоінтів, які потребують авторизації
 const privateEndpoints = [
   '/auth/logout',
@@ -88,6 +106,8 @@ axiosAPI.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+
 
 // Експорт налаштованого інстансу axios
 export default axiosAPI;
