@@ -18,8 +18,8 @@ const Home = () => {
 
   return (
     <main>
-      {<Hero />}
-      {/* <Categories /> */}
+      <Hero />
+      <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
       {/* <Testimonials /> */}
     </main>
