@@ -1,6 +1,7 @@
-├── .gitignore
+   ├── .gitignore
     ├── README.md
     ├── eslint.config.js
+    ├── frontend.txt
     ├── index.html
     ├── package-lock.json
     ├── package.json
@@ -77,7 +78,8 @@
         │   │   ├── SignInModal.jsx
         │   │   └── SignInModal.module.css
         │   ├── SignUpForm
-        │   │   └── SignUpForm.jsx
+        │   │   ├── SignUpForm.jsx
+        │   │   └── SignUpForm.module.css
         │   ├── SignUpModal
         │   │   ├── SignUpModal.jsx
         │   │   └── SignUpModal.module.css
@@ -180,7 +182,7 @@
         │       └── testimonialsSlice.js
         │   └── users
         │       ├── authSlice.js
-        │       ├── operations.js
         │       └── userSlice.js
+    ├── tech_task_front.md
     ├── vercel.json
     └── vite.config.js
