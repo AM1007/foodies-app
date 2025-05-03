@@ -1,8 +1,0 @@
-type: object
-properties:
-  message:
-    type: string
-    description: Опис помилки
-    example: 'Email already in use'
-required:
-  - message

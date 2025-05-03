@@ -1,8 +1,0 @@
-type: object
-properties:
-  message:
-    type: string
-    description: Повідомлення про результат операції підписки або відписки
-    example: 'Підписка на користувача успішно оформлена'
-required:
-  - message
