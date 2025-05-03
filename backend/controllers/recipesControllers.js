@@ -2,21 +2,11 @@ import recipesServices from '../services/recipesServices.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
-/**
- * Controller for searching recipes with filters and pagination
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const searchRecipes = async (req, res) => {
   const searchResults = await recipesServices.getAllRecipes(req.query);
   res.status(HTTP_STATUS.OK).json(searchResults);
 };
 
-/**
- * Controller for getting detailed recipe information by ID
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const getRecipeById = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipesServices.getRecipeById(id);
@@ -46,26 +36,15 @@ const getFavoriteRecipes = async (req, res) => {
   res.status(HTTP_STATUS.OK).json(favorites);
 };
 
-/**
- * Controller for getting popular recipes
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const getPopularRecipes = async (req, res) => {
   const popularRecipes = await recipesServices.getPopularRecipes(req.query);
   res.status(HTTP_STATUS.OK).json(popularRecipes);
 };
 
-/**
- * Controller for creating a new recipe
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const createRecipe = async (req, res) => {
   const { id: userId } = req.user;
   const recipeData = req.body;
 
-  // Parse ingredients if they were sent as JSON string
   if (typeof recipeData.ingredients === 'string') {
     try {
       recipeData.ingredients = JSON.parse(recipeData.ingredients);
@@ -82,11 +61,6 @@ const createRecipe = async (req, res) => {
   res.status(HTTP_STATUS.CREATED).json(newRecipe);
 };
 
-/**
- * Controller for deleting a recipe
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const deleteRecipe = async (req, res) => {
   const { id: recipeId } = req.params;
   const { id: userId } = req.user;
@@ -95,11 +69,6 @@ const deleteRecipe = async (req, res) => {
   res.status(HTTP_STATUS.OK).json(result);
 };
 
-/**
- * Controller for getting user's own recipes
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const getUserRecipes = async (req, res) => {
   const { id: userId } = req.user;
   const userRecipes = await recipesServices.getUserRecipes(userId, req.query);

@@ -37,5 +37,4 @@ const RecipeIngredient = sequelize.define(
   },
 );
 
-// RecipeIngredient.sync();
 export default RecipeIngredient;

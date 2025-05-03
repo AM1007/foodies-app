@@ -1,9 +1,10 @@
-# docs/paths/auth/register.yaml
 post:
   tags:
     - Auth
   summary: Реєстрація нового користувача
   description: Створення нового облікового запису користувача
+  operationId: registerUser
+  security: []
   requestBody:
     required: true
     content:

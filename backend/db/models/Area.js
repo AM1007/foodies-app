@@ -15,6 +15,4 @@ const Area = sequelize.define(
   },
 );
 
-// Area.sync();
-
 export default Area;

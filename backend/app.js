@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Налаштування Swagger документації
-swaggerConfig.setup(app);
+await swaggerConfig.setup(app);
 
 // Підключення до бази даних
 connectToDatabase();

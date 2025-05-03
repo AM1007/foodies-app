@@ -3,6 +3,7 @@ post:
     - Auth
   summary: Вихід із системи
   description: Інвалідація токену користувача
+  operationId: logoutUser
   security:
     - bearerAuth: []
   responses:

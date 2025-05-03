@@ -1,21 +1,10 @@
-.pageIntro {
-  padding: 64px 0 32px 0;
-}
-
-.breadcrumbs {
-  font-size: 12px;
-  color: var(--gray);
-  margin-bottom: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
 .active {
   color: var(--black);
 }
 
 .photoUpload {
   width: 100%;
+  max-width: 343px;
   height: 318px;
   border: 1px dashed var(--gray);
   border-radius: 30px;
@@ -41,6 +30,29 @@
   height: 50px;
 }
 
+.uploadAnotherBtn {
+  color: var(--black);
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+
+
 .uploadText {
   font-size: 14px;
   color: var(--black);
@@ -65,23 +77,30 @@
 }
 
 .formGroup {
-  padding-top: 32px;
+  padding-top: 8px;
 }
 
-.nameLabel {
-  color: var(--gray);
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding-top: 32px;
 }
 
 .label {
   color: var(--black);
-  font-size: 18px;
+  font-size: 16px;
   display: block;
-  font-size: 14px;
   font-weight: 800;
-  line-height: 1.33;
-  letter-spacing: -0.36px;
-  margin-bottom: 32px;
+  letter-spacing: -0.32px;
+  margin-bottom: 8px;
   text-transform: uppercase;
+}
+
+.nameLabel {
+  color: var(--gray);
+  margin: 32px 0;
 }
 
 .inputWrapper {
@@ -129,34 +148,6 @@
   appearance: none;
 }
 
-.timeController {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-}
-
-.timeButton {
-  width: 48px;
-  height: 48px;
-  border: 1px solid var(--gray);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.timeValue {
-  margin: 0 12px;
-  font-size: 14px;
-  text-align: center;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  color: var(--gray);
-}
-
 .ingredientInputs {
   display: flex;
   flex-direction: column;
@@ -166,21 +157,34 @@
 
 .addIngredientButton {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
+  gap: 8px;
+
+  padding: 14px 20px;
+  width: auto;
+
   background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 24px;
+  border: 1px solid #BFBEBE;
+  border-radius: 30px;
+
+  font-family: 'Mulish', sans-serif;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+
+  color: #050505;
   cursor: pointer;
-  width: 100%;
-  margin-bottom: 16px;
+  transition: background-color 0.2s ease;
 }
 
 .plusIcon {
-  font-size: 18px;
-  font-weight: bold;
+  display: flex;
+  width: 20px;
+  height: 20px;
 }
 
 .actionsGroup {

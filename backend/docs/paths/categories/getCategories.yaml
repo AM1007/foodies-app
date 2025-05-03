@@ -1,0 +1,22 @@
+tags:
+  - Categories
+summary: Отримання списку категорій рецептів
+description:
+  Публічний ендпоінт для отримання повного списку категорій, доступних в системі
+operationId: getCategories
+security: []
+responses:
+  '200':
+    description: Успішне отримання списку категорій
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../components/schemas/categories/Category.yaml'
+  '400':
+    description: Неправильний запит
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/Error.yaml'

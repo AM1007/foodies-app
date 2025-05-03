@@ -34,8 +34,76 @@
     │   ├── validateBody.js
     │   └── validateQuery.js
     ├── docs
+    │   ├── components
+    │   │   ├── recipes
+    │   │   │   └── RecipeDetail.yaml
+    │   │   ├── schemas
+    │   │   │   ├── Error.yaml
+    │   │   │   ├── areas
+    │   │   │   │   └── Area.yaml
+    │   │   │   ├── auth
+    │   │   │   │   ├── LoginRequest.yaml
+    │   │   │   │   ├── LoginResponse.yaml
+    │   │   │   │   ├── RefreshTokenRequest.yaml
+    │   │   │   │   ├── RefreshTokenResponse.yaml
+    │   │   │   │   ├── RegisterRequest.yaml
+    │   │   │   │   └── RegisterResponse.yaml
+    │   │   │   ├── categories
+    │   │   │   │   └── Category.yaml
+    │   │   │   ├── ingredients
+    │   │   │   │   └── Ingredient.yaml
+    │   │   │   ├── recipes
+    │   │   │   │   ├── CreateRecipeRequest.yaml
+    │   │   │   │   ├── Pagination.yaml
+    │   │   │   │   └── RecipePreview.yaml
+    │   │   │   ├── testimonials
+    │   │   │   │   └── Testimonial.yaml
+    │   │   │   └── users
+    │   │   │   │   ├── FollowResponse.yaml
+    │   │   │   │   ├── FollowersResponse.yaml
+    │   │   │   │   ├── FollowingResponse.yaml
+    │   │   │   │   ├── UpdateAvatarRequest.yaml
+    │   │   │   │   ├── UpdateAvatarResponse.yaml
+    │   │   │   │   ├── UserDetailedInfo.yaml
+    │   │   │   │   ├── UserProfile.yaml
+    │   │   │   │   └── UsersList.yaml
+    │   │   └── securitySchemes
+    │   │   │   └── bearerAuth.yaml
     │   ├── index.html
-    │   └── openapi.yaml
+    │   ├── openapi.yaml
+    │   └── paths
+    │   │   ├── areas
+    │   │       └── getAreas.yaml
+    │   │   ├── auth
+    │   │       ├── login.yaml
+    │   │       ├── logout.yaml
+    │   │       ├── refresh.yaml
+    │   │       └── register.yaml
+    │   │   ├── categories
+    │   │       └── getCategories.yaml
+    │   │   ├── ingredients
+    │   │       └── getIngredients.yaml
+    │   │   ├── recepies
+    │   │       ├── addToFavorites.yaml
+    │   │       ├── createRecipe.yaml
+    │   │       ├── deleteRecipe.yaml
+    │   │       ├── getFavoriteRecipes.yaml
+    │   │       ├── getPopularRecipes.yaml
+    │   │       ├── getRecipeById.yaml
+    │   │       ├── getUserRecipes.yaml
+    │   │       ├── removeFromFavorites.yaml
+    │   │       └── searchRecipes.yaml
+    │   │   ├── testimonials
+    │   │       └── getTestimonials.yaml
+    │   │   └── users
+    │   │       ├── followUser.yaml
+    │   │       ├── getAllUsers.yaml
+    │   │       ├── getCurrentUser.yaml
+    │   │       ├── getFollowers.yaml
+    │   │       ├── getFollowing.yaml
+    │   │       ├── getUserById.yaml
+    │   │       ├── unfollowUser.yaml
+    │   │       └── updateAvatar.yaml
     ├── helpers
     │   ├── HttpError.js
     │   ├── createEmailTemplates.js

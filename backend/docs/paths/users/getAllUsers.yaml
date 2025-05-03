@@ -3,6 +3,7 @@ get:
     - Users
   summary: Отримання списку всіх користувачів
   description: Отримання списку всіх зареєстрованих користувачів системи.
+  operationId: getAllUsers
   security:
     - bearerAuth: []
   responses:

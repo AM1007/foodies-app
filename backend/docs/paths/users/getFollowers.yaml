@@ -5,6 +5,7 @@ get:
   description:
     Приватний ендпоінт для отримання списку користувачів, які підписані на
     поточного користувача.
+  operationId: getFollowers
   security:
     - bearerAuth: []
   responses:

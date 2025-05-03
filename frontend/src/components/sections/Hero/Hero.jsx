@@ -1,4 +1,4 @@
-// import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { useAuth } from '../../../hooks/useAuth';
 import styles from './Hero.module.css';
 
@@ -23,7 +23,9 @@ const Hero = () => {
             Amazing recipes for beginners in the world of cooking, enveloping
             you in the aromas and tastes of various cuisines.
           </p>
-          <button className={styles.heroButton}>Add Recipe</button>
+          <Link to="/recipe/add" className={styles.heroButton}>
+            Add Recipe
+          </Link>
         </div>
 
         <div className={styles.imageWrapper}>

@@ -49,6 +49,7 @@
   border-radius: 30px;
   padding: 12px 24px;
   font-size: 14px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
 }

@@ -9,6 +9,41 @@ import { recipeImagesUpload } from '../middlewares/upload.js';
 const router = express.Router();
 
 /**
+ * @route GET /api/recipes/popular
+ * @desc Get popular recipes based on favorite count
+ * @access Public
+ */
+router.get(
+  '/popular',
+  validateQuery(recipeSchemas.recipeQuerySchema),
+  recipesControllers.getPopularRecipes,
+);
+
+/**
+ * @route GET /api/recipes/own
+ * @desc Get recipes created by the authenticated user
+ * @access Private
+ */
+router.get(
+  '/own',
+  authenticate,
+  validateQuery(recipeSchemas.recipeQuerySchema),
+  recipesControllers.getUserRecipes,
+);
+
+/**
+ * @route GET /api/recipes/favorites
+ * @desc Get user's favorite recipes
+ * @access Private
+ */
+router.get(
+  '/favorites',
+  authenticate,
+  validateQuery(recipeSchemas.recipeQuerySchema),
+  recipesControllers.getFavoriteRecipes,
+);
+
+/**
  * @route GET /api/recipes
  * @desc Search recipes with filters and pagination
  * @access Public
@@ -18,6 +53,7 @@ router.get(
   validateQuery(recipeSchemas.recipeQuerySchema),
   recipesControllers.searchRecipes,
 );
+
 /**
  * @route GET /api/recipes/:id
  * @desc Get detailed recipe information by ID
@@ -25,28 +61,22 @@ router.get(
  */
 router.get('/:id', recipesControllers.getRecipeById);
 
+/**
+ * @route POST /api/recipes/:id/favorite
+ * @desc Add recipe to user's favorites
+ * @access Private
+ */
 router.post('/:id/favorite', authenticate, recipesControllers.addToFavorites);
+
+/**
+ * @route DELETE /api/recipes/:id/favorite
+ * @desc Remove recipe from user's favorites
+ * @access Private
+ */
 router.delete(
   '/:id/favorite',
   authenticate,
   recipesControllers.removeFromFavorites,
-);
-router.get(
-  '/favorites',
-  authenticate,
-  validateQuery(recipeSchemas.recipeQuerySchema),
-  recipesControllers.getFavoriteRecipes,
-);
-
-/**
- * @route GET /api/recipes/popular
- * @desc Get popular recipes based on favorite count
- * @access Public
- */
-router.get(
-  '/popular',
-  validateQuery(recipeSchemas.recipeQuerySchema),
-  recipesControllers.getPopularRecipes,
 );
 
 /**
@@ -68,17 +98,5 @@ router.post(
  * @access Private
  */
 router.delete('/:id', authenticate, recipesControllers.deleteRecipe);
-
-/**
- * @route GET /api/recipes/own
- * @desc Get recipes created by the authenticated user
- * @access Private
- */
-router.get(
-  '/own',
-  authenticate,
-  validateQuery(recipeSchemas.recipeQuerySchema),
-  recipesControllers.getUserRecipes,
-);
 
 export default router;

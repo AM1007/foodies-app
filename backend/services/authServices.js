@@ -44,18 +44,30 @@ const registerUser = async userData => {
 const signInUser = async userData => {
   const { email, password } = userData;
   const user = await findUser({ email });
+
   if (!user) {
     throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
+
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {
     throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
-  const payload = { email };
 
+  // Check if user already has a valid token
+  if (user.token) {
+    // Verify if the token is still valid
+    const { error } = jwtHelpers.verifyToken(user.token);
+    if (!error) {
+      throw HttpError(HTTP_STATUS.CONFLICT, 'User already logged in');
+    }
+  }
+
+  const payload = { email };
   const token = jwtHelpers.generateToken(payload);
   const refreshToken = jwtHelpers.generateToken(payload, '7d');
   await user.update({ token, refreshToken });
+
   return {
     token,
     refreshToken,

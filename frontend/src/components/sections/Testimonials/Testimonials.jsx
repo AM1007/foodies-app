@@ -7,21 +7,7 @@ import styles from './Testimonials.module.css';
 import MainTitle from '../../sharedTitle/MainTitle/MainTitle';
 import Subtitle from '../../sharedTitle/SubTitle/Subtitle';
 import { ReactComponent as QuoteIcon } from '../../../icons/quote.svg';
-
-const testimonials = [
-  {
-    text: 'Thank you for the wonderful recipe for feta pasta with tomatoes and basil. It turned out to be not only tasty, but also incredibly colorful. This has become a favorite family meal!',
-    author: 'LARRY PAGEIM',
-  },
-  {
-    text: 'Amazing experience! The flavors were perfect and it was so easy to make.',
-    author: 'JANE DOE',
-  },
-  {
-    text: 'My kids loved it! And it’s now our go-to recipe for family dinners.',
-    author: 'JOHN SMITH',
-  },
-];
+import testimonials from '../../../data/testimonials';
 
 export default function Testimonials() {
   return (
@@ -29,7 +15,7 @@ export default function Testimonials() {
       <div className={styles.testimonialsSection}>
         <div className={styles.textWrapper}>
           <Subtitle className={styles.subtitle}>What our customer say</Subtitle>
-          <MainTitle>TESTIMONIALS</MainTitle>
+          <MainTitle>Testimonials</MainTitle>
         </div>
         <Swiper
           modules={[Pagination, Autoplay]}

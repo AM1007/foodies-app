@@ -3,6 +3,8 @@ post:
     - Auth
   summary: Вхід в систему
   description: Автентифікація користувача та отримання токену
+  operationId: loginUser
+  security: []
   requestBody:
     required: true
     content:
