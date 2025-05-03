@@ -8,6 +8,7 @@ import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
 
 const SignInForm = ({ onSuccess }) => {
+  console.log(12);
   const emailId = useId();
   const passwordId = useId();
   const dispatch = useDispatch();
@@ -30,7 +31,11 @@ const SignInForm = ({ onSuccess }) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    console.log(1);
+    console.log('⭐️ handleSubmit function called with values:', values);
     try {
+      console.log('⏱️ Entering try block');
+
       console.log('🔄 Attempting to login with:', values.email);
       await dispatch(loginUser(values)).unwrap();
       console.log('✅ Login API call successful');
@@ -70,7 +75,6 @@ const SignInForm = ({ onSuccess }) => {
               />
             </div>
           </div>
-
           <div className={styles.formGroup}>
             <label htmlFor={passwordId} className={styles.label}>
               Password<sup>*</sup>
@@ -92,13 +96,12 @@ const SignInForm = ({ onSuccess }) => {
               />
             </div>
           </div>
-
           {error && <div className={styles.error}>{error}</div>}
-
           <Button
             type="submit"
             className={styles.submitButton}
             disabled={loading || isSubmitting}
+            onClick={() => console.log('🖱 Submit button clicked')}
           >
             {loading || isSubmitting ? 'Signing in...' : 'SIGN IN'}
           </Button>
