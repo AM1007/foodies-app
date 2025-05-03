@@ -28,7 +28,7 @@ app.use(morgan(formatsLogger));
 
 // Налаштування CORS
 const corsOptions = {
-  origin: ['http://localhost:3000'],
+  origin: ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000','http://localhost:5173'],
   credentials: true,
 };
 
