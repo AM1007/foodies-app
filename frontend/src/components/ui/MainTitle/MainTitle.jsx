@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './MainTitle.module.css';
 
 const MainTitle = ({ text }) => {
