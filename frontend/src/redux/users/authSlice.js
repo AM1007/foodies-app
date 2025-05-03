@@ -48,7 +48,9 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (formData, { rejectWithValue }) => {
     try {
+      console.log('🔄 Sending registration request...');
       const res = await axiosAPI.post('/auth/register', formData);
+      console.log('✅ Registration successful');
       const processedData = processAuthResponse(res.data);
 
       if (processedData.token) {
@@ -57,6 +59,10 @@ export const registerUser = createAsyncThunk(
 
       return processedData;
     } catch (err) {
+      console.log(
+        '❌ Registration failed:',
+        err.response?.data?.message || 'Registration failed',
+      );
       return rejectWithValue(
         err.response?.data?.message || 'Помилка реєстрації',
       );
@@ -68,13 +74,19 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (formData, { rejectWithValue }) => {
     try {
+      console.log('🔄 Sending login request...');
       const res = await axiosAPI.post('/auth/login', formData);
+      console.log('✅ Login successful, received token');
       const processedData = processAuthResponse(res.data);
 
       setToken(processedData.token);
 
       return processedData;
     } catch (err) {
+      console.log(
+        '❌ Login failed:',
+        err.response?.data?.message || 'Login failed',
+      );
       return rejectWithValue(err.response?.data?.message || 'Помилка входу');
     }
   },
@@ -84,10 +96,16 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('🔄 Sending logout request...');
       await axiosAPI.post('/auth/logout');
+      console.log('✅ Logout API call successful');
       clearToken();
       return null;
     } catch (err) {
+      console.log(
+        '❌ Logout API call failed:',
+        err.response?.data?.message || 'Logout failed',
+      );
       clearToken();
       return rejectWithValue(err.response?.data?.message || 'Помилка виходу');
     }
@@ -199,10 +217,12 @@ const authSlice = createSlice({
           state.token = action.payload.token;
           state.isAuthenticated = true;
         }
+        console.log('🔐 Auth state updated: User logged in and authenticated');
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        console.log('❌ Auth state updated: Login failed');
       })
 
       .addCase(logoutUser.pending, state => {
@@ -214,6 +234,7 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.loading = false;
         state.error = null;
+        console.log('🔓 Auth state updated: User logged out');
       })
       .addCase(logoutUser.rejected, state => {
         state.user = null;
