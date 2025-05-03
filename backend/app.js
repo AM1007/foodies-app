@@ -51,7 +51,7 @@ app.use(morgan(formatsLogger));
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  const allowedOrigins = ['http://localhost:5173', 'https://foodies-app-pke3.onrender.com',, 'http://localhost:3000'];
+  const allowedOrigins = ['http://localhost:5173', 'https://foodies-app-pke3.onrender.com', 'http://localhost:3000'];
 
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
