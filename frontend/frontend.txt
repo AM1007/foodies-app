@@ -1,0 +1,186 @@
+├── .gitignore
+    ├── README.md
+    ├── eslint.config.js
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+        ├── assets
+        │   ├── favicon.svg
+        │   ├── logo.svg
+        │   └── quote.svg
+        ├── fonts
+        │   └── Mulish-Regular.woff2
+        └── image
+        │   └── hero
+        │       ├── image_hero_dish1_1x.png
+        │       ├── image_hero_dish1_2x.png
+        │       ├── image_hero_dish2_1x.png
+        │       └── image_hero_dish2_2x.png
+    ├── src
+        ├── App.jsx
+        ├── api
+        │   └── api.js
+        ├── components
+        │   ├── AddRecipeForm
+        │   │   ├── AddRecipeForm.jsx
+        │   │   └── AddRecipeForm.module.css
+        │   ├── AuthBar
+        │   │   ├── AuthBar.jsx
+        │   │   └── AuthBar.module.css
+        │   ├── Button
+        │   │   ├── Button.jsx
+        │   │   └── Button.module.css
+        │   ├── Layout
+        │   │   └── Layout.jsx
+        │   ├── Loader
+        │   │   ├── Loader.jsx
+        │   │   └── Loader.module.css
+        │   ├── LogOutModal
+        │   │   └── LogOutModal.jsx
+        │   ├── Logo
+        │   │   ├── Logo.jsx
+        │   │   └── Logo.module.css
+        │   ├── MobileMenu
+        │   │   ├── MobileMenu.jsx
+        │   │   └── MobileMenu.module.css
+        │   ├── Modal
+        │   │   ├── Modal.jsx
+        │   │   └── Modal.module.css
+        │   ├── Navigation
+        │   │   ├── Navigation.jsx
+        │   │   └── Navigation.module.css
+        │   ├── NetworkLinks
+        │   │   ├── NetworkLinks.jsx
+        │   │   └── NetworkLinks.module.css
+        │   ├── PopularRecipes
+        │   │   ├── PopularRecipes.jsx
+        │   │   └── PopularRecipes.module.css
+        │   ├── PrivateRoute.jsx
+        │   ├── RecipeInfo
+        │   │   └── RecipeInfo.jsx
+        │   ├── RecipeIngredients
+        │   │   ├── RecipeIngredients.jsx
+        │   │   └── RecipeIngredients.module.css
+        │   ├── RecipeMainInfo
+        │   │   ├── RecipeMainInfo.jsx
+        │   │   └── RecipeMainInfo.module.css
+        │   ├── RecipePreparation
+        │   │   ├── RecipePreparation.jsx
+        │   │   └── RecipePreparation.module.css
+        │   ├── RecipePreview
+        │   │   ├── RecipePreview.jsx
+        │   │   └── RecipePreview.module.css
+        │   ├── SignInForm
+        │   │   └── SignInForm.jsx
+        │   ├── SignInModal
+        │   │   ├── SignInModal.jsx
+        │   │   └── SignInModal.module.css
+        │   ├── SignUpForm
+        │   │   └── SignUpForm.jsx
+        │   ├── SignUpModal
+        │   │   ├── SignUpModal.jsx
+        │   │   └── SignUpModal.module.css
+        │   ├── UserInfo
+        │   │   ├── UserInfo.jsx
+        │   │   └── UserInfo.module.css
+        │   ├── sections
+        │   │   ├── Categories
+        │   │   │   ├── Categories.jsx
+        │   │   │   └── Categories.module.css
+        │   │   ├── Footer
+        │   │   │   ├── Footer.jsx
+        │   │   │   └── Footer.module.css
+        │   │   ├── Header
+        │   │   │   ├── Header.jsx
+        │   │   │   └── Header.module.css
+        │   │   ├── Hero
+        │   │   │   ├── Hero.jsx
+        │   │   │   └── Hero.module.css
+        │   │   └── Testimonials
+        │   │   │   ├── Testimonials.jsx
+        │   │   │   └── Testimonials.module.css
+        │   └── ui
+        │   │   ├── ArrowBtn
+        │   │       ├── ArrowBtn.jsx
+        │   │       └── ArrowBtn.module.css
+        │   │   ├── BurgerBtn
+        │   │       ├── BurgerBtn.jsx
+        │   │       └── BurgerBtn.module.css
+        │   │   ├── CloseBtn
+        │   │       ├── CloseBtn.jsx
+        │   │       └── CloseBtn.module.css
+        │   │   ├── DeleteBtn
+        │   │       ├── DeleteBtn.jsx
+        │   │       └── DeleteBtn.module.css
+        │   │   ├── DropdownSelector
+        │   │       ├── DropdownSelector.jsx
+        │   │       └── DropdownSelector.module.css
+        │   │   ├── MainTitle
+        │   │       ├── MainTitle.jsx
+        │   │       └── MainTitle.module.css
+        │   │   ├── PathInfo
+        │   │       ├── PathInfo.jsx
+        │   │       └── PathInfo.module.css
+        │   │   ├── RecipeCard
+        │   │       ├── RecipeCard.jsx
+        │   │       └── RecipeCard.module.css
+        │   │   ├── SubTitle
+        │   │       ├── SubTitle.jsx
+        │   │       └── SubTitle.module.css
+        │   │   ├── TimeController
+        │   │       ├── TimeController.jsx
+        │   │       └── TimeController.module.css
+        │   │   ├── UploadAvatar
+        │   │       ├── UploadAvatar.jsx
+        │   │       └── UploadAvatar.module.css
+        │   │   └── UserAvatar
+        │   │       ├── UserAvatar.jsx
+        │   │       └── UserAvatar.module.css
+        ├── context
+        │   ├── ModalContext.js
+        │   └── ModalProvider.jsx
+        ├── data
+        │   ├── socialLinks.js
+        │   └── testimonials.js
+        ├── hooks
+        │   ├── useAuth.js
+        │   ├── useModal.js
+        │   └── useScrollLock.js
+        ├── icons
+        │   ├── quote.svg
+        │   └── sprite.svg
+        ├── index.css
+        ├── main.jsx
+        ├── pages
+        │   ├── AddRecipe
+        │   │   ├── AddRecipePage.jsx
+        │   │   └── AddRecipePage.module.css
+        │   ├── Home
+        │   │   └── Home.jsx
+        │   ├── NotFound
+        │   │   └── NotFound.jsx
+        │   ├── Profile
+        │   │   └── Profile.jsx
+        │   └── Recipe
+        │   │   ├── Recipe.jsx
+        │   │   └── Recipe.module.css
+        └── redux
+        │   ├── areas
+        │       └── areasSlice.js
+        │   ├── categories
+        │       └── categoriesSlice.js
+        │   ├── ingredients
+        │       └── ingredientsSlice.js
+        │   ├── recipes
+        │       └── recipesSlice.js
+        │   ├── redux.md
+        │   ├── store.js
+        │   ├── testimonials
+        │       └── testimonialsSlice.js
+        │   └── users
+        │       ├── authSlice.js
+        │       ├── operations.js
+        │       └── userSlice.js
+    ├── vercel.json
+    └── vite.config.js

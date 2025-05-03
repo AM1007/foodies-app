@@ -9,13 +9,14 @@
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build-docs",
-    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
-    "preview-docs": "redocly preview-docs",
+    "build-docs": "swagger-jsdoc -d ./swagger/swagger.js -o ./swagger/swagger.json",
+    "swagger": "swagger-ui-express -c ./swagger/swagger.json",
     "seed:users": "node scripts/seedUsers.js",
     "seed:recipes": "node scripts/seedRecipes.js",
     "seed:areas": "node scripts/seedAreas.js",
     "seed:categories": "node scripts/seedCategories.js",
-    "seed:ingredients": "node scripts/seedIngredients.js"
+    "seed:ingredients": "node scripts/seedIngredients.js",
+    "seed:testimonials": "node scripts/seedTestimonials.js"
   },
   "repository": {
     "type": "git",
@@ -28,8 +29,8 @@
   },
   "homepage": "https://github.com/AM1007/foodies_app#readme",
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.1.1",
     "bcrypt": "^5.1.1",
+    "chalk": "^5.4.1",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -50,7 +51,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@redocly/cli": "^1.34.2",
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.9"
   }
