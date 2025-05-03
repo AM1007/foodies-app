@@ -27,23 +27,28 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS
-const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
+// const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
 
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       console.error(`CORS заблоковано запит з: ${origin}`);
+//       callback(new Error('Не дозволено CORS політикою'));
+//     }
+//   },
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+//   exposedHeaders: ['Content-Range', 'X-Content-Range'],
+//   maxAge: 86400 // 24 години
+// };
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.error(`CORS заблоковано запит з: ${origin}`);
-      callback(new Error('Не дозволено CORS політикою'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With','Access-Control-Allow-Headers',],
-  exposedHeaders: ['Content-Range', 'X-Content-Range'],
-  maxAge: 86400 // 24 години
+  origin: true,
+  credentials: true
 };
+
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
