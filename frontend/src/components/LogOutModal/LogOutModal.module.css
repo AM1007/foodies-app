@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  width: 100%;
+}
+
+.title {
+  font-family: 'Mulish', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.question {
+  font-family: 'Mulish', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--dark-gray);
+  margin-bottom: 32px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+.cancelButton {
+  padding: 12px 24px;
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  background-color: transparent;
+  color: var(--black);
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancelButton:hover {
+  background-color: var(--light-gray);
+}
+
+.logoutButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  background-color: var(--red);
+  color: var(--white);
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logoutButton:hover {
+  background-color: #900606;
+}
+
+.logoutButton:disabled {
+  background-color: var(--gray);
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .question {
+    font-size: 18px;
+    max-width: 400px;
+  }
+
+  .buttonsWrapper {
+    gap: 24px;
+  }
+
+  .cancelButton,
+  .logoutButton {
+    padding: 14px 32px;
+  }
+}
