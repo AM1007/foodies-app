@@ -1,13 +1,15 @@
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
 import clsx from 'clsx';
-import BurgerBtn from '../ui/BurgerBtn/BurgerBtn';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import styles from './Navigation.module.css';
 
-const Navigation = ({ isLightTheme, isAuthenticated }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+const Navigation = ({
+  isLightTheme,
+  isAuthenticated,
+  isMenuOpen,
+  setIsMenuOpen,
+  BurgerBtn,
+}) => {
   const generateActiveClass = ({ isActive }) =>
     clsx(
       styles.link,
@@ -34,21 +36,12 @@ const Navigation = ({ isLightTheme, isAuthenticated }) => {
             </NavLink>
           </li>
         </ul>
-        <BurgerBtn
-          onClick={() => setIsMenuOpen(true)}
-          isLightTheme={isLightTheme}
-        />
         {isAuthenticated && (
-          <>
-            <BurgerBtn
-              onClick={() => setIsMenuOpen(true)}
-              isLightTheme={isLightTheme}
-            />
-            <MobileMenu
-              isOpen={isMenuOpen}
-              onClose={() => setIsMenuOpen(false)}
-            />
-          </>
+          <MobileMenu
+            isOpen={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            BurgerBtn={BurgerBtn}
+          />
         )}
       </nav>
     </>
