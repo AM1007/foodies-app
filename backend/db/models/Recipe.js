@@ -66,5 +66,4 @@ const Recipe = sequelize.define(
   },
 );
 
-// Recipe.sync();
 export default Recipe;

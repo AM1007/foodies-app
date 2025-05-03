@@ -1,12 +1,13 @@
-├── .env.example
+ ├── .env.example
     ├── .gitignore
+    ├── API_DOCUMENTATION.md
+    ├── DATABASE.md
     ├── README.md
     ├── app.js
     ├── backend.txt
     ├── constants
     │   ├── auth.js
-    │   ├── recepies.js
-    │   └── users.js
+    │   └── httpStatus.js
     ├── controllers
     │   ├── areasControllers.js
     │   ├── authControllers.js
@@ -16,6 +17,7 @@
     │   ├── testimonialControllers.js
     │   └── usersControllers.js
     ├── db
+    │   ├── associations.js
     │   ├── models
     │   │   ├── Area.js
     │   │   ├── Category.js
@@ -29,15 +31,12 @@
     │   └── sequelize.js
     ├── decorators
     │   ├── ctrlWrapper.js
-    │   └── validateBody.js
-    ├── docs
-    │   ├── index.html
-    │   └── openapi.yaml
+    │   ├── validateBody.js
+    │   └── validateQuery.js
     ├── helpers
     │   ├── HttpError.js
-    │   ├── createEmailTemplates.js
     │   ├── jwt.js
-    │   └── sendEmail.js
+    │   └── paginationHelper.js
     ├── middlewares
     │   ├── authenticate.js
     │   ├── errorHandler.js
@@ -57,7 +56,6 @@
     │   │   └── .gitkeep
     │   └── recipeImages
     │   │   └── .gitkeep
-    ├── redocly.yaml
     ├── routes
     │   ├── areasRouter.js
     │   ├── authRouter.js
@@ -68,26 +66,23 @@
     │   └── usersRouter.js
     ├── schemas
     │   ├── authSchemas.js
-    │   ├── recipeSchemas.js
-    │   └── userSchemas.js
+    │   └── recipeSchemas.js
+    ├── scripts
+    │   ├── seedAreas.js
+    │   ├── seedCategories.js
+    │   ├── seedIngredients.js
+    │   ├── seedRecipes.js
+    │   ├── seedTestimonials.js
+    │   └── seedUsers.js
     ├── services
     │   ├── areasServices.js
     │   ├── authServices.js
     │   ├── categoriesServices.js
+    │   ├── cloudinary.js
     │   ├── ingredientsServices.js
     │   ├── recipesServices.js
     │   ├── testimonialServices.js
     │   └── usersServices.js
-    ├── swagger
-    │   ├── components
-    │   │   ├── .gitkeep
-    │   │   ├── schemas
-    │   │   │   └── User.yaml
-    │   │   └── securitySchemes
-    │   │   │   └── bearerAuth.yaml
-    │   └── paths
-    │   │   └── root.yaml
-    ├── swaggerConfig.js
     ├── tech_task.md
     └── temp
     │   └── .gitkeep

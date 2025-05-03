@@ -1,46 +1,92 @@
-.section {
-  padding: 60px 20px;
+.categoriesSection {
+  max-width: 375px;
+  height: auto;
+  margin: 0 auto;
+  padding: 64px 0 16px 0;
+  position: relative;
+  overflow: hidden;
+}
+.textWrapper {
+  max-width: 343px;
+  height: auto;
+  gap: 16px;
+  margin-bottom: 32px;
+  text-align: left;
+  margin-left: 0;
 }
 
-.grid {
+@media (min-width: 768px) {
+  .categoriesSection {
+    max-width: 704px;
+    padding: 100px 32px 0 32px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .textWrapper {
+    max-width: 531px;
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .categoriesSection {
+    max-width: 1280px;
+    padding: 120px 60px 120px 60px;
+  }
+}
+
+/* .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
+  margin-top: 32px;
 }
 
 .card {
   position: relative;
-  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
+  border-radius: 16px;
+  height: 180px;
 }
 
 .image {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
-}
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 16px;
 }
 
 .label {
-  font-size: 16px;
-  font-weight: 600;
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
 }
 
-.button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
+.arrow {
+  font-size: 14px;
 }
+
+.allCard {
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.allBtn {
+  background: none;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+} */

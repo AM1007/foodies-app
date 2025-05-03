@@ -1,0 +1,62 @@
+.avatarWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.userAvatar {
+  width: 80px;
+  height: 80px;
+}
+
+.followerAvatar {
+  width: 60px;
+  height: 60px;
+}
+
+.followingAvatar {
+  width: 60px;
+  height: 60px;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: var(--black);
+  width: 100%;
+  height: 100%;
+}
+
+.avatarIconWrapper svg {
+  width: 50%;
+  height: 50%;
+}
+
+.avatarInput {
+  display: none;
+}
+
+
+@media (min-width: 768px) {
+  .userAvatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .followerAvatar,
+  .followingAvatar {
+    width: 85px;
+    height: 85px;
+  }
+}

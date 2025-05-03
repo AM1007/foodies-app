@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Recipe = lazy(() => import('./pages/Recipe/Recipe'));
-const AddRecipe = lazy(() => import('./pages/AddRecipe/AddRecipe'));
+const AddRecipe = lazy(() => import('./pages/AddRecipe/AddRecipePage'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
@@ -17,30 +17,33 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route
+          {/* <Route
             path="/recipe"
             element={
               <PrivateRoute>
                 <Recipe />
               </PrivateRoute>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/recipe/add"
             element={
               <PrivateRoute>
                 <AddRecipe />
               </PrivateRoute>
             }
-          />
-          <Route
+          /> */}
+          <Route path="/recipe" element={<Recipe />} />
+          <Route path="/recipe/add" element={<AddRecipe />} />
+          <Route path="/user/" element={<Profile />} />
+          {/* <Route
             path="/user/:id"
             element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route path="/recipe/:id" element={<Recipe />} />
           <Route path="*" element={<NotFound />} />
         </Route>

@@ -1,0 +1,17 @@
+@media screen and (min-width: 768px) {
+  .burgerBtn {
+    display: none;
+  }
+}
+.burgerIcon {
+  width: 28px;
+  height: 28px;
+}
+
+.burgerLight {
+  stroke: var(--black);
+}
+
+.burgerDark {
+  stroke: var(--white);
+}

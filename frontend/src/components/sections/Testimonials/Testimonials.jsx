@@ -1,67 +1,43 @@
-import Slider from 'react-slick';
-import { useEffect, useState } from 'react';
-import Subtitle from '../../sharedTitle/SubTitle/Subtitle';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import styles from './Testimonials.module.css';
 import MainTitle from '../../sharedTitle/MainTitle/MainTitle';
-import axios from 'axios';
+import Subtitle from '../../sharedTitle/SubTitle/Subtitle';
+import { ReactComponent as QuoteIcon } from '../../../icons/quote.svg';
+import testimonials from '../../../data/testimonials';
 
-export const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([]);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const { data } = await axios.get('/api/testimonials'); // змінити на реальний endpoint
-
-        // Перевірка, чи data — масив, якщо ні — використовуємо заглушку
-        if (Array.isArray(data)) {
-          setTestimonials(data);
-        } else {
-          setTestimonials([
-            { text: 'This is a great platform!', author: 'Olena K.' },
-            { text: 'Easy recipes, big taste!', author: 'Ivan P.' },
-          ]);
-        }
-      } catch (error) {
-        console.error('Failed to load testimonials', error);
-        // Заглушка при помилці
-        setTestimonials([
-          { text: 'This is a great platform!', author: 'Olena K.' },
-          { text: 'Easy recipes, big taste!', author: 'Ivan P.' },
-        ]);
-      }
-    };
-
-    fetchTestimonials();
-  }, []);
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    arrows: false,
-    pauseOnHover: true,
-  };
-
+export default function Testimonials() {
   return (
-    <section className="py-10 text-center">
-      <Subtitle>What our customers say</Subtitle>
-      <MainTitle>TESTIMONIALS</MainTitle>
-
-      <div className="max-w-3xl mx-auto mt-8 px-4">
-        <Slider {...settings}>
-          {testimonials.map((item, idx) => (
-            <div key={idx}>
-              <blockquote className="italic text-lg text-gray-700">
-                “{item.text}”
-              </blockquote>
-              <p className="mt-4 font-bold uppercase">{item.author}</p>
-            </div>
+    <section className={styles.sectionWrapper}>
+      <div className={styles.testimonialsSection}>
+        <div className={styles.textWrapper}>
+          <Subtitle className={styles.subtitle}>What our customer say</Subtitle>
+          <MainTitle>Testimonials</MainTitle>
+        </div>
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          loop={true}
+        >
+          {testimonials.map(t => (
+            <SwiperSlide key={t.author}>
+              <div className={styles.slide}>
+                <div className={styles.quoteRow}>
+                  <QuoteIcon className={styles.icon} />
+                  <p className={styles.text}>{t.text}</p>
+                </div>
+                <p className={styles.author}>{t.author}</p>
+              </div>
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </div>
     </section>
   );
-};
-
-export default Testimonials;
+}

@@ -1,0 +1,60 @@
+.darkTheme {
+  --bg-color: var(--black);
+  --text-color: var(--white);
+}
+
+.lightTheme {
+  --bg-color: var(--white);
+  --text-color: var(--black);
+}
+
+.headerContainer {
+  max-width: 375px;
+  margin: 0 auto;
+  background-color: var(--white);
+}
+
+@media screen and (min-width: 768px) {
+  .headerContainer {
+    max-width: 768px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .headerContainer {
+    max-width: 1440px;
+  }
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 16px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: var(--bg-color);
+}
+
+@media screen and (min-width: 768px) {
+  .headerWrapper {
+    padding: 20px 32px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .headerWrapper {
+    padding: 20px 60px;
+  }
+}
+
+.logoLight {
+  fill: var(--black);
+}
+
+.logoDark {
+  fill: var(--white);
+}

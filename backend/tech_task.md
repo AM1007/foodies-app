@@ -1,72 +1,69 @@
-# Технічне завдання
+# Technical Specifications
 
-# [**На головну...**](./README.md)
+## [Back to main page...](README.md)
 
-## Вимоги до серверу
+### Server Requirements
 
-1. Розгорнути сервер для розробки (підключити модулі, налаштувати CORS, написати
-   функцію для вилову помилок тощо)
-2. Ініціалізувати та підключити БД до проєкту
-3. Створити swagger-документацію енд-поінтів (не обовʼязкове завдання)
+- Deploy a development server (connect modules, configure CORS, write error
+  handling functions, etc.)
+- Initialize and connect the database to the project
+- Create swagger documentation for endpoints (optional task)
 
-## /users
+### /users
 
-- створити публічний ендпоінт реєстрації користувача
-- створити публічний ендпоінт логінізації користувача
-- написати прошарок авторизації
-- створити приватний ендпоінт на отримання інформації про поточного користувача
+- Create a public endpoint for user registration
+- Create a public endpoint for user login
+- Write an authorization middleware
+- Create a private endpoint to retrieve information about the current user
+- Create a private endpoint to retrieve detailed information about a user:
 
-- створити приватний ендпоінт на отримання детальної інформації про користувача:
+- If an authorized user requests information about themselves, the response
+  should contain user information (avatar, name, email) and information about
+  the number of recipes created by the user, number of favorite recipes, number
+  of users following the authorized user, and number of profiles the authorized
+  user follows
+- If an authorized user requests information about another user, the response
+  should contain user information (avatar, name, email) and information about
+  the number of recipes created by the user and the number of users following
+  that user
 
-  - якщо авторизований користувач запитує інформацію щодо себе, відповідь має
-    містити інформацію про користувача (аватар, імʼя, email) та інформацію щодо
-    кількості створених користувачем рецептів, кількості улюблених рецептів,
-    кількості користувачів, що слідкують за авторизованим користувачем та
-    кількості профілів, за якими слідкує авторизований користувач
-  - якщо авторизований користувач запитує інформацію щодо іншого користувача,
-    відповідь має містити інформацію про користувача (аватар, імʼя, email) та
-    інформацію щодо кількості створених користувачем рецептів та кількості
-    користувачів, що слідкують за користувачем
+- Create a private endpoint for updating the authorized user's avatar
+- Create a private endpoint to get information about users who follow the user's
+  profile
+- Create a private endpoint to get information about users followed by the
+  authorized user
+- Create a private endpoint to add a user to the list of profiles followed by
+  the authorized user
+- Create a private endpoint to remove a user from the list of profiles followed
+  by the authorized user
+- Create a private endpoint for user logout
 
-- створити приватний ендпоінт для оновлення аватарки авторизованого користувача
-- створити приватний ендпоінт для отримання інформації щодо користувачів, що
-  слідкують за профілем користувача
-- створити приватний ендпоінт для отримання інформації щодо користувачів, за
-  якими слідкує авторизований користувач
-- створити приватний ендпоінт для додавання користувача в перелік профілів, за
-  якими слідкує авторизований користувач
-- створити приватний ендпоінт для видалення користувача з переліку профілів, за
-  якими слідкує авторизований користувач
-- створити приватний ендпоінт для логаута користувача
+### /categories
 
-## /categories
+- Create a public endpoint to get a list of recipe categories
 
-- створити публічний ендпоінт для отримання списку категорій рецептів
+### /areas
 
-## /areas
+- Create a public endpoint to get a list of regional cuisines
 
-- створити публічний ендпоінт для отримання списку регіонів походження страв
+### /ingredients
 
-## /ingredients
+- Create a public endpoint to get a list of ingredients
 
-- створити публічний ендпоінт для отримання списку інгредієнтів
+### /testimonials
 
-## /testimonials
+- Create a public endpoint to get a list of testimonials
 
-- створити публічний ендпоінт для отримання списку відгуків
+### /recipes
 
-## /recipes
-
-- створити публічний ендпоінт для пошуку рецептів за категорією, інгредієнтом та
-  регіоном походження страви (з урахуванням логіки пагінації)
-- створити публічний ендпоінт для отримання детальної інформації про рецепт за
-  його id
-- створити публічний ендпоінт для отримання популярних рецептів (популярність
-  слід розраховувати в залежності від кількості користувачів, які додали цей
-  рецепт в улюблені)
-- створити приватний ендпоінт для створення власного рецепту
-- створити приватний ендпоінт для видалення власного рецепту
-- створити приватний ендпоінт для отримання власних рецептів
-- створити приватний ендпоінт для додавання рецепту до списку улюблених
-- створити приватний ендпоінт для видалення рецепту зі списку улюблених
-- створити приватний ендпоінт для отримання улюблених рецептів
+- Create a public endpoint to search for recipes by category, ingredient, and
+  regional cuisine (with pagination logic)
+- Create a public endpoint to get detailed information about a recipe by its id
+- Create a public endpoint to get popular recipes (popularity should be
+  calculated based on the number of users who added the recipe to favorites)
+- Create a private endpoint for creating a personal recipe Create a private
+  endpoint for deleting a personal recipe - Create a private endpoint for
+  retrieving personal recipes Create a private endpoint for adding a recipe to
+  the favorites list
+- Create a private endpoint for removing a recipe from the favorites list Create
+  a private endpoint for retrieving favorite recipes

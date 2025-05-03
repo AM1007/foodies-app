@@ -1,63 +1,150 @@
-.hero {
-  position: relative;
-  width: auto;
-  height: auto;
+.heroSection {
+  background-color: var(--black);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  max-width: 375px;
   margin: 0 auto;
-  background: #000;
-  border-radius: 30px;
+  padding: 20px;
+  position: relative;
   overflow: hidden;
-  background-color: #000;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 120px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.title {
+  color: var(--white);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 327px;
+  margin: 0 auto;
+}
+
+.subtitle {
+  color: var(--white);
+  font-weight: 500px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.02px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 326px;
+}
+
+.heroButton {
+  background-color: transparent;
+  color: var(--white);
+  border: 1px solid var(--white);
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.heroButton:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 32px;
+  padding-bottom: 100px;
+}
+
+.imageSmall {
+  width: 77px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: rotate(10deg);
+}
+
+.imageLarge {
+  width: 190px;
+  height: auto;
+  border-radius: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transform: rotate(-10deg);
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
-  .button {
-    width: 159px;
-    height: 56px;
-    top: 485px;
-    left: 288px;
-    padding: 16px 32px;
+  .heroSection {
+    max-width: 768px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+
+  .textWrapper {
+    gap: 40px;
+    padding-top: 151px;
+    padding-bottom: 30px;
+  }
+  .title {
+    font-size: 70px;
+    line-height: 70px;
+    max-width: 678px;
+  }
+
+  .subtitle {
     font-size: 16px;
     line-height: 24px;
+    max-width: 577px;
+  }
+
+  .heroButton {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  .imageWrapper {
+    padding-bottom: 90px;
+  }
+  .imageSmall {
+    width: 128px;
+  }
+
+  .imageLarge {
+    width: 302px;
   }
 }
 
 @media (min-width: 1280px) {
-  .button {
-    top: 462px;
-    left: 620px;
+  .heroSection {
+    max-width: 1440px;
   }
-}
+  .textWrapper {
+    padding-top: 88px;
+    padding-bottom: 40px;
+  }
 
-.button:hover {
-  background: #ffffff;
-  color: #000000;
-}
+  .title {
+    font-size: 90px;
+    line-height: 90px;
+    max-width: 875px;
+  }
 
-.imagesWrapper {
-  position: relative;
-  height: 100%;
-}
+  .heroButton {
+    font-size: 16px;
+  }
 
-.image1 {
-  position: absolute;
-  top: 621px;
-  left: 599px;
-  width: 302px;
-  height: 273px;
-  border-radius: 30px;
-
-  object-fit: cover;
-  z-index: 1;
-}
-
-.image2 {
-  position: absolute;
-  top: 697px;
-  left: 471px;
-  width: 128px;
-  height: 116px;
-  border-radius: 15px;
-
-  object-fit: cover;
-  z-index: 2;
+  .imageWrapper {
+    padding-bottom: 82px;
+  }
 }

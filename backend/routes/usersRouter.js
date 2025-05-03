@@ -13,6 +13,24 @@ userRouter.get(
   usersControllers.getUserInfoController,
 );
 
+userRouter.get(
+  '/followers',
+  authenticate,
+  usersControllers.getFollowersController,
+);
+
+userRouter.get(
+  '/following',
+  authenticate,
+  usersControllers.getFollowingUsersController,
+);
+
+userRouter.get(
+  '/:id',
+  authenticate,
+  usersControllers.getUserDetailedInfoController,
+);
+
 userRouter.patch(
   '/avatar',
   authenticate,
@@ -30,18 +48,6 @@ userRouter.post(
   '/:id/unfollow',
   authenticate,
   usersControllers.unfollowUserController,
-);
-
-userRouter.get(
-  '/followed-users',
-  authenticate,
-  usersControllers.getFollowedUsersController,
-);
-
-userRouter.get(
-  '/following-users',
-  authenticate,
-  usersControllers.getFollowingUsersController,
 );
 
 export default userRouter;
