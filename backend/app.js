@@ -40,7 +40,7 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With','Access-Control-Allow-Headers',],
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
   maxAge: 86400 // 24 години
 };
