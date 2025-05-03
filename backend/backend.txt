@@ -1,13 +1,13 @@
-  ├── .env.example
+ ├── .env.example
     ├── .gitignore
+    ├── API_DOCUMENTATION.md
+    ├── DATABASE.md
     ├── README.md
     ├── app.js
     ├── backend.txt
     ├── constants
     │   ├── auth.js
-    │   ├── httpStatus.js
-    │   ├── recepies.js
-    │   └── users.js
+    │   └── httpStatus.js
     ├── controllers
     │   ├── areasControllers.js
     │   ├── authControllers.js
@@ -35,10 +35,9 @@
     │   └── validateQuery.js
     ├── docs
     │   ├── components
-    │   │   ├── recipes
-    │   │   │   └── RecipeDetail.yaml
     │   │   ├── schemas
     │   │   │   ├── Error.yaml
+    │   │   │   ├── Pagination.yaml
     │   │   │   ├── areas
     │   │   │   │   └── Area.yaml
     │   │   │   ├── auth
@@ -54,7 +53,7 @@
     │   │   │   │   └── Ingredient.yaml
     │   │   │   ├── recipes
     │   │   │   │   ├── CreateRecipeRequest.yaml
-    │   │   │   │   ├── Pagination.yaml
+    │   │   │   │   ├── RecipeDetail.yaml
     │   │   │   │   └── RecipePreview.yaml
     │   │   │   ├── testimonials
     │   │   │   │   └── Testimonial.yaml
@@ -83,7 +82,7 @@
     │   │       └── getCategories.yaml
     │   │   ├── ingredients
     │   │       └── getIngredients.yaml
-    │   │   ├── recepies
+    │   │   ├── recіpes
     │   │       ├── addToFavorites.yaml
     │   │       ├── createRecipe.yaml
     │   │       ├── deleteRecipe.yaml
@@ -106,10 +105,8 @@
     │   │       └── updateAvatar.yaml
     ├── helpers
     │   ├── HttpError.js
-    │   ├── createEmailTemplates.js
     │   ├── jwt.js
-    │   ├── paginationHelper.js
-    │   └── sendEmail.js
+    │   └── paginationHelper.js
     ├── middlewares
     │   ├── authenticate.js
     │   ├── errorHandler.js
@@ -140,8 +137,7 @@
     │   └── usersRouter.js
     ├── schemas
     │   ├── authSchemas.js
-    │   ├── recipeSchemas.js
-    │   └── userSchemas.js
+    │   └── recipeSchemas.js
     ├── scripts
     │   ├── seedAreas.js
     │   ├── seedCategories.js
@@ -169,12 +165,5 @@
     │   │   └── root.yaml
     ├── swaggerConfig.js
     ├── tech_task.md
-    ├── temp
+    └── temp
     │   └── .gitkeep
-    └── todelete
-    │   ├── areas.json
-    │   ├── categories.json
-    │   ├── ingredients.json
-    │   ├── recipes.json
-    │   ├── testimonials.json
-    │   └── users.json

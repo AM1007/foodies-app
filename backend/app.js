@@ -7,6 +7,7 @@ import { connectToDatabase } from './db/sequelize.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 import swaggerConfig from './swaggerConfig.js';
+import './db/associations.js';
 
 // Імпорт маршрутів (будуть додані пізніше)
 import authRouter from './routes/authRouter.js';
@@ -39,13 +40,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Налаштування Swagger документації
-await swaggerConfig.setup(app);
+swaggerConfig.setup(app);
 
 // Підключення до бази даних
 connectToDatabase();
-
-// Підключення моделей та асоціацій
-import './db/associations.js';
 
 // Базовий маршрут для перевірки роботи API
 app.get('/', (req, res) => {
