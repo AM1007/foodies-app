@@ -27,7 +27,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS
-const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
+// const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000', 'http://localhost:5173'];
 
 // const corsOptions = {
 //   origin: function (origin, callback) {
@@ -44,13 +44,32 @@ const allowedOrigins = ['https://foodies-app-pke3.onrender.com', 'http://localho
 //   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 //   maxAge: 86400 // 24 години
 // };
-const corsOptions = {
-  origin: allowedOrigins,
-  credentials: true
-};
+// const corsOptions = {
+//   origin: allowedOrigins,
+//   credentials: true
+// };
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = ['http://localhost:5173', 'https://foodies-app-pke3.onrender.com',, 'http://localhost:3000'];
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  }
+
+  // Якщо preflight запит — одразу відповідь без продовження
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions));
 
 // Парсери для обробки JSON та URL-encoded даних
 app.use(express.json());
