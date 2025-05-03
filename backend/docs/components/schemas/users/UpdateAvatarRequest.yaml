@@ -1,8 +1,0 @@
-type: object
-properties:
-  avatar:
-    type: string
-    format: binary
-    description: Файл зображення для оновлення аватару користувача
-required:
-  - avatar

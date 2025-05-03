@@ -9,13 +9,14 @@
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build-docs",
-    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
-    "preview-docs": "redocly preview-docs",
+    "build-docs": "swagger-jsdoc -d ./swagger/swagger.js -o ./swagger/swagger.json",
+    "swagger": "swagger-ui-express -c ./swagger/swagger.json",
     "seed:users": "node scripts/seedUsers.js",
     "seed:recipes": "node scripts/seedRecipes.js",
     "seed:areas": "node scripts/seedAreas.js",
     "seed:categories": "node scripts/seedCategories.js",
-    "seed:ingredients": "node scripts/seedIngredients.js"
+    "seed:ingredients": "node scripts/seedIngredients.js",
+    "seed:testimonials": "node scripts/seedTestimonials.js"
   },
   "repository": {
     "type": "git",
