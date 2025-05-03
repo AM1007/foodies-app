@@ -24,23 +24,8 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 // Налаштування CORS с проверкой источника
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3173',
-  'https://your-production-frontend.com',
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Разрешить запросы без origin (например, мобильные приложения, REST-клиенты)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Blocked by CORS policy'));
-    }
-  },
+  origin: '*',
   credentials: true,
 };
 
