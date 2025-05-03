@@ -46,9 +46,9 @@ export default function CategoryList({ onCategoryClick }) {
         </div>
       ))}
 
-      <div className={styles.buttonWrap}>
+      {/* <div className={styles.buttonWrap}>
         <button className={styles.button}>ALL CATEGORIES</button>
-      </div>
+      </div> */}
     </div>
   );
 }
