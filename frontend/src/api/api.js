@@ -4,6 +4,7 @@ import axios from 'axios';
 const axiosAPI = axios.create({
   baseURL: 'https://foodies-app-pke3.onrender.com/api',
 });
+console.log('🌐 API baseURL configured as:', axiosAPI.defaults.baseURL);
 
 // Масив приватних ендпоінтів, які потребують авторизації
 const privateEndpoints = [
@@ -36,6 +37,7 @@ axiosAPI.interceptors.request.use(
     return config;
   },
   error => {
+    console.error('❌ Request Error:', error);
     return Promise.reject(error);
   },
 );
