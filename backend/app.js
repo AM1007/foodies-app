@@ -25,7 +25,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 const corsOptions = {
-  origin: '*',
+  origin: ['https://foodies-app-pke3.onrender.com', 'http://localhost:3000'],
   credentials: true,
 };
 
