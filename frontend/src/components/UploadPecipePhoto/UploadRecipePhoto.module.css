@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.photoUpload {
+  width: 100%;
+  max-width: 343px;
+  height: 318px;
+  border: 1px dashed var(--gray);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.uploadPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+}
+
+.cameraIcon {
+  width: 65px;
+  height: 64px;
+  border: 2px #BFBEBE;
+}
+
+.uploadText {
+  font-size: 14px;
+  color: var(--black);
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  text-decoration-line: underline;
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadedPhoto {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.recipeImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uploadAnotherBtn {
+  color: var(--black);
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  text-decoration-line: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 16px;
+  display: block;
+  text-align: center;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.errorMessage {
+  color: #e74a3b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .photoUpload {
+    max-width: 360px;
+    height: 330px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .photoUpload {
+    max-width: 400px;
+    height: 350px;
+  }
+}
