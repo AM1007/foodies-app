@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../api/api';
+import axiosAPI from '../../api/api';
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchAll',
   async ({ page, category, ingredient, region }, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/recipes', {
+      const response = await axiosAPI.get('/recipes', {
         params: { page, category, ingredient, region },
       });
       return response.data;
@@ -21,7 +21,7 @@ export const fetchRecipeDetails = createAsyncThunk(
   'recipes/fetchDetails',
   async (recipeId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/recipes/${recipeId}`);
+      const response = await axiosAPI.get(`/recipes/${recipeId}`);
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -35,7 +35,7 @@ export const fetchPopularRecipes = createAsyncThunk(
   'recipes/fetchPopular',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/recipes/popular');
+      const response = await axiosAPI.get('/recipes/popular');
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -49,7 +49,7 @@ export const createRecipe = createAsyncThunk(
   'recipes/create',
   async (recipeData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/recipes', recipeData);
+      const response = await axiosAPI.post('/recipes', recipeData);
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -63,7 +63,7 @@ export const deleteRecipe = createAsyncThunk(
   'recipes/delete',
   async (recipeId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/recipes/${recipeId}`);
+      await axiosAPI.delete(`/recipes/${recipeId}`);
       return recipeId;
     } catch (err) {
       return rejectWithValue(
@@ -77,7 +77,7 @@ export const fetchOwnRecipes = createAsyncThunk(
   'recipes/fetchOwn',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/recipes/own');
+      const response = await axiosAPI.get('/recipes/own');
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -91,7 +91,7 @@ export const addToFavorites = createAsyncThunk(
   'recipes/addToFavorites',
   async (recipeId, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`/recipes/${recipeId}/favorite`);
+      const response = await axiosAPI.post(`/recipes/${recipeId}/favorite`);
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -105,7 +105,7 @@ export const removeFromFavorites = createAsyncThunk(
   'recipes/removeFromFavorites',
   async (recipeId, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/recipes/${recipeId}/favorite`);
+      const response = await axiosAPI.delete(`/recipes/${recipeId}/favorite`);
       return response.data;
     } catch (err) {
       return rejectWithValue(
@@ -119,7 +119,7 @@ export const fetchFavoriteRecipes = createAsyncThunk(
   'recipes/fetchFavorites',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/recipes/favorites');
+      const response = await axiosAPI.get('/recipes/favorites');
       return response.data;
     } catch (err) {
       return rejectWithValue(
