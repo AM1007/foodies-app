@@ -1,3 +1,8 @@
+.categoryListContainer {
+  max-width: 343px;
+  margin: 0 auto;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -12,6 +17,8 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -20,10 +27,11 @@
 
 .image {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
+
 .buttonWrap {
   position: absolute;
   bottom: 16px;
@@ -40,7 +48,7 @@
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--black);
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -51,95 +59,84 @@
 
 .icon {
   flex-shrink: 0;
-  fill: var(--white);
-}
-
-.button {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 30px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.button:hover {
-  background: var(--white);
-}
-
-.small,
-.large,
-.allCategories {
-  width: 343px;
-  height: 250px;
-  border-radius: 20px;
+  stroke: var(--white);
+  fill: none;
+  width: 24px;
+  height: 24px;
 }
 
 .allCategories {
-  background-color: #050505;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--black);
+  color: var(--white);
   font-size: 18px;
   font-weight: 600;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 20px;
+  aspect-ratio: 1 / 1;
 }
 
-@media (min-width: 768px) and (max-width: 1439px) {
+@media screen and (min-width: 768px) {
+  .categoryListContainer {
+    max-width: 704px;
+  }
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(342px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .grid > .card:nth-child(3),
+  .grid > .card:nth-child(8) {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
+  }
+  .icon {
+    width: 44px;
+    height: 44px;
+  }
+  .buttonWrap {
+    bottom: 24px;
+    left: 24px;
+    gap: 4px;
+  }
+  .allCategories {
+    font-size: 20px;
+    border-radius: 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .categoryListContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     gap: 20px;
   }
 
   .card {
+    grid-column: span 4;
+    height: 369px;
+  }
+
+  .grid > .card:nth-child(3),
+  .grid > .card:nth-child(4),
+  .grid > .card:nth-child(8),
+  .grid > .card:nth-child(10) {
+    grid-column: span 8;
+  }
+
+  .image {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .allCategories {
+    font-size: 20px;
     border-radius: 30px;
-  }
-
-  .small {
-    width: 342px;
-    height: 369px;
-  }
-
-  .large {
-    width: 704px;
-    height: 369px;
-  }
-
-  .allCategories {
-    width: 342px;
-    height: 369px;
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
-    gap: 20px;
-  }
-
-  .small {
-    width: 325px;
-    height: 369px;
-  }
-
-  .large {
-    width: 590px;
-    height: 369px;
-  }
-
-  .allCategories {
-    width: 325px;
-    height: 369px;
-    font-size: 20px;
   }
 }

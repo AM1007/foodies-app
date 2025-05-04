@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import MainTitle from '../../ui/MainTitle/MainTitle';
-import Subtitle from '../../ui/SubTitle/Subtitle';
+import Subtitle from '../../ui/SubTitle/SubTitle';
 import CategoryList from '../../CategoryList/CategoryList';
-import Recipes from '../../RecipeInfo/RecipeInfo';
+// import Recipes from '../../RecipeInfo/RecipeInfo';
 import styles from './Categories.module.css';
 
 export default function Categories() {

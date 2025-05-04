@@ -30,7 +30,8 @@ application. It allows users to:
 
 ## 🔑 Key Features
 
-- **User Authentication**: Registration, login, logout, and token refresh
+- **User Authentication**: Registration with automatic authentication, login,
+  logout, and token refresh
 - **User Profiles**: View user details, update avatars, follow/unfollow users
 - **Recipe Management**: Create, search, and delete recipes
 - **Social Features**: Follow other users, favorite recipes

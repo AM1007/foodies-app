@@ -1,4 +1,4 @@
- ├── .env.example
+  ├── .env.example
     ├── .gitignore
     ├── API_DOCUMENTATION.md
     ├── DATABASE.md
@@ -83,6 +83,19 @@
     │   ├── recipesServices.js
     │   ├── testimonialServices.js
     │   └── usersServices.js
+    ├── swagger
+    │   ├── definitions
+    │   │   └── auth.js
+    │   ├── index.js
+    │   ├── schemas
+    │   │   ├── area.js
+    │   │   ├── category.js
+    │   │   ├── components.js
+    │   │   ├── ingredient.js
+    │   │   ├── recipe.js
+    │   │   ├── testimonial.js
+    │   │   └── user.js
+    │   └── swagger.js
     ├── tech_task.md
     └── temp
     │   └── .gitkeep

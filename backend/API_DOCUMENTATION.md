@@ -38,7 +38,9 @@ Register a new user in the system.
     "name": "Ivan Petrenko",
     "email": "ivan@example.com",
     "avatar": "https://www.gravatar.com/avatar/abc123"
-  }
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 

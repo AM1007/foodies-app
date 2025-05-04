@@ -7,7 +7,14 @@ const signUpController = async (req, res) => {
 
   res.status(HTTP_STATUS.CREATED).json({
     message: 'Registration successful',
-    user,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+    },
+    token: user.token,
+    refreshToken: user.refreshToken,
   });
 };
 

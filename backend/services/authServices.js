@@ -13,19 +13,15 @@ const findUser = async query => await User.findOne({ where: query });
 const registerUser = async userData => {
   const { email, password, name } = userData;
 
-  // Перевіряємо чи існує користувач з таким email
   const existingUser = await findUser({ email });
   if (existingUser) {
     throw HttpError(HTTP_STATUS.CONFLICT, 'Email already in use');
   }
 
-  // Створюємо хеш пароля
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Отримуємо аватар з gravatar
   const avatarURL = gravatar.url(email, { s: '250', d: 'mp' }, true);
 
-  // Створюємо нового користувача
   const newUser = await User.create({
     name,
     email,
@@ -33,11 +29,19 @@ const registerUser = async userData => {
     avatar: avatarURL,
   });
 
+  const payload = { email };
+  const token = jwtHelpers.generateToken(payload);
+  const refreshToken = jwtHelpers.generateToken(payload, '7d');
+
+  await newUser.update({ token, refreshToken });
+
   return {
     id: newUser.id,
     name: newUser.name,
     email: newUser.email,
     avatar: newUser.avatar,
+    token,
+    refreshToken,
   };
 };
 
@@ -54,9 +58,7 @@ const signInUser = async userData => {
     throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
 
-  // Check if user already has a valid token
   if (user.token) {
-    // Verify if the token is still valid
     const { error } = jwtHelpers.verifyToken(user.token);
     if (!error) {
       throw HttpError(HTTP_STATUS.CONFLICT, 'User already logged in');
