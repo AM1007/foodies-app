@@ -6,9 +6,7 @@ import 'modern-normalize';
 import './index.css';
 import App from './App.jsx';
 import { ModalProvider } from './context/ModalProvider.jsx';
-
 import store from '../src/redux/store.js';
-console.log('Redux store initialized:', store);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

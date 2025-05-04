@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../api/api';
+import axiosAPI from '../../api/api';
 
 export const fetchCurrentUser = createAsyncThunk(
   'user/fetchCurrentUser',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get('/users/current');
+      const res = await axiosAPI.get('/users/current');
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -19,7 +19,7 @@ export const fetchUserById = createAsyncThunk(
   'user/fetchUserById',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`/users/${userId}`);
+      const res = await axiosAPI.get(`/users/${userId}`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -33,7 +33,7 @@ export const updateUserAvatar = createAsyncThunk(
   'user/updateUserAvatar',
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.patch('/users/avatar', formData, {
+      const res = await axiosAPI.patch('/users/avatar', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return res.data;
@@ -49,7 +49,7 @@ export const fetchFollowers = createAsyncThunk(
   'user/fetchFollowers',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`/users/${userId}/followers`);
+      const res = await axiosAPI.get(`/users/${userId}/followers`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -63,7 +63,7 @@ export const fetchFollowing = createAsyncThunk(
   'user/fetchFollowing',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`/users/${userId}/following`);
+      const res = await axiosAPI.get(`/users/${userId}/following`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -77,7 +77,7 @@ export const followUser = createAsyncThunk(
   'user/followUser',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`/users/${userId}/follow`);
+      const res = await axiosAPI.post(`/users/${userId}/follow`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -91,7 +91,7 @@ export const unfollowUser = createAsyncThunk(
   'user/unfollowUser',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(`/users/${userId}/follow`);
+      const res = await axiosAPI.delete(`/users/${userId}/follow`);
       return res.data;
     } catch (err) {
       return rejectWithValue(

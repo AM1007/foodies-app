@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../api/api';
+import axiosAPI from '../../api/api';
 
 export const fetchTestimonials = createAsyncThunk(
   'testimonials/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/testimonials');
+      const response = await axiosAPI.get('/testimonials');
       return response.data;
     } catch (err) {
       return rejectWithValue(
