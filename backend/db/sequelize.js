@@ -5,12 +5,10 @@ dotenv.config();
 
 let sequelize;
 
-// Перевірка наявності змінної INTERNAL_DATABASE_URL
 if (
   process.env.NODE_ENV === 'production' &&
   process.env.INTERNAL_DATABASE_URL
 ) {
-  // Використовувати внутрішню URL для виробничого середовища
   sequelize = new Sequelize(process.env.INTERNAL_DATABASE_URL, {
     dialect: 'postgres',
     dialectOptions: {
@@ -23,9 +21,8 @@ if (
   });
   console.log('Using internal database URL for production');
 } else {
-  // Використовувати звичайні параметри для локального середовища
   sequelize = new Sequelize({
-    dialect: process.env.DATABASE_DIALECT,
+    dialect: process.env.DATABASE_DIALECT || 'postgres',
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     host: process.env.DATABASE_HOST,
