@@ -119,3 +119,13 @@
     padding: 16px 0;
   }
 }
+
+.custom-success-toast {
+  background-color: #2ecc71 !important;
+  color: white !important;
+}
+
+.custom-error-toast {
+  background-color: #e74c3c !important;
+  color: white !important;
+}
