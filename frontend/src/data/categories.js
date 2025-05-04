@@ -14,3 +14,4 @@ const categories = [
   { name: 'Side', image: '/image/categories/Side_1x-min.png' },
   { name: 'Starter', image: '/image/categories/Starter_1x-min.png' },
 ];
+export default categories;
