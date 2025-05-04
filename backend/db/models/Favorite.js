@@ -4,7 +4,7 @@ import sequelize from '../sequelize.js';
 const Favorite = sequelize.define(
   'Favorite',
   {
-    // Цей модель буде використовуватися як проміжна таблиця
+    // Ця модель буде використовуватися як проміжна таблиця
     // і матиме лише зв'язки з User та Recipe
   },
   {

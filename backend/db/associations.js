@@ -8,19 +8,15 @@ import Testimonial from './models/Testimonial.js';
 import Favorite from './models/Favorite.js';
 import Follower from './models/Follower.js';
 
-// Зв'язок User - Recipe (один користувач має багато рецептів)
 User.hasMany(Recipe, { foreignKey: 'owner', as: 'recipes' });
 Recipe.belongsTo(User, { foreignKey: 'owner', as: 'user' });
 
-// Зв'язок Category - Recipe (одна категорія має багато рецептів)
 Category.hasMany(Recipe, { foreignKey: 'categoryId', as: 'recipes' });
 Recipe.belongsTo(Category, { foreignKey: 'categoryId', as: 'category' });
 
-// Зв'язок Area - Recipe (один регіон має багато рецептів)
 Area.hasMany(Recipe, { foreignKey: 'areaId', as: 'recipes' });
 Recipe.belongsTo(Area, { foreignKey: 'areaId', as: 'area' });
 
-// Зв'язок Recipe - Ingredient (багато до багатьох)
 Recipe.belongsToMany(Ingredient, {
   through: RecipeIngredient,
   foreignKey: 'recipeId',
@@ -32,7 +28,6 @@ Ingredient.belongsToMany(Recipe, {
   as: 'recipes',
 });
 
-// Зв'язок User - Favorite (улюблені рецепти)
 User.belongsToMany(Recipe, {
   through: Favorite,
   foreignKey: 'userId',
@@ -44,7 +39,6 @@ Recipe.belongsToMany(User, {
   as: 'favoritedBy',
 });
 
-// Зв'язок User - Follower (підписники)
 User.belongsToMany(User, {
   through: Follower,
   foreignKey: 'followerId',
@@ -58,7 +52,6 @@ User.belongsToMany(User, {
   otherKey: 'followerId',
 });
 
-// Зв'язок User - Testimonial
 User.hasMany(Testimonial, { foreignKey: 'owner', as: 'testimonials' });
 Testimonial.belongsTo(User, { foreignKey: 'owner', as: 'user' });
 
