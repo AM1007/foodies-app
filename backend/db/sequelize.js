@@ -52,6 +52,7 @@ async function connectToDatabase() {
 export { connectToDatabase };
 export default sequelize;
 
+// temporary commit
 // ===========================================
 
 // import { Sequelize } from 'sequelize';
