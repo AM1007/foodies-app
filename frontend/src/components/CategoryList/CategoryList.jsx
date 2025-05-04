@@ -1,5 +1,6 @@
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
+import icons from '../../icons/sprite.svg';
 
 export default function CategoryList({ onCategoryClick }) {
   return (
@@ -20,7 +21,7 @@ export default function CategoryList({ onCategoryClick }) {
               <div className={styles.buttonWrap}>
                 <button className={styles.button}>{cat.name}</button>
                 <svg width="24" height="24" className={styles.icon}>
-                  <use href="/icons/sprite.svg#arrow-up-right"></use>
+                  <use href={`${icons}#arrow-up-right`} />
                 </svg>
               </div>
             </div>
