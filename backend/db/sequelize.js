@@ -3,31 +3,90 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Додаємо логіку повторних спроб
+const MAX_RETRIES = 5;
+const RETRY_INTERVAL = 5000; // 5 секунд
+
 const sequelize = new Sequelize({
   dialect: process.env.DATABASE_DIALECT || 'postgres',
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   host: process.env.DATABASE_HOST,
   database: process.env.DATABASE_NAME,
-  port: process.env.DATABASE_PORT,
+  port: process.env.DATABASE_PORT || 5432,
   dialectOptions: {
     ssl: {
-      require: true,
-      rejectUnauthorized: false,
+      require: true, // SSL завжди потрібен для Render
+      rejectUnauthorized: false, // Важливо для Render
     },
   },
-  logging: true,
+  logging: process.env.NODE_ENV === 'production' ? false : console.log,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
-async function connectToDatabase() {
+async function connectToDatabase(retryCount = 0) {
   try {
     await sequelize.authenticate();
     console.log('Database connection successful');
+    return true;
   } catch (error) {
-    console.error('Database connection error:', error);
-    process.exit(1);
+    console.error('Database connection error:', error.message);
+
+    if (retryCount < MAX_RETRIES) {
+      console.log(
+        `Retrying connection in ${RETRY_INTERVAL / 1000}s... (${
+          retryCount + 1
+        }/${MAX_RETRIES})`,
+      );
+      await new Promise(resolve => setTimeout(resolve, RETRY_INTERVAL));
+      return connectToDatabase(retryCount + 1);
+    } else {
+      console.error('Max retries reached. Could not connect to database.');
+      // Не завершуємо процес, дозволяємо серверу запуститися для API endpoints, які не потребують DB
+      return false;
+    }
   }
 }
 
 export { connectToDatabase };
 export default sequelize;
+
+// ====================================================
+// import { Sequelize } from 'sequelize';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
+
+// const sequelize = new Sequelize({
+//   dialect: process.env.DATABASE_DIALECT || 'postgres',
+//   username: process.env.DATABASE_USERNAME,
+//   password: process.env.DATABASE_PASSWORD,
+//   host: process.env.DATABASE_HOST,
+//   database: process.env.DATABASE_NAME,
+//   port: process.env.DATABASE_PORT,
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//       rejectUnauthorized: false,
+//     },
+//   },
+//   logging: true,
+// });
+
+// async function connectToDatabase() {
+//   try {
+//     await sequelize.authenticate();
+//     console.log('Database connection successful');
+//   } catch (error) {
+//     console.error('Database connection error:', error);
+//     process.exit(1);
+//   }
+// }
+
+// export { connectToDatabase };
+// export default sequelize;
