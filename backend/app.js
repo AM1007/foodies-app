@@ -36,23 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// connectToDatabase();
-try {
-  await connectToDatabase().then(connected => {
-    if (connected) {
-      console.log('Database connection established successfully');
-    } else {
-      console.warn(
-        'Application starting without database connection. Some features will be unavailable.',
-      );
-    }
-  });
-} catch (error) {
-  console.error('Failed to initialize database connection:', error);
-  console.warn(
-    'Application starting without database connection. Some features will be unavailable.',
-  );
-}
+connectToDatabase();
 
 const swaggerSpec = swaggerConfig();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -85,7 +69,7 @@ app.listen(port, () => {
   console.log(
     chalk.cyan(
       `📚 API Documentation available at ${chalk.underline(
-        `${process.env.APP_DOMAIN || `http://localhost:${port}`}/api-docs`,
+        `http://localhost:${port}/api-docs`,
       )}`,
     ),
   );
