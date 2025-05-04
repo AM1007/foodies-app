@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './DropdownSelector.module.css';
+import icons from '../../../icons/sprite.svg';
 
 const DropdownSelector = ({
   label,
@@ -9,7 +10,7 @@ const DropdownSelector = ({
   placeholder = '',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isPlaceholderActive, setIsPlaceholderActive] = useState(true);  // Додаємо стан для активності placeholder
+  const [isPlaceholderActive, setIsPlaceholderActive] = useState(true); 
   const dropdownRef = useRef(null); 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const DropdownSelector = ({
   const handleSelect = (val) => {
     onChange(val);
     setIsOpen(false);
-    setIsPlaceholderActive(false);  // Після вибору колір placeholder змінюється
+    setIsPlaceholderActive(false); 
   };
 
   const selectedOption =
@@ -48,8 +49,8 @@ const DropdownSelector = ({
         >
           {selectedOption}
           <span className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ''}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none">
-              <path d="M4.5 6.75L9 11.25L13.5 6.75" />
+            <svg  fill="none">
+              <use href={`${icons}#down`} />
             </svg>
           </span>
         </div>

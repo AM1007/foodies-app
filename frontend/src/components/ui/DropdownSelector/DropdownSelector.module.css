@@ -56,8 +56,10 @@
 }
 
 .dropdown {
+  max-height: calc(2rem * 10);
+  overflow-y: auto;
   position: absolute;
-  top: 40px;
+  top: 48px;
   left: 0;
   background: var(--white);
   border: 1px solid var(--gray);
@@ -75,19 +77,4 @@
   letter-spacing: -0.28px;
   cursor: pointer;
   padding: 4px 0;
-}
-
-/* Медіа-запити, якщо використовуєш кнопки чи окремі значення часу */
-@media screen and (min-width: 768px) {
-  .timeButton {
-    width: 56px;
-    height: 56px;
-  }
-
-  .timeValue {
-    margin: 0 16px;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.32px;
-  }
 }

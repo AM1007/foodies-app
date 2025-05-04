@@ -1,91 +1,31 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .active {
   color: var(--black);
 }
 
-.photoUpload {
-  width: 100%;
-  max-width: 343px;
-  height: 318px;
-  border: 1px dashed var(--gray);
-  border-radius: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.uploadPlaceholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  gap: 8px;
-}
-
-.cameraIcon {
-  width: 50px;
-  height: 50px;
-}
-
-.uploadAnotherBtn {
-  color: var(--black);
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.28px;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: auto;
-  text-underline-offset: auto;
-  text-underline-position: from-font;
-
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-
-
-.uploadText {
-  font-size: 14px;
-  color: var(--black);
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: auto;
-  text-underline-offset: auto;
-}
-
-.fileInput {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-
 .formGroup {
   padding-top: 8px;
+  margin-bottom: 24px;
+  width: 100%;
+  display: block;
+  align-items: center;
+    justify-content: center
 }
 
 .formWrapper {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
   padding-top: 32px;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 .label {
@@ -99,14 +39,52 @@
 }
 
 .nameLabel {
+  width: 100%;
+  max-width: 343px;
+  color: var(--black);
+  margin: 24px 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.43;
+  letter-spacing: -0.32px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  display: block;
+  resize: vertical;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.nameWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.nameTextarea::placeholder {
   color: var(--gray);
-  margin: 32px 0;
+  font-weight: 700;
+  opacity: 0.8;
 }
 
 .inputWrapper {
   position: relative;
   width: 100%;
+  max-width: 343px;
   border-bottom: 1px solid var(--gray);
+}
+.form h3{
+  display: none;
+}
+.errorInput {
+  border-bottom: 1px solid #e74a3b !important;
+}
+
+.errorMessage {
+  color: #e74a3b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 .textarea {
@@ -119,7 +97,22 @@
   background: transparent;
   border: none;
   outline: none;
+  color: var(--black);
+  padding: 8px 0;
+  min-height: 40px;
+}
+
+.input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--gray);
+  padding: 8px 0;
 }
 
 .charCount {
@@ -129,30 +122,36 @@
   font-size: 14px;
   color: var(--gray);
 }
-
-.selectWrapper {
-  position: relative;
-  width: 100%;
+.charCountTitle {
+  display: none;
 }
 
-.select {
+.selectContainer, 
+.timeContainer, 
+.ingredientsContainer {
   width: 100%;
-  padding: 14px;
-  border: 1px solid var(--gray);
-  border-radius: 30px;
+  margin-bottom: 16px;
+}
+
+.quantityInputContainer {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid var(--gray);
+}
+
+.quantityInput {
+  width: 100%;
+  max-width: 343px;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.43;
   letter-spacing: -0.28px;
-  color: var(--gray);
-  appearance: none;
-}
-
-.ingredientInputs {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--black);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray);
 }
 
 .addIngredientButton {
@@ -160,54 +159,105 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-
   padding: 14px 20px;
-  width: auto;
-
-  background-color: white;
-  border: 1px solid #BFBEBE;
+  width: fit-content;
+  background-color: var(--white);
+  border: 1px solid var(--gray);
   border-radius: 30px;
-
-  font-family: 'Mulish', sans-serif;
   font-size: 14px;
-  font-style: normal;
   font-weight: 700;
   line-height: 20px;
   letter-spacing: -0.28px;
   text-transform: uppercase;
-
-  color: #050505;
+  color: var(--black);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  margin-bottom: 24px;
+}
+
+.addIngredientButton:hover {
+  background-color: var(--white);
+}
+
+.addIngredientButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .plusIcon {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.selectedIngredients {
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.selectedIngredients h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.ingredientsList {
   display: flex;
-  width: 20px;
-  height: 20px;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.ingredientItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: var(--white);
+  border-radius: 8px;
+}
+
+.ingredientName {
+  font-weight: 500;
+  color:var(--black);
+}
+
+.ingredientAmount {
+  color: var(--gray);
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+.removeIngredientBtn {
+  background: none;
+  border: none;
+  color: #e74a3b;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.removeIngredientBtn:hover {
+  background-color: rgba(231, 74, 59, 0.1);
+}
+
+.hide-title h3 {
+  display: none !important;
 }
 
 .actionsGroup {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
-}
-
-.resetButton {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  cursor: pointer;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .publishButton {
   background-color: #222;
-  color: white;
+  color:var(--white);
   border: none;
   border-radius: 24px;
   padding: 12px 24px;
@@ -215,39 +265,52 @@
   font-weight: bold;
   cursor: pointer;
   text-transform: uppercase;
+  transition: background-color 0.2s ease;
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 0;
-  border-top: 1px solid #eee;
+.publishButton:hover {
+  background-color: var(--black);
 }
 
-.footerLogo {
-  font-size: 18px;
-  font-weight: bold;
+.publishButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #666;
 }
 
-.socialLinks {
-  display: flex;
-  gap: 16px;
+/* Стилі для адаптивності */
+@media (min-width: 768px) {
+  .formWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .selectContainer {
+    grid-column: 1 / 2;
+  }
+
+  .timeContainer {
+    grid-column: 2 / 3;
+  }
+
+  .ingredientsContainer {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .ingredientsList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 
-.socialLink {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.copyright {
-  text-align: center;
-  font-size: 12px;
-  color: #999;
-  padding-bottom: 24px;
+@media (min-width: 1440px) {
+  .ingredientsList {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
