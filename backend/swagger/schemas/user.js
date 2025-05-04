@@ -73,6 +73,105 @@
  *           description: URL-адреса аватару користувача
  *           example: "https://example.com/avatars/ivan.jpg"
  *
+ *     RegisterUserRequest:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Ім'я користувача
+ *           example: "Іван Петренко"
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Електронна пошта користувача
+ *           example: "ivan@example.com"
+ *         password:
+ *           type: string
+ *           format: password
+ *           description: Пароль користувача
+ *           example: "password123"
+ *
+ *     RegisterResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           description: Повідомлення про успішну реєстрацію
+ *           example: "Registration successful"
+ *         user:
+ *           $ref: '#/components/schemas/UserResponse'
+ *         token:
+ *           type: string
+ *           description: JWT токен для аутентифікації
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *         refreshToken:
+ *           type: string
+ *           description: Токен для оновлення JWT токену
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *
+ *     LoginRequest:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Електронна пошта користувача
+ *           example: "ivan@example.com"
+ *         password:
+ *           type: string
+ *           format: password
+ *           description: Пароль користувача
+ *           example: "password123"
+ *
+ *     LoginResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: JWT токен для аутентифікації
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *         refreshToken:
+ *           type: string
+ *           description: Токен для оновлення JWT токену
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *         user:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: integer
+ *               description: Унікальний ідентифікатор користувача
+ *               example: 1
+ *             email:
+ *               type: string
+ *               format: email
+ *               description: Електронна пошта користувача
+ *               example: "ivan@example.com"
+ *
+ *     RefreshTokenRequest:
+ *       type: object
+ *       required:
+ *         - refreshToken
+ *       properties:
+ *         refreshToken:
+ *           type: string
+ *           description: Токен для оновлення JWT токену
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *
+ *     RefreshTokenResponse:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: Новий JWT токен для аутентифікації
+ *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *
  *     UserDetailedResponse:
  *       type: object
  *       properties:

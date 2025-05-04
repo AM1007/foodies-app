@@ -10,6 +10,37 @@ const { User } = models;
 
 const findUser = async query => await User.findOne({ where: query });
 
+// const registerUser = async userData => {
+//   const { email, password, name } = userData;
+
+//   // Перевіряємо чи існує користувач з таким email
+//   const existingUser = await findUser({ email });
+//   if (existingUser) {
+//     throw HttpError(HTTP_STATUS.CONFLICT, 'Email already in use');
+//   }
+
+//   // Створюємо хеш пароля
+//   const hashedPassword = await bcrypt.hash(password, 10);
+
+//   // Отримуємо аватар з gravatar
+//   const avatarURL = gravatar.url(email, { s: '250', d: 'mp' }, true);
+
+//   // Створюємо нового користувача
+//   const newUser = await User.create({
+//     name,
+//     email,
+//     password: hashedPassword,
+//     avatar: avatarURL,
+//   });
+
+//   return {
+//     id: newUser.id,
+//     name: newUser.name,
+//     email: newUser.email,
+//     avatar: newUser.avatar,
+//   };
+// };
+
 const registerUser = async userData => {
   const { email, password, name } = userData;
 
@@ -33,11 +64,21 @@ const registerUser = async userData => {
     avatar: avatarURL,
   });
 
+  // Генеруємо токени для нового користувача
+  const payload = { email };
+  const token = jwtHelpers.generateToken(payload);
+  const refreshToken = jwtHelpers.generateToken(payload, '7d');
+
+  // Оновлюємо користувача з новими токенами
+  await newUser.update({ token, refreshToken });
+
   return {
     id: newUser.id,
     name: newUser.name,
     email: newUser.email,
     avatar: newUser.avatar,
+    token,
+    refreshToken,
   };
 };
 
