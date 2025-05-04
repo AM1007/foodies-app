@@ -9,7 +9,11 @@ export default function CategoryList({ onCategoryClick }) {
           {categories.map(cat => (
             <div
               key={cat.name}
-              className={styles.card}
+              className={`
+                ${styles.card} 
+                ${cat.isWideTablet ? styles.tabletWide : ''} 
+                ${cat.isWideDesktop ? styles.desktopWide : ''}
+              `}
               onClick={() => onCategoryClick(cat.name)}
             >
               <img src={cat.image} alt={cat.name} className={styles.image} />
