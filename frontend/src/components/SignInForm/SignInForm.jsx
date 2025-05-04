@@ -6,6 +6,8 @@ import { loginUser, resetAuthError } from '../../redux/users/authSlice';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const SignInForm = ({ onSuccess }) => {
   console.log(12);
@@ -18,8 +20,15 @@ const SignInForm = ({ onSuccess }) => {
 
   useEffect(() => {
     if (isAuthenticated && onSuccess) {
-      console.log('✅ Login successful! User is authenticated.');
-      onSuccess();
+      iziToast.success({
+        title: 'Success',
+        message: 'You have successfully signed in!',
+        position: 'topRight',
+        class: 'custom-success-toast',
+      });
+      setTimeout(() => {
+        onSuccess();
+      }, 1000); // 1 секунда
     }
   }, [isAuthenticated, onSuccess]);
 
@@ -41,6 +50,12 @@ const SignInForm = ({ onSuccess }) => {
       console.log('✅ Login API call successful');
     } catch (error) {
       console.log('❌ Login failed:', error);
+      iziToast.error({
+        title: 'Login failed',
+        message: error.message || 'Something went wrong',
+        position: 'topRight',
+        class: 'custom-error-toast',
+      });
     } finally {
       setSubmitting(false);
     }
