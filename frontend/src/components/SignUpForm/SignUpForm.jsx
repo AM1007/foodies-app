@@ -6,25 +6,30 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Button from '../Button/Button.jsx';
 import styles from './SignUpForm.module.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-/**
- * SignUpForm using Formik for form state and Yup for validation
- * Props:
- * - onSuccess: callback after successful registration (e.g., close modal)
- */
 export default function SignUpForm({ onSuccess }) {
   const dispatch = useDispatch();
   const { loading, error } = useSelector(state => state.auth);
 
-  // Generate stable IDs for accessibility
   const nameId = useId();
   const emailId = useId();
   const passwordId = useId();
 
-  // Clear auth errors on unmount
   useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
 
-  // Validation schema
+  useEffect(() => {
+    if (error) {
+      iziToast.error({
+        title: 'Error',
+        message: error,
+        position: 'topRight',
+        class: 'custom-error-toast',
+      });
+    }
+  }, [error]);
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, 'Name must be at least 2 characters')
@@ -37,13 +42,24 @@ export default function SignUpForm({ onSuccess }) {
       .required('Password is required'),
   });
 
-  // Form submit handler
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await dispatch(registerUser(values)).unwrap();
+      iziToast.success({
+        title: 'Success',
+        message: 'You have successfully signed in!',
+        position: 'topRight',
+        class: 'custom-success-toast',
+      });
       onSuccess();
     } catch {
       // Server error stored in state.auth.error
+      iziToast.error({
+        title: 'Error',
+        message: error,
+        position: 'topRight',
+        class: 'custom-error-toast',
+      });
     } finally {
       setSubmitting(false);
     }
