@@ -15,15 +15,9 @@ const {
   sequelize,
 } = models;
 
-/**
- * Search for recipes with filters and pagination
- * @param {Object} query - Query parameters
- * @returns {Object} Recipes with pagination metadata
- */
 const getAllRecipes = async (query = {}) => {
   const { title, category, area, ingredient, time, sort } = query;
 
-  // Prepare filter conditions
   const whereConditions = {};
   const includeOptions = [
     { model: Category, as: 'category' },
@@ -31,27 +25,22 @@ const getAllRecipes = async (query = {}) => {
     { model: User, as: 'user', attributes: ['id', 'name', 'email', 'avatar'] },
   ];
 
-  // Add category filter if provided (per the requirements)
   if (category) {
     whereConditions.categoryId = category;
   }
 
-  // Add area filter if provided (per the requirements)
   if (area) {
     whereConditions.areaId = area;
   }
 
-  // Add title filter if provided (additional feature)
   if (title) {
     whereConditions.title = { [Op.iLike]: `%${title}%` };
   }
 
-  // Add time filter if provided (additional feature)
   if (time) {
     whereConditions.time = { [Op.lte]: time };
   }
 
-  // Add ingredient filter if provided (per the requirements)
   if (ingredient) {
     includeOptions.push({
       model: Ingredient,
@@ -67,22 +56,18 @@ const getAllRecipes = async (query = {}) => {
     });
   }
 
-  // Handle sorting
   const order = [];
   if (sort) {
     const sortDirection = sort.startsWith('-') ? 'DESC' : 'ASC';
     const sortField = sort.startsWith('-') ? sort.substring(1) : sort;
     order.push([sortField, sortDirection]);
   } else {
-    // Default sort by createdAt descending (newest first)
     order.push(['createdAt', 'DESC']);
   }
 
-  // Get pagination options
   const { limit, offset } = paginationHelper.getPaginationOptions(query);
 
   try {
-    // Get recipes with filters and pagination
     const result = await Recipe.findAndCountAll({
       where: whereConditions,
       include: includeOptions,
@@ -92,22 +77,14 @@ const getAllRecipes = async (query = {}) => {
       distinct: true,
     });
 
-    // Format response with pagination metadata
     return paginationHelper.paginateResponse(result, query);
   } catch (error) {
-    // Log the error for debugging
     console.error('Error fetching recipes:', error);
 
-    // Re-throw the error to be handled by the controller wrapper
     throw error;
   }
 };
 
-/**
- * Get detailed recipe information by ID
- * @param {number|string} recipeId - ID of the recipe to retrieve
- * @returns {Object} Recipe with detailed information
- */
 const getRecipeById = async recipeId => {
   try {
     const recipe = await Recipe.findByPk(Number(recipeId), {
@@ -133,15 +110,12 @@ const getRecipeById = async recipeId => {
 
     return recipe;
   } catch (error) {
-    // If error is already an HttpError, rethrow it
     if (error.status) {
       throw error;
     }
 
-    // Log original error for debugging
     console.error('Error fetching recipe by ID:', error);
 
-    // Convert to appropriate HTTP error
     throw HttpError(
       HTTP_STATUS.INTERNAL_SERVER_ERROR,
       'Failed to retrieve recipe',
@@ -194,11 +168,8 @@ const getPopularRecipes = async (query = {}) => {
   const { limit, offset } = paginationHelper.getPaginationOptions(query);
 
   try {
-    // Получаем общее количество рецептов
     const count = await Recipe.count();
 
-    // Получаем последние добавленные рецепты
-    // Это будет наше запасное решение, которое гарантированно работает
     const recipes = await Recipe.findAll({
       include: [
         { model: Category, as: 'category' },
@@ -218,7 +189,6 @@ const getPopularRecipes = async (query = {}) => {
       `Successfully fetched ${recipes.length} recipes for popular recipes endpoint`,
     );
 
-    // Добавим комментарий о том, что на данный момент мы не сортируем по популярности
     console.log(
       'Note: Currently returning recent recipes instead of sorting by popularity due to database constraints',
     );
@@ -273,14 +243,12 @@ const createRecipe = async (recipeData, userId, files = {}) => {
 };
 
 const deleteRecipe = async (recipeId, userId) => {
-  // Находим рецепт и проверяем его существование
   const recipe = await Recipe.findByPk(recipeId);
 
   if (!recipe) {
     throw HttpError(HTTP_STATUS.NOT_FOUND, 'Recipe not found');
   }
 
-  // Проверяем, является ли пользователь владельцем рецепта
   if (recipe.owner !== userId) {
     throw HttpError(
       HTTP_STATUS.FORBIDDEN,
@@ -289,12 +257,10 @@ const deleteRecipe = async (recipeId, userId) => {
   }
 
   try {
-    // Сначала удаляем связанные записи в RecipeIngredient
     await RecipeIngredient.destroy({
       where: { recipeId },
     });
 
-    // Затем удаляем сам рецепт
     await recipe.destroy();
 
     return { message: 'Recipe deleted successfully' };
@@ -307,16 +273,9 @@ const deleteRecipe = async (recipeId, userId) => {
   }
 };
 
-/**
- * Get recipes created by the user
- * @param {number} userId - ID of the user
- * @param {Object} query - Query parameters for pagination and filtering
- * @returns {Object} User's recipes with pagination metadata
- */
 const getUserRecipes = async (userId, query = {}) => {
   const { title, category, area, time, sort } = query;
 
-  // Prepare filter conditions - always filter by owner
   const whereConditions = {
     owner: userId,
   };
@@ -331,42 +290,34 @@ const getUserRecipes = async (userId, query = {}) => {
     },
   ];
 
-  // Add title filter if provided
   if (title) {
     whereConditions.title = { [Op.iLike]: `%${title}%` };
   }
 
-  // Add category filter if provided
   if (category) {
     whereConditions.categoryId = category;
   }
 
-  // Add area filter if provided
   if (area) {
     whereConditions.areaId = area;
   }
 
-  // Add time filter if provided
   if (time) {
     whereConditions.time = { [Op.lte]: time };
   }
 
-  // Handle sorting
   const order = [];
   if (sort) {
     const sortDirection = sort.startsWith('-') ? 'DESC' : 'ASC';
     const sortField = sort.startsWith('-') ? sort.substring(1) : sort;
     order.push([sortField, sortDirection]);
   } else {
-    // Default sort by createdAt descending (newest first)
     order.push(['createdAt', 'DESC']);
   }
 
-  // Get pagination options
   const { limit, offset } = paginationHelper.getPaginationOptions(query);
 
   try {
-    // Get recipes with filters and pagination
     const result = await Recipe.findAndCountAll({
       where: whereConditions,
       include: includeOptions,
@@ -376,7 +327,6 @@ const getUserRecipes = async (userId, query = {}) => {
       distinct: true,
     });
 
-    // Format response with pagination metadata
     return paginationHelper.paginateResponse(result, query);
   } catch (error) {
     console.error('Error fetching user recipes:', error);

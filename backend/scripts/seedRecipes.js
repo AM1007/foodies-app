@@ -13,22 +13,17 @@ import sequelize from '../db/sequelize.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Мапінг для збереження відповідності між MongoDB ID і SQL ID
 const recipeIdMap = {};
 
 async function migrateRecipes() {
   try {
-    // Підключення до бази даних
     await connectToDatabase();
 
-    // Очищення таблиць і скидання автоінкременту
     await RecipeIngredient.destroy({ where: {}, force: true });
     await Recipe.destroy({ where: {}, force: true });
 
-    // Скидання послідовностей (для PostgreSQL)
     await sequelize.query('ALTER SEQUENCE "Recipes_id_seq" RESTART WITH 1');
 
-    // Пробуємо скинути послідовність RecipeIngredient, але продовжуємо, якщо не вдається
     try {
       await sequelize.query(
         'ALTER SEQUENCE "RecipeIngredients_id_seq" RESTART WITH 1',
@@ -41,7 +36,6 @@ async function migrateRecipes() {
       console.warn('Continuing with migration...');
     }
 
-    // Зчитування файлів ingredients.json та recipes.json
     const ingredientsData = fs.readFileSync(
       path.join(__dirname, '..', 'mockData', 'ingredients.json'),
       'utf8',
@@ -54,7 +48,6 @@ async function migrateRecipes() {
     );
     const recipesJson = JSON.parse(recipesData);
 
-    // Отримання всіх категорій, регіонів та користувачів для мапінгу ID
     const categories = await Category.findAll();
     const areas = await Area.findAll();
     const users = await User.findAll();
@@ -64,7 +57,6 @@ async function migrateRecipes() {
       `Found ${categories.length} categories, ${areas.length} areas, ${users.length} users, ${ingredients.length} ingredients`,
     );
 
-    // Створення мапінгів для швидкого пошуку
     const categoryMap = {};
     categories.forEach(cat => {
       categoryMap[cat.name] = cat.id;
@@ -80,7 +72,6 @@ async function migrateRecipes() {
       userMap[user.id] = user.id;
     });
 
-    // Створюємо мапінг MongoDB ID інгредієнтів до їх назв
     const mongoIdToName = {};
     ingredientsJson.forEach(ing => {
       if (ing._id) {
@@ -88,7 +79,6 @@ async function migrateRecipes() {
       }
     });
 
-    // Мапінг назв інгредієнтів до їх SQL ID
     const ingredientMap = {};
     ingredients.forEach(ing => {
       ingredientMap[ing.name] = ing.id;
@@ -105,14 +95,12 @@ async function migrateRecipes() {
       } ingredients by MongoDB ID`,
     );
 
-    // Створюємо об'єкт для зберігання відповідності MongoDB ID власників до SQL ID
     const ownerIdMap = {};
     recipesJson.forEach(recipe => {
       if (recipe.owner && recipe.owner.$oid) {
         const mongoOwnerId = recipe.owner.$oid;
-        // Дефолтний користувач, якщо не знайдено
+
         if (!ownerIdMap[mongoOwnerId]) {
-          // Знаходимо відповідного користувача або беремо першого
           const matchingUser =
             users.find(user => user.id === mongoOwnerId) || users[0];
           ownerIdMap[mongoOwnerId] = matchingUser.id;
@@ -124,16 +112,14 @@ async function migrateRecipes() {
     let successCount = 0;
     let totalIngredientsAdded = 0;
 
-    // Підготовка даних для вставки
     for (const recipe of recipesJson) {
       try {
-        // Знаходимо ID категорії, регіону та користувача
         const categoryId = categoryMap[recipe.category];
         const areaId = areaMap[recipe.area];
         const ownerId =
           recipe.owner && recipe.owner.$oid
             ? ownerIdMap[recipe.owner.$oid]
-            : users[0].id; // Беремо першого користувача як дефолтного
+            : users[0].id;
 
         if (!categoryId) {
           console.warn(
@@ -156,7 +142,6 @@ async function migrateRecipes() {
           ownerId,
         });
 
-        // Створюємо рецепт
         const createdRecipe = await Recipe.create({
           title: recipe.title,
           description: recipe.description || null,
@@ -168,7 +153,6 @@ async function migrateRecipes() {
           owner: ownerId,
         });
 
-        // Зберігаємо відповідність між MongoDB ID і SQL ID
         if (recipe._id && recipe._id.$oid) {
           recipeIdMap[recipe._id.$oid] = createdRecipe.id;
         }
@@ -178,7 +162,6 @@ async function migrateRecipes() {
         );
         successCount++;
 
-        // Додаємо інгредієнти до рецепту
         if (recipe.ingredients && recipe.ingredients.length > 0) {
           let ingredientCount = 0;
 
@@ -188,7 +171,6 @@ async function migrateRecipes() {
               continue;
             }
 
-            // Знаходимо назву інгредієнта за його MongoDB ID
             const ingredientName = mongoIdToName[ingredientData.id];
             if (!ingredientName) {
               console.warn(
@@ -197,7 +179,6 @@ async function migrateRecipes() {
               continue;
             }
 
-            // Знаходимо SQL ID інгредієнта за його назвою
             const ingredientId = ingredientMap[ingredientName];
             if (!ingredientId) {
               console.warn(
@@ -206,7 +187,6 @@ async function migrateRecipes() {
               continue;
             }
 
-            // Додаємо інгредієнт до рецепта
             await RecipeIngredient.create({
               recipeId: createdRecipe.id,
               ingredientId: ingredientId,
@@ -242,7 +222,6 @@ async function migrateRecipes() {
   }
 }
 
-// Викликаємо функцію міграції
 migrateRecipes()
   .then(() => {
     console.log('Recipe migration completed successfully');

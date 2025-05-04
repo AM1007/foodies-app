@@ -2,15 +2,6 @@ import authServices from '../services/authServices.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
-// const signUpController = async (req, res) => {
-//   const user = await authServices.registerUser(req.body);
-
-//   res.status(HTTP_STATUS.CREATED).json({
-//     message: 'Registration successful',
-//     user,
-//   });
-// };
-
 const signUpController = async (req, res) => {
   const user = await authServices.registerUser(req.body);
 

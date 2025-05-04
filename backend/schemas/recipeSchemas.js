@@ -1,6 +1,5 @@
 import Joi from 'joi';
 
-// Schema for recipe ingredient
 const ingredientSchema = Joi.object({
   ingredientId: Joi.number().required().messages({
     'any.required': 'Ingredient ID is required',
@@ -8,7 +7,6 @@ const ingredientSchema = Joi.object({
   measure: Joi.string().allow('', null),
 });
 
-// Schema for creating a new recipe
 const createRecipeSchema = Joi.object({
   title: Joi.string().required().messages({
     'any.required': 'Title is required',
@@ -34,7 +32,6 @@ const createRecipeSchema = Joi.object({
   preview: Joi.string().allow('', null),
 });
 
-// Schema for updating an existing recipe
 const updateRecipeSchema = Joi.object({
   title: Joi.string(),
   description: Joi.string().allow('', null),
@@ -47,7 +44,6 @@ const updateRecipeSchema = Joi.object({
   preview: Joi.string().allow('', null),
 }).min(1);
 
-// Schema for recipe search/filtering
 const recipeQuerySchema = Joi.object({
   page: Joi.number().min(1).default(1),
   limit: Joi.number().min(1).max(100).default(10),

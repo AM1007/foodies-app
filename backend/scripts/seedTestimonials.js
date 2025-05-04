@@ -13,13 +13,11 @@ async function migrateTestimonials() {
   try {
     await connectToDatabase();
 
-    // Clear existing data and reset sequence
     await Testimonial.destroy({ where: {}, force: true });
     await sequelize.query(
       'ALTER SEQUENCE "Testimonials_id_seq" RESTART WITH 1',
     );
 
-    // Load JSON data
     const testimonialsData = fs.readFileSync(
       path.join(__dirname, '..', 'mockData', 'testimonials.json'),
       'utf8',
@@ -32,14 +30,12 @@ async function migrateTestimonials() {
     const testimonialsJson = JSON.parse(testimonialsData);
     const usersJson = JSON.parse(usersData);
 
-    // Fetch users from DB
     const dbUsers = await User.findAll();
     const emailToId = {};
     dbUsers.forEach(user => {
       emailToId[user.email] = user.id;
     });
 
-    // Create Mongo _id to SQL id map using email
     const mongoIdToSqlId = {};
     usersJson.forEach(user => {
       const mongoId = user._id?.$oid;
