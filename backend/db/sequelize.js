@@ -23,7 +23,6 @@ if (
   });
   console.log('Using internal database URL for production');
 } else {
-  // Використовувати звичайні параметри для локального середовища
   sequelize = new Sequelize({
     dialect: process.env.DATABASE_DIALECT || 'postgres',
     username: process.env.DATABASE_USERNAME,
