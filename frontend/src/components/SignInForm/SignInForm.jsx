@@ -24,7 +24,6 @@ const SignInForm = ({ onSuccess }) => {
         title: 'Success',
         message: 'You have successfully signed in!',
         position: 'topRight',
-        class: 'custom-success-toast',
       });
       setTimeout(() => {
         onSuccess();
@@ -54,7 +53,6 @@ const SignInForm = ({ onSuccess }) => {
         title: 'Login failed',
         message: error.message || 'Something went wrong',
         position: 'topRight',
-        class: 'custom-error-toast',
       });
     } finally {
       setSubmitting(false);

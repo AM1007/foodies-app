@@ -136,7 +136,6 @@
   }
 }
 
-/* Адаптивність для десктопів */
 @media (min-width: 1440px) {
   .form {
     max-width: 520px;

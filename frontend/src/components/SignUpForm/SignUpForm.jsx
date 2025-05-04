@@ -47,9 +47,8 @@ export default function SignUpForm({ onSuccess }) {
       await dispatch(registerUser(values)).unwrap();
       iziToast.success({
         title: 'Success',
-        message: 'You have successfully signed in!',
+        message: 'You have successfully signed up!',
         position: 'topRight',
-        class: 'custom-success-toast',
       });
       onSuccess();
     } catch {
@@ -58,7 +57,6 @@ export default function SignUpForm({ onSuccess }) {
         title: 'Error',
         message: error,
         position: 'topRight',
-        class: 'custom-error-toast',
       });
     } finally {
       setSubmitting(false);
