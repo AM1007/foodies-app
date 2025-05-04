@@ -85,7 +85,7 @@ app.listen(port, () => {
   console.log(
     chalk.cyan(
       `📚 API Documentation available at ${chalk.underline(
-        `http://localhost:${port}/api-docs`,
+        `${process.env.APP_DOMAIN || `http://localhost:${port}`}/api-docs`,
       )}`,
     ),
   );
