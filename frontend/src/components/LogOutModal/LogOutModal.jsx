@@ -3,6 +3,8 @@ import { logoutUser } from '../../redux/users/authSlice';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import styles from './LogOutModal.module.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogOutModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -13,9 +15,13 @@ const LogOutModal = ({ onClose }) => {
       console.log('🔄 Attempting to logout user...');
       await dispatch(logoutUser()).unwrap();
       console.log('✅ Logout successful! User session terminated.');
-      onClose();
+      toast.success('Logged out successfully');
+      setTimeout(() => {
+        onClose();
+      }, 1000);
     } catch (error) {
       console.log('❌ Logout failed:', error);
+      toast.error(`Logout failed: ${error.message || error}`);
     }
   };
 
@@ -42,6 +48,7 @@ const LogOutModal = ({ onClose }) => {
           </Button>
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={3000} />
     </Modal>
   );
 };
