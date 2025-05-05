@@ -20,7 +20,7 @@ const SignUpModal = ({ onClose }) => {
         <SignUpForm onSuccess={onClose} />
 
         <p className={styles.switchText}>
-          I already have an account? Sign in{' '}
+          I already have an account?{' '}
           <button
             type="button"
             onClick={switchToSignIn}

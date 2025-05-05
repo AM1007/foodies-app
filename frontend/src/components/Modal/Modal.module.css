@@ -1,4 +1,30 @@
-/* Modal.module.css */
+.modal {
+  position: relative;
+
+  width: 375px;
+
+  display: inline-flex;
+  padding: 60px 30px;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+
+  border-radius: 20px;
+  background: #fff;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--black);
+}
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -7,9 +33,12 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000; /* <-- достатньо велике, щоби бути над усім іншим */
+
+  align-items: flex-start;
+  padding: 40px 0 0 0;
+
+  z-index: 1001;
 }
 
 .backdrop {
@@ -20,16 +49,24 @@
   height: 100%;
 }
 
-.modal {
-  position: relative;
-  background: #fff;
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 400px;
-  width: 90%;
-  z-index: 1001; /* <-- щоб «поверх» .overlay > .backdrop */
-}
-
 .contentWrapper {
   margin-top: 1rem;
+}
+@media (min-width: 768px) {
+  .overlay {
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 40px 60px 0 0;
+  }
+  .modal {
+    display: inline-flex;
+    padding: 80px 80px;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 560px;
+
+    border-radius: 30px;
+    background: #fff;
+  }
 }

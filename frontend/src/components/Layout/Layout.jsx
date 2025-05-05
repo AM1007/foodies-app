@@ -12,6 +12,9 @@ import LogOutModal from '../LogOutModal/LogOutModal';
 import { useModal } from '../../hooks/useModal';
 import Loader from '../Loader/Loader';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Layout = () => {
   const dispatch = useDispatch();
   const { activeModal, closeModal } = useModal();
@@ -59,6 +62,8 @@ const Layout = () => {
       {activeModal === 'signup' && <SignUpModal onClose={closeModal} />}
       {activeModal === 'signin' && <SignInModal onClose={closeModal} />}
       {activeModal === 'logout' && <LogOutModal onClose={closeModal} />}
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 };

@@ -4,7 +4,7 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
   return (
-    <footer className="container">
+    <footer className={`container ${styles.footer}`}>
       <div className={styles.wrapper}>
         <Logo />
 

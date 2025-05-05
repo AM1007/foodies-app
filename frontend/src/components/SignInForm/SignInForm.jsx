@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
-import { Field, Form, Formik } from 'formik';
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, resetAuthError } from '../../redux/users/authSlice';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignInForm = ({ onSuccess }) => {
-  console.log(12);
   const emailId = useId();
   const passwordId = useId();
   const dispatch = useDispatch();
@@ -20,15 +18,8 @@ const SignInForm = ({ onSuccess }) => {
 
   useEffect(() => {
     if (isAuthenticated && onSuccess) {
-      iziToast.success({
-        title: 'Success',
-        message: 'You have successfully signed in!',
-        position: 'topRight',
-        class: 'custom-success-toast',
-      });
-      setTimeout(() => {
-        onSuccess();
-      }, 1000); // 1 секунда
+      toast.success('You have successfully signed in!');
+      setTimeout(() => onSuccess(), 1000);
     }
   }, [isAuthenticated, onSuccess]);
 
@@ -40,22 +31,10 @@ const SignInForm = ({ onSuccess }) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(1);
-    console.log('⭐️ handleSubmit function called with values:', values);
     try {
-      console.log('⏱️ Entering try block');
-
-      console.log('🔄 Attempting to login with:', values.email);
       await dispatch(loginUser(values)).unwrap();
-      console.log('✅ Login API call successful');
     } catch (error) {
-      console.log('❌ Login failed:', error);
-      iziToast.error({
-        title: 'Login failed',
-        message: error.message || 'Something went wrong',
-        position: 'topRight',
-        class: 'custom-error-toast',
-      });
+      toast.error(error.message || 'Something went wrong');
     } finally {
       setSubmitting(false);
     }
@@ -70,53 +49,49 @@ const SignInForm = ({ onSuccess }) => {
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor={emailId} className={styles.label}>
-              Email<sup>*</sup>
-            </label>
-            <Field
-              name="email"
-              id={emailId}
-              className={styles.input}
-              type="email"
-            />
-            <div className={styles.error}>
+            <label htmlFor={emailId} className={styles.visuallyHidden}></label>
+            <div className={styles.inputWrapper}>
               <Field
+                id={emailId}
                 name="email"
-                component={({ form }) =>
-                  form.errors.email && form.touched.email
-                    ? form.errors.email
-                    : null
-                }
+                type="email"
+                required
+                placeholder="Email*"
+                className={styles.input}
               />
             </div>
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor={passwordId} className={styles.label}>
-              Password<sup>*</sup>
-            </label>
-            <Field
-              name="password"
-              id={passwordId}
-              className={styles.input}
-              type="password"
-            />
-            <div className={styles.error}>
+            <label
+              htmlFor={passwordId}
+              className={styles.visuallyHidden}
+            ></label>
+            <div className={styles.inputWrapper}>
               <Field
+                id={passwordId}
                 name="password"
-                component={({ form }) =>
-                  form.errors.password && form.touched.password
-                    ? form.errors.password
-                    : null
-                }
+                type="password"
+                required
+                placeholder="Password*"
+                className={styles.input}
               />
             </div>
+            <ErrorMessage
+              name="password"
+              component="div"
+              className={styles.error}
+            />
           </div>
           {error && <div className={styles.error}>{error}</div>}
           <Button
             type="submit"
             className={styles.submitButton}
             disabled={loading || isSubmitting}
-            onClick={() => console.log('🖱 Submit button clicked')}
           >
             {loading || isSubmitting ? 'Signing in...' : 'SIGN IN'}
           </Button>
