@@ -1,6 +1,8 @@
 import recipesServices from '../services/recipesServices.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
+import recipeSchemas from '../schemas/recipeSchemas.js';
+const { createRecipeSchema } = recipeSchemas;
 
 const searchRecipes = async (req, res) => {
   const searchResults = await recipesServices.getAllRecipes(req.query);
@@ -41,25 +43,110 @@ const getPopularRecipes = async (req, res) => {
   res.status(HTTP_STATUS.OK).json(popularRecipes);
 };
 
-const createRecipe = async (req, res) => {
-  const { id: userId } = req.user;
-  const recipeData = req.body;
+const createRecipe = async (req, res, next) => {
+  try {
+    const { id: userId } = req.user;
+    const recipeData = req.body;
 
-  if (typeof recipeData.ingredients === 'string') {
-    try {
-      recipeData.ingredients = JSON.parse(recipeData.ingredients);
-    } catch (e) {
-      throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Invalid ingredients format');
+    console.log('Ingredients before parsing:', recipeData.ingredients);
+    console.log('Type of ingredients:', typeof recipeData.ingredients);
+
+    // Парсимо ingredients, якщо це рядок
+    if (typeof recipeData.ingredients === 'string') {
+      try {
+        recipeData.ingredients = JSON.parse(recipeData.ingredients);
+        console.log('Ingredients after parsing:', recipeData.ingredients);
+      } catch (e) {
+        console.error('Error parsing ingredients:', e.message);
+        throw HttpError(
+          HTTP_STATUS.BAD_REQUEST,
+          'Invalid ingredients format: ' + e.message,
+        );
+      }
     }
-  }
 
-  const newRecipe = await recipesServices.createRecipe(
-    recipeData,
-    userId,
-    req.files || {},
-  );
-  res.status(HTTP_STATUS.CREATED).json(newRecipe);
+    // Перевіряємо, чи є ingredients масивом після парсингу
+    if (!Array.isArray(recipeData.ingredients)) {
+      console.error(
+        'Ingredients is not an array after parsing:',
+        recipeData.ingredients,
+      );
+      throw HttpError(
+        HTTP_STATUS.BAD_REQUEST,
+        '"ingredients" must be an array',
+      );
+    }
+
+    // Тепер валідуємо
+    const { error } = recipeSchemas.createRecipeSchema.validate(recipeData);
+    if (error) {
+      console.error('Validation error:', error.message);
+      throw HttpError(HTTP_STATUS.BAD_REQUEST, error.message);
+    }
+
+    const newRecipe = await recipesServices.createRecipe(
+      recipeData,
+      userId,
+      req.files || {},
+    );
+
+    res.status(HTTP_STATUS.CREATED).json(newRecipe);
+  } catch (error) {
+    next(error);
+  }
 };
+
+// const createRecipe = async (req, res) => {
+//   try {
+//     const { id: userId } = req.user;
+//     const recipeData = req.body;
+
+//     console.log('Recipe data received:', recipeData);
+//     console.log('Ingredients (raw):', recipeData.ingredients);
+//     console.log('Type of ingredients:', typeof recipeData.ingredients);
+
+//     if (typeof recipeData.ingredients === 'string') {
+//       console.log('Trying to parse ingredients string');
+//       try {
+//         recipeData.ingredients = JSON.parse(recipeData.ingredients);
+//         console.log('Successfully parsed ingredients:', recipeData.ingredients);
+//       } catch (e) {
+//         console.error('Error parsing ingredients:', e.message);
+//         throw HttpError(
+//           HTTP_STATUS.BAD_REQUEST,
+//           'Invalid ingredients format: ' + e.message,
+//         );
+//       }
+//     }
+
+//     console.log('Final ingredients data:', recipeData.ingredients);
+
+//     // Перевірка, чи є ingredients масивом після всіх перетворень
+//     if (!Array.isArray(recipeData.ingredients)) {
+//       console.error(
+//         'Ingredients is not an array after processing:',
+//         recipeData.ingredients,
+//       );
+//       throw HttpError(
+//         HTTP_STATUS.BAD_REQUEST,
+//         '"ingredients" must be an array',
+//       );
+//     }
+
+//     const newRecipe = await recipesServices.createRecipe(
+//       recipeData,
+//       userId,
+//       req.files || {},
+//     );
+//     res.status(HTTP_STATUS.CREATED).json(newRecipe);
+//   } catch (error) {
+//     console.error('Error in createRecipe controller:', error);
+//     if (!error.status) {
+//       error.status = HTTP_STATUS.INTERNAL_SERVER_ERROR;
+//     }
+//     next(error);
+//   }
+// };
 
 const deleteRecipe = async (req, res) => {
   const { id: recipeId } = req.params;
