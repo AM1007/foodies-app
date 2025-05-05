@@ -1,14 +1,18 @@
 import styles from './RecipeMainInfo.module.css';
-import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useModal } from '../../hooks/useModal';
 
 const RecipeMainInfo = ({ title, category, time, description, author }) => {
-  const { isAuth } = useAuth();
+  const { isAuthenticated } = useSelector(state => state.auth);
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
   const handleAuthorClick = () => {
-    if (!isAuth) {
-      alert('Please sign in to view user profiles');
+    if (!author?._id) return;
+
+    if (!isAuthenticated) {
+      openModal('signin');
     } else {
       navigate(`/user/${author._id}`);
     }
@@ -32,9 +36,13 @@ const RecipeMainInfo = ({ title, category, time, description, author }) => {
             />
             <div className={styles.authorText}>
               <span className={styles.authorLabel}>Created by:</span>
-              <span className={styles.authorName} onClick={handleAuthorClick}>
+              <button
+                type="button"
+                onClick={handleAuthorClick}
+                className={styles.authorName}
+              >
                 {author?.name || 'Anonymous'}
-              </span>
+              </button>
             </div>
           </div>
         </div>

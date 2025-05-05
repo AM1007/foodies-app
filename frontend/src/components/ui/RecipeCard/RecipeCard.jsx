@@ -1,23 +1,22 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './RecipeCard.module.css';
 import { addToFavorites, removeFromFavorites } from '../../../redux/recipes/recipesSlice';
-import { useAuth } from '../../../hooks/useAuth';
-import { ModalContext } from '../../../context/ModalContext';
+import { useModal } from '../../../hooks/useModal';
+import icons from '../../../icons/sprite.svg';
 
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuth } = useAuth();
-  const { openModal } = useContext(ModalContext);
+  const { isAuthenticated } = useSelector(state => state.auth);
   const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
+  const { openModal } = useModal();
 
-  const isRecipeFavorite = favoriteRecipes.some(favoriteRecipe => favoriteRecipe._id === recipe._id);
+  const isRecipeFavorite = favoriteRecipes.some(fav => fav._id === recipe._id);
 
   const handleFavoriteToggle = () => {
-    if (!isAuth) {
-      openModal('signIn');
+    if (!isAuthenticated) {
+      openModal('signin');
       return;
     }
     if (isRecipeFavorite) {
@@ -28,8 +27,8 @@ const RecipeCard = ({ recipe }) => {
   };
 
   const handleAuthorClick = () => {
-    if (!isAuth) {
-      openModal('signIn');
+    if (!isAuthenticated) {
+      openModal('signin');
       return;
     }
     if (recipe.user?._id) navigate(`/user/${recipe.user._id}`);
@@ -45,17 +44,31 @@ const RecipeCard = ({ recipe }) => {
         <p className={styles.description}>{recipe.description}</p>
         <div className={styles.footer}>
           <button className={styles.author} onClick={handleAuthorClick}>
-            by {recipe.user?.name || 'Anonymous'}
+            <img
+              src={recipe.user?.avatar || '/default-avatar.jpg'}
+              alt={recipe.user?.name || 'Anonymous'}
+              className={styles.authorAvatar}
+            />
+            {recipe.user?.name || 'Anonymous'}
           </button>
           <div className={styles.actions}>
             <button
               className={`${styles.heart} ${isRecipeFavorite ? styles.active : ''}`}
               onClick={handleFavoriteToggle}
+              aria-label="Toggle favorite"
             >
-              ❤️
+              <svg className={styles.icon}>
+                <use href={`${icons}#heart`} />
+              </svg>
             </button>
-            <button className={styles.arrow} onClick={handleViewRecipe}>
-              ➡️
+            <button
+              className={`${styles.arrow}`}
+              onClick={handleViewRecipe}
+              aria-label="View recipe"
+            >
+              <svg className={styles.icon}>
+                <use href={`${icons}#arrow`} />
+              </svg>
             </button>
           </div>
         </div>

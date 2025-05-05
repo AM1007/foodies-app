@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { addToFavorites, removeFromFavorites } from '../../redux/recipes/recipesSlice';
-import { useAuth } from '../../hooks/useAuth';
+import { useModal } from '../../hooks/useModal';
 import styles from './RecipePreparation.module.css';
 
 const RecipePreparation = ({ preparation, recipeId }) => {
   const dispatch = useDispatch();
-  const { isAuth } = useAuth();
+  const { isAuthenticated } = useSelector(state => state.auth);
   const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
+  const { openModal } = useModal();
+
   const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
 
   useEffect(() => {
@@ -16,10 +18,11 @@ const RecipePreparation = ({ preparation, recipeId }) => {
   }, [favoriteRecipes, recipeId]);
 
   const handleToggleFavorite = () => {
-    if (!isAuth) {
-      alert('Sign in to add recipes to favorites!');
+    if (!isAuthenticated) {
+      openModal('signin');
       return;
     }
+
     if (isRecipeFavorite) {
       dispatch(removeFromFavorites(recipeId));
     } else {

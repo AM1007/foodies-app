@@ -1,4 +1,4 @@
-.card {
+   .card {
     background-color: var(--white);
     border-radius: 16px;
     overflow: hidden;
@@ -28,15 +28,18 @@
   }
   
   .title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--black);
+    text-transform: uppercase;
   }
   
   .description {
-    font-size: 14px;
-    color: var(--gray);
-    line-height: 1.4;
+    font-size: 16px;
+    color: var(--dark-gray);
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: -0.32px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -48,17 +51,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;
   }
   
   .author {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.32px;
+    line-height: 24px;
+    color: var(--dark-gray);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
+  }
+  
+  .authorAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    object-fit: cover;
+    margin-right: 8px;
   }
   
   .actions {
@@ -66,7 +80,8 @@
     gap: 8px;
   }
   
-  .heart, .arrow {
+  .heart,
+  .arrow {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -80,17 +95,36 @@
     padding: 0;
   }
   
-  .heart:hover, .arrow:hover {
+  .heart svg
+  {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--black);
+  }
+  .arrow svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--black);
+  }
+  
+  .heart.active {
+    background-color: var(--black);
     border-color: var(--black);
   }
   
-  .active {
-    background-color: var(--red);
-    border-color: var(--red);
+  .heart.active svg {
+    stroke: var(--white);
   }
   
-  .active svg path {
-    fill: white;
+  .arrow:hover {
+    background-color: var(--black);
+    border-color: var(--black);
+  }
+  
+  .arrow:hover svg {
+    stroke: var(--white);
   }
   
   @media (min-width: 768px) {
@@ -120,3 +154,9 @@
       font-size: 16px;
     }
   }
+  
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+  
