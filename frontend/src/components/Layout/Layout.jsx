@@ -63,7 +63,7 @@ const Layout = () => {
       {activeModal === 'signin' && <SignInModal onClose={closeModal} />}
       {activeModal === 'logout' && <LogOutModal onClose={closeModal} />}
 
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-center" autoClose={3000} />
     </>
   );
 };
