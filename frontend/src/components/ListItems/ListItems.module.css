@@ -1,37 +1,64 @@
-/* .container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.tabs {
-  display: flex;
-  gap: 30px;
-  border-bottom: 1px solid var(--gray);
-  margin: 64px 0 32px 0;
-}
-
 .list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 24px;
+  margin-top: 24px;
+  justify-content: flex-start;
 }
 
 .empty {
+  margin: 40px auto 0;
+  width: 610px;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--dark-gray);
   text-align: center;
-  color: #222;
-  font-size: 18px;
-  margin-top: 60px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+
+  white-space: normal;
+  padding: 0 10px;
+}
+
+.recipePreviewCard {
+  flex: 1 1 calc(33.333% - 24px);
+  max-width: calc(33.333% - 24px);
+  box-sizing: border-box;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .userStub {
-  padding: 12px 16px;
-  border: 1px solid #ddd;
+  flex: 1 1 calc(25% - 24px); /* 4 колонки */
+  max-width: calc(25% - 24px);
+  padding: 16px;
+  background-color: var(--background-light);
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  text-align: center;
   font-size: 16px;
-  color: #333;
-} */
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
