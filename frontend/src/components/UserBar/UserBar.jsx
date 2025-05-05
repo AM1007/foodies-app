@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import Button from '../Button/Button';
 import icons from '../../icons/sprite.svg';
 import styles from './UserBar.module.css';
 
 const UserBar = () => {
+  const user = useSelector(state => state.user.current) || {};
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
     <div className={styles.userBar}>
@@ -11,32 +14,28 @@ const UserBar = () => {
         className={styles.userBtn}
         onClick={() => setIsDropdownOpen(prev => !prev)}
       >
-        {/* Тестовий аватар */}
-        <img
-          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
-          alt="Avatar"
-          className={styles.avatar}
-        />
-        {/* Тестове ім'я користувача */}
-        <span className={styles.username}>VICTORIA</span>
-        <svg
-          className={clsx(styles.arrow, isDropdownOpen && styles.open)}
-          width="18"
-          height="18"
-        >
-          <use href={`${icons}#down`} />
-        </svg>
+        <img src={user.avatar} alt="Avatar" className={styles.avatar} />
+        <div className={styles.wrapper}>
+          <span className={styles.username}>{user.name}</span>
+          <svg
+            className={clsx(styles.arrow, isDropdownOpen && styles.open)}
+            width="18"
+            height="18"
+          >
+            <use href={`${icons}#down`} />
+          </svg>
+        </div>
       </button>
 
       {isDropdownOpen && (
         <div className={styles.dropdown}>
-          <button className={styles.dropdownItem}>PROFILE</button>
-          <button className={styles.dropdownItem}>
+          <Button className={styles.dropdownItem}>PROFILE</Button>
+          <Button className={styles.dropdownItem}>
             LOG OUT{' '}
             <svg className={styles.icon} width="18" height="18">
               <use href={`${icons}#arrow-up-right`} />
             </svg>
-          </button>
+          </Button>
         </div>
       )}
     </div>
