@@ -5,7 +5,7 @@ import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
 import MainTitle from '../../components/ui/MainTitle/MainTitle';
 import SubTitle from '../../components/ui/SubTitle/SubTitle';
-import RecipeCardUI from '../../components/ui/RecipeCard/RecipeCard';
+import RecipeCard from '../../components/ui/RecipeCard/RecipeCard';
 
 const RecipeList = () => {
   const dispatch = useDispatch();
@@ -35,13 +35,13 @@ const RecipeList = () => {
     <div className="container">
       <MainTitle text="Recipes" />
       <SubTitle text="Browse our delicious collection" />
-      <div className={styles.wrapper}>
+      <div>
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <div>
+        <div className={styles.wrapper}>
           {recipes && recipes.length > 0
             ? recipes.map(recipe => (
-                <RecipeCardUI
+                <RecipeCard
                   key={recipe.id}
                   recipe={recipe}
                   isFavorite={false}

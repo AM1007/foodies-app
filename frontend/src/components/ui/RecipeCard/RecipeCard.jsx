@@ -2,7 +2,7 @@ import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
 import avatar from '/assets/avatar.png';
 
-const RecipeCardUI = ({
+const RecipeCard = ({
   recipe,
   isFavorite,
   onFavoriteToggle,
@@ -21,16 +21,16 @@ const RecipeCardUI = ({
       <div className={styles.content}>
         <h4 className={styles.title}>{recipe.title}</h4>
         <p className={styles.description}>{recipe.description}</p>
-        <div className={styles.footer}>
+        <div className={styles.wrapper}>
           <button className={styles.author} onClick={onAuthorClick}>
             <img
               src={avatarUrl}
               alt={recipe.user?.name || 'Anonymous'}
-              className={styles.authorAvatar}
+              className={styles.avatar}
             />
             {recipe.user?.name || 'Anonymous'}
           </button>
-          <div className={styles.actions}>
+          <div className={styles.wrap}>
             <button
               className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
               onClick={onFavoriteToggle}
@@ -56,4 +56,4 @@ const RecipeCardUI = ({
   );
 };
 
-export default RecipeCardUI;
+export default RecipeCard;
