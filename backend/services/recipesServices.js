@@ -185,14 +185,6 @@ const getPopularRecipes = async (query = {}) => {
       offset,
     });
 
-    console.log(
-      `Successfully fetched ${recipes.length} recipes for popular recipes endpoint`,
-    );
-
-    console.log(
-      'Note: Currently returning recent recipes instead of sorting by popularity due to database constraints',
-    );
-
     return paginationHelper.paginateResponse(
       {
         count,
@@ -201,8 +193,6 @@ const getPopularRecipes = async (query = {}) => {
       query,
     );
   } catch (error) {
-    console.error('Error fetching popular recipes:', error);
-    console.error('Error details:', error.stack);
     throw HttpError(
       HTTP_STATUS.INTERNAL_SERVER_ERROR,
       'Failed to retrieve recipes',
@@ -216,7 +206,6 @@ const createRecipe = async (recipeData, userId, files = {}) => {
 
     recipeDetails.owner = userId;
 
-    // Постійний код для правильного збереження посилань на зображення
     if (files.thumb && files.thumb[0]) {
       recipeDetails.thumb = files.thumb[0].path;
     }
@@ -242,123 +231,6 @@ const createRecipe = async (recipeData, userId, files = {}) => {
     throw error;
   }
 };
-
-// const createRecipe = async (recipeData, userId, files = {}) => {
-//   try {
-//     const { ingredients, ...recipeDetails } = recipeData;
-
-//     // Логування на початку сервісу
-//     console.log('====== SERVICE: CREATE RECIPE START ======');
-//     console.log(
-//       'Service: Creating recipe with files:',
-//       JSON.stringify(files, null, 2),
-//     );
-//     console.log(
-//       'Initial recipeDetails:',
-//       JSON.stringify(recipeDetails, null, 2),
-//     );
-
-//     recipeDetails.owner = userId;
-
-//     // Логування перед встановленням полів зображень
-//     console.log('Before setting image paths:');
-//     console.log(
-//       'Thumb path from files:',
-//       files.thumb ? files.thumb[0].path : 'none',
-//     );
-//     console.log(
-//       'Preview path from files:',
-//       files.preview ? files.preview[0].path : 'none',
-//     );
-
-//     if (files.thumb) {
-//       recipeDetails.thumb = files.thumb[0].path;
-//       console.log('Thumb path being set to:', recipeDetails.thumb);
-//     }
-//     if (files.preview) {
-//       recipeDetails.preview = files.preview[0].path;
-//       console.log('Preview path being set to:', recipeDetails.preview);
-//     }
-
-//     // Логування перед створенням рецепту
-//     console.log('Before forced set:', JSON.stringify(recipeDetails, null, 2));
-//     // Примусово встановити поля, якщо файли є
-//     if (files.thumb && files.thumb[0]) {
-//       recipeDetails.thumb = files.thumb[0].path;
-//       console.log('Forced thumb set to:', recipeDetails.thumb);
-//     }
-//     if (files.preview && files.preview[0]) {
-//       recipeDetails.preview = files.preview[0].path;
-//       console.log('Forced preview set to:', recipeDetails.preview);
-//     }
-//     console.log('After forced set:', JSON.stringify(recipeDetails, null, 2));
-//     console.log(
-//       'Final recipe details before creation:',
-//       JSON.stringify(recipeDetails, null, 2),
-//     );
-//     console.log('====== SERVICE: CREATE RECIPE DETAILS END ======');
-
-//     const recipe = await Recipe.create(recipeDetails);
-
-//     // Логування після створення рецепту
-//     console.log('====== SERVICE: RECIPE CREATED ======');
-//     console.log('Created recipe ID:', recipe.id);
-//     console.log('Created recipe thumb:', recipe.thumb);
-//     console.log('Created recipe preview:', recipe.preview);
-//     console.log('====================================');
-
-//     if (ingredients && ingredients.length > 0) {
-//       const recipeIngredients = ingredients.map(ingredient => ({
-//         recipeId: recipe.id,
-//         ingredientId: ingredient.ingredientId,
-//         measure: ingredient.measure || '',
-//       }));
-
-//       await RecipeIngredient.bulkCreate(recipeIngredients);
-//     }
-
-//     return await getRecipeById(recipe.id);
-//   } catch (error) {
-//     console.error('====== SERVICE: ERROR CREATING RECIPE ======');
-//     console.error('Error type:', error.name);
-//     console.error('Error message:', error.message);
-//     console.error('Error stack:', error.stack);
-//     console.error('==========================================');
-//     throw error;
-//   }
-// };
-
-// const createRecipe = async (recipeData, userId, files = {}) => {
-//   try {
-//     const { ingredients, ...recipeDetails } = recipeData;
-
-//     recipeDetails.owner = userId;
-
-//     if (files.thumb) {
-//       recipeDetails.thumb = files.thumb.path;
-//     }
-//     if (files.preview) {
-//       recipeDetails.preview = files.preview.path;
-//     }
-
-//     const recipe = await Recipe.create(recipeDetails);
-
-//     if (ingredients && ingredients.length > 0) {
-//       const recipeIngredients = ingredients.map(ingredient => ({
-//         recipeId: recipe.id,
-//         ingredientId: ingredient.ingredientId,
-//         measure: ingredient.measure || '',
-//       }));
-
-//       await RecipeIngredient.bulkCreate(recipeIngredients);
-//     }
-
-//     return await getRecipeById(recipe.id);
-//   } catch (error) {
-//     console.error('Error creating recipe:', error);
-//     throw error;
-//   }
-// };
 
 const deleteRecipe = async (recipeId, userId) => {
   const recipe = await Recipe.findByPk(recipeId);
