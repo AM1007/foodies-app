@@ -5,32 +5,24 @@
   background-color: var(--white);
 }
 
-.signIn {
+.button {
   padding: 10px 16px;
+  cursor: pointer;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.5;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
+
 @media screen and (min-width: 768px) {
-  .signIn {
+  .button {
     padding: 14px 30px;
   }
 }
 .signUp {
-  padding: 10px 16px;
   border: 1px solid var(--gray);
   border-radius: 30px;
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
   color: var(--white);
   background-color: var(--black);
-}
-@media screen and (min-width: 768px) {
-  .signUp {
-    padding: 14px 30px;
-  }
 }
