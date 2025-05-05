@@ -1,8 +1,13 @@
 import styles from './PopularRecipes.module.css';
 import RecipeCardContainer from '../RecipeCardContainer/RecipeCardContainer';
+import { useSelector } from 'react-redux';
 
 const PopularRecipes = ({ recipes }) => {
-  if (!recipes?.length) return null;
+  const { popularLoading, popularError } = useSelector(state => state.recipes);
+
+  if (popularLoading) return <p className={styles.message}>Loading popular recipes...</p>;
+  if (popularError) return <p className={styles.message}>Error: {popularError}</p>;
+  if (!recipes?.length) return <p className={styles.message}>No popular recipes available.</p>;
 
   return (
     <section className={styles.popular}>
