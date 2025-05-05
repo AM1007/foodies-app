@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/users/authSlice';
 import Modal from '../Modal/Modal';
@@ -24,23 +23,22 @@ const LogOutModal = ({ onClose }) => {
     <Modal isOpen={true} onClose={onClose}>
       <div className={styles.container}>
         <h2 className={styles.title}>Log Out</h2>
-        <p className={styles.question}>Are you sure you want to log out?</p>
+        <p className={styles.text}>You can always log back in at my time.</p>
 
         <div className={styles.buttonsContainer}>
-          <Button
-            className={styles.cancelButton}
-            onClick={onClose}
-            disabled={loading}
-          >
-            Cancel
-          </Button>
-
           <Button
             className={styles.logoutButton}
             onClick={handleLogout}
             disabled={loading}
           >
             {loading ? 'Logging out...' : 'Log Out'}
+          </Button>
+          <Button
+            className={styles.cancelButton}
+            onClick={onClose}
+            disabled={loading}
+          >
+            Cancel
           </Button>
         </div>
       </div>

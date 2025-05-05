@@ -6,7 +6,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axiosAPI.get('/users/current');
-      return res.data;
+      return res.data.user;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch current user',
@@ -20,7 +20,7 @@ export const fetchUserById = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const res = await axiosAPI.get(`/users/${userId}`);
-      return res.data;
+      return res.data.user;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch user data',
@@ -36,7 +36,7 @@ export const updateUserAvatar = createAsyncThunk(
       const res = await axiosAPI.patch('/users/avatar', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      return res.data;
+      return res.data; 
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to update avatar',
@@ -148,8 +148,8 @@ const userSlice = createSlice({
       })
 
       .addCase(updateUserAvatar.fulfilled, (state, action) => {
-        if (state.current && state.current._id === action.payload._id) {
-          state.current.avatarURL = action.payload.avatarURL;
+        if (state.current) {
+          state.current.avatar = action.payload.avatar;
         }
       })
 

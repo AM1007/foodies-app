@@ -14,7 +14,7 @@ const RecipeCardContainer = ({ recipe }) => {
   const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
   const { openModal } = useModal();
 
-  const isFavorite = favoriteRecipes.some(fav => fav._id === recipe._id);
+  const isFavorite = favoriteRecipes.some(favorite => favorite.id === recipe.id);
 
   const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
@@ -22,9 +22,9 @@ const RecipeCardContainer = ({ recipe }) => {
       return;
     }
     if (isFavorite) {
-      dispatch(removeFromFavorites(recipe._id));
+      dispatch(removeFromFavorites(recipe.id));
     } else {
-      dispatch(addToFavorites(recipe._id));
+      dispatch(addToFavorites(recipe.id));
     }
   };
 
@@ -33,10 +33,10 @@ const RecipeCardContainer = ({ recipe }) => {
       openModal('signin');
       return;
     }
-    if (recipe.user?._id) navigate(`/user/${recipe.user._id}`);
+    if (recipe.user?.id) navigate(`/user/${recipe.user.id}`);
   };
 
-  const handleViewRecipe = () => navigate(`/recipe/${recipe._id}`);
+  const handleViewRecipe = () => navigate(`/recipe/${recipe.id}`);
 
   return (
     <RecipeCard

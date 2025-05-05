@@ -9,6 +9,7 @@ const RecipeCard = ({
   onAuthorClick,
   onViewRecipe,
 }) => {
+
   if (!recipe) return null;
 
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
