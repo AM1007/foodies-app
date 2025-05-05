@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import AuthBar from '../../AuthBar/AuthBar.jsx';
 import UserBar from '../../UserBar/UserBar.jsx';
 import BurgerBtn from '../../ui/BurgerBtn/BurgerBtn.jsx';
@@ -14,7 +15,7 @@ const Header = () => {
 
   const headerThemeClass = isHomePage ? styles.darkTheme : styles.lightTheme;
 
-  const isAuthenticated = false; //для тесту
+  const { isAuthenticated = false } = useSelector(state => state.auth || {});
 
   return (
     <>
