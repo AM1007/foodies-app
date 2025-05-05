@@ -1,31 +1,29 @@
-import React, { useState } from 'react';
-import styles from './RecipePreparation.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { addToFavorites, removeFromFavorites } from '../../redux/recipes/recipesSlice';
 import { useAuth } from '../../hooks/useAuth';
-// import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import styles from './RecipePreparation.module.css';
 
-
-const RecipePreparation = ({ preparation, isFavorite, recipeId }) => {
+const RecipePreparation = ({ preparation, recipeId }) => {
+  const dispatch = useDispatch();
   const { isAuth } = useAuth();
-//   const navigate = useNavigate();
-  const [favorite, setFavorite] = useState(isFavorite);
+  const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
+  const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
 
-  const handleToggleFavorite = async () => {
+  useEffect(() => {
+    const isFavoriteInList = favoriteRecipes.some(favoriteRecipe => favoriteRecipe._id === recipeId);
+    setIsRecipeFavorite(isFavoriteInList);
+  }, [favoriteRecipes, recipeId]);
+
+  const handleToggleFavorite = () => {
     if (!isAuth) {
-      // Показати модалку або перенаправити
       alert('Sign in to add recipes to favorites!');
       return;
     }
-
-    try {
-      if (favorite) {
-        await axios.delete(`/favorites/${recipeId}`);
-      } else {
-        await axios.post(`/favorites`, { recipeId });
-      }
-      setFavorite(!favorite);
-    } catch (err) {
-      console.error('Failed to update favorites', err);
+    if (isRecipeFavorite) {
+      dispatch(removeFromFavorites(recipeId));
+    } else {
+      dispatch(addToFavorites(recipeId));
     }
   };
 
@@ -34,9 +32,8 @@ const RecipePreparation = ({ preparation, isFavorite, recipeId }) => {
       <div className={styles.wrapper}>
         <h3 className={styles.title}>Recipe Preparation</h3>
         <p className={styles.text}>{preparation}</p>
-
         <button onClick={handleToggleFavorite} className={styles.favoriteBtn}>
-          {favorite ? 'Remove from favorites' : 'Add to favorites'}
+          {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
         </button>
       </div>
     </section>
