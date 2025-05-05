@@ -156,7 +156,9 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.recipes = action.payload;
+        state.error = null;
+        state.recipes = action.payload.data;
+        state.pagination = action.payload.pagination;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = false;
