@@ -29,6 +29,7 @@ const corsOptions = {
     'https://foodies-app-pke3.onrender.com',
     'http://localhost:3000',
     'https://foodies-app-ten-iota.vercel.app',
+    'http://localhost:5173',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
