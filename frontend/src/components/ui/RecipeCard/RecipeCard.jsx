@@ -1,5 +1,6 @@
 import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
+import avatar from '/assets/avatar.png';
 
 const RecipeCardUI = ({
   recipe,
@@ -8,20 +9,16 @@ const RecipeCardUI = ({
   onAuthorClick,
   onViewRecipe,
 }) => {
-  const imageUrl = recipe.thumb?.startsWith('http')
-  ? recipe.thumb
-  : recipe.preview?.startsWith('http')
-    ? recipe.preview
-    : '/placeholder-image.jpg';
 
+  if (!recipe) return null;
 
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
     ? recipe.user.avatar
-    : '/default-avatar.jpg';
+    : avatar;
 
   return (
     <div className={styles.card}>
-      <img src={imageUrl} alt={recipe.title} className={styles.image} />
+      <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
       <div className={styles.content}>
         <h4 className={styles.title}>{recipe.title}</h4>
         <p className={styles.description}>{recipe.description}</p>
