@@ -1,31 +1,20 @@
-
 import css from './UserInfo.module.css';
-
 import UserAvatar from '../ui/UserAvatar/UserAvatar';
 
-function UserInfo({
-  user = {},
-  isOwnProfile = true,
-  onAvatarChange = () => {},
-}) {
+const UserInfo = ({ user = {}, isOwnProfile = true }) => {
   const {
-    avatarUrl,
-    name = 'Anonymous',
-    email = 'example@example.com',
-    recipesCount = 0,
-    favoritesCount = 0,
-    followersCount = 0,
-    followingCount = 0,
+    name,
+    email,
+    recipesCount,
+    favoritesCount,
+    followersCount,
+    followingCount,
   } = user;
 
   return (
     <div className={css.userInfo}>
-      <UserAvatar
-        avatarUrl={avatarUrl}
-        name={name || email}
-        isOwnProfile={isOwnProfile}
-        onAvatarChange={onAvatarChange}
-      />
+      <UserAvatar isOwnProfile={isOwnProfile} />
+      <h2>{name}</h2>
 
       <ul className={css.userStats}>
         <li className={css.userStatItem}>Email: {email}</li>
@@ -36,6 +25,6 @@ function UserInfo({
       </ul>
     </div>
   );
-}
+};
 
 export default UserInfo;
