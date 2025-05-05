@@ -9,7 +9,7 @@ const RecipeIngredients = ({ ingredients }) => {
           {ingredients.map(item => (
             <li key={item.id} className={styles.item}>
               <div className={styles.imageWrapper}>
-                <img src={item.image || '/placeholder.png'} alt={item.name} className={styles.image} />
+                <img src={item.img || '/placeholder.png'} alt={item.name} className={styles.image} />
               </div>
               <div className={styles.textBlock}>
                 <p className={styles.name}>{item.name}</p>
