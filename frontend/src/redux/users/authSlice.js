@@ -12,14 +12,14 @@ const clearToken = () => {
 
 const processAuthResponse = response => {
   if (!response || typeof response !== 'object') {
-    console.error('Отримана недійсна відповідь:', response);
-    throw new Error('Отримана недійсна відповідь від API');
+    console.error('Invalid response received:', response);
+    throw new Error('Invalid response received from API');
   }
 
-  console.log('Отримана відповідь від API:', response);
+  console.log('Received response from API:', response);
 
   if (response.message === 'Registration successful' && response.user) {
-    console.log('Обробка відповіді реєстрації:', response);
+    console.log('Processing the registration response:', response);
 
     return {
       token: response.token || null,
@@ -28,7 +28,7 @@ const processAuthResponse = response => {
   }
 
   if (response.token) {
-    console.log('Обробка відповіді логіну:', response);
+    console.log('Processing the login response:', response);
 
     if (response.refreshToken) {
       localStorage.setItem('refreshToken', response.refreshToken);
@@ -40,8 +40,8 @@ const processAuthResponse = response => {
     };
   }
 
-  console.error('Неочікуваний формат відповіді:', response);
-  throw new Error('Неочікуваний формат відповіді від API');
+  console.error('Unexpected response format:', response);
+  throw new Error('Unexpected response format from API');
 };
 
 export const registerUser = createAsyncThunk(
@@ -64,7 +64,7 @@ export const registerUser = createAsyncThunk(
         err.response?.data?.message || 'Registration failed',
       );
       return rejectWithValue(
-        err.response?.data?.message || 'Помилка реєстрації',
+        err.response?.data?.message || 'Registration error',
       );
     }
   },
@@ -87,7 +87,7 @@ export const loginUser = createAsyncThunk(
         '❌ Login failed:',
         err.response?.data?.message || 'Login failed',
       );
-      return rejectWithValue(err.response?.data?.message || 'Помилка входу');
+      return rejectWithValue(err.response?.data?.message || 'Login error');
     }
   },
 );
@@ -107,7 +107,7 @@ export const logoutUser = createAsyncThunk(
         err.response?.data?.message || 'Logout failed',
       );
       clearToken();
-      return rejectWithValue(err.response?.data?.message || 'Помилка виходу');
+      return rejectWithValue(err.response?.data?.message || 'Exit error');
     }
   },
 );
@@ -119,7 +119,7 @@ export const refreshToken = createAsyncThunk(
       const refreshTokenValue = localStorage.getItem('refreshToken');
 
       if (!refreshTokenValue) {
-        return rejectWithValue('Відсутній refreshToken');
+        return rejectWithValue('Missing refreshToken');
       }
 
       const res = await axiosAPI.post('/auth/refresh', {
@@ -134,7 +134,7 @@ export const refreshToken = createAsyncThunk(
           const userRes = await axiosAPI.get('/users/current');
           processedData.user = userRes.data.user;
         } catch (userError) {
-          console.error('Помилка отримання даних користувача:', userError);
+          console.error('Error retrieving user data:', userError);
         }
       }
 
@@ -142,7 +142,7 @@ export const refreshToken = createAsyncThunk(
     } catch (err) {
       clearToken();
       return rejectWithValue(
-        err.response?.data?.message || 'Помилка оновлення токена',
+        err.response?.data?.message || 'Token refresh error',
       );
     }
   },
@@ -155,14 +155,14 @@ export const fetchCurrentUser = createAsyncThunk(
       const { auth } = getState();
 
       if (!auth.token) {
-        return rejectWithValue('Немає токена для авторизації');
+        return rejectWithValue('No authorization token');
       }
 
       const res = await axiosAPI.get('/users/current');
       return res.data.user;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || 'Помилка отримання даних користувача',
+        err.response?.data?.message || 'Error retrieving user data',
       );
     }
   },
@@ -274,7 +274,7 @@ const authSlice = createSlice({
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.loading = false;
 
-        if (action.payload === 'Немає токена для авторизації') {
+        if (action.payload === 'No authorization token') {
           state.isAuthenticated = false;
           state.token = null;
         }
