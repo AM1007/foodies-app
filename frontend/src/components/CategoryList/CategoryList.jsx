@@ -1,22 +1,25 @@
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
+import icons from '../../icons/sprite.svg';
 
 export default function CategoryList({ onCategoryClick }) {
   return (
-    <section className={styles.container}>
+    <section className="container">
       <div className={styles.categoryListContainer}>
         <div className={styles.grid}>
           {categories.map(cat => (
             <div
               key={cat.name}
-              className={styles.card}
+              className={`
+                ${styles.card}
+              `}
               onClick={() => onCategoryClick(cat.name)}
             >
               <img src={cat.image} alt={cat.name} className={styles.image} />
               <div className={styles.buttonWrap}>
                 <button className={styles.button}>{cat.name}</button>
                 <svg width="24" height="24" className={styles.icon}>
-                  <use href="/icons/sprite.svg#arrow-up-right"></use>
+                  <use href={`${icons}#arrow-up-right`} />
                 </svg>
               </div>
             </div>
@@ -26,7 +29,7 @@ export default function CategoryList({ onCategoryClick }) {
             className={`${styles.card} ${styles.allCategories}`}
             onClick={() => onCategoryClick('All categories')}
           >
-            ALL CATEGORIES
+            All categories
           </div>
         </div>
       </div>

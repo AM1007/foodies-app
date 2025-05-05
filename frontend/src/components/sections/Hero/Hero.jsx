@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 // import { useAuth } from '../../../hooks/useAuth';
+import HeroImages from '../../ui/HeroImages/HeroImages.jsx';
 import styles from './Hero.module.css';
 
 const Hero = () => {
@@ -15,7 +16,7 @@ const Hero = () => {
   // };
 
   return (
-    <section className={styles.container}>
+    <section className="container">
       <div className={styles.heroSection}>
         <div className={styles.textWrapper}>
           <h1 className={styles.title}>Improve Your Culinary Talents</h1>
@@ -28,18 +29,7 @@ const Hero = () => {
           </Link>
         </div>
 
-        <div className={styles.imageWrapper}>
-          <img
-            src="/image/hero/image_hero_dish2_1x.png"
-            alt="Dish large"
-            className={styles.imageSmall}
-          />
-          <img
-            src="/image/hero/image_hero_dish1_1x.png"
-            alt="Dish small"
-            className={styles.imageLarge}
-          />
-        </div>
+        <HeroImages />
       </div>
     </section>
   );

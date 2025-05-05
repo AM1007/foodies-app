@@ -4,13 +4,12 @@ const testimonials = [
     author: 'LARRY PAGEIM',
   },
   {
-    text: 'Amazing experience! The flavors were perfect and it was so easy to make.',
-    author: 'JANE DOE',
+    text: 'Amazing recipe! My kids loved it and asked for more. Simple and delicious.',
+    author: 'SARA SMITH',
   },
   {
-    text: 'My kids loved it! And it’s now our go-to recipe for family dinners.',
-    author: 'JOHN SMITH',
+    text: 'Easy to make and super tasty. Will definitely cook it again.',
+    author: 'JOHN DOE',
   },
 ];
-
 export default testimonials;

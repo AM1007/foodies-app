@@ -185,14 +185,6 @@ const getPopularRecipes = async (query = {}) => {
       offset,
     });
 
-    console.log(
-      `Successfully fetched ${recipes.length} recipes for popular recipes endpoint`,
-    );
-
-    console.log(
-      'Note: Currently returning recent recipes instead of sorting by popularity due to database constraints',
-    );
-
     return paginationHelper.paginateResponse(
       {
         count,
@@ -201,8 +193,6 @@ const getPopularRecipes = async (query = {}) => {
       query,
     );
   } catch (error) {
-    console.error('Error fetching popular recipes:', error);
-    console.error('Error details:', error.stack);
     throw HttpError(
       HTTP_STATUS.INTERNAL_SERVER_ERROR,
       'Failed to retrieve recipes',
@@ -216,11 +206,11 @@ const createRecipe = async (recipeData, userId, files = {}) => {
 
     recipeDetails.owner = userId;
 
-    if (files.thumb) {
-      recipeDetails.thumb = files.thumb.path;
+    if (files.thumb && files.thumb[0]) {
+      recipeDetails.thumb = files.thumb[0].path;
     }
-    if (files.preview) {
-      recipeDetails.preview = files.preview.path;
+    if (files.preview && files.preview[0]) {
+      recipeDetails.preview = files.preview[0].path;
     }
 
     const recipe = await Recipe.create(recipeDetails);

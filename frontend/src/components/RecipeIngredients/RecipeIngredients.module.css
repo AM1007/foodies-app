@@ -1,71 +1,68 @@
 .ingredients {
-    margin-top: 48px;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 24px;
-    color: var(--black);
-  }
-  
-  .list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  
-  @media (min-width: 768px) {
-    .list {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-  }
-  
-  @media (min-width: 1440px) {
-    .list {
-      grid-template-columns: repeat(5, 1fr);
-      gap: 32px;
-    }
-  }
-  
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 1.25rem; /* ≈20px */
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: auto; /* auto, щоб не обривати текст */
+  min-width: 178px;
+  height: 90px;
+  gap: 14px; /* точно як на скріншоті */
+}
+
+.imageWrapper {
+  width: 90px;
+  height: 90px;
+  border: 1px solid var(--gray);
+  border-radius: 12px;
+  padding: 15px; /* точний внутрішній відступ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.name {
+  font-size: 0.875rem; /* ≈14px */
+  font-weight: 600;
+  color: var(--black);
+}
+
+.amount {
+  font-size: 0.75rem; /* ≈12px */
+  color: var(--gray);
+}
+
+/* 📱 Mobile-first адаптація */
+@media (max-width: 480px) {
   .item {
-    background-color: var(--light-gray);
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    height: 100%;
-  }
-  
-  .imageWrapper {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background-color: var(--white);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    justify-content: flex-start;
   }
-  
-  .name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
-  }
-  
-  .amount {
-    font-size: 12px;
-    color: var(--gray);
-  }
-  
+}

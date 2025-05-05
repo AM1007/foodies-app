@@ -25,18 +25,42 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(morgan(formatsLogger));
 
 const corsOptions = {
-  origin: '*',
+  origin: [
+    'https://foodies-app-pke3.onrender.com',
+    'http://localhost:3000',
+    'https://foodies-app-ten-iota.vercel.app',
+    'http://localhost:5173',
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-connectToDatabase();
+let databaseConnected = false;
+try {
+  await connectToDatabase();
+  databaseConnected = true;
+} catch (error) {
+  console.error('Failed to connect to database:', error);
+  console.warn('Starting server without database connection...');
+}
+
+app.get('/api/status', (req, res) => {
+  res.json({
+    server: 'running',
+    database: databaseConnected ? 'connected' : 'disconnected',
+    environment: process.env.NODE_ENV,
+    version: '1.0.0',
+  });
+});
 
 const swaggerSpec = swaggerConfig();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -72,5 +96,11 @@ app.listen(port, () => {
         `http://localhost:${port}/api-docs`,
       )}`,
     ),
+  );
+
+  console.log(
+    databaseConnected
+      ? chalk.green('✅ Database connection: established')
+      : chalk.red('❌ Database connection: failed'),
   );
 });

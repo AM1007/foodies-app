@@ -48,7 +48,6 @@ router.post(
   '/',
   authenticate,
   recipeImagesUpload,
-  validateBody(recipeSchemas.createRecipeSchema),
   recipesControllers.createRecipe,
 );
 

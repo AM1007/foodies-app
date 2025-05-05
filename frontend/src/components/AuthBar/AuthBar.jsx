@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '../Button/Button.jsx';
 import styles from './AuthBar.module.css';
 import { useModal } from '../../hooks/useModal.js';
@@ -12,13 +11,13 @@ const AuthBar = () => {
         className={`${styles.button} ${styles.signIn}`}
         onClick={() => openModal('signin')}
       >
-        SIGN IN
+        sign in
       </Button>
       <Button
         className={`${styles.button} ${styles.signUp}`}
         onClick={() => openModal('signup')}
       >
-        SIGN UP
+        sign up
       </Button>
       {/* <Button onClick={() => openModal('logout')}>Log Out</Button> */}
     </div>

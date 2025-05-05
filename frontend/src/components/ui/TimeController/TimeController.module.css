@@ -1,3 +1,13 @@
+.label {
+  color: var(--black);
+  font-size: 16px;
+  display: block;
+  font-weight: 800;
+  letter-spacing: -0.32px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
 .timeController {
   display: flex;
   align-items: center;

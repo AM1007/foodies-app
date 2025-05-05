@@ -1,6 +1,8 @@
 import recipesServices from '../services/recipesServices.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
+import recipeSchemas from '../schemas/recipeSchemas.js';
+const { createRecipeSchema } = recipeSchemas;
 
 const searchRecipes = async (req, res) => {
   const searchResults = await recipesServices.getAllRecipes(req.query);
@@ -58,6 +60,7 @@ const createRecipe = async (req, res) => {
     userId,
     req.files || {},
   );
+
   res.status(HTTP_STATUS.CREATED).json(newRecipe);
 };
 

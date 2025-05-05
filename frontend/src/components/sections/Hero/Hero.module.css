@@ -2,7 +2,6 @@
   background-color: var(--black);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  max-width: 375px;
   margin: 0 auto;
   padding: 20px;
   position: relative;
@@ -29,11 +28,12 @@
   text-align: center;
   max-width: 327px;
   margin: 0 auto;
+  text-transform: uppercase;
 }
 
 .subtitle {
   color: var(--white);
-  font-weight: 500px;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.02px;
@@ -57,31 +57,6 @@
 .heroButton:hover {
   background-color: var(--white);
   color: var(--black);
-}
-
-.imageWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 32px;
-  padding-bottom: 100px;
-}
-
-.imageSmall {
-  width: 77px;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transform: rotate(10deg);
-}
-
-.imageLarge {
-  width: 190px;
-  height: auto;
-  border-radius: 30px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  transform: rotate(-10deg);
-  z-index: 1;
 }
 
 @media (min-width: 768px) {
