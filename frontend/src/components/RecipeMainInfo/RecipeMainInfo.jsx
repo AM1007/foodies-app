@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
 
-const RecipeMainInfo = ({ title, category, time, description, author }) => {
+const RecipeMainInfo = ({ title, category, time, description, user }) => {
   const { isAuthenticated } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const { openModal } = useModal();
 
   const handleAuthorClick = () => {
-    if (!author?._id) return;
+    if (!user?.id) return;
 
     if (!isAuthenticated) {
       openModal('signin');
     } else {
-      navigate(`/user/${author._id}`);
+      navigate(`/user/${user.id}`);
     }
   };
 
@@ -30,8 +30,9 @@ const RecipeMainInfo = ({ title, category, time, description, author }) => {
           <p className={styles.description}>{description}</p>
           <div className={styles.authorBlock}>
             <img
-              src={author?.avatar || '/placeholder.jpg'}
-              alt={author?.name || 'Anonymous'}
+              src={user?.avatar ?? '/placeholder.jpg'}
+              alt={user && user.name ? user.name : 'Anonymous'}
+
               className={styles.authorImage}
             />
             <div className={styles.authorText}>
@@ -41,7 +42,8 @@ const RecipeMainInfo = ({ title, category, time, description, author }) => {
                 onClick={handleAuthorClick}
                 className={styles.authorName}
               >
-                {author?.name || 'Anonymous'}
+                {user && user.name ? user.name : 'Anonymous'}
+
               </button>
             </div>
           </div>

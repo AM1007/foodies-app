@@ -8,9 +8,12 @@ const RecipeCardUI = ({
   onAuthorClick,
   onViewRecipe,
 }) => {
-  const imageUrl = recipe.preview?.startsWith('http')
+  const imageUrl = recipe.thumb?.startsWith('http')
+  ? recipe.thumb
+  : recipe.preview?.startsWith('http')
     ? recipe.preview
     : '/placeholder-image.jpg';
+
 
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
     ? recipe.user.avatar
