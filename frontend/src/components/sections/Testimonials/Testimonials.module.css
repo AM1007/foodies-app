@@ -1,90 +1,80 @@
-.sectionWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 4rem 1rem;
-}
-
 .testimonialsSection {
-  align-items: center;
   text-align: center;
+  padding: 64px 16px 80px;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
-  max-width: 860px;
-  width: 100%;
-  padding: 64px 16px 80px 16px;
+}
+.testimonialsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 
-@media (min-width: 768px) {
+.testimonialsSlider {
+  width: 100%;
+  max-width: 822px;
+}
+
+.testimonialCard {
+  background: transparent;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.icon {
+  width: 40px;
+  height: 32px;
+  fill: var(--gray);
+  margin-left: 0;
+  display: block;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin: 20px 0;
+  padding-bottom: 80px;
+}
+
+.author {
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-top: 54px;
+  padding-bottom: 56px;
+}
+
+.swiper-pagination-bullets {
+  margin-top: 20px;
+}
+
+@media (max-width: 767px) {
   .testimonialsSection {
-    padding: 100px 32px;
+    max-width: 343px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .testimonialsSection {
+    max-width: 704px;
+  }
+  .icon {
+    width: 59px;
+    height: 48px;
+  }
+  .text {
+    font-size: 24px;
+    line-height: 36px;
   }
 }
 
 @media (min-width: 1280px) {
   .testimonialsSection {
-    padding: 120px 0px;
+    max-width: 822px;
   }
-}
-
-.textWrapper {
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.swiper-pagination-bullets {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.quoteRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 24px;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-.icon {
-  width: 40px;
-  height: 40px;
-  fill: #6b7280;
-  flex-shrink: 0;
-}
-
-.text {
-  font-size: 1.125rem;
-  font-style: italic;
-  color: #111827;
-  line-height: 1.6;
-  text-align: left;
-  max-width: 600px;
-}
-
-.author {
-  font-weight: bold;
-  font-size: 0.875rem;
-  color: #000;
-  margin-top: 8px;
-}
-
-.fadeSlide {
-  opacity: 1;
-  transform: translateY(0) scale(1);
 }

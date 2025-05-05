@@ -4,16 +4,14 @@ import icons from '../../icons/sprite.svg';
 
 export default function CategoryList({ onCategoryClick }) {
   return (
-    <section className={styles.container}>
+    <section className="container">
       <div className={styles.categoryListContainer}>
         <div className={styles.grid}>
           {categories.map(cat => (
             <div
               key={cat.name}
               className={`
-                ${styles.card} 
-                ${cat.isWideTablet ? styles.tabletWide : ''} 
-                ${cat.isWideDesktop ? styles.desktopWide : ''}
+                ${styles.card}
               `}
               onClick={() => onCategoryClick(cat.name)}
             >

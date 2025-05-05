@@ -19,7 +19,9 @@ const Header = () => {
 
   return (
     <>
-      <header className={`${styles.headerContainer} ${headerThemeClass}`}>
+      <header
+        className={`${styles.headerContainer}  ${headerThemeClass}`}
+      >
         <div className={styles.headerWrapper}>
           <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
           <Navigation
