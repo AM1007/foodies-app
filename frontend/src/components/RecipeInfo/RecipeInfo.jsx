@@ -5,13 +5,13 @@ import styles from './RecipeInfo.module.css';
 
 const RecipeInfo = ({ recipe, favoriteRecipes }) => {
   const isRecipeFavorite = favoriteRecipes.some(
-    favoriteRecipe => favoriteRecipe._id === recipe._id
+    favoriteRecipe => favoriteRecipe.id === recipe.id
   );
 
   return (
     <div className={styles.recipeInfo}>
       <div className={styles.imageBlock}>
-        <img src={recipe.preview} alt={recipe.title} />
+        <img src={recipe.thumb} alt={recipe.title} />
       </div>
       <div className={styles.detailsBlock}>
         <RecipeMainInfo
@@ -19,7 +19,7 @@ const RecipeInfo = ({ recipe, favoriteRecipes }) => {
           category={recipe.category?.name || 'Unknown'}
           time={recipe.time}
           description={recipe.description}
-          author={recipe.user || { name: 'Anonymous', id: null }}
+          user={recipe.user || { name: 'Anonymous', id: null }}
         />
 
         <RecipeIngredients
@@ -27,9 +27,9 @@ const RecipeInfo = ({ recipe, favoriteRecipes }) => {
             recipe.ingredients?.map(ingredient => ({
               id: ingredient.id,
               name: ingredient.name,
-              image: ingredient.image,
+              img: ingredient.img,
               amount:
-                ingredient?.RecipeIngredients?.measure ||
+                ingredient?.RecipeIngredient?.measure ||
                 ingredient?.through?.measure ||
                 'n/a',
             })) || []
@@ -37,7 +37,7 @@ const RecipeInfo = ({ recipe, favoriteRecipes }) => {
         />
         <RecipePreparation
           preparation={recipe.instructions}
-          recipeId={recipe._id}
+          recipeId={recipe.id}
           isFavorite={isRecipeFavorite}
         />
       </div>

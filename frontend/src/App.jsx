@@ -35,7 +35,7 @@ function App() {
           /> */}
           <Route path="/recipe" element={<Recipe />} />
           <Route path="/recipe/add" element={<AddRecipe />} />
-          <Route path="/user/" element={<Profile />} />
+          <Route path="/user" element={<Profile />} />
           {/* <Route
             path="/user/:id"
             element={
