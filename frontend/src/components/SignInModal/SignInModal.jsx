@@ -20,13 +20,13 @@ const SignInModal = ({ onClose }) => {
         <SignInForm onSuccess={onClose} />
 
         <p className={styles.switchText}>
-          Don't have an account? Create an account{' '}
+          Don't have an account?{' '}
           <button
             type="button"
             onClick={switchToSignUp}
             className={styles.switchButton}
           >
-            Sign Up
+            Create an account
           </button>
         </p>
       </div>

@@ -1,25 +1,20 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  width: 100%;
-}
-
 .title {
-  font-family: 'Mulish', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--black);
-  margin-bottom: 24px;
+  color: #050505;
   text-align: center;
+  font-family: Mulish;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 32px;
+  letter-spacing: -0.56px;
+  text-transform: uppercase;
 }
 
 .switchText {
   font-family: 'Mulish', sans-serif;
   font-size: 14px;
   color: var(--dark-gray);
-  margin-top: 24px;
+  padding-top: 16px;
   text-align: center;
 }
 
@@ -34,22 +29,26 @@
   transition: color 0.3s;
 }
 
-.switchButton:hover {
-  color: var(--red);
-}
-
 @media (min-width: 768px) {
-  .container {
-    padding: 24px;
-  }
-
   .title {
-    font-size: 28px;
-    margin-bottom: 32px;
+    color: #050505;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
   }
 
   .switchText {
-    font-size: 16px;
-    margin-top: 32px;
+    color: #bfbebe;
+    font-family: Mulish;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: -0.28px;
   }
 }

@@ -6,8 +6,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Button from '../Button/Button.jsx';
 import styles from './SignUpForm.module.css';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUpForm({ onSuccess }) {
   const dispatch = useDispatch();
@@ -21,12 +21,7 @@ export default function SignUpForm({ onSuccess }) {
 
   useEffect(() => {
     if (error) {
-      iziToast.error({
-        title: 'Error',
-        message: error,
-        position: 'topRight',
-        class: 'custom-error-toast',
-      });
+      toast.error(error);
     }
   }, [error]);
 
@@ -45,19 +40,10 @@ export default function SignUpForm({ onSuccess }) {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await dispatch(registerUser(values)).unwrap();
-      iziToast.success({
-        title: 'Success',
-        message: 'You have successfully signed up!',
-        position: 'topRight',
-      });
+      toast.success('You have successfully signed up!');
       onSuccess();
     } catch {
-      // Server error stored in state.auth.error
-      iziToast.error({
-        title: 'Error',
-        message: error,
-        position: 'topRight',
-      });
+      toast.error(error || 'Something went wrong');
     } finally {
       setSubmitting(false);
     }
@@ -71,32 +57,42 @@ export default function SignUpForm({ onSuccess }) {
     >
       {({ isSubmitting }) => (
         <Form className={styles.form}>
-          <label htmlFor={nameId} className={styles.label}>
-            Name<sup>*</sup>
-          </label>
-          <Field id={nameId} name="name" className={styles.input} />
+          <label htmlFor={nameId} className={styles.visuallyHidden}></label>
+          <div className={styles.inputWrapper}>
+            <Field
+              id={nameId}
+              name="name"
+              required
+              className={styles.input}
+              placeholder="Name*"
+            />
+          </div>
           <ErrorMessage name="name" component="div" className={styles.error} />
 
-          <label htmlFor={emailId} className={styles.label}>
-            Email<sup>*</sup>
-          </label>
-          <Field
-            id={emailId}
-            name="email"
-            type="email"
-            className={styles.input}
-          />
+          <label htmlFor={emailId} className={styles.visuallyHidden}></label>
+          <div className={styles.inputWrapper}>
+            <Field
+              id={emailId}
+              name="email"
+              type="email"
+              required
+              placeholder="Email*"
+              className={styles.input}
+            />
+          </div>
           <ErrorMessage name="email" component="div" className={styles.error} />
 
-          <label htmlFor={passwordId} className={styles.label}>
-            Password<sup>*</sup>
-          </label>
-          <Field
-            id={passwordId}
-            name="password"
-            type="password"
-            className={styles.input}
-          />
+          <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
+          <div className={styles.inputWrapper}>
+            <Field
+              id={passwordId}
+              name="password"
+              type="password"
+              required
+              placeholder="Password*"
+              className={styles.input}
+            />
+          </div>
           <ErrorMessage
             name="password"
             component="div"
@@ -105,7 +101,11 @@ export default function SignUpForm({ onSuccess }) {
 
           {error && <div className={styles.error}>{error}</div>}
 
-          <Button type="submit" disabled={loading || isSubmitting}>
+          <Button
+            type="submit"
+            className={styles.submitButton}
+            disabled={loading || isSubmitting}
+          >
             {loading || isSubmitting ? 'Signing up…' : 'Sign Up'}
           </Button>
         </Form>

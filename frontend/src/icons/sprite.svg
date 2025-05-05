@@ -85,5 +85,9 @@
     <symbol id="quote" viewBox="0 0 39 32">
       <path d="M0 32V21.294c0-4 .704-7.686 2.113-11.059S5.909 3.451 9.275 0l6.105 4.824c-1.957 1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514V32H-.002zm22.896 0V21.294c0-4 .704-7.686 2.113-11.059S28.805 3.451 32.171 0l6.105 4.824c-1.957 1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514V32H22.894z"/>
     </symbol>
+    <symbol id="icon-x" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" d="M24 8l-16 16"></path>
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" d="M8 8l16 16"></path>
+</symbol>
   </defs>
 </svg>

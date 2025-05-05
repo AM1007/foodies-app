@@ -1,7 +1,13 @@
-import React from 'react';
+// import React from 'react';
 import styles from './Button.module.css';
 
-const Button = ({ onClick, className = '', children }) => {
+const Button = ({
+  type = 'button',
+  disabled = false,
+  onClick,
+  className = '',
+  children,
+}) => {
   const clickHandler = event => {
     if (onClick) {
       onClick(event);
@@ -11,7 +17,12 @@ const Button = ({ onClick, className = '', children }) => {
   const btnClassName = className || styles.button;
 
   return (
-    <button type="type" onClick={clickHandler} className={btnClassName}>
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={clickHandler}
+      className={btnClassName}
+    >
       {children}
     </button>
   );
