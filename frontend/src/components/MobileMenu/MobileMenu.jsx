@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Logo from '../Logo/Logo';
 import CloseBtn from '../ui/CloseBtn/CloseBtn';
 import useScrollLock from '../../hooks/useScrollLock';
@@ -7,10 +8,14 @@ import styles from './MobileMenu.module.css';
 
 const MobileMenu = ({ isOpen, onClose }) => {
   useScrollLock(isOpen);
-  if (!isOpen) return null;
 
   return (
-    <div className={styles.overlay}>
+    <motion.div
+      initial={{ x: '100%' }}
+      animate={{ x: isOpen ? 0 : '100%' }}
+      transition={{ duration: 0.4 }}
+      className={styles.overlay}
+    >
       <div className={styles.wrapper}>
         <Logo className={styles.logoWhite} />
         <CloseBtn onClick={onClose} />
@@ -30,7 +35,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
         </ul>
       </nav>
       <HeroImages />
-    </div>
+    </motion.div>
   );
 };
 
