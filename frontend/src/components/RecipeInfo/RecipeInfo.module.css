@@ -1,0 +1,37 @@
+.recipeInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .imageBlock img {
+    width: 100%;
+    max-width: 551px;
+    height: auto;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+  
+  .detailsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0;
+  }
+  
+  @media (min-width: 1024px) {
+    .recipeInfo {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 80px;
+    }
+  
+    .imageBlock {
+      flex: 0 0 551px;
+    }
+  
+    .detailsBlock {
+      flex: 1;
+    }
+  }
+  
