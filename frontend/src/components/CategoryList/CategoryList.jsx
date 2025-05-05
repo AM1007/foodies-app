@@ -29,7 +29,7 @@ export default function CategoryList({ onCategoryClick }) {
             className={`${styles.card} ${styles.allCategories}`}
             onClick={() => onCategoryClick('All categories')}
           >
-            ALL CATEGORIES
+            All categories
           </div>
         </div>
       </div>
