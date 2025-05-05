@@ -1,51 +1,31 @@
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './RecipeCard.module.css';
-import { addToFavorites, removeFromFavorites } from '../../../redux/recipes/recipesSlice';
-import { useModal } from '../../../hooks/useModal';
 import icons from '../../../icons/sprite.svg';
 
-const RecipeCard = ({ recipe }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector(state => state.auth);
-  const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
-  const { openModal } = useModal();
+const RecipeCardUI = ({
+  recipe,
+  isFavorite,
+  onFavoriteToggle,
+  onAuthorClick,
+  onViewRecipe,
+}) => {
+  const imageUrl = recipe.preview?.startsWith('http')
+    ? recipe.preview
+    : '/placeholder-image.jpg';
 
-  const isRecipeFavorite = favoriteRecipes.some(fav => fav._id === recipe._id);
-
-  const handleFavoriteToggle = () => {
-    if (!isAuthenticated) {
-      openModal('signin');
-      return;
-    }
-    if (isRecipeFavorite) {
-      dispatch(removeFromFavorites(recipe._id));
-    } else {
-      dispatch(addToFavorites(recipe._id));
-    }
-  };
-
-  const handleAuthorClick = () => {
-    if (!isAuthenticated) {
-      openModal('signin');
-      return;
-    }
-    if (recipe.user?._id) navigate(`/user/${recipe.user._id}`);
-  };
-
-  const handleViewRecipe = () => navigate(`/recipe/${recipe._id}`);
+  const avatarUrl = recipe.user?.avatar?.startsWith('http')
+    ? recipe.user.avatar
+    : '/default-avatar.jpg';
 
   return (
     <div className={styles.card}>
-      <img src={recipe.preview} alt={recipe.title} className={styles.image} />
+      <img src={imageUrl} alt={recipe.title} className={styles.image} />
       <div className={styles.content}>
         <h4 className={styles.title}>{recipe.title}</h4>
         <p className={styles.description}>{recipe.description}</p>
         <div className={styles.footer}>
-          <button className={styles.author} onClick={handleAuthorClick}>
+          <button className={styles.author} onClick={onAuthorClick}>
             <img
-              src={recipe.user?.avatar || '/default-avatar.jpg'}
+              src={avatarUrl}
               alt={recipe.user?.name || 'Anonymous'}
               className={styles.authorAvatar}
             />
@@ -53,8 +33,8 @@ const RecipeCard = ({ recipe }) => {
           </button>
           <div className={styles.actions}>
             <button
-              className={`${styles.heart} ${isRecipeFavorite ? styles.active : ''}`}
-              onClick={handleFavoriteToggle}
+              className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
+              onClick={onFavoriteToggle}
               aria-label="Toggle favorite"
             >
               <svg className={styles.icon}>
@@ -62,8 +42,8 @@ const RecipeCard = ({ recipe }) => {
               </svg>
             </button>
             <button
-              className={`${styles.arrow}`}
-              onClick={handleViewRecipe}
+              className={styles.arrow}
+              onClick={onViewRecipe}
               aria-label="View recipe"
             >
               <svg className={styles.icon}>
@@ -77,4 +57,4 @@ const RecipeCard = ({ recipe }) => {
   );
 };
 
-export default RecipeCard;
+export default RecipeCardUI;

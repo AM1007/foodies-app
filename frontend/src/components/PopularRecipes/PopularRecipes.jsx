@@ -1,5 +1,5 @@
 import styles from './PopularRecipes.module.css';
-import RecipeCard from '../ui/RecipeCard/RecipeCard';
+import RecipeCardContainer from '../RecipeCardContainer/RecipeCardContainer';
 
 const PopularRecipes = ({ recipes }) => {
   if (!recipes?.length) return null;
@@ -10,7 +10,7 @@ const PopularRecipes = ({ recipes }) => {
       <ul className={styles.list}>
         {recipes.map(recipe => (
           <li key={recipe._id}>
-            <RecipeCard recipe={recipe} />
+            <RecipeCardContainer recipe={recipe} />
           </li>
         ))}
       </ul>
