@@ -2,70 +2,80 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
   width: 100%;
 }
 
 .title {
-  font-family: 'Mulish', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--black);
-  margin-bottom: 24px;
+  color: #050505;
   text-align: center;
+  font-family: Mulish;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 32px; /* 114.286% */
+  letter-spacing: -0.56px;
+  text-transform: uppercase;
 }
 
-.question {
-  font-family: 'Mulish', sans-serif;
-  font-size: 16px;
+.text {
+  color: #bfbebe;
+  text-align: center;
+  padding-top: 16px;
+
+  /* Mobile/Main text */
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
   font-weight: 500;
-  color: var(--dark-gray);
-  margin-bottom: 32px;
-  text-align: center;
-  max-width: 300px;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.28px;
 }
 
-.buttonsWrapper {
+.buttonsContainer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 16px;
-  width: 100%;
-  justify-content: center;
+  padding-top: 32px;
 }
 
 .cancelButton {
-  padding: 12px 24px;
-  border: 1px solid var(--gray);
-  border-radius: 30px;
-  background-color: transparent;
-  color: var(--black);
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+  display: flex;
+  padding: 14px 113px;
+  align-items: flex-start;
+  gap: 10px;
 
-.cancelButton:hover {
-  background-color: var(--light-gray);
+  border-radius: 30px;
+  border: 1px solid #bfbebe;
+
+  color: #050505;
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
 }
 
 .logoutButton {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 30px;
-  background-color: var(--red);
-  color: var(--white);
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+  display: flex;
+  padding: 15px 110px;
+  align-items: flex-start;
+  gap: 10px;
 
-.logoutButton:hover {
-  background-color: #900606;
+  border-radius: 30px;
+  background: #050505;
+  border: 1px solid #050505;
+
+  color: #fff;
+  font-family: Mulish;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
 }
 
 .logoutButton:disabled {
@@ -75,24 +85,55 @@
 
 @media (min-width: 768px) {
   .container {
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 400px;
   }
 
   .title {
-    font-size: 28px;
+    font-size: 0; /* ховаємо сам текст */
+    position: relative;
   }
 
-  .question {
+  .title::after {
+    content: 'Are you logging out?';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 40px;
+    color: #050505;
+    text-transform: uppercase;
+    width: 400px;
+  }
+
+  .text {
     font-size: 18px;
     max-width: 400px;
   }
 
   .buttonsWrapper {
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
-  .cancelButton,
+  .cancelButton {
+    display: flex;
+    padding: 16px 165px;
+    align-items: flex-start;
+    gap: 10px;
+  }
   .logoutButton {
-    padding: 14px 32px;
+    display: flex;
+    padding: 18px 164px;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid #050505;
   }
 }
