@@ -43,58 +43,107 @@ const getPopularRecipes = async (req, res) => {
   res.status(HTTP_STATUS.OK).json(popularRecipes);
 };
 
-const createRecipe = async (req, res, next) => {
-  try {
-    const { id: userId } = req.user;
-    const recipeData = req.body;
+const createRecipe = async (req, res) => {
+  const { id: userId } = req.user;
+  const recipeData = req.body;
 
-    console.log('Ingredients before parsing:', recipeData.ingredients);
-    console.log('Type of ingredients:', typeof recipeData.ingredients);
+  // Логування для відлагодження завантаження файлів
+  console.log('====== DEBUG: CREATE RECIPE ======');
+  console.log('Files received:', req.files ? 'YES' : 'NO');
+  console.log('Files object:', JSON.stringify(req.files, null, 2));
+  console.log('Thumb file:', req.files?.thumb ? 'YES' : 'NO');
+  console.log('Preview file:', req.files?.preview ? 'YES' : 'NO');
 
-    // Парсимо ingredients, якщо це рядок
-    if (typeof recipeData.ingredients === 'string') {
-      try {
-        recipeData.ingredients = JSON.parse(recipeData.ingredients);
-        console.log('Ingredients after parsing:', recipeData.ingredients);
-      } catch (e) {
-        console.error('Error parsing ingredients:', e.message);
-        throw HttpError(
-          HTTP_STATUS.BAD_REQUEST,
-          'Invalid ingredients format: ' + e.message,
-        );
-      }
-    }
-
-    // Перевіряємо, чи є ingredients масивом після парсингу
-    if (!Array.isArray(recipeData.ingredients)) {
-      console.error(
-        'Ingredients is not an array after parsing:',
-        recipeData.ingredients,
-      );
-      throw HttpError(
-        HTTP_STATUS.BAD_REQUEST,
-        '"ingredients" must be an array',
-      );
-    }
-
-    // Тепер валідуємо
-    const { error } = recipeSchemas.createRecipeSchema.validate(recipeData);
-    if (error) {
-      console.error('Validation error:', error.message);
-      throw HttpError(HTTP_STATUS.BAD_REQUEST, error.message);
-    }
-
-    const newRecipe = await recipesServices.createRecipe(
-      recipeData,
-      userId,
-      req.files || {},
-    );
-
-    res.status(HTTP_STATUS.CREATED).json(newRecipe);
-  } catch (error) {
-    next(error);
+  if (req.files?.thumb) {
+    console.log('Thumb file details:', {
+      path: req.files.thumb[0].path,
+      filename: req.files.thumb[0].filename,
+      size: req.files.thumb[0].size,
+      mimetype: req.files.thumb[0].mimetype,
+    });
   }
+
+  if (req.files?.preview) {
+    console.log('Preview file details:', {
+      path: req.files.preview[0].path,
+      filename: req.files.preview[0].filename,
+      size: req.files.preview[0].size,
+      mimetype: req.files.preview[0].mimetype,
+    });
+  }
+  console.log('Recipe data:', JSON.stringify(recipeData, null, 2));
+  console.log('================================');
+
+  if (typeof recipeData.ingredients === 'string') {
+    try {
+      recipeData.ingredients = JSON.parse(recipeData.ingredients);
+    } catch (e) {
+      throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Invalid ingredients format');
+    }
+  }
+
+  const newRecipe = await recipesServices.createRecipe(
+    recipeData,
+    userId,
+    req.files || {},
+  );
+
+  // Додаткове логування після створення рецепта
+  console.log('====== RECIPE CREATED ======');
+  console.log('New recipe:', {
+    id: newRecipe.id,
+    title: newRecipe.title,
+    thumb: newRecipe.thumb, // Перевіримо, чи встановлені URL зображень
+    preview: newRecipe.preview,
+  });
+  console.log('============================');
+
+  res.status(HTTP_STATUS.CREATED).json(newRecipe);
 };
+
+// const createRecipe = async (req, res, next) => {
+//   try {
+//     const { id: userId } = req.user;
+//     const recipeData = req.body;
+
+//     console.log("Ingredients before parsing:", recipeData.ingredients);
+//     console.log("Type of ingredients:", typeof recipeData.ingredients);
+
+//     // Парсимо ingredients, якщо це рядок
+//     if (typeof recipeData.ingredients === 'string') {
+//       try {
+//         recipeData.ingredients = JSON.parse(recipeData.ingredients);
+//         console.log("Ingredients after parsing:", recipeData.ingredients);
+//       } catch (e) {
+//         console.error("Error parsing ingredients:", e.message);
+//         throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Invalid ingredients format: ' + e.message);
+//       }
+//     }
+
+//     // Перевіряємо, чи є ingredients масивом після парсингу
+//     if (!Array.isArray(recipeData.ingredients)) {
+//       console.error("Ingredients is not an array after parsing:", recipeData.ingredients);
+//       throw HttpError(HTTP_STATUS.BAD_REQUEST, "\"ingredients\" must be an array");
+//     }
+
+//     // Тепер валідуємо
+//     const { error } = recipeSchemas.createRecipeSchema.validate(recipeData);
+//     if (error) {
+//       console.error("Validation error:", error.message);
+//       throw HttpError(HTTP_STATUS.BAD_REQUEST, error.message);
+//     }
+
+//     const newRecipe = await recipesServices.createRecipe(
+//       recipeData,
+//       userId,
+//       req.files || {},
+//     );
+
+//     res.status(HTTP_STATUS.CREATED).json(newRecipe);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // const createRecipe = async (req, res) => {
 //   try {
