@@ -1,17 +1,16 @@
 .categoriesWrapper {
-  max-width: 343px;
-  margin: 0 auto;
-  padding: 32px 16px;
+  padding: 64px 16px;
 }
 @media screen and (min-width: 768px) {
   .categoriesWrapper {
-    max-width: 768px;
-    padding: 40px 32px;
+    /* padding: 100px 32px; */
+  }
+  .title {
+    padding-left: 12px;
   }
 }
 @media screen and (min-width: 1440px) {
   .categoriesWrapper {
-    max-width: 1440px;
-    padding: 40px 80px;
+    /* padding: 120px 80px; */
   }
 }

@@ -15,7 +15,7 @@ const Hero = () => {
   // };
 
   return (
-    <section className={styles.container}>
+    <section className="container">
       <div className={styles.heroSection}>
         <div className={styles.textWrapper}>
           <h1 className={styles.title}>Improve Your Culinary Talents</h1>

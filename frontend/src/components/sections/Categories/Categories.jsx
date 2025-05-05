@@ -22,12 +22,12 @@ export default function Categories() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <div className={styles.categoriesWrapper}>
         {!selectedCategory ? (
           <>
-            <MainTitle text="Categories" />
-            <Subtitle text="Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style, and the warm atmosphere of the kitchen." />
+            <MainTitle  className={styles.title} text="Categories" />
+            <Subtitle className={styles.title} text="Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style, and the warm atmosphere of the kitchen." />
             <CategoryList onCategoryClick={handleCategoryClick} />
           </>
         ) : (
