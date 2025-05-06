@@ -39,7 +39,20 @@
   border: 1px solid var(--gray);
 }
 .inputWrapper {
-  width: 100%;
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--black);
 }
 
 .error {
@@ -100,6 +113,21 @@
 }
 
 @media (min-width: 768px) {
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding-top: 40px;
+    width: 400px;
+  }
+  .input {
+    display: flex;
+    padding: 16px 200px 16px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 225px;
+  }
 }
 
 .visuallyHidden {
