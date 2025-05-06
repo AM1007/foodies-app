@@ -14,7 +14,7 @@
 
 .select, .selectInput {
   width: 100%;
-  width: 343px;
+  max-width: 343px;
   padding: 14px;
   border: 1px solid var(--gray);
   border-radius: 30px;
