@@ -1,13 +1,13 @@
 .recipeInfo {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 80px;
   }
   
   .imageBlock img {
     width: 100%;
     max-width: 551px;
-    height: auto;
+    height: 400px;
     border-radius: 16px;
     object-fit: cover;
   }
@@ -15,7 +15,7 @@
   .detailsBlock {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+
     padding: 0;
   }
   
@@ -23,7 +23,7 @@
     .recipeInfo {
       flex-direction: row;
       align-items: flex-start;
-      gap: 80px;
+
     }
   
     .imageBlock {
