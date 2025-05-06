@@ -47,7 +47,7 @@ const RecipeCard = ({
               aria-label="View recipe"
             >
               <svg className={styles.icon}>
-                <use href={`${icons}#arrow`} />
+                <use href={`${icons}#arrow-up-right`} />
               </svg>
             </button>
           </div>
