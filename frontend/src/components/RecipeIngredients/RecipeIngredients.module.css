@@ -2,12 +2,15 @@
   width: 100%;
   margin-bottom: 24px;
 }
-
+.wrap{
+  padding: 0;
+}
 .title {
   font-size: 1.25rem; /* ≈20px */
   font-weight: 700;
   color: var(--black);
   margin-bottom: 16px;
+  text-transform: uppercase;
 }
 
 .list {

@@ -8,6 +8,7 @@
   font-weight: 700;
   color: var(--black);
   margin-bottom: 40px;
+  text-transform: uppercase;
 }
 
 .list {
