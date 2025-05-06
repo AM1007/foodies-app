@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AuthBar from '../../AuthBar/AuthBar.jsx';
 import UserBar from '../../UserBar/UserBar.jsx';
 import BurgerBtn from '../../ui/BurgerBtn/BurgerBtn.jsx';
 import Logo from '../../Logo/Logo.jsx';
 import Navigation from '../../Navigation/Navigation.jsx';
+import { fetchCurrentUser } from '../../../redux/users/userSlice.js';
 import styles from './Header.module.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
   const isHomePage = location.pathname === '/';
 
   const headerThemeClass = isHomePage ? styles.darkTheme : styles.lightTheme;
 
   const { isAuthenticated = false } = useSelector(state => state.auth || {});
+  const user = useSelector(state => state.user.current);
+
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      dispatch(fetchCurrentUser());
+    }
+  }, [isAuthenticated, user, dispatch]);
 
   return (
     <>
