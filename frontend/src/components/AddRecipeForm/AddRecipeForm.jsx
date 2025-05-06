@@ -3,16 +3,24 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddRecipeForm.module.css';
-import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto.jsx';
-import DeleteBtn from '../ui/DeleteBtn/DeleteBtn.jsx';
-import DropdownSelector from '../ui/DropdownSelector/DropdownSelector.jsx';
-import TimeController from '../ui/TimeController/TimeController.jsx';
-import RecipeIngredients from '../RecipeIngredients/RecipeIngredients.jsx';
-import axiosAPI from '../../api/api.js';
+import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto';
+import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
+import TimeController from '../ui/TimeController/TimeController';
+import RecipeIngredients from '../RecipeIngredients/RecipeIngredients';
+import TextAreaWithCount from '../TextAreaWithCount/TextAreaWithCount';
+import IngredientSelector from '../IngredientSelector/IngredientSelector';
+import Button from '../Button/Button';
+import icons from '../../icons/sprite.svg';
+import Loader from '../Loader/Loader';
+
+import { createRecipe } from '../../redux/recipes/recipesSlice';
+import { fetchCategories } from '../../redux/categories/categoriesSlice';
+import { fetchIngredients } from '../../redux/ingredients/ingredientsSlice';
 
 const schema = yup.object().shape({
   title: yup
@@ -38,12 +46,16 @@ const schema = yup.object().shape({
 
 const AddRecipeForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Локальний стан
-  const [categories, setCategories] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredient, setSelectedIngredient] = useState('');
-  const [ingredientQuantity, setIngredientQuantity] = useState('');
+  const { items: categories, loading: categoriesLoading } = useSelector(
+    state => state.categories,
+  );
+  const { items: ingredients, loading: ingredientsLoading } = useSelector(
+    state => state.ingredients,
+  );
+  const { loading: recipesLoading } = useSelector(state => state.recipes);
+
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -72,52 +84,32 @@ const AddRecipeForm = () => {
   const instructions = watch('instructions');
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axiosAPI.get('/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        toast.error('Failed to load categories');
-      }
-    };
-
-    const fetchIngredients = async () => {
-      try {
-        const response = await axiosAPI.get('/ingredients');
-        setIngredients(response.data);
-      } catch (error) {
-        console.error('Error fetching ingredients:', error);
-        toast.error('Failed to load ingredients');
-      }
-    };
-
-    fetchCategories();
-    fetchIngredients();
-  }, []);
+    dispatch(fetchCategories());
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   const handlePhotoChange = file => {
     setValue('photo', file);
   };
 
-  const addIngredient = () => {
-    if (selectedIngredient && ingredientQuantity) {
-      const ingredient = ingredients.find(ing => ing.id === selectedIngredient);
+  const handleAddIngredient = (ingredientId, quantity) => {
+    if (ingredientId && quantity) {
+      const ingredient = ingredients.find(ing => ing.id === ingredientId);
       if (ingredient) {
         const isAlreadyAdded = recipeIngredients.some(
-          ing => ing.ingredientId === selectedIngredient,
+          ing => ing.ingredientId === ingredientId,
         );
 
         if (isAlreadyAdded) {
           toast.warning('This ingredient is already added');
-          return;
+          return false;
         }
 
         const newIngredient = {
           id: Date.now(),
-          ingredientId: selectedIngredient,
+          ingredientId,
           name: ingredient.name,
-          amount: ingredientQuantity,
+          amount: quantity,
           image: ingredient.thumb || ingredient.image || '/placeholder.png',
         };
 
@@ -125,12 +117,12 @@ const AddRecipeForm = () => {
           ...prevIngredients,
           newIngredient,
         ]);
-        setSelectedIngredient('');
-        setIngredientQuantity('');
+        return true;
       }
     } else {
       toast.warning('Please select an ingredient and specify the quantity');
     }
+    return false;
   };
 
   const removeIngredient = id => {
@@ -140,8 +132,6 @@ const AddRecipeForm = () => {
   const resetForm = () => {
     reset();
     setRecipeIngredients([]);
-    setSelectedIngredient('');
-    setIngredientQuantity('');
   };
 
   const onSubmit = async data => {
@@ -166,141 +156,104 @@ const AddRecipeForm = () => {
         formData.append(`ingredients[${index}][quantity]`, ingredient.amount);
       });
 
-      await axiosAPI.post('/recipes', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const resultAction = await dispatch(createRecipe(formData));
 
-      toast.success('Recipe published successfully!');
-      navigate('/user');
+      if (createRecipe.fulfilled.match(resultAction)) {
+        toast.success('Recipe published successfully!');
+        navigate('/user');
+      } else if (createRecipe.rejected.match(resultAction)) {
+        const errorMessage = resultAction.payload || 'Failed to create recipe';
+        toast.error(`Error: ${errorMessage}`);
+      }
     } catch (error) {
       console.error('Error creating recipe:', error);
-      const errorMessage =
-        error.response?.data?.message || 'Failed to create recipe';
-      toast.error(`Error: ${errorMessage}`);
+      toast.error(`Error: ${error.message || 'Failed to create recipe'}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (categoriesLoading || ingredientsLoading) return <Loader />;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      {/*  Фото */}
+      {/* Photo */}
       <PhotoUploader
         onPhotoChange={handlePhotoChange}
         error={errors.photo?.message}
       />
 
-      {/* Назва рецепту */}
+      {/* Recipe Title */}
       <div className={styles.formGroup}>
-  <div className={`${styles.nameWrapper} ${errors.title ? styles.errorInput : ''}`}>
-    <textarea
-      className={styles.nameLabel}
-      placeholder="The name of the recipe"
-      maxLength={200}
-      {...register('title')}
-    />
-    <span className={styles.charCountTitle}>{title?.length || 0}</span>
-  </div>
-  {errors.title && (
-    <p className={styles.errorMessage}>{errors.title.message}</p>
-  )}
-</div>
-      {/* Опис рецепту */}
-      <div className={styles.formGroup}>
-        <label className={`${styles.label}`}>Description</label>
         <div
-          className={`${styles.inputWrapper} ${
-            errors.description ? styles.errorInput : ''
+          className={`${styles.nameWrapper} ${
+            errors.title ? styles.errorInput : ''
           }`}
         >
           <textarea
-            className={styles.textarea}
-            placeholder="Enter a description"
+            className={styles.nameLabel}
+            placeholder="The name of the recipe"
             maxLength={200}
-            {...register('description')}
+            {...register('title')}
           />
-          <span className={styles.charCount}>
-            {description?.length || 0}/200
-          </span>
+          <span className={styles.charCountTitle}>{title?.length || 0}</span>
         </div>
-        {errors.description && (
-          <p className={styles.errorMessage}>{errors.description.message}</p>
+        {errors.title && (
+          <p className={styles.errorMessage}>{errors.title.message}</p>
         )}
       </div>
 
-      {/* Категорія, Час приготування, Інгредієнти, Кількість */}
-      <div className={styles.formWrapper}>
-        {/* Категорія */}
-        <Controller
-          name="categoryId"
-          control={control}
-          render={({ field }) => (
-            <div className={styles.selectContainer}>
-              <DropdownSelector
-                label="Category"
-                options={categories}
-                value={field.value}
-                onChange={field.onChange}
-                placeholder="Select a category"
-              />
-              {errors.categoryId && (
-                <p className={styles.errorMessage}>
-                  {errors.categoryId.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
+      {/* Description */}
+      <TextAreaWithCount
+        placeholder="Enter a description of the dish"
+        maxLength={200}
+        register={register}
+        name="description"
+        value={description}
+        error={errors.description?.message}
+      />
 
-        {/* Час приготування */}
-        <Controller
-          name="time"
-          control={control}
-          render={({ field }) => (
-            <div className={styles.timeContainer}>
-              <TimeController value={field.value} onChange={field.onChange} />
-              {errors.time && (
-                <p className={styles.errorMessage}>{errors.time.message}</p>
-              )}
-            </div>
-          )}
-        />
-
-        {/* Інгредієнти і кількість */}
-        <div className={styles.ingredientsContainer}>
-          <DropdownSelector
-            label="Ingredients"
-            options={ingredients}
-            value={selectedIngredient}
-            onChange={setSelectedIngredient}
-            placeholder="Add the ingredient"
-          />
-
+      {/* Category */}
+      <Controller
+        name="categoryId"
+        control={control}
+        render={({ field }) => (
           <div>
-            <input
-              type="text"
-              className={styles.quantityInput}
-              placeholder="Enter quantity"
-              value={ingredientQuantity}
-              onChange={e => setIngredientQuantity(e.target.value)}
+            <DropdownSelector
+              label="Category"
+              options={categories}
+              value={field.value}
+              onChange={field.onChange}
+              placeholder="Select a category"
             />
+            {errors.categoryId && (
+              <p className={styles.errorMessage}>{errors.categoryId.message}</p>
+            )}
           </div>
-        </div>
-      </div>
+        )}
+      />
 
-      {/* Кнопка додавання інгредієнта */}
-      <button
-        type="button"
-        className={styles.addIngredientButton}
-        onClick={addIngredient}
-        disabled={!selectedIngredient || !ingredientQuantity}
-      >
-        Add ingredient<span className={styles.plusIcon}>+</span>
-      </button>
+      {/* Time */}
+      <Controller
+        name="time"
+        control={control}
+        render={({ field }) => (
+          <div className={styles.timeContainer}>
+            <TimeController value={field.value} onChange={field.onChange} />
+            {errors.time && (
+              <p className={styles.errorMessage}>{errors.time.message}</p>
+            )}
+          </div>
+        )}
+      />
 
-      {/* Відображення доданих інгредієнтів */}
+      {/* Ingredient Selector */}
+      <IngredientSelector
+        ingredients={ingredients}
+        onAddIngredient={handleAddIngredient}
+      />
+
+      {/* Recipe Ingredients */}
       {recipeIngredients.length > 0 && (
         <RecipeIngredients
           ingredients={recipeIngredients}
@@ -308,42 +261,39 @@ const AddRecipeForm = () => {
         />
       )}
 
-      {/* Інструкції приготування */}
-      <div className={styles.formGroup}>
-        <label className={styles.label}>Recipe preparation</label>
-        <div
-          className={`${styles.inputWrapper} ${
-            errors.instructions ? styles.errorInput : ''
-          }`}
-        >
-          <textarea
-            className={styles.textarea}
-            placeholder="Enter recipe instructions"
-            maxLength={2000}
-            {...register('instructions')}
-          ></textarea>
-          <span className={styles.charCount}>
-            {instructions?.length || 0}/2000
-          </span>
-        </div>
-        {errors.instructions && (
-          <p className={styles.errorMessage}>{errors.instructions.message}</p>
-        )}
-      </div>
+      {/* Recipe Instruction */}
+      <TextAreaWithCount
+        label="Recipe preparation"
+        placeholder="Enter recipe"
+        maxLength={2000}
+        register={register}
+        name="instructions"
+        value={instructions}
+        error={errors.instructions?.message}
+      />
 
-      {/* Кнопки скидання форми та публікації */}
+      {/* Form Actions */}
       <div className={styles.actionsGroup}>
-        <DeleteBtn onClick={resetForm} />
         <button
-          type="submit"
-          className={styles.publishButton}
-          disabled={isSubmitting}
+          type="button"
+          className={styles.deleteBtn}
+          onClick={resetForm}
+          aria-label="Видалити рецепт"
         >
-          {isSubmitting ? 'PUBLISHING...' : 'PUBLISH'}
+          <svg fill="none">
+            <use href={`${icons}#trash`} />
+          </svg>
         </button>
+
+        <Button
+          type="submit"
+          disabled={isSubmitting || recipesLoading}
+          className={styles.publishButton}
+        >
+          {isSubmitting || recipesLoading ? 'PUBLISHING...' : 'PUBLISH'}
+        </Button>
       </div>
 
-      {/* Компонент для нотифікацій */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
