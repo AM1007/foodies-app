@@ -23,6 +23,29 @@
   border: 1px solid var(--gray);
 }
 
+.inputWrapper {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--black);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
 .submitButton {
   margin-top: 16px;
   padding: 14px 0;
