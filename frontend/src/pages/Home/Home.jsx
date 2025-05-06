@@ -1,10 +1,13 @@
 import Hero from '../../components/sections/Hero/Hero';
 import Categories from '../../components/sections/Categories/Categories';
 import Testimonials from '../../components/sections/Testimonials/Testimonials';
+<<<<<<< HEAD
 import RecipeList from '../../components/RecipeList/RecipeList';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from '../../redux/users/userSlice';
+=======
+>>>>>>> af355511652499df2344454de1feeaeb034d8fb3
 // import Recipes from '../../components/sections/Recipes/Recipes';
 
 // import { useEffect } from 'react';
@@ -36,7 +39,6 @@ const Home = () => {
       <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
       <Testimonials />
-      <RecipeList />
     </main>
   );
 };

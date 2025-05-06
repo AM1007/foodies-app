@@ -14,7 +14,9 @@ const RecipeCardContainer = ({ recipe }) => {
   const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
   const { openModal } = useModal();
 
-  const isFavorite = favoriteRecipes.some(favorite => favorite.id === recipe.id);
+  const isFavorite = favoriteRecipes.some(
+    favorite => favorite.id === recipe.id,
+  );
 
   const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
@@ -37,6 +39,8 @@ const RecipeCardContainer = ({ recipe }) => {
   };
 
   const handleViewRecipe = () => navigate(`/recipe/${recipe.id}`);
+
+  if (!recipe || !recipe.id) return null;
 
   return (
     <RecipeCard

@@ -1,0 +1,84 @@
+.formGroup {
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.label {
+  color: var(--black);
+  font-size: 16px;
+  display: block;
+  font-weight: 800;
+  letter-spacing: -0.32px;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  resize: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gray); /* Переносимо підкреслення сюди */
+  outline: none;
+  color: var(--black);
+  padding: 0 0 16px; /* Встановлюємо відступ 16px від лінії до тексту */
+  min-height: 36px; /* Зменшуємо min-height, щоб компенсувати padding */
+  overflow: hidden;
+  transition: height 0.2s ease;
+  position: relative;
+}
+
+.errorInput {
+  border-bottom: 1px solid #e74a3b !important;
+}
+
+/* Стилі для placeholder */
+.textarea::placeholder {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  color: var(--gray);
+  opacity: 1;
+}
+
+.charCount {
+  position: absolute;
+  right: 0;
+  font-size: 14px;
+}
+
+/* Сірий колір для порожнього значення лічильника */
+.emptyCount {
+  color: var(--gray);
+  font-weight: 400;
+}
+
+/* Чорний колір для поточного значення лічильника, коли є текст */
+.currentCount {
+  color: var(--black);
+  font-weight: 500;
+}
+
+/* Сірий колір для максимального значення */
+.maxCount {
+  color: var(--gray);
+  font-weight: 400;
+}
+
+.errorMessage {
+  color: #e74a3b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}

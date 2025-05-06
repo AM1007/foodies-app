@@ -1,8 +1,9 @@
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, resetAuthError } from '../../redux/users/authSlice';
 import { fetchCurrentUser } from '../../redux/users/userSlice';  
+import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
@@ -13,6 +14,7 @@ const SignInForm = ({ onSuccess }) => {
   const passwordId = useId();
   const dispatch = useDispatch();
   const { error, loading } = useSelector(state => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
 
@@ -73,11 +75,28 @@ const SignInForm = ({ onSuccess }) => {
               <Field
                 id={passwordId}
                 name="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="Password*"
                 className={styles.input}
               />
+              {showPassword ? (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(false)}
+                >
+                  <use href={`${icons}#eye-off`} />
+                </svg>
+              ) : (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(true)}
+                >
+                  <use href={`${icons}#eye`} />
+                </svg>
+              )}
             </div>
             <ErrorMessage name="password" component="div" className={styles.error} />
           </div>

@@ -8,15 +8,24 @@ const DropdownSelector = ({
   value,
   onChange,
   placeholder = '',
+  error,
+  className,
+  labelClassName,
+  wrapperClassName
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isPlaceholderActive, setIsPlaceholderActive] = useState(true); 
-  const dropdownRef = useRef(null); 
+  const [isPlaceholderActive, setIsPlaceholderActive] = useState(!value);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState(options);
+  const dropdownRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setSearchTerm('');
+        setFilteredOptions(options);
       }
     };
     
@@ -25,49 +34,115 @@ const DropdownSelector = ({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [options]);
+
+  useEffect(() => {
+    setIsPlaceholderActive(!value);
+  }, [value]);
+
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [options]);
 
   const handleSelect = (val) => {
     onChange(val);
     setIsOpen(false);
-    setIsPlaceholderActive(false); 
+    setIsPlaceholderActive(false);
+    setSearchTerm('');
+    setFilteredOptions(options);
+  };
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    
+    if (term.trim() === '') {
+      setFilteredOptions(options);
+    } else {
+      const filtered = options.filter(option => 
+        option.name.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredOptions(filtered);
+    }
+  };
+
+  const handleOpenDropdown = () => {
+    setIsOpen(prev => !prev);
+    if (!isOpen) {
+      // Фокусуємось на інпуті після відкриття дропдауна
+      setTimeout(() => {
+        searchInputRef.current && searchInputRef.current.focus();
+      }, 10);
+    } else {
+      // При закритті очищаємо пошук
+      setSearchTerm('');
+      setFilteredOptions(options);
+    }
   };
 
   const selectedOption =
-    options.find((opt) => opt.id === value)?.name || placeholder;
+    options.find((opt) => opt.id === value)?.name || '';
 
   return (
-    <div>
-      {label && <label className={styles.label}>{label}</label>}
+    <div className={`${className || ''}`}>
+      {label && <label className={`${styles.label} ${labelClassName || ''}`}>{label}</label>}
       <div
-        ref={dropdownRef} 
-        className={styles.selectWrapper}
-        onClick={() => setIsOpen((prev) => !prev)}
+        ref={dropdownRef}
+        className={`${styles.selectWrapper} ${wrapperClassName || ''} ${error ? styles.error : ''}`}
       >
-        <div
-          className={`${styles.select} ${!isPlaceholderActive ? styles.selected : ''}`}
-        >
-          {selectedOption}
-          <span className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ''}`}>
-            <svg  fill="none">
-              <use href={`${icons}#down`} />
-            </svg>
-          </span>
-        </div>
+        {isOpen ? (
+          <div className={styles.selectInput}>
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder={placeholder}
+              className={styles.searchInput}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <span 
+              className={`${styles.arrow} ${styles.arrowOpen}`}
+              onClick={handleOpenDropdown}
+            >
+              <svg width="14" height="14" fill="none">
+                <use href={`${icons}#down`} />
+              </svg>
+            </span>
+          </div>
+        ) : (
+          <div
+            className={`${styles.select} ${!isPlaceholderActive ? styles.selected : ''}`}
+            onClick={handleOpenDropdown}
+          >
+            {selectedOption || placeholder}
+            <span className={styles.arrow}>
+              <svg width="14" height="14" fill="none">
+                <use href={`${icons}#down`} />
+              </svg>
+            </span>
+          </div>
+        )}
+        
         {isOpen && (
           <ul className={styles.dropdown}>
-            {options.map((opt) => (
-              <li
-                key={opt.id}
-                className={styles.dropdownItem}
-                onClick={() => handleSelect(opt.id)}
-              >
-                {opt.name}
-              </li>
-            ))}
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((opt) => (
+                <li
+                  key={opt.id}
+                  className={styles.dropdownItem}
+                  onClick={() => handleSelect(opt.id)}
+                >
+                  {opt.name}
+                </li>
+              ))
+            ) : (
+              <li className={styles.noResults}>No results found</li>
+            )}
           </ul>
         )}
       </div>
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };

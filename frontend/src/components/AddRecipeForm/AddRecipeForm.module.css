@@ -1,5 +1,5 @@
 .form {
-  width: 100%;
+  max-width: 343px;
   display: flex;
   flex-direction: column;
 }
@@ -15,17 +15,6 @@
   display: block;
   align-items: center;
     justify-content: center
-}
-
-.formWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding-top: 32px;
-  margin-bottom: 24px;
-  width: 100%;
 }
 
 .label {
@@ -48,9 +37,9 @@
   line-height: 1.43;
   letter-spacing: -0.32px;
   margin-bottom: 8px;
+  resize: none !important;
   text-transform: uppercase;
   display: block;
-  resize: vertical;
   background: transparent;
   border: none;
   outline: none;
@@ -58,6 +47,7 @@
 .nameWrapper {
   position: relative;
   width: 100%;
+  height: 24px;
   margin-bottom: 8px;
 }
 
@@ -130,13 +120,11 @@
 .timeContainer, 
 .ingredientsContainer {
   width: 100%;
-  margin-bottom: 16px;
 }
 
 .quantityInputContainer {
   position: relative;
   width: 100%;
-  border-bottom: 1px solid var(--gray);
 }
 
 .quantityInput {
@@ -176,17 +164,13 @@
 }
 
 .addIngredientButton:hover {
-  background-color: var(--white);
+  color: var(--white);
+  background-color: var(--black);
 }
 
 .addIngredientButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.plusIcon {
-  font-size: 16px;
-  margin-left: 4px;
 }
 
 .selectedIngredients {
@@ -243,26 +227,45 @@
   background-color: rgba(231, 74, 59, 0.1);
 }
 
-.hide-title h3 {
-  display: none !important;
-}
-
 .actionsGroup {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  align-items: flex-start;
+  gap: 8px;
   width: 100%;
 }
 
+.deleteBtn {
+  width: 48px;
+  height: 48px;
+  padding: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gray);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteBtn:hover {
+  color: var(--gray);
+  background-color: var(--black);
+}
+
+.deleteBtn svg {
+  stroke: var(--gray);
+}
+
 .publishButton {
-  background-color: #222;
+  background-color: var(--black);
   color:var(--white);
   border: none;
   border-radius: 24px;
-  padding: 12px 24px;
+  padding: 14px 32px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
+line-height: 1.43;
+letter-spacing: -0.28px;
   cursor: pointer;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
@@ -280,7 +283,11 @@
 
 /* Стилі для адаптивності */
 @media (min-width: 768px) {
+  .form {
+    max-width: 768px;
+  }
   .formWrapper {
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;

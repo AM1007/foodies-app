@@ -1,0 +1,66 @@
+.ingredientsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.quantityInput {
+  width: 100%;
+  max-width: 343px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--black);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray);
+}
+
+.addIngredientButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  width: fit-content;
+  background-color: var(--white);
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  text-transform: uppercase;
+  color: var(--black);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 64px;
+}
+
+.addIngredientButton:hover {
+  color: var(--white);
+  background-color: var(--black);
+}
+
+.addIngredientButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.plusIcon {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+@media (max-width: 767px) {
+  .ingredientsContainer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

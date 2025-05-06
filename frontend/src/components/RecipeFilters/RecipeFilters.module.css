@@ -1,0 +1,25 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .resetButton {
+    margin-top: 24px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .filters {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,56 +1,49 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
-
 import styles from './RecipeList.module.css';
 import MainTitle from '../../components/ui/MainTitle/MainTitle';
 import SubTitle from '../../components/ui/SubTitle/SubTitle';
-import RecipeCard from '../../components/ui/RecipeCard/RecipeCard';
+import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
+import Loader from '../../components/Loader/Loader';
 
-const RecipeList = () => {
+const RecipeList = ({ category }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
 
   useEffect(() => {
-    dispatch(fetchRecipes({ page: 1 }));
-  }, [dispatch]);
+    // Запит відбувається лише при першому рендері, якщо не було передано категорію
+    // При виборі категорії запит вже відбувся в CategoryList
+    if (!category) {
+      dispatch(fetchRecipes({ page: 1 }));
+    }
+  }, [dispatch, category]);
 
   useEffect(() => {
     console.log('Recipes from Redux:', recipes);
   }, [recipes]);
 
-  const handleFavoriteToggle = id => {
-    console.log('Toggle favorite for recipe:', id);
-  };
-
-  const handleAuthorClick = () => {
-    console.log('Go to author profile');
-  };
-
-  const handleViewRecipe = () => {
-    console.log('View recipe details');
-  };
-
   return (
     <div className="container">
-      <MainTitle text="Recipes" />
+      <MainTitle text={category || 'Recipes'} />
       <SubTitle text="Browse our delicious collection" />
       <div>
-        {loading && <p>Loading...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {loading && (
+          <div className={styles.loaderWrapper}>
+            <Loader />
+          </div>
+        )}
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <div className={styles.wrapper}>
           {recipes && recipes.length > 0
             ? recipes.map(recipe => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  isFavorite={false}
-                  onFavoriteToggle={() => handleFavoriteToggle(recipe.id)}
-                  onAuthorClick={handleAuthorClick}
-                  onViewRecipe={handleViewRecipe}
-                />
+                <RecipeCardContainer key={recipe.id} recipe={recipe} />
               ))
-            : !loading && <p>No recipes found</p>}
+            : !loading && (
+                <div className={styles.emptyState}>
+                  <p>No recipes found for this category. Try another one!</p>
+                </div>
+              )}
         </div>
       </div>
     </div>

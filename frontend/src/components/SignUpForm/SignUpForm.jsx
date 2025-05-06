@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useId } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, resetAuthError } from '../../redux/users/authSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button.jsx';
 import styles from './SignUpForm.module.css';
@@ -16,6 +16,8 @@ export default function SignUpForm({ onSuccess }) {
   const nameId = useId();
   const emailId = useId();
   const passwordId = useId();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
 
@@ -87,11 +89,28 @@ export default function SignUpForm({ onSuccess }) {
             <Field
               id={passwordId}
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               required
               placeholder="Password*"
               className={styles.input}
             />
+            {showPassword ? (
+              <svg
+                className={styles.eyeIcon}
+                aria-hidden="true"
+                onClick={() => setShowPassword(false)}
+              >
+                <use href={`${icons}#eye-off`} />
+              </svg>
+            ) : (
+              <svg
+                className={styles.eyeIcon}
+                aria-hidden="true"
+                onClick={() => setShowPassword(true)}
+              >
+                <use href={`${icons}#eye`} />
+              </svg>
+            )}
           </div>
           <ErrorMessage
             name="password"
