@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
+import UserAvatar from '../ui/UserAvatar/UserAvatar';
+import { fetchCurrentUser } from '../../redux/users/userSlice';
 import icons from '../../icons/sprite.svg';
 import styles from './UserBar.module.css';
-import UserAvatar from '../ui/UserAvatar/UserAvatar';
 
 const UserBar = () => {
   const user = useSelector(state => state.user.current) || {};
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  console.log(user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openModal } = useModal();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  if (!user) return null;
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      dispatch(fetchCurrentUser());
+    }
+  }, [isAuthenticated, user, dispatch]);
+
+  if (!isAuthenticated || !user) return null;
 
   return (
     <div className={styles.userBar}>
@@ -22,7 +32,12 @@ const UserBar = () => {
         className={styles.userBtn}
         onClick={() => setIsDropdownOpen(prev => !prev)}
       >
-        <UserAvatar avatarType="user" isOwnProfile={true} showUpload={false} />
+        <UserAvatar
+          className={styles.avatar}
+          avatarType="user"
+          isOwnProfile={true}
+          showUpload={false}
+        />
 
         <div className={styles.wrapper}>
           <span className={styles.username}>{user.name}</span>
@@ -42,16 +57,16 @@ const UserBar = () => {
             className={styles.dropdownItem}
             onClick={() => {
               navigate('/user');
-              setIsDropdownOpen(false); 
+              setIsDropdownOpen(false);
             }}
           >
-            PROFILE
+            Profile
           </Button>
           <Button
             className={styles.dropdownItem}
             onClick={() => openModal('logout')}
           >
-            LOG OUT{' '}
+            Log out{' '}
             <svg className={styles.icon} width="18" height="18">
               <use href={`${icons}#arrow-up-right`} />
             </svg>
