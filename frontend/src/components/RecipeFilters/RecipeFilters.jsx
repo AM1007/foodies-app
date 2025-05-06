@@ -9,63 +9,67 @@ import { fetchAreas } from '../../redux/areas/areasSlice';
 
 const RecipeFilters = ({ categoryName }) => {
   const dispatch = useDispatch();
-  
+
   const { items: ingredients } = useSelector(state => state.ingredients);
   const { items: areas } = useSelector(state => state.areas);
-  
+
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
-  
+
   useEffect(() => {
     if (!ingredients || ingredients.length === 0) {
       dispatch(fetchIngredients());
     }
-    
+
     if (!areas || areas.length === 0) {
       dispatch(fetchAreas());
     }
   }, [dispatch, ingredients, areas]);
 
-  const handleIngredientChange = (ingredientId) => {
+  const handleIngredientChange = ingredientId => {
     setSelectedIngredient(ingredientId);
-    
-    dispatch(fetchRecipes({
-      page: 1,
-      category: categoryName,
-      ingredient: ingredientId,
-      region: selectedArea
-    }));
+
+    dispatch(
+      fetchRecipes({
+        page: 1,
+        category: categoryName,
+        ingredient: ingredientId,
+        region: selectedArea,
+      }),
+    );
   };
-  
-  const handleAreaChange = (areaId) => {
+
+  const handleAreaChange = areaId => {
     setSelectedArea(areaId);
-    
-    dispatch(fetchRecipes({
-      page: 1,
-      category: categoryName,
-      ingredient: selectedIngredient,
-      region: areaId
-    }));
+
+    dispatch(
+      fetchRecipes({
+        page: 1,
+        category: categoryName,
+        ingredient: selectedIngredient,
+        region: areaId,
+      }),
+    );
   };
 
   return (
-    <div className='container'>
+    <>
       <div className={styles.filters}>
-          <DropdownSelector
-            options={ingredients || []}
-            value={selectedIngredient}
-            onChange={handleIngredientChange}
-            placeholder="Ingredients"
-          />
-        
-          <DropdownSelector
-            options={areas || []}
-            value={selectedArea}
-            onChange={handleAreaChange}
-            placeholder="Area"
-          />
+        <DropdownSelector
+          options={ingredients || []}
+          value={selectedIngredient}
+          onChange={handleIngredientChange}
+          placeholder="Ingredients"
+        />
+
+        <DropdownSelector
+          options={areas || []}
+          value={selectedArea}
+          onChange={handleAreaChange}
+          placeholder="Area"
+        />
       </div>
-    </div>
+    </>
   );
 };
 

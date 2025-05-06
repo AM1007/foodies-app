@@ -10,7 +10,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .resetButton {
     margin-top: 24px;
     font-size: 14px;

@@ -1,17 +1,6 @@
-.categoriesWrapper {
-  padding: 64px 16px;
-}
 @media screen and (min-width: 768px) {
-  .categoriesWrapper {
-    /* padding: 100px 32px; */
-  }
   .title {
     padding-left: 12px;
-  }
-}
-@media screen and (min-width: 1440px) {
-  .categoriesWrapper {
-    /* padding: 120px 80px; */
   }
 }
 
