@@ -49,6 +49,11 @@ const signInUser = async userData => {
   const { email, password } = userData;
   const user = await findUser({ email });
 
+  const userResponse = {
+    id: user.id,
+    email: user.email,
+  };
+
   if (!user) {
     throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
   }
@@ -61,7 +66,11 @@ const signInUser = async userData => {
   if (user.token) {
     const { error } = jwtHelpers.verifyToken(user.token);
     if (!error) {
-      throw HttpError(HTTP_STATUS.CONFLICT, 'User already logged in');
+      return {
+        token: user.token,
+        refreshToken: user.refreshToken,
+        user: userResponse,
+      };
     }
   }
 
@@ -70,11 +79,7 @@ const signInUser = async userData => {
   const refreshToken = jwtHelpers.generateToken(payload, '7d');
   await user.update({ token, refreshToken });
 
-  return {
-    token,
-    refreshToken,
-    user: { id: user.id, email: user.email },
-  };
+  return { token, refreshToken, user: userResponse };
 };
 
 const refreshUserToken = async refreshToken => {

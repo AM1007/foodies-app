@@ -2,6 +2,7 @@ import express from 'express';
 import usersControllers from '../controllers/usersControllers.js';
 import upload from '../middlewares/upload.js';
 import authenticate from '../middlewares/authenticate.js';
+import validateNumericId from '../middlewares/validateNumericId.js';
 
 const userRouter = express.Router();
 
@@ -14,20 +15,22 @@ userRouter.get(
 );
 
 userRouter.get(
-  '/followers',
-  authenticate,
-  usersControllers.getFollowersController,
-);
-
-userRouter.get(
   '/following',
   authenticate,
   usersControllers.getFollowingUsersController,
 );
 
 userRouter.get(
+  '/:id/followers',
+  authenticate,
+  validateNumericId,
+  usersControllers.getFollowersController,
+);
+
+userRouter.get(
   '/:id',
   authenticate,
+  validateNumericId,
   usersControllers.getUserDetailedInfoController,
 );
 
@@ -41,12 +44,14 @@ userRouter.patch(
 userRouter.post(
   '/:id/follow',
   authenticate,
+  validateNumericId,
   usersControllers.followUserController,
 );
 
 userRouter.post(
   '/:id/unfollow',
   authenticate,
+  validateNumericId,
   usersControllers.unfollowUserController,
 );
 

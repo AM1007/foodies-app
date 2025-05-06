@@ -1,6 +1,8 @@
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
+import { Association } from 'sequelize';
+import associations from '../db/associations.js';
 
 const { User, Follower, Recipe } = models;
 
@@ -76,18 +78,42 @@ const unfollowUser = async (followerId, followingId) => {
 
 const getUsersIFollow = async id => {
   const user = await findUser({ id });
-  return await user.getFollowing({
-    attributes: ['id', 'name', 'email'],
+
+  const followingUsers = await user.getFollowing({
+    attributes: ['id', 'name', 'email', 'avatar'],
+    include: [
+      { association: 'recipes', attributes: ['id', 'title', 'thumb'] },
+      {
+        association: 'followers',
+        attributes: ['name', 'email', 'avatar'],
+        through: { attributes: [] },
+      },
+    ],
     joinTableAttributes: [],
   });
+  return followingUsers;
 };
 
 const getUsersFollowingMe = async id => {
   const user = await findUser({ id });
-  return await user.getFollowers({
-    attributes: ['id', 'name', 'email'],
+
+  const followers = await user.getFollowers({
+    attributes: ['id', 'name', 'email', 'avatar'],
+    include: [
+      {
+        association: 'recipes',
+        attributes: ['id', 'title', 'thumb'],
+      },
+      {
+        association: 'followers',
+        attributes: ['name', 'email', 'avatar'],
+        through: { attributes: [] },
+      },
+    ],
     joinTableAttributes: [],
   });
+
+  return followers;
 };
 
 const getUserDetailedInfo = async (userId, { isSelf = false } = {}) => {
