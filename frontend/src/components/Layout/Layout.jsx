@@ -24,8 +24,8 @@ const Layout = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    if (storedToken && !user) {
-      dispatch(refreshToken())
+    if (storedToken && !user && !loading) {
+      dispatch(refreshToken())  
         .unwrap()
         .then(() => {
           if (!user) {
@@ -36,13 +36,13 @@ const Layout = () => {
           console.error('Error refreshing token:', err);
         });
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, loading]);
 
   useEffect(() => {
-    if (isAuthenticated && token && !user) {
+    if (isAuthenticated && !user) {
       dispatch(fetchCurrentUser());
     }
-  }, [isAuthenticated, token, user, dispatch]);
+  }, [isAuthenticated, user, dispatch]);
 
   useEffect(() => {
     if (

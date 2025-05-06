@@ -6,7 +6,11 @@ import { updateUserAvatar } from '../../../redux/users/userSlice';
 import { toast } from 'react-toastify';
 import UploadAvatar from '../UploadAvatar/UploadAvatar';
 
-function UserAvatar({ avatarType = 'user', isOwnProfile = true }) {
+function UserAvatar({
+  avatarType = 'user',
+  isOwnProfile = true,
+  showUpload = true,
+}) {
   const dispatch = useDispatch();
   const avatar = useSelector(state => state.user.current?.avatar);
 
@@ -41,7 +45,7 @@ function UserAvatar({ avatarType = 'user', isOwnProfile = true }) {
         </div>
       )}
 
-      {isOwnProfile && (
+      {isOwnProfile && showUpload && (
         <label className={css.avatarInputWrapper}>
           <label className={css.avatarInputWrapper}>
             <UploadAvatar />
