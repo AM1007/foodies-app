@@ -1,6 +1,10 @@
 import Hero from '../../components/sections/Hero/Hero';
 import Categories from '../../components/sections/Categories/Categories';
 import Testimonials from '../../components/sections/Testimonials/Testimonials';
+import RecipeList from '../../components/RecipeList/RecipeList';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCurrentUser } from '../../redux/users/userSlice';
 // import Recipes from '../../components/sections/Recipes/Recipes';
 
 // import { useEffect } from 'react';
@@ -9,6 +13,16 @@ import Testimonials from '../../components/sections/Testimonials/Testimonials';
 // import { selectIsCategoriesVisible } from '../../redux/categories/selectors';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.current);
+  const loading = useSelector(state => state.user.loading);
+
+  // useEffect(() => {
+  //   if (!user && !loading) {
+  //     dispatch(fetchCurrentUser());
+  //   }
+  // }, [dispatch, user, loading]);
+
   // const dispatch = useDispatch();
   // const showCategories = useSelector(selectIsCategoriesVisible);
 
