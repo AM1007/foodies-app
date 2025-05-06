@@ -1,7 +1,6 @@
 import Hero from '../../components/sections/Hero/Hero';
 import Categories from '../../components/sections/Categories/Categories';
 import Testimonials from '../../components/sections/Testimonials/Testimonials';
-import RecipeList from '../../components/RecipeList/RecipeList';
 // import Recipes from '../../components/sections/Recipes/Recipes';
 
 // import { useEffect } from 'react';
@@ -23,7 +22,6 @@ const Home = () => {
       <Categories />
       {/* {showCategories ? <Categories /> : <Recipes />} */}
       <Testimonials />
-      <RecipeList />
     </main>
   );
 };
