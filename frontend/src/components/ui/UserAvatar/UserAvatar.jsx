@@ -6,7 +6,11 @@ import { updateUserAvatar } from '../../../redux/users/userSlice';
 import { toast } from 'react-toastify';
 import UploadAvatar from '../UploadAvatar/UploadAvatar';
 
-function UserAvatar({ avatarType = 'user', isOwnProfile = true }) {
+function UserAvatar({
+  avatarType = 'user',
+  isOwnProfile = true,
+  showUpload = true,
+}) {
   const dispatch = useDispatch();
   const avatar = useSelector(state => state.user.current?.avatar);
 
@@ -32,30 +36,30 @@ function UserAvatar({ avatarType = 'user', isOwnProfile = true }) {
       : css.userAvatar;
 
   return (
-    <div className={`${css.avatarWrapper} ${avatarClass}`}>
-      {avatar ? (
-        <img src={avatar} alt="User avatar" className={css.avatarImage} />
-      ) : (
-        <div className={css.avatarIconWrapper}>
-          <FaUserAlt />
-        </div>
-      )}
+    <div className={css.avatarOuterWrapper}>
+  <div className={`${css.avatarWrapper} ${avatarClass}`}>
+    {avatar ? (
+      <img src={avatar} alt="User avatar" className={css.avatarImage} />
+    ) : (
+      <div className={css.avatarIconWrapper}>
+        <FaUserAlt />
+      </div>
+    )}
+  </div>
 
-      {isOwnProfile && (
-        <label className={css.avatarInputWrapper}>
-          <label className={css.avatarInputWrapper}>
-            <UploadAvatar />
-            <input
-              type="file"
-              accept="image/*"
-              className={css.avatarInput}
-              onChange={handleAvatarChange}
-              hidden
-            />
-          </label>
-        </label>
-      )}
-    </div>
+  {isOwnProfile && showUpload && (
+    <label className={css.avatarInputWrapper}>
+      <UploadAvatar />
+      <input
+        type="file"
+        accept="image/*"
+        className={css.avatarInput}
+        onChange={handleAvatarChange}
+        hidden
+      />
+    </label>
+  )}
+</div>
   );
 }
 

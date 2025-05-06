@@ -1,162 +1,176 @@
-   .card {
-    background-color: var(--white);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.3s ease;
-    height: 100%;
+.card {
+  background-color: var(--white);
+  border-radius: 16px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 342px;
   }
-  
-  .card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 1440px) {
+  .card {
+    width: 290px;
   }
-  
+}
+
+.image {
+  height: 230px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+@media screen and (min-width: 768px) {
   .image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 275px;
+    width: 342px;
   }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    flex-grow: 1;
+}
+
+@media screen and (min-width: 1440px) {
+  .image {
+    width: 290px;
   }
-  
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 768px) {
   .title {
     font-size: 20px;
-    font-weight: 700;
-    color: var(--black);
-    text-transform: uppercase;
   }
-  
+}
+
+.description {
+  font-size: 14px;
+  margin-top: 8px;
+  color: var(--dark-gray);
+  font-weight: 500;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media screen and (min-width: 768px) {
   .description {
     font-size: 16px;
-    color: var(--dark-gray);
-    line-height: 24px;
-    font-weight: 500;
-    letter-spacing: -0.32px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
-  
-  .footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .author {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.32px;
-    line-height: 24px;
-    color: var(--dark-gray);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .authorAvatar {
+}
+
+.wrapper {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 30px;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+@media screen and (min-width: 768px) {
+  .avatar {
     width: 40px;
     height: 40px;
-    border-radius: 30px;
-    object-fit: cover;
-    margin-right: 8px;
   }
-  
-  .actions {
-    display: flex;
-    gap: 8px;
+}
+
+.author {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--dark-gray);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .author {
+    font-size: 16px;
   }
-  
-  .heart,
-  .arrow {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--gray);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0;
-  }
-  
-  .heart svg
-  {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: var(--black);
-  }
-  .arrow svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: var(--black);
-  }
-  
-  .heart.active {
-    background-color: var(--black);
-    border-color: var(--black);
-  }
-  
-  .heart.active svg {
-    stroke: var(--white);
-  }
-  
-  .arrow:hover {
-    background-color: var(--black);
-    border-color: var(--black);
-  }
-  
-  .arrow:hover svg {
-    stroke: var(--white);
-  }
-  
-  @media (min-width: 768px) {
-    .image {
-      height: 220px;
-    }
-  
-    .title {
-      font-size: 20px;
-    }
-  
-    .description {
-      font-size: 15px;
-    }
-  }
-  
-  @media (min-width: 1440px) {
-    .image {
-      height: 240px;
-    }
-  
-    .title {
-      font-size: 22px;
-    }
-  
-    .description {
-      font-size: 16px;
-    }
-  }
-  
+}
+
+.wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.heart,
+.arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--gray);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.heart svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--black);
+}
+.arrow svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--black);
+}
+
+.heart.active {
+  background-color: var(--black);
+  border-color: var(--black);
+}
+
+.heart.active svg {
+  fill: none;
+  stroke: var(--white);
+}
+.heart:hover{
+  background-color: var(--black);
+  border-color: var(--black);
+
+}
+.arrow:hover {
+  background-color: var(--black);
+  border-color: var(--black);
+}
+.heart:hover svg,
+.arrow:hover svg {
+  stroke: var(--white);
+} 
+
+@media (min-width: 1440px) {
   .icon {
     width: 18px;
     height: 18px;
   }
-  
+}

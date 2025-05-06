@@ -1,8 +1,31 @@
+import { useDispatch } from 'react-redux';
+import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+import { toast } from 'react-toastify';
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
 import icons from '../../icons/sprite.svg';
 
 export default function CategoryList({ onCategoryClick }) {
+  const dispatch = useDispatch();
+
+  const handleCategoryClick = async categoryName => {
+    try {
+      if (categoryName === 'All categories') {
+        await dispatch(fetchRecipes({ page: 1 })).unwrap();
+      } else {
+        await dispatch(
+          fetchRecipes({ page: 1, category: categoryName }),
+        ).unwrap();
+      }
+
+      onCategoryClick(categoryName);
+    } catch (error) {
+      toast.error(
+        `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
+      );
+    }
+  };
+
   return (
     <section className="container">
       <div className={styles.categoryListContainer}>
@@ -13,12 +36,17 @@ export default function CategoryList({ onCategoryClick }) {
               className={`
                 ${styles.card}
               `}
-              onClick={() => onCategoryClick(cat.name)}
+              onClick={() => handleCategoryClick(cat.name)}
             >
               <img src={cat.image} alt={cat.name} className={styles.image} />
               <div className={styles.buttonWrap}>
                 <button className={styles.button}>{cat.name}</button>
-                <svg width="24" height="24" className={styles.icon}>
+                <svg
+                  width="24"
+                  height="24"
+                  className={styles.icon}
+                  onClick={() => handleCategoryClick('All categories')}
+                >
                   <use href={`${icons}#arrow-up-right`} />
                 </svg>
               </div>
@@ -27,7 +55,7 @@ export default function CategoryList({ onCategoryClick }) {
 
           <div
             className={`${styles.card} ${styles.allCategories}`}
-            onClick={() => onCategoryClick('All categories')}
+            onClick={() => handleCategoryClick('All categories')}
           >
             All categories
           </div>

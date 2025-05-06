@@ -1,15 +1,13 @@
 import css from './UserInfo.module.css';
 import UserAvatar from '../ui/UserAvatar/UserAvatar';
 
-const UserInfo = ({ user = {}, isOwnProfile = true }) => {
-  const {
-    name,
-    email,
-    recipesCount,
-    favoritesCount,
-    followersCount,
-    followingCount,
-  } = user;
+const UserInfo = ({
+  user = {},
+  isOwnProfile = true,
+  followersCount = 0,
+  followingCount = 0,
+}) => {
+  const { name, email, recipesCount, favoritesCount } = user;
 
   return (
     <div className={css.userInfo}>
@@ -17,12 +15,27 @@ const UserInfo = ({ user = {}, isOwnProfile = true }) => {
       <h2>{name}</h2>
 
       <ul className={css.userStats}>
-        <li className={css.userStatItem}>Email: {email}</li>
-        <li className={css.userStatItem}>Recipes: {recipesCount}</li>
-        <li className={css.userStatItem}>Favorites: {favoritesCount}</li>
-        <li className={css.userStatItem}>Followers: {followersCount}</li>
-        <li className={css.userStatItem}>Following: {followingCount}</li>
-      </ul>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Email:</span>
+    <span className={css.statValue}>{email}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Recipes:</span>
+    <span className={css.statValue}>{recipesCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Favorites:</span>
+    <span className={css.statValue}>{favoritesCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Followers:</span>
+    <span className={css.statValue}>{followersCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Following:</span>
+    <span className={css.statValue}>{followingCount || 0}</span>
+  </li>
+</ul>
     </div>
   );
 };

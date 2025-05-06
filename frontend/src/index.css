@@ -9,7 +9,6 @@
 :root {
   --base-font: 'Mulish', sans-serif;
   --base-font-size: 16px;
-  line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -40,6 +39,8 @@ body {
   min-height: 100%;
   line-height: 1.5;
   margin: 0;
+  color: var(--black);
+  font-size: var(--base-font-size);
 }
 
 ul {

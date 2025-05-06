@@ -1,3 +1,7 @@
+.timeControllerWrapper{
+  margin: 20px 0;
+}
+
 .label {
   color: var(--black);
   font-size: 16px;
@@ -25,6 +29,7 @@
   align-items: center;
   font-size: 24px;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .timeValue {
@@ -38,6 +43,11 @@
   background: none;
   border: none;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.valueChanged {
+  color: var(--black);
 }
 
 .dropdownWrapper {

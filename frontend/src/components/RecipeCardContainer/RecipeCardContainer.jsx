@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToFavorites, removeFromFavorites } from '../../redux/recipes/recipesSlice';
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from '../../redux/recipes/recipesSlice';
 import { useModal } from '../../hooks/useModal';
-import RecipeCardUI from '../ui/RecipeCard/RecipeCard';
+import RecipeCard from '../ui/RecipeCard/RecipeCard';
 
 const RecipeCardContainer = ({ recipe }) => {
   const navigate = useNavigate();
@@ -11,7 +14,9 @@ const RecipeCardContainer = ({ recipe }) => {
   const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
   const { openModal } = useModal();
 
-  const isFavorite = favoriteRecipes.some(favorite => favorite.id === recipe.id);
+  const isFavorite = favoriteRecipes.some(
+    favorite => favorite.id === recipe.id,
+  );
 
   const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
@@ -35,8 +40,10 @@ const RecipeCardContainer = ({ recipe }) => {
 
   const handleViewRecipe = () => navigate(`/recipe/${recipe.id}`);
 
+  if (!recipe || !recipe.id) return null;
+
   return (
-    <RecipeCardUI
+    <RecipeCard
       recipe={recipe}
       isFavorite={isFavorite}
       onFavoriteToggle={handleFavoriteToggle}

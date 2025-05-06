@@ -61,9 +61,9 @@ const getFollowingUsersController = async (req, res) => {
 };
 
 const getFollowersController = async (req, res) => {
-  const { id } = req.user;
-  const response = await usersServices.getUsersFollowingMe(id);
-  res.status(HTTP_STATUS.OK).json({ response });
+  const { id } = req.params;
+  const followers = await usersServices.getUsersFollowingMe(Number(id));
+  res.status(HTTP_STATUS.OK).json({ followers });
 };
 
 export default {
