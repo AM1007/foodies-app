@@ -53,7 +53,7 @@ const Profile = () => {
       <MainTitle text="Profile" />
       <SubTitle text="Reveal your culinary art, share your favorite recipe, and create gastronomic masterpieces with us." />
       <div className={styles.wrapper}>
-        <div>
+        <div className={styles.userCardWrapper}>
           {current ? (
             <UserInfo
               user={current}

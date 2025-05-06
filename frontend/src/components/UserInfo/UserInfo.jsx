@@ -15,12 +15,27 @@ const UserInfo = ({
       <h2>{name}</h2>
 
       <ul className={css.userStats}>
-        <li className={css.userStatItem}>Email: {email}</li>
-        <li className={css.userStatItem}>Recipes: {recipesCount || 0}</li>
-        <li className={css.userStatItem}>Favorites: {favoritesCount || 0}</li>
-        <li className={css.userStatItem}>Followers: {followersCount}</li>
-        <li className={css.userStatItem}>Following: {followingCount}</li>
-      </ul>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Email:</span>
+    <span className={css.statValue}>{email}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Recipes:</span>
+    <span className={css.statValue}>{recipesCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Favorites:</span>
+    <span className={css.statValue}>{favoritesCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Followers:</span>
+    <span className={css.statValue}>{followersCount || 0}</span>
+  </li>
+  <li className={css.userStatItem}>
+    <span className={css.statLabel}>Following:</span>
+    <span className={css.statValue}>{followingCount || 0}</span>
+  </li>
+</ul>
     </div>
   );
 };

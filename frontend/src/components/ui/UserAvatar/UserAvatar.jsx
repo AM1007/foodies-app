@@ -36,30 +36,30 @@ function UserAvatar({
       : css.userAvatar;
 
   return (
-    <div className={`${css.avatarWrapper} ${avatarClass}`}>
-      {avatar ? (
-        <img src={avatar} alt="User avatar" className={css.avatarImage} />
-      ) : (
-        <div className={css.avatarIconWrapper}>
-          <FaUserAlt />
-        </div>
-      )}
+    <div className={css.avatarOuterWrapper}>
+  <div className={`${css.avatarWrapper} ${avatarClass}`}>
+    {avatar ? (
+      <img src={avatar} alt="User avatar" className={css.avatarImage} />
+    ) : (
+      <div className={css.avatarIconWrapper}>
+        <FaUserAlt />
+      </div>
+    )}
+  </div>
 
-      {isOwnProfile && showUpload && (
-        <label className={css.avatarInputWrapper}>
-          <label className={css.avatarInputWrapper}>
-            <UploadAvatar />
-            <input
-              type="file"
-              accept="image/*"
-              className={css.avatarInput}
-              onChange={handleAvatarChange}
-              hidden
-            />
-          </label>
-        </label>
-      )}
-    </div>
+  {isOwnProfile && showUpload && (
+    <label className={css.avatarInputWrapper}>
+      <UploadAvatar />
+      <input
+        type="file"
+        accept="image/*"
+        className={css.avatarInput}
+        onChange={handleAvatarChange}
+        hidden
+      />
+    </label>
+  )}
+</div>
   );
 }
 
