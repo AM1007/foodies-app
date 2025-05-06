@@ -47,30 +47,30 @@ export const updateUserAvatar = createAsyncThunk(
 
 export const fetchFollowers = createAsyncThunk(
   'user/fetchFollowers',
-  async (userId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await axiosAPI.get(`/users/${userId}/followers`);
+      const res = await axiosAPI.get('/users/followers');
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to fetch followers',
+        err.response?.data?.message || 'Failed to fetch followers'
       );
     }
-  },
+  }
 );
 
 export const fetchFollowing = createAsyncThunk(
   'user/fetchFollowing',
-  async (userId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await axiosAPI.get(`/users/${userId}/following`);
+      const res = await axiosAPI.get('/users/following');
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to fetch following list',
+        err.response?.data?.message || 'Failed to fetch following list'
       );
     }
-  },
+  }
 );
 
 export const followUser = createAsyncThunk(
