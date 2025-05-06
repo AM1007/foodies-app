@@ -16,11 +16,11 @@ const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 function App() {
   return (
     <UserProvider>
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          {/* <Route
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            {/* <Route
             path="/recipe"
             element={
               <PrivateRoute>
@@ -28,7 +28,7 @@ function App() {
               </PrivateRoute>
             }
           /> */}
-          {/* <Route
+            {/* <Route
             path="/recipe/add"
             element={
               <PrivateRoute>
@@ -36,10 +36,10 @@ function App() {
               </PrivateRoute>
             }
           /> */}
-          <Route path="/recipe" element={<Recipe />} />
-          <Route path="/recipe/add" element={<AddRecipe />} />
-          <Route path="/user" element={<Profile />} />
-          {/* <Route
+            <Route path="/recipe" element={<Recipe />} />
+            <Route path="/recipe/add" element={<AddRecipe />} />
+            <Route path="/user" element={<Profile />} />
+            {/* <Route
             path="/user/:id"
             element={
               <PrivateRoute>
@@ -47,11 +47,11 @@ function App() {
               </PrivateRoute>
             }
           /> */}
-          <Route path="/recipe/:id" element={<Recipe />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Suspense>
+            <Route path="/recipe/:id" element={<Recipe />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </UserProvider>
   );
 }
