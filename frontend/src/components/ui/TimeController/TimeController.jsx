@@ -3,19 +3,39 @@ import styles from './TimeController.module.css';
 
 const presetOptions = [10, 20, 40, 60];
 
-const TimeController = ({ value, onChange, minTime = 5, maxTime = 180, step = 1, label = 'Cooking Time' }) => {
+const TimeController = ({ 
+  value, 
+  onChange, 
+  minTime = 5, 
+  maxTime = 180, 
+  step = 1, 
+  label = 'Cooking Time',
+  onBlur = () => {}
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [localValue, setLocalValue] = useState(value);
+  const [wasInteracted, setWasInteracted] = useState(false);
   const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
   const decreaseTime = () => {
-    if (value > minTime) {
-      onChange(value - step);
+    if (localValue > minTime) {
+      const newValue = localValue - step;
+      setLocalValue(newValue);
+      onChange(newValue);
+      setWasInteracted(true); 
     }
   };
 
   const increaseTime = () => {
-    if (value < maxTime) {
-      onChange(value + step);
+    if (localValue < maxTime) {
+      const newValue = localValue + step;
+      setLocalValue(newValue);
+      onChange(newValue);
+      setWasInteracted(true); 
     }
   };
 
@@ -24,35 +44,43 @@ const TimeController = ({ value, onChange, minTime = 5, maxTime = 180, step = 1,
   };
 
   const handleSelect = (option) => {
+    setLocalValue(option);
     onChange(option);
     setIsOpen(false);
+    setWasInteracted(true); 
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        onBlur();
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [onBlur]);
 
   return (
     <div className={styles.timeControllerWrapper}>
       <label className={styles.label}>{label}</label>
       <div className={styles.timeController} ref={dropdownRef}>
         <button
+          type="button"
           className={styles.timeButton}
           onClick={decreaseTime}
-          disabled={value <= minTime}
+          disabled={localValue <= minTime}
         >
           −
         </button>
 
         <div className={styles.dropdownWrapper}>
-          <button className={styles.timeValue} onClick={toggleDropdown}>
-            {value} min
+          <button 
+            type="button"
+            className={`${styles.timeValue} ${wasInteracted ? styles.valueChanged : ''}`}
+            onClick={toggleDropdown}
+          >
+            {localValue} min
           </button>
           {isOpen && (
             <ul className={styles.dropdown}>
@@ -70,9 +98,10 @@ const TimeController = ({ value, onChange, minTime = 5, maxTime = 180, step = 1,
         </div>
 
         <button
+          type="button"
           className={styles.timeButton}
           onClick={increaseTime}
-          disabled={value >= maxTime}
+          disabled={localValue >= maxTime}
         >
           +
         </button>
