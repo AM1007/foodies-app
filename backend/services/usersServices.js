@@ -1,8 +1,6 @@
 import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
-import { Association } from 'sequelize';
-import associations from '../db/associations.js';
 
 const { User, Follower, Recipe } = models;
 
