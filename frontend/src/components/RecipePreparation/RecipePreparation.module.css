@@ -4,7 +4,9 @@
     flex-direction: column;
     gap: 24px;
   }
-  
+  .wrap{
+    padding: 0;
+  }
   .title {
     font-size: 20px;
     font-weight: 700;
@@ -42,6 +44,7 @@
     background-color: transparent;
     transition: all 0.3s ease;
     cursor: pointer;
+    text-transform: uppercase;
   }
   
   .favoriteBtn:hover {

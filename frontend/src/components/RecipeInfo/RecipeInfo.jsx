@@ -1,11 +1,62 @@
+// import RecipeMainInfo from '../RecipeMainInfo/RecipeMainInfo';
+// import RecipeIngredients from '../RecipeIngredients/RecipeIngredients';
+// import RecipePreparation from '../RecipePreparation/RecipePreparation';
+// import styles from './RecipeInfo.module.css';
+
+// const RecipeInfo = ({ recipe, favoriteRecipes }) => {
+//   const isRecipeFavorite = favoriteRecipes.some(
+//     favoriteRecipe => favoriteRecipe.id === recipe.id
+//   );
+
+//   return (
+//     <div className={styles.recipeInfo}>
+//       <div className={styles.imageBlock}>
+//         <img src={recipe.thumb} alt={recipe.title} />
+//       </div>
+//       <div className={styles.detailsBlock}>
+//         <RecipeMainInfo
+//           title={recipe.title}
+//           category={recipe.category?.name || 'Unknown'}
+//           time={recipe.time}
+//           description={recipe.description}
+//           user={recipe.user || { name: 'Anonymous', id: null }}
+//         />
+
+//         <RecipeIngredients
+//           ingredients={
+//             recipe.ingredients?.map(ingredient => ({
+//               _id: ingredient._id,
+//               name: ingredient.name,
+//               img: ingredient.img,
+//               amount:
+//                 ingredient?.RecipeIngredient?.measure ||
+//                 ingredient?.through?.measure ||
+//                 'n/a',
+//             })) || []
+//           }
+//         />
+//         <RecipePreparation
+//           preparation={recipe.instructions}
+//           recipeId={recipe.id}
+//           isFavorite={isRecipeFavorite}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default RecipeInfo;
+
+
 import RecipeMainInfo from '../RecipeMainInfo/RecipeMainInfo';
 import RecipeIngredients from '../RecipeIngredients/RecipeIngredients';
 import RecipePreparation from '../RecipePreparation/RecipePreparation';
 import styles from './RecipeInfo.module.css';
 
 const RecipeInfo = ({ recipe, favoriteRecipes }) => {
+  const recipeId = recipe._id?.$oid || recipe.id;
   const isRecipeFavorite = favoriteRecipes.some(
-    favoriteRecipe => favoriteRecipe.id === recipe.id
+    favorite => favorite._id === recipeId || favorite.id === recipeId
   );
 
   return (
@@ -25,19 +76,19 @@ const RecipeInfo = ({ recipe, favoriteRecipes }) => {
         <RecipeIngredients
           ingredients={
             recipe.ingredients?.map(ingredient => ({
-              id: ingredient.id,
+              _id: ingredient._id || ingredient.id,
               name: ingredient.name,
               img: ingredient.img,
               amount:
                 ingredient?.RecipeIngredient?.measure ||
                 ingredient?.through?.measure ||
-                'n/a',
+                ingredient.measure || 'n/a',
             })) || []
           }
         />
         <RecipePreparation
           preparation={recipe.instructions}
-          recipeId={recipe.id}
+          recipeId={recipeId}
           isFavorite={isRecipeFavorite}
         />
       </div>
