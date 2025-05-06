@@ -41,7 +41,7 @@ export default function SignUpForm({ onSuccess }) {
     try {
       await dispatch(registerUser(values)).unwrap();
       toast.success('You have successfully signed up!');
-      onSuccess();
+      setTimeout(() => onSuccess(), 1000);
     } catch {
       toast.error(error || 'Something went wrong');
     } finally {
