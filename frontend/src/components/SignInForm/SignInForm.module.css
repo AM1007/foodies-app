@@ -66,22 +66,6 @@
   width: 100%;
 }
 
-.submitButton {
-  margin-top: 16px;
-  padding: 14px 0;
-  width: 100%;
-  background-color: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 30px;
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
 @media (min-width: 768px) {
   .form {
     display: flex;
