@@ -1,18 +1,11 @@
-/* .wrap {
+.wrap {
   display: flex;
   flex-direction: column;
   padding: 0;
-} */
+}
 .recipeMainInfo {
   padding-top: 0;
   margin-bottom: 32px;
-}
-
-.image {
-  /* width: 100%;
-  max-width: 400px; */
-  border-radius: 16px;
-  object-fit: cover;
 }
 
 .title {
@@ -38,6 +31,9 @@
   color: var(--gray);
   border: 1px solid var(--gray);
   border-radius: 20px;
+  font-weight: 500;
+  line-height: 1.28571;
+  letter-spacing: -0.28px;
 }
 
 .description {
@@ -45,8 +41,8 @@
   font-weight: 500;
   color: var(--gray);
   margin-bottom: 20px;
-  line-height: 1.42857; 
-letter-spacing: -0.28px;
+  line-height: 1.42857;
+  letter-spacing: -0.28px;
 }
 
 .authorBlock {
@@ -83,7 +79,6 @@ letter-spacing: -0.28px;
   cursor: pointer;
   line-height: 1.42857;
   letter-spacing: -0.28px;
-
 }
 
 .authorName:hover {
@@ -92,11 +87,6 @@ letter-spacing: -0.28px;
 
 @media (min-width: 768px) {
   .recipeMainInfo {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-    padding: 0;
-
     margin-bottom: 40px;
   }
 
@@ -106,51 +96,79 @@ letter-spacing: -0.28px;
   }
 
   .title {
-    font-size: 2rem; /* ≈32px */
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--black);
+    line-height: 1.16667;
+    letter-spacing: -0.48px;
+    text-transform: uppercase;
   }
 
   .category {
-    justify-content: flex-start;
+    gap: 8px;
   }
 
   .description {
-    font-size: 1rem; /* ≈16px */
-  }
-
-  .authorBlock {
-    justify-content: flex-start;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
   }
 
   .authorImage {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
+  }
+  .authorLabel {
+    font-size: 14px;
+    color: var(--gray);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
   }
 
   .authorName {
-    font-size: 1rem;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black);
+    cursor: pointer;
+    line-height: 1.42857;
+    letter-spacing: -0.28px;
   }
 }
 
 @media (min-width: 1440px) {
-  .title {
-    font-size: 2.25rem;
-  }
-
-  .category span {
-    font-size: 1rem;
-    padding: 6px 14px;
+  .recipeMainInfo {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding: 0;
   }
 
   .description {
-    font-size: 1.125rem;
+    font-size: 16px;
+    color: var(--dark-gray);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .authorImage {
+    width: 50px;
+    height: 50px;
+  }
 
-    .authorImage {
-      width: 48px;
-      height: 48px;
-    }
+  .authorLabel {
+    font-size: 14px;
+    line-height: 1.42857;
+    letter-spacing: -0.28px;
+  }
 
-    .authorName {
-      font-size: 1.125rem;
-    }
+  .authorName {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
   }
 }
