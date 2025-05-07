@@ -28,7 +28,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
   letter-spacing: -0.32px;
 
   display: flex;
@@ -38,6 +38,16 @@
   border-radius: 30px;
   border: 1px solid var(--gray);
 }
+
+.input:focus {
+  outline: none;
+  border: 1px solid #050505;
+}
+
+.input:not(:placeholder-shown) {
+  border: 1px solid #050505;
+}
+
 .inputWrapper {
   position: relative;
 }
@@ -87,29 +97,18 @@
   transition: color 0.3s;
 }
 
-.submitButton {
+.buttonWrapper {
   margin-top: 16px;
-  padding: 14px 0;
   width: 100%;
-  background-color: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 30px;
-  font-family: 'Mulish', sans-serif;
+}
+
+.submitButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 14px 28px;
   font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submitButton:hover {
-  background-color: #333;
-}
-
-.submitButton:disabled {
-  background-color: var(--gray);
-  cursor: not-allowed;
+  line-height: 20px;
 }
 
 @media (min-width: 768px) {
@@ -127,6 +126,11 @@
     justify-content: center;
     align-items: center;
     gap: 225px;
+  }
+
+  .submitButton {
+    padding: 14px 115px;
+    font-size: 16px;
   }
 }
 

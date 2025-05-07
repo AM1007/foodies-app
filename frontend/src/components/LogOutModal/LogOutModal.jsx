@@ -14,13 +14,11 @@ const LogOutModal = ({ onClose }) => {
     try {
       console.log('🔄 Attempting to logout user...');
       await dispatch(logoutUser()).unwrap();
-      console.log('✅ Logout successful! User session terminated.');
       toast.success('Logged out successfully');
       setTimeout(() => {
         onClose();
       }, 1000);
     } catch (error) {
-      console.log('❌ Logout failed:', error);
       toast.error(`Logout failed: ${error.message || error}`);
     }
   };
@@ -29,18 +27,21 @@ const LogOutModal = ({ onClose }) => {
     <Modal isOpen={true} onClose={onClose}>
       <div className={styles.container}>
         <h2 className={styles.title}>Log Out</h2>
-        <p className={styles.text}>You can always log back in at my time.</p>
+        <p className={styles.text}>You can always log back in.</p>
 
         <div className={styles.buttonsContainer}>
           <Button
-            className={styles.logoutButton}
+            variant="dark"
+            className={styles.modalButton}
             onClick={handleLogout}
             disabled={loading}
           >
             {loading ? 'Logging out...' : 'Log Out'}
           </Button>
+
           <Button
-            className={styles.cancelButton}
+            variant="white"
+            className={`${styles.modalButton} ${styles.modalButtonSize}`}
             onClick={onClose}
             disabled={loading}
           >

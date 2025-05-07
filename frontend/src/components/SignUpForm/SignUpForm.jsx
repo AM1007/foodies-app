@@ -57,7 +57,7 @@ export default function SignUpForm({ onSuccess }) {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, isValid, dirty }) => (
         <Form className={styles.form}>
           <label htmlFor={nameId} className={styles.visuallyHidden}></label>
           <div className={styles.inputWrapper}>
@@ -120,13 +120,20 @@ export default function SignUpForm({ onSuccess }) {
 
           {error && <div className={styles.error}>{error}</div>}
 
-          <Button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading || isSubmitting}
-          >
-            {loading || isSubmitting ? 'Signing up…' : 'Sign Up'}
-          </Button>
+          <div className={styles.buttonWrapper}>
+            <Button
+              type="submit"
+              className={styles.submitButton}
+              variant={
+                !isValid || !dirty || isSubmitting || loading
+                  ? 'inactive'
+                  : 'dark'
+              }
+              disabled={!isValid || !dirty || isSubmitting || loading}
+            >
+              {isSubmitting || loading ? 'Signing up…' : 'Sign Up'}
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

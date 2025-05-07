@@ -1,7 +1,9 @@
 .modal {
   position: relative;
 
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
+  min-width: 320px;
 
   display: inline-flex;
   padding: 60px 30px;
@@ -60,11 +62,11 @@
   }
   .modal {
     display: inline-flex;
-    padding: 80px 80px;
+    padding: 80px 80px 80px 80px;
     justify-content: center;
     align-items: center;
     gap: 40px;
-    width: 560px;
+    max-width: 560px;
 
     border-radius: 30px;
     background: #fff;

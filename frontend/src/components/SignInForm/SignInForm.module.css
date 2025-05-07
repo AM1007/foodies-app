@@ -47,23 +47,25 @@
 }
 
 .submitButton {
-  margin-top: 16px;
-  padding: 14px 0;
   width: 100%;
-  background-color: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 30px;
-  font-family: 'Mulish', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 14px 28px;
   font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  line-height: 20px;
 }
 
 .inputWrapper {
   width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border: 1px solid #050505;
+}
+
+.input:not(:placeholder-shown) {
+  border: 1px solid #050505;
 }
 
 @media (min-width: 768px) {
@@ -81,6 +83,10 @@
     justify-content: center;
     align-items: center;
     gap: 225px;
+  }
+  .submitButton {
+    padding: 14px 115px;
+    font-size: 16px;
   }
 }
 
