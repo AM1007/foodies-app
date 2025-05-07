@@ -42,6 +42,20 @@ export const fetchRecipeDetails = createAsyncThunk(
   },
 );
 
+export const fetchUserRecipes = createAsyncThunk(
+  'recipes/fetchUserRecipes',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axiosAPI.get(`/recipes/user/${userId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || 'Failed to fetch user recipes',
+      );
+    }
+  },
+);
+
 export const fetchPopularRecipes = createAsyncThunk(
   'recipes/fetchPopular',
   async (_, { rejectWithValue }) => {
