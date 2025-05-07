@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+
   }
   .wrap{
     padding: 0;
@@ -14,38 +15,38 @@
     letter-spacing: -0.36px;
     text-transform: uppercase;
   }
-  
-  @media (min-width: 768px) {
-    .title {
-      font-size: 24px;
-    }
-  }
-  
-  .text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--dark-gray);
+  /* .text {
+    font-size: 14px;
+    line-height: 1.42857;
+    color: var(--gray);
     white-space: pre-line;
+    margin-bottom: 32px;
+  } */
+  .text {
+    font-size: 14px;
+    line-height: 1.42857;
+    color: var(--gray);
+    margin-bottom: 0; /* ось це тепер спрацює! */
   }
-  
-  @media (min-width: 768px) {
-    .text {
-      font-size: 18px;
-    }
+  .text + .text {
+    margin-top: 20px;
   }
   
   .favoriteBtn {
     align-self: start;
     font-size: 14px;
-    font-weight: 600;
-    padding: 10px 24px;
+    font-weight: 700;
+    padding: 14px 20px;
     border: 1px solid var(--gray);
-    border-radius: 28px;
-    color: var(--black);
+    border-radius: 30px;
+    color: var(--gray);
     background-color: transparent;
     transition: all 0.3s ease;
     cursor: pointer;
+    line-height: 1.42857; 
+letter-spacing: -0.28px;
     text-transform: uppercase;
+    margin-top: 32px; 
   }
   
   .favoriteBtn:hover {
@@ -53,6 +54,17 @@
     color: var(--white);
     border-color: var(--black);
   }
+  @media (min-width: 768px) {
+    .title {
+      font-size: 24px;
+      
+    }
+    .text {
+      font-size: 18px;
+    }
+  }
+  
+
   /* .container {
     margin: 0 auto;
     padding: 0 16px;
