@@ -31,7 +31,7 @@ const Navigation = ({
             </NavLink>
           </li>
           <li className={styles.navItem}>
-            <NavLink className={generateActiveClass} to="recipe/add">
+            <NavLink className={generateActiveClass} to="recipes/add">
               Add recipe
             </NavLink>
           </li>
