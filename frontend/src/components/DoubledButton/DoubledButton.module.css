@@ -1,0 +1,41 @@
+.doubledContainer {
+  display: inline-flex;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+  width: auto;
+  white-space: nowrap;
+}
+
+.doubledButton {
+  flex: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 28px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 18px;
+  letter-spacing: -0.24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.doubledButton:hover {
+  opacity: 0.8;
+}
+
+.doubledActive {
+  background: #050505;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .doubledButton {
+    padding: 16px 32px;
+    font-size: 14px;
+  }
+}
