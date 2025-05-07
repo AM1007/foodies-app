@@ -120,6 +120,18 @@ const getUserDetailedInfo = async (userId, { isSelf = false } = {}) => {
   const recipesCount = await user.countRecipes();
   const followersCount = await user.countFollowers();
 
+  const recipes = await user.getRecipes({
+    attributes: [
+      'id',
+      'title',
+      'description',
+      'instructions',
+      'thumb',
+      'createdAt',
+    ],
+    order: [['createdAt', 'DESC']],
+  });
+
   const profile = {
     id: user.id,
     name: user.name,
@@ -129,6 +141,7 @@ const getUserDetailedInfo = async (userId, { isSelf = false } = {}) => {
       recipes: recipesCount,
       followers: followersCount,
     },
+    recipes,
   };
 
   if (isSelf) {
