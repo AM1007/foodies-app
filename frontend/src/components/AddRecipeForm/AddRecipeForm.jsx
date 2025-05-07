@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddRecipeForm.module.css';
 import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto';
+import RecipeTitleInput from '../ui/RecipeTitleInput/RecipeTitleInput';
 import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
 import TimeController from '../ui/TimeController/TimeController';
 import RecipeIngredients from '../RecipeIngredients/RecipeIngredients';
@@ -125,7 +126,7 @@ const AddRecipeForm = () => {
     return false;
   };
 
-  const handleRemoveIngredient = (id) => {
+  const handleRemoveIngredient = id => {
     setRecipeIngredients(recipeIngredients.filter(ing => ing.id !== id));
   };
 
@@ -182,130 +183,119 @@ const AddRecipeForm = () => {
         onPhotoChange={handlePhotoChange}
         error={errors.photo?.message}
       />
-
-      {/* Recipe Title */}
-      <div className={styles.formGroup}>
-        <div
-          className={`${styles.nameWrapper} ${
-            errors.title ? styles.errorInput : ''
-          }`}
-        >
-          <textarea
-            className={styles.nameLabel}
-            placeholder="The name of the recipe"
-            maxLength={200}
-            {...register('title')}
-          />
-          <span className={styles.charCountTitle}>{title?.length || 0}</span>
-        </div>
-        {errors.title && (
-          <p className={styles.errorMessage}>{errors.title.message}</p>
-        )}
-      </div>
-
-      {/* Description */}
-      <TextAreaWithCount
-        placeholder="Enter a description of the dish"
-        maxLength={200}
-        register={register}
-        name="description"
-        value={description}
-        error={errors.description?.message}
-      />
-
-      {/* Category */}
-      <Controller
-        name="categoryId"
-        control={control}
-        render={({ field }) => (
-          <div>
-            <DropdownSelector
-              label="Category"
-              options={categories}
-              value={field.value}
-              onChange={field.onChange}
-              placeholder="Select a category"
-            />
-            {errors.categoryId && (
-              <p className={styles.errorMessage}>{errors.categoryId.message}</p>
-            )}
-          </div>
-        )}
-      />
-
-      {/* Time */}
-      <Controller
-        name="time"
-        control={control}
-        render={({ field }) => (
-          <div className={styles.timeContainer}>
-            <TimeController value={field.value} onChange={field.onChange} />
-            {errors.time && (
-              <p className={styles.errorMessage}>{errors.time.message}</p>
-            )}
-          </div>
-        )}
-      />
-
-      {/* Ingredient Selector */}
-      <IngredientSelector
-        ingredients={ingredients}
-        onAddIngredient={handleAddIngredient}
-      />
-
-      {/* Recipe Ingredients */}
-      {recipeIngredients.length > 0 && (
-        <RecipeIngredients
-          ingredients={recipeIngredients}
-          onRemove={handleRemoveIngredient}
-    removable={true} 
+      <div className={styles.formWrapper}>
+        {/* Recipe Title */}
+        <RecipeTitleInput 
+          register={register('title')} 
+          value={title} 
+          error={errors.title?.message}
         />
-      )}
 
-      {/* Recipe Instruction */}
-      <TextAreaWithCount
-        label="Recipe preparation"
-        placeholder="Enter recipe"
-        maxLength={2000}
-        register={register}
-        name="instructions"
-        value={instructions}
-        error={errors.instructions?.message}
-      />
+        {/* Description */}
+        <TextAreaWithCount
+          placeholder="Enter a description of the dish"
+          maxLength={200}
+          register={register}
+          name="description"
+          value={description}
+          error={errors.description?.message}
+        />
 
-      {/* Form Actions */}
-      <div className={styles.actionsGroup}>
-        <button
-          type="button"
-          className={styles.deleteBtn}
-          onClick={resetForm}
-          aria-label="Видалити рецепт"
-        >
-          <svg fill="none">
-            <use href={`${icons}#trash`} />
-          </svg>
-        </button>
+        {/* Category */}
+        <Controller
+          name="categoryId"
+          control={control}
+          render={({ field }) => (
+            <div>
+              <DropdownSelector
+                label="Category"
+                options={categories}
+                value={field.value}
+                onChange={field.onChange}
+                placeholder="Select a category"
+              />
+              {errors.categoryId && (
+                <p className={styles.errorMessage}>
+                  {errors.categoryId.message}
+                </p>
+              )}
+            </div>
+          )}
+        />
 
-        <Button
-          type="submit"
-          disabled={isSubmitting || recipesLoading}
-          className={styles.publishButton}
-        >
-          {isSubmitting || recipesLoading ? 'PUBLISHING...' : 'PUBLISH'}
-        </Button>
+        {/* Time */}
+        <Controller
+          name="time"
+          control={control}
+          render={({ field }) => (
+            <div className={styles.timeContainer}>
+              <TimeController value={field.value} onChange={field.onChange} />
+              {errors.time && (
+                <p className={styles.errorMessage}>{errors.time.message}</p>
+              )}
+            </div>
+          )}
+        />
+
+        {/* Ingredient Selector */}
+        <IngredientSelector
+          ingredients={ingredients}
+          onAddIngredient={handleAddIngredient}
+        />
+
+        {/* Recipe Ingredients */}
+        {recipeIngredients.length > 0 && (
+          <RecipeIngredients
+            ingredients={recipeIngredients}
+            onRemove={handleRemoveIngredient}
+            removable={true}
+          />
+        )}
+
+        {/* Recipe Instruction */}
+        <TextAreaWithCount
+          label="Recipe preparation"
+          placeholder="Enter recipe"
+          maxLength={2000}
+          register={register}
+          name="instructions"
+          value={instructions}
+          error={errors.instructions?.message}
+        />
+
+        {/* Form Actions */}
+        <div className={styles.actionsGroup}>
+          <button
+            type="button"
+            className={styles.deleteBtn}
+            onClick={resetForm}
+          >
+            <svg fill="none">
+              <use href={`${icons}#trash`} />
+            </svg>
+          </button>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting || recipesLoading}
+            className={styles.publishButton}
+          >
+            {isSubmitting || recipesLoading ? 'PUBLISHING...' : 'PUBLISH'}
+          </Button>
+        </div>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </form>
   );
 };

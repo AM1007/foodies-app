@@ -18,7 +18,7 @@ const PhotoUploader = ({ onPhotoChange, error }) => {
   };
 
   return (
-    <div>
+    <div className={styles.photoUploadWrap}>
       <div className={styles.photoUpload}>
         {photoPreview ? (
           <div className={styles.uploadedPhoto}>

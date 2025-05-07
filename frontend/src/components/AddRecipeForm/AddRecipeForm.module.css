@@ -1,230 +1,29 @@
 .form {
-  max-width: 343px;
   display: flex;
   flex-direction: column;
 }
 
-.active {
-  color: var(--black);
+.formWrapper{
+  margin-top: 32px;
 }
 
-.formGroup {
-  padding-top: 8px;
-  margin-bottom: 24px;
-  width: 100%;
-  display: block;
-  align-items: center;
-    justify-content: center
-}
-
-.label {
-  color: var(--black);
-  font-size: 16px;
-  display: block;
-  font-weight: 800;
-  letter-spacing: -0.32px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.nameLabel {
-  width: 100%;
-  max-width: 343px;
-  color: var(--black);
-  margin: 24px 0;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 1.43;
-  letter-spacing: -0.32px;
-  margin-bottom: 8px;
-  resize: none !important;
-  text-transform: uppercase;
-  display: block;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-.nameWrapper {
-  position: relative;
-  width: 100%;
-  height: 24px;
-  margin-bottom: 8px;
-}
-
-.nameTextarea::placeholder {
-  color: var(--gray);
-  font-weight: 700;
-  opacity: 0.8;
-}
-
-.inputWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 343px;
-  border-bottom: 1px solid var(--gray);
-}
 .form h3{
   display: none;
 }
+
 .errorInput {
-  border-bottom: 1px solid #e74a3b !important;
+  border-bottom: 1px solid var(--red) !important;
 }
 
 .errorMessage {
-  color: #e74a3b;
+  color: var(--red);
   font-size: 12px;
   margin-top: 4px;
   font-weight: 500;
 }
 
-.textarea {
+.timeContainer {
   width: 100%;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  resize: vertical;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--black);
-  padding: 8px 0;
-  min-height: 40px;
-}
-
-.input {
-  width: 100%;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--gray);
-  padding: 8px 0;
-}
-
-.charCount {
-  position: absolute;
-  right: 0;
-  bottom: 16px;
-  font-size: 14px;
-  color: var(--gray);
-}
-.charCountTitle {
-  display: none;
-}
-
-.selectContainer, 
-.timeContainer, 
-.ingredientsContainer {
-  width: 100%;
-}
-
-.quantityInputContainer {
-  position: relative;
-  width: 100%;
-}
-
-.quantityInput {
-  width: 100%;
-  max-width: 343px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--black);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--gray);
-}
-
-.addIngredientButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 20px;
-  width: fit-content;
-  background-color: var(--white);
-  border: 1px solid var(--gray);
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 20px;
-  letter-spacing: -0.28px;
-  text-transform: uppercase;
-  color: var(--black);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 24px;
-}
-
-.addIngredientButton:hover {
-  color: var(--white);
-  background-color: var(--black);
-}
-
-.addIngredientButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.selectedIngredients {
-  margin-bottom: 32px;
-  width: 100%;
-}
-
-.selectedIngredients h4 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.ingredientsList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.ingredientItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  background-color: var(--white);
-  border-radius: 8px;
-}
-
-.ingredientName {
-  font-weight: 500;
-  color:var(--black);
-}
-
-.ingredientAmount {
-  color: var(--gray);
-  margin-left: auto;
-  margin-right: 16px;
-}
-
-.removeIngredientBtn {
-  background: none;
-  border: none;
-  color: #e74a3b;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.removeIngredientBtn:hover {
-  background-color: rgba(231, 74, 59, 0.1);
 }
 
 .actionsGroup {
@@ -264,8 +63,8 @@
   padding: 14px 32px;
   font-size: 14px;
   font-weight: 700;
-line-height: 1.43;
-letter-spacing: -0.28px;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
   cursor: pointer;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
@@ -281,43 +80,28 @@ letter-spacing: -0.28px;
   background-color: #666;
 }
 
-/* Стилі для адаптивності */
 @media (min-width: 768px) {
   .form {
-    max-width: 768px;
-  }
-  .formWrapper {
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .selectContainer {
-    grid-column: 1 / 2;
+  .formWrapper{
+    margin-top: 80px;
   }
 
   .timeContainer {
     grid-column: 2 / 3;
   }
-
-  .ingredientsContainer {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px;
-    align-items: flex-end;
-  }
-
-  .ingredientsList {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
 }
-
 @media (min-width: 1440px) {
-  .ingredientsList {
-    grid-template-columns: repeat(3, 1fr);
+  .form {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+
+  .formWrapper{
+    margin-top: 0;
   }
 }

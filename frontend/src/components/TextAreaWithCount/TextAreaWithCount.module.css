@@ -1,5 +1,4 @@
 .formGroup {
-  margin-bottom: 32px;
   width: 100%;
 }
 
@@ -8,6 +7,7 @@
   font-size: 16px;
   display: block;
   font-weight: 800;
+  line-height: 1.5;
   letter-spacing: -0.32px;
   margin-bottom: 32px;
   text-transform: uppercase;
@@ -16,40 +16,48 @@
 .inputWrapper {
   position: relative;
   width: 100%;
+  max-width: 343px;
 }
 
 .textarea {
   width: 100%;
-  font-size: 14px;
   font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
   resize: none;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--gray); /* Переносимо підкреслення сюди */
+  border-bottom: 1px solid var(--gray);
   outline: none;
   color: var(--black);
-  padding: 0 0 16px; /* Встановлюємо відступ 16px від лінії до тексту */
-  min-height: 36px; /* Зменшуємо min-height, щоб компенсувати padding */
+  padding: 0 0 16px; 
+  min-height: 36px; 
   overflow: hidden;
   transition: height 0.2s ease;
   position: relative;
 }
+@media (min-width: 768px) {
+  .inputWrapper {
+    max-width: 649px;
+  }
+  .label {
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin-bottom: 40px;
+  }
+}
+@media (min-width: 1440px) {
+  
+}
 
 .errorInput {
-  border-bottom: 1px solid #e74a3b !important;
+  border-bottom: 1px solid var(--red) !important;
 }
 
 /* Стилі для placeholder */
 .textarea::placeholder {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.43;
-  letter-spacing: -0.28px;
   color: var(--gray);
-  opacity: 1;
 }
 
 .charCount {
