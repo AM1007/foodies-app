@@ -1,11 +1,14 @@
 .card {
   background-color: var(--white);
   width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
 }
 
 .image {
   height: 230px;
   width: 100%;
+  max-width: 340px;
   object-fit: cover;
   border-radius: 30px;
   margin-bottom: 16px;
