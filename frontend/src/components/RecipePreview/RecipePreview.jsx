@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
 import css from './RecipePreview.module.css';
-
 import ArrowBtn from '../ui/ArrowBtn/ArrowBtn';
 import DeleteBtn from '../ui/DeleteBtn/DeleteBtn';
 
@@ -23,7 +20,7 @@ function RecipePreview({ recipe, onDelete }) {
   return (
     <div className={css.recipePreviewCard}>
       <img
-        src={recipe.image || '/placeholder.jpg'}
+        src={recipe.thumb || '/placeholder.jpg'}
         alt={recipe.title}
         className={css.recipePreviewCardImage}
       />
@@ -37,9 +34,7 @@ function RecipePreview({ recipe, onDelete }) {
         </div>
 
         <div className={css.recipePreviewCardActions}>
-          <Link to={`/recipes/${recipe.id}`}>
-            <ArrowBtn ariaLabel="Go to recipe" />
-          </Link>
+          <ArrowBtn to={`/recipes/${recipe.id}`} ariaLabel="Go to recipe" />
           {onDelete && (
             <DeleteBtn ariaLabel="Delete recipe" onClick={handleDelete} />
           )}

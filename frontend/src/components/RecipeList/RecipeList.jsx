@@ -22,6 +22,14 @@ const RecipeList = ({ category }) => {
     console.log('Recipes from Redux:', recipes);
   }, [recipes]);
 
+  const handleDelete = async id => {
+    try {
+      dispatch(deleteRecipe(id));
+    } catch (error) {
+      console.error('Error deleting recipe:', error);
+    }
+  };
+
   return (
     <>
       <MainTitle text={category || 'Recipes'} />
