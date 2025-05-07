@@ -4,13 +4,13 @@ import RecipePreview from '../RecipePreview/RecipePreview';
 import emptyMessages from '../../data/emptyMessages';
 import styles from './ListItems.module.css';
 
-const ListItems = ({ activeTab, data = [] }) => {
+const ListItems = ({ activeTab, items = [] }) => {
   const isRecipeTab = ['my-recipes', 'my-favorites', 'recipes'].includes(
     activeTab,
   );
   const isUserTab = ['followers', 'following'].includes(activeTab);
 
-  if (!data.length) {
+  if (!items.length) {
     return (
       <div className={styles.empty}>
         {emptyMessages[activeTab] || 'No items to show.'}
@@ -21,13 +21,12 @@ const ListItems = ({ activeTab, data = [] }) => {
   return (
     <div className={styles.list}>
       {isRecipeTab &&
-        data.map(recipe => <RecipePreview key={recipe.id} recipe={recipe} />)}
+        items.map(recipe => <RecipePreview key={recipe.id} recipe={recipe} />)}
       {isUserTab &&
-        data.map(user => (
+        items.map(user => (
           <div key={user.id} className={styles.userStub}>
             {user.name}
           </div>
-          // <UserCard user={user} />
         ))}
     </div>
   );

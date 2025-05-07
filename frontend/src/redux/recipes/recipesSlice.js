@@ -46,8 +46,9 @@ export const fetchUserRecipes = createAsyncThunk(
   'recipes/fetchUserRecipes',
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axiosAPI.get(`/recipes/user/${userId}`);
-      return response.data;
+      const response = await axiosAPI.get(`/users/${userId}`);
+
+      return response.data.recipes;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch user recipes',
@@ -198,6 +199,20 @@ const recipesSlice = createSlice({
         state.currentRecipe = action.payload;
       })
       .addCase(fetchRecipeDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(fetchUserRecipes.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchUserRecipes.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.userRecipes = action.payload;
+      })
+      .addCase(fetchUserRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

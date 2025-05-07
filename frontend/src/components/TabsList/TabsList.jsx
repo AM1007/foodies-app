@@ -23,7 +23,7 @@ export default function TabsList({ isOwnProfile, activeTab, setActiveTab }) {
           className={`${styles.tab} ${
             activeTab === tab.id ? styles.active : ''
           }`}
-          onClick={() => setActiveTab(tab.id)} // This will update the active tab
+          onClick={() => setActiveTab(tab.id)} 
         >
           {tab.label}
         </button>

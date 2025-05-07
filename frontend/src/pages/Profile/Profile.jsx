@@ -83,15 +83,17 @@ const Profile = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'my-recipes':
-        return <ListItems items={ownRecipes?.data} />; 
+        return <ListItems activeTab={activeTab} items={ownRecipes?.data} />;
       case 'my-favorites':
-        return <ListItems items={favoriteRecipes?.data} />; 
+        return (
+          <ListItems activeTab={activeTab} items={favoriteRecipes?.data} />
+        );
       case 'followers':
-        return <ListItems items={followers?.response} />; 
+        return <ListItems activeTab={activeTab} items={followers?.response} />;
       case 'following':
-        return <ListItems items={following?.response} />; 
+        return <ListItems activeTab={activeTab} items={following?.response} />;
       case 'recipes':
-        return <ListItems items={userRecipes?.data} />; 
+        return <ListItems activeTab={activeTab} items={userRecipes?.data} />;
       default:
         return null;
     }
@@ -130,8 +132,6 @@ const Profile = () => {
         />
 
         <div>{renderTabContent()}</div>
-
-        <RecipePreview />
       </div>
     </div>
   );
