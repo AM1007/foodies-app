@@ -1,19 +1,14 @@
 .button {
-  color: var(--white);
-  font-family: Mulish;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 18px; /* 150% */
-  letter-spacing: -0.24px;
-  text-transform: uppercase;
-
   display: inline-flex;
-  padding: 14px 28px;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 
   border-radius: 30px;
-  border: 1px solid var(--light-gray);
-  background: var(--dark-gray);
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }

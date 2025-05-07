@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: 375px;
+  min-width: 320px;
 }
 
 .title {
@@ -12,7 +14,7 @@
   font-size: 28px;
   font-style: normal;
   font-weight: 800;
-  line-height: 32px; /* 114.286% */
+  line-height: 32px;
   letter-spacing: -0.56px;
   text-transform: uppercase;
 }
@@ -22,12 +24,11 @@
   text-align: center;
   padding-top: 16px;
 
-  /* Mobile/Main text */
   font-family: Mulish;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
   letter-spacing: -0.28px;
 }
 
@@ -39,48 +40,17 @@
   padding-top: 32px;
 }
 
-.cancelButton {
+.modalButton {
+  width: 100%;
   display: flex;
-  padding: 14px 113px;
-  align-items: flex-start;
-  gap: 10px;
-
-  border-radius: 30px;
-  border: 1px solid #bfbebe;
-
-  color: #050505;
-  font-family: Mulish;
+  justify-content: center;
+  padding: 14px 114px;
   font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 20px; /* 142.857% */
-  letter-spacing: -0.28px;
-  text-transform: uppercase;
+  line-height: 20px;
 }
 
-.logoutButton {
-  display: flex;
-  padding: 15px 110px;
-  align-items: flex-start;
-  gap: 10px;
-
-  border-radius: 30px;
-  background: #050505;
-  border: 1px solid #050505;
-
-  color: #fff;
-  font-family: Mulish;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 20px; /* 142.857% */
-  letter-spacing: -0.28px;
-  text-transform: uppercase;
-}
-
-.logoutButton:disabled {
-  background-color: var(--gray);
-  cursor: not-allowed;
+.modalButtonSize {
+  padding: 12px 115px;
 }
 
 @media (min-width: 768px) {
@@ -93,7 +63,7 @@
   }
 
   .title {
-    font-size: 0; /* ховаємо сам текст */
+    font-size: 0;
     position: relative;
   }
 
@@ -122,18 +92,15 @@
     align-items: center;
     gap: 20px;
   }
-
-  .cancelButton {
-    display: flex;
-    padding: 16px 165px;
-    align-items: flex-start;
+  .modalButton {
+    padding: 18px 160px;
+    font-size: 16px;
     gap: 10px;
   }
-  .logoutButton {
-    display: flex;
-    padding: 18px 164px;
-    align-items: flex-start;
+
+  .modalButtonSize {
+    padding: 13px 115px;
+    padding: 15px 165px;
     gap: 10px;
-    border: 1px solid #050505;
   }
 }

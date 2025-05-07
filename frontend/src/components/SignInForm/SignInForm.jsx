@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from 'react';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, resetAuthError } from '../../redux/users/authSlice';
-import { fetchCurrentUser } from '../../redux/users/userSlice';  
+import { fetchCurrentUser } from '../../redux/users/userSlice';
 import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
@@ -27,7 +27,6 @@ const SignInForm = ({ onSuccess }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-
       await dispatch(loginUser(values)).unwrap();
 
       const currentUser = await dispatch(fetchCurrentUser()).unwrap();
@@ -52,7 +51,7 @@ const SignInForm = ({ onSuccess }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, isValid, dirty }) => (
         <Form className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor={emailId} className={styles.visuallyHidden}></label>
@@ -66,11 +65,18 @@ const SignInForm = ({ onSuccess }) => {
                 className={styles.input}
               />
             </div>
-            <ErrorMessage name="email" component="div" className={styles.error} />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
+            <label
+              htmlFor={passwordId}
+              className={styles.visuallyHidden}
+            ></label>
             <div className={styles.inputWrapper}>
               <Field
                 id={passwordId}
@@ -98,7 +104,11 @@ const SignInForm = ({ onSuccess }) => {
                 </svg>
               )}
             </div>
-            <ErrorMessage name="password" component="div" className={styles.error} />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className={styles.error}
+            />
           </div>
 
           {error && <div className={styles.error}>{error}</div>}
@@ -106,9 +116,14 @@ const SignInForm = ({ onSuccess }) => {
           <Button
             type="submit"
             className={styles.submitButton}
-            disabled={loading || isSubmitting}
+            variant={
+              !isValid || !dirty || isSubmitting || loading
+                ? 'inactive'
+                : 'dark'
+            }
+            disabled={!isValid || !dirty || isSubmitting || loading}
           >
-            {loading || isSubmitting ? 'Signing in...' : 'SIGN IN'}
+            {loading || isSubmitting ? 'Signing in...' : 'Sign in'}
           </Button>
         </Form>
       )}
