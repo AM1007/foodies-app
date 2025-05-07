@@ -20,33 +20,22 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route
-            path="/recipe"
-            element={
-              <PrivateRoute>
-                <Recipe />
-              </PrivateRoute>
-            }
-          />
+              path="/recipes/add"
+              element={
+                <PrivateRoute>
+                  <AddRecipe />
+                </PrivateRoute>
+              }
+            />
             <Route
-            path="/recipe/add"
-            element={
-              <PrivateRoute>
-                <AddRecipe />
-              </PrivateRoute>
-            }
-          />
-            <Route path="/recipe" element={<Recipe />} />
-            <Route path="/recipe/add" element={<AddRecipe />} />
-            <Route path="/users/current" element={<Profile />} />
-            <Route
-            path="/users/:id"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-            <Route path="/recipe/:id" element={<Recipe />} />
+              path="/users/current"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/recipes/:id" element={<Recipe />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
