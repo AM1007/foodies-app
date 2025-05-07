@@ -1,9 +1,8 @@
 .modal {
   position: relative;
 
-  width: 100%;
-  max-width: 375px;
-  min-width: 320px;
+  width: 90%;
+  max-width: 320px;
 
   display: inline-flex;
   padding: 60px 30px;

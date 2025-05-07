@@ -37,7 +37,7 @@ const LogOutModal = () => {
             onClick={handleLogout}
             disabled={loading}
           >
-            {loading ? BeatLoader : 'Log Out'}
+            {loading ? 'Logging out...' : 'Log Out'}
           </Button>
 
           <Button
