@@ -1,15 +1,14 @@
 .card {
   background-color: var(--white);
   width: 100%;
-  max-width: 551px; /*зробила розтягування як узображенні страви*/
+  max-width: 343px; 
   margin: 0 auto;
 }
 
 .image {
   height: 230px;
   width: 100%;
-  max-width: 551px; /*зробила розтягування як у зображенні страви*/
-  object-fit: cover;
+  max-width: 343px; 
   border-radius: 30px;
   margin-bottom: 16px;
 }

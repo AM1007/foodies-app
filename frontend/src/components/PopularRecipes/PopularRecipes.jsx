@@ -16,7 +16,8 @@ const PopularRecipes = () => {
   }
 
   return (
-    <section className={styles.popular}>
+    <section className="container">
+    <div className={styles.popular}>
       <h3 className={styles.title}>Popular Recipes</h3>
       <ul className={styles.list}>
         {popularRecipes.data.slice(0, 4).map(recipe => (
@@ -25,6 +26,7 @@ const PopularRecipes = () => {
           </li>
         ))}
       </ul>
+    </div>
     </section>
   );
 };
