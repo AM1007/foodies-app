@@ -28,7 +28,7 @@
   min-width: 152px;
   height: 75px;
   gap: 10px; 
-
+  position: relative;
 }
 
 .imageWrapper {
@@ -71,6 +71,25 @@ letter-spacing: -0.28px;
   color: var(--gray);
 }
 
+.removeButton {
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: none;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.removeButton:hover {
+  color: #e74a3b;
+}
 
 @media (max-width: 768px) {
   .item {

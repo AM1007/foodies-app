@@ -125,7 +125,7 @@ const AddRecipeForm = () => {
     return false;
   };
 
-  const removeIngredient = id => {
+  const handleRemoveIngredient = (id) => {
     setRecipeIngredients(recipeIngredients.filter(ing => ing.id !== id));
   };
 
@@ -257,7 +257,8 @@ const AddRecipeForm = () => {
       {recipeIngredients.length > 0 && (
         <RecipeIngredients
           ingredients={recipeIngredients}
-          onRemove={removeIngredient}
+          onRemove={handleRemoveIngredient}
+    removable={true} 
         />
       )}
 
