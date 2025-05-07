@@ -6,6 +6,7 @@ import Loader from '../../components/Loader/Loader';
 import PathInfo from '../../components/ui/PathInfo/PathInfo';
 import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
 import PopularRecipes from '../../components/PopularRecipes/PopularRecipes';
+import styles from './Recipe.module.css';
 
 const RecipePage = () => {
   const { id } = useParams();
@@ -22,12 +23,14 @@ const RecipePage = () => {
   if (!currentRecipe) return <p style={{ textAlign: 'center' }}>Recipe not found</p>;
 
   return (
+    <div className={styles.pageWrapper}>
     <div className="container">
       <PathInfo current={currentRecipe.title} />
       <RecipeInfo recipe={currentRecipe} favoriteRecipes={favoriteRecipes} />
       <div>
         <PopularRecipes  />
       </div>
+    </div>
     </div>
   );
 };
