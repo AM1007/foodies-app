@@ -1,6 +1,6 @@
 import styles from './RecipeIngredients.module.css';
 
-const RecipeIngredients = ({ ingredients }) => {
+const RecipeIngredients = ({ ingredients, onRemove, removable = false }) => {
   return (
     <section className="wrap">
       <div className={styles.ingredients}>
@@ -15,6 +15,16 @@ const RecipeIngredients = ({ ingredients }) => {
                 <p className={styles.name}>{item.name}</p>
                 <p className={styles.amount}>{item.amount}</p>
               </div>
+              {removable && onRemove && (
+                <button 
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={() => onRemove(item._id || item.id)}
+                  aria-label={`Remove ${item.name}`}
+                >
+                  ✕
+                </button>
+              )}
             </li>
           ))}
         </ul>
