@@ -12,10 +12,12 @@
   justify-content: center;
   gap: 16px;
 }
-
+.title {
+  margin-bottom: 12px;
+}
 .testimonialsSlider {
   width: 100%;
-  max-width: 822px;
+  max-width: 100%;
 }
 
 .testimonialCard {
@@ -45,23 +47,18 @@
   line-height: 24px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-top: 54px;
-  padding-bottom: 56px;
+  margin-top: 64px;
+  margin-bottom: 54px;
 }
 
 .swiper-pagination-bullets {
   margin-top: 20px;
 }
 
-@media (max-width: 767px) {
-  .testimonialsSection {
-    max-width: 343px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1279px) {
+@media screen and (min-width: 768px) {
   .testimonialsSection {
     max-width: 704px;
+    padding: 100px 32px;
   }
   .icon {
     width: 59px;
@@ -70,11 +67,17 @@
   .text {
     font-size: 24px;
     line-height: 36px;
+    margin: 40px 0;
+  }
+  .author {
+    margin-top: 80px;
+    margin-bottom: 56px;
   }
 }
 
-@media (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   .testimonialsSection {
     max-width: 822px;
+    padding: 120px 0;
   }
 }
