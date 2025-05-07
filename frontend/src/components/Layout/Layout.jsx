@@ -17,15 +17,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   const dispatch = useDispatch();
-  const { activeModal, closeModal } = useModal();
-  const { isAuthenticated, loading, user, token } = useSelector(
-    state => state.auth,
-  );
+  const { modal, closeModal } = useModal();
+  const { isAuthenticated, loading, user } = useSelector(state => state.auth);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken && !user && !loading) {
-      dispatch(refreshToken())  
+      dispatch(refreshToken())
         .unwrap()
         .then(() => {
           if (!user) {
@@ -45,13 +43,10 @@ const Layout = () => {
   }, [isAuthenticated, user, dispatch]);
 
   useEffect(() => {
-    if (
-      isAuthenticated &&
-      (activeModal === 'signin' || activeModal === 'signup')
-    ) {
+    if (isAuthenticated && (modal === 'signin' || modal === 'signup')) {
       closeModal();
     }
-  }, [isAuthenticated, activeModal, closeModal]);
+  }, [isAuthenticated, modal, closeModal]);
 
   return (
     <>
@@ -59,9 +54,9 @@ const Layout = () => {
       <main>{loading ? <Loader /> : <Outlet />}</main>
       <Footer />
 
-      {activeModal === 'signup' && <SignUpModal onClose={closeModal} />}
-      {activeModal === 'signin' && <SignInModal onClose={closeModal} />}
-      {activeModal === 'logout' && <LogOutModal onClose={closeModal} />}
+      {modal === 'signup' && <SignUpModal onClose={closeModal} />}
+      {modal === 'signin' && <SignInModal onClose={closeModal} />}
+      {modal === 'logout' && <LogOutModal onClose={closeModal} />}
 
       <ToastContainer position="top-center" autoClose={3000} />
     </>
