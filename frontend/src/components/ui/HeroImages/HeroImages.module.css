@@ -2,13 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-top: 32px;
+  margin-top: 29.5px;
   padding-bottom: 100px;
+  position: relative;
 }
 
 .imageSmall {
   width: 77px;
-  height: auto;
+  height: 70px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transform: rotate(10deg);
@@ -16,9 +17,33 @@
 
 .imageLarge {
   width: 190px;
-  height: auto;
+  height: 172px;
   border-radius: 30px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   transform: rotate(-10deg);
   z-index: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .imageWrapper {
+    margin-top: 30px;
+    padding-bottom: 91px;
+  }
+
+  .imageSmall {
+    width: 128px;
+    height: 116px;
+  }
+
+  .imageLarge {
+    width: 302px;
+    height: 273px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .imageWrapper {
+    margin-top: 40px;
+    padding-bottom: 82px;
+  }
 }
