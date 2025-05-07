@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
@@ -10,7 +10,9 @@ import icons from '../../icons/sprite.svg';
 import styles from './UserBar.module.css';
 
 const UserBar = () => {
-  const user = useSelector(state => state.user.current) || {};
+  const userFromState = useSelector(state => state.user.current);
+  const user = useMemo(() => userFromState || {}, [userFromState]);
+
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   console.log(user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
