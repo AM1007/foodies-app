@@ -1,14 +1,14 @@
 .card {
   background-color: var(--white);
   width: 100%;
-  max-width: 340px;
+  max-width: 551px; /*зробила розтягування як узображенні страви*/
   margin: 0 auto;
 }
 
 .image {
   height: 230px;
   width: 100%;
-  max-width: 340px;
+  max-width: 551px; /*зробила розтягування як у зображенні страви*/
   object-fit: cover;
   border-radius: 30px;
   margin-bottom: 16px;
