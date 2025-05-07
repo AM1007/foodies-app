@@ -1,0 +1,61 @@
+.card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+  display: flex;
+  aspect-ratio: 343 / 250;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.buttonWrap {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.icon {
+  flex-shrink: 0;
+  stroke: var(--white);
+  fill: none;
+  width: 24px;
+  height: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .buttonWrap {
+    bottom: 24px;
+    left: 24px;
+    gap: 4px;
+  }
+}

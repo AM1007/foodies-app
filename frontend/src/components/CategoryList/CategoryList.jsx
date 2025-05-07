@@ -1,9 +1,10 @@
+// CategoryList.jsx
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import { toast } from 'react-toastify';
-import styles from './CategoryList.module.css';
+import styles from '../CategoryList/CategoryList.module.css';
 import categories from '../../data/categories.js';
-import icons from '../../icons/sprite.svg';
+import CategoryCard from '../../components/CategoryCard/CategoryCard.jsx';
 
 export default function CategoryList({ onCategoryClick }) {
   const dispatch = useDispatch();
@@ -31,25 +32,11 @@ export default function CategoryList({ onCategoryClick }) {
       <div className={styles.categoryListContainer}>
         <div className={styles.grid}>
           {categories.map(cat => (
-            <div
-              key={cat.name}
-              className={`
-                ${styles.card}
-              `}
-              onClick={() => handleCategoryClick(cat.name)}
-            >
-              <img src={cat.image} alt={cat.name} className={styles.image} />
-              <div className={styles.buttonWrap}>
-                <button className={styles.button}>{cat.name}</button>
-                <svg
-                  width="24"
-                  height="24"
-                  className={styles.icon}
-                  onClick={() => handleCategoryClick('All categories')}
-                >
-                  <use href={`${icons}#arrow-up-right`} />
-                </svg>
-              </div>
+            <div key={cat.name} className={styles.card}>
+              <CategoryCard
+                category={cat}
+                onCategoryClick={handleCategoryClick}
+              />
             </div>
           ))}
 
