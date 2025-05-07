@@ -1,7 +1,6 @@
 import styles from './NotFound.module.css';
 import { Link } from 'react-router-dom';
 import imageNotFound from '../../icons/imageNotFound.svg';
-import Button from '../../components/Button/Button';
 
 const NotFound = () => {
   return (
@@ -11,7 +10,7 @@ const NotFound = () => {
         src={imageNotFound}
         alt="Not found"
       />
-      <Link to={`/`}>{/* <Button>Home Page</Button> */}</Link>
+      <Link to={`/`}></Link>
     </div>
   );
 };

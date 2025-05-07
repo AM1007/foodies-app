@@ -38,7 +38,7 @@
   justify-content: center;
 
   align-items: flex-start;
-  padding: 40px 0 0 0;
+  padding: 80px 0 0 0;
 
   z-index: 1001;
 }
@@ -58,7 +58,7 @@
   .overlay {
     justify-content: flex-end;
     align-items: flex-start;
-    padding: 40px 60px 0 0;
+    padding: 100px 80px 0 0;
   }
   .modal {
     display: inline-flex;
