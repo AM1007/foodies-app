@@ -9,7 +9,6 @@
 .recipePreviewCardImage {
   width: 75px;
   height: 75px;
-  background-color: var(--black);
   object-fit: cover;
   border-radius: 15px;
   flex-shrink: 0;

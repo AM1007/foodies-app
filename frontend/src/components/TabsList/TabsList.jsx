@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './TabsList.module.css';
 
 const TABS_OWN = [
@@ -13,17 +12,8 @@ const TABS_OTHER = [
   { id: 'followers', label: 'Followers' },
 ];
 
-export default function TabsList({ isOwnProfile, onTabChange }) {
-  const [activeTab, setActiveTab] = useState(
-    isOwnProfile ? 'my-recipes' : 'recipes',
-  );
-
+export default function TabsList({ isOwnProfile, activeTab, setActiveTab }) {
   const tabs = isOwnProfile ? TABS_OWN : TABS_OTHER;
-
-  const handleClick = tabId => {
-    setActiveTab(tabId);
-    onTabChange(tabId);
-  };
 
   return (
     <div className={styles.tabs}>
@@ -33,7 +23,7 @@ export default function TabsList({ isOwnProfile, onTabChange }) {
           className={`${styles.tab} ${
             activeTab === tab.id ? styles.active : ''
           }`}
-          onClick={() => handleClick(tab.id)}
+          onClick={() => setActiveTab(tab.id)} 
         >
           {tab.label}
         </button>
