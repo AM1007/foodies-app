@@ -1,19 +1,17 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 }
 
 .title {
-  color: #050505;
-  text-align: center;
-  font-family: Mulish;
-  font-size: 28px;
-  font-style: normal;
+  font-family: 'Mulish', sans-serif;
+  font-size: 24px;
   font-weight: 800;
-  line-height: 32px;
-  letter-spacing: -0.56px;
+  color: var(--black);
+  /* margin-bottom: 24px; */
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -38,8 +36,15 @@
 
 @media (min-width: 768px) {
   .title {
-    font-size: 28px;
-    margin-bottom: 32px;
+    color: #050505;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
   }
 
   .switchText {

@@ -1,36 +1,36 @@
 .dark {
   padding: 14px 28px;
-  background: #1a1a1a;
-  color: #fff;
-  border: 1px solid #e8e8e8;
+  background: var(--dark-gray);
+  color: var(--white);
+  border: 1px solid var(--light-gray);
   font-size: 12px;
   line-height: 18px;
   letter-spacing: -0.24px;
 }
 
 .dark:hover {
-  background: #050505;
+  background: var(--black);
 }
 
 .white {
   padding: 16px 32px;
   background: transparent;
-  color: #050505;
-  border: 1px solid #1a1a1a;
+  color: var(--black);
+  border: 1px solid var(--dark-gray);
   font-size: 14px;
   line-height: 24px;
   letter-spacing: -0.32px;
 }
 
 .white:hover {
-  background: #050505;
-  color: #fff;
+  background: var(--black);
+  color: var(--white);
 }
 
 .inactive {
   padding: 14px 171px;
-  background: #bfbebe;
-  color: #fff;
+  background: var(--gray);
+  color: var(--white);
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.32px;

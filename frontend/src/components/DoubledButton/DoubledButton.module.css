@@ -2,7 +2,7 @@
   display: inline-flex;
   border-radius: 30px;
   overflow: hidden;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--light-gray);
   width: auto;
   white-space: nowrap;
 }
@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   padding: 14px 28px;
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--base-font);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -29,8 +29,8 @@
 }
 
 .doubledActive {
-  background: #050505;
-  color: #fff;
+  background: var(--black);
+  color: var(--white);
 }
 
 @media (min-width: 768px) {
