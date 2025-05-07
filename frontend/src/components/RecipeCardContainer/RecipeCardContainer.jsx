@@ -19,9 +19,7 @@ const RecipeCardContainer = ({ recipe }) => {
   const recipeId = recipe._id?.$oid || recipe.id;
 
   const isFavorite = favoriteRecipes.some(
-    favorite =>
-      favorite._id === recipeId ||
-      favorite.id === recipeId
+    favorite => favorite._id === recipeId || favorite.id === recipeId,
   );
 
   const handleFavoriteToggle = () => {
@@ -41,10 +39,10 @@ const RecipeCardContainer = ({ recipe }) => {
       openModal('signin');
       return;
     }
-    if (recipe.user?.id) navigate(`/user/${recipe.user.id}`);
+    if (recipe.user?.id) navigate(`/users/${recipe.user.id}`);
   };
 
-  const handleViewRecipe = () => navigate(`/recipe/${recipeId}`);
+  const handleViewRecipe = () => navigate(`/recipes/${recipeId}`);
 
   return (
     <RecipeCard
