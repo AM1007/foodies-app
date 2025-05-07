@@ -27,7 +27,7 @@ const Header = () => {
   }, [isAuthenticated, user, dispatch]);
 
   return (
-   
+    <section className="container">
       <header className={`${styles.headerContainer}  ${headerThemeClass}`}>
         <div className={styles.headerWrapper}>
           <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
@@ -51,7 +51,7 @@ const Header = () => {
           )}
         </div>
       </header>
-    
+    </section>
   );
 };
 

@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-top: 29.5px;
   padding-bottom: 100px;
   position: relative;
 }
@@ -26,7 +25,6 @@
 
 @media screen and (min-width: 768px) {
   .imageWrapper {
-    margin-top: 30px;
     padding-bottom: 91px;
   }
 
@@ -43,7 +41,6 @@
 
 @media screen and (min-width: 1280px) {
   .imageWrapper {
-    margin-top: 40px;
     padding-bottom: 82px;
   }
 }
