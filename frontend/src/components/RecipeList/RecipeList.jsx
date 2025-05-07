@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
@@ -7,35 +7,77 @@ import SubTitle from '../../components/ui/SubTitle/SubTitle';
 import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
 import Loader from '../../components/Loader/Loader';
 import RecipeFilters from '../../components/RecipeFilters/RecipeFilters';
+import RecipePagination from '../../components/RecipePagination/RecipePagination';
 
 const RecipeList = ({ category }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
 
-  useEffect(() => {
-    if (!category) {
-      dispatch(fetchRecipes({ page: 1 }));
-    }
-  }, [dispatch, category]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [filters, setFilters] = useState({
+    category: category || '',
+    ingredient: '',
+    region: '',
+  });
 
   useEffect(() => {
-    console.log('Recipes from Redux:', recipes);
-  }, [recipes]);
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      setItemsPerPage(width >= 768 ? 12 : 8);
+    };
 
-  const handleDelete = async id => {
-    try {
-      dispatch(deleteRecipe(id));
-    } catch (error) {
-      console.error('Error deleting recipe:', error);
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (category !== filters.category) {
+      setFilters(prev => ({ ...prev, category }));
+      setCurrentPage(1);
     }
+  }, [category]);
+
+  useEffect(() => {
+    dispatch(
+      fetchRecipes({
+        page: currentPage,
+        category: filters.category,
+        ingredient: filters.ingredient,
+        region: filters.region,
+      }),
+    );
+  }, [dispatch, currentPage, filters]);
+
+  const handleFilterChange = newFilters => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+    setCurrentPage(1);
   };
+
+  const totalPages = recipes ? Math.ceil(recipes.length / itemsPerPage) : 0;
+
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const indexOfLastRecipe = currentPage * itemsPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - itemsPerPage;
+  const currentRecipes = recipes
+    ? recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    : [];
 
   return (
     <>
-      <MainTitle text={category || 'Recipes'} />
-      <SubTitle text="Browse our delicious collection" />
+      <MainTitle text={category} />
+      <SubTitle text="Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires." />
       <div className={styles.wrap}>
-        <RecipeFilters />
+        <RecipeFilters onFilterChange={handleFilterChange} />
         <div>
           {loading && (
             <div className={styles.loaderWrapper}>
@@ -44,8 +86,8 @@ const RecipeList = ({ category }) => {
           )}
           {error && <p className={styles.errorMessage}>{error}</p>}
           <div className={styles.wrapper}>
-            {recipes && recipes.length > 0
-              ? recipes.map(recipe => (
+            {currentRecipes && currentRecipes.length > 0
+              ? currentRecipes.map(recipe => (
                   <RecipeCardContainer key={recipe.id} recipe={recipe} />
                 ))
               : !loading && (
@@ -54,6 +96,14 @@ const RecipeList = ({ category }) => {
                   </div>
                 )}
           </div>
+
+          {totalPages > 1 && (
+            <RecipePagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
       </div>
     </>
