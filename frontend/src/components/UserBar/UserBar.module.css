@@ -82,8 +82,10 @@
 }
 
 .dropdownItem {
+  padding: 0;
+  width: 100%;
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
   gap: 2px;
   font-size: 12px;
   font-weight: 700;
@@ -91,8 +93,13 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   cursor: pointer;
+  border: none;
   color: var(--white);
   text-align: left;
+}
+.dropdownItem:hover {
+  background: none;
+  color: var(--gray);
 }
 
 .icon {
