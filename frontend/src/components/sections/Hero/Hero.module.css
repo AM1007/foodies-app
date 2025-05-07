@@ -2,12 +2,15 @@
   background-color: var(--black);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px 16px 0 16px;
   position: relative;
   overflow: hidden;
 }
-
+.heroContent {
+  padding: 16px;
+}
 .textWrapper {
   display: flex;
   flex-direction: column;
@@ -59,9 +62,10 @@
   color: var(--black);
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .heroSection {
     max-width: 768px;
+    padding: 32px 32px 0 32px;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
   }
@@ -100,9 +104,10 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   .heroSection {
     max-width: 1440px;
+    padding: 32px 32px 0 32px;
   }
   .textWrapper {
     padding-top: 88px;
