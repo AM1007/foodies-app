@@ -20,15 +20,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route
-              path="/recipe"
-              element={
-                <PrivateRoute>
-                  <Recipe />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/recipe/add"
+              path="/recipes/add"
               element={
                 <PrivateRoute>
                   <AddRecipe />
@@ -43,7 +35,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route path="/recipe/:id" element={<Recipe />} />
+            <Route path="/recipes/:id" element={<Recipe />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
