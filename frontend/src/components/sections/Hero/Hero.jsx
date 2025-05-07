@@ -17,7 +17,7 @@ const Hero = () => {
             Amazing recipes for beginners in the world of cooking, enveloping
             you in the aromas and tastes of various cuisines.
           </p>
-          <Link to="/recipe/add" className={styles.heroButton}>
+          <Link to="/recipes/add" className={styles.heroButton}>
             Add Recipe
           </Link>
         </div>
