@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  
 }
 .wrap {
   padding: 0;
