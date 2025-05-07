@@ -22,14 +22,13 @@
 }
 
 .cameraIcon {
-  width: 65px;
-  height: 64px;
-  border: 2px #BFBEBE;
+  width: 50px;
+  height: 50px;
 }
 
 .uploadText {
-  font-size: 14px;
   color: var(--black);
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.43;
   letter-spacing: -0.28px;
@@ -63,17 +62,14 @@
 
 .uploadAnotherBtn {
   color: var(--black);
-  font-family: 'Mulish', sans-serif;
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 1.43;
   letter-spacing: -0.28px;
   text-decoration-line: underline;
   cursor: pointer;
   background: none;
   border: none;
-  padding: 0;
   margin-top: 16px;
   display: block;
   text-align: center;
@@ -84,22 +80,46 @@
 }
 
 .errorMessage {
-  color: #e74a3b;
+  color:var(--red);
   font-size: 12px;
   margin-top: 4px;
   font-weight: 500;
 }
 
 @media (min-width: 768px) {
-  .photoUpload {
-    max-width: 360px;
-    height: 330px;
+  .photoUploadWrap {
+    width: 704px;
   }
+  .photoUpload {
+    max-width: 704px;
+    height: 400px;
+  }
+  .uploadPlaceholder {
+    gap: 16px;
+  }
+  .cameraIcon {
+    width: 64px;
+    height: 64px;
+  }
+  .uploadText {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .uploadAnotherBtn {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    margin-top: 20px;
+  }
+
 }
 
 @media (min-width: 1440px) {
+  .photoUploadWrap {
+    width: 551px;
+  }
   .photoUpload {
-    max-width: 400px;
-    height: 350px;
+    max-width: 551px;
   }
 }

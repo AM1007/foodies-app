@@ -14,7 +14,7 @@ const AddRecipePage = () => {
 
   return (
     <div className="container">
-      <PathInfo current="ADD RECIPE" onHomeClick={handleHome} />
+      <PathInfo current="Add recipe" onHomeClick={handleHome} />
       <MainTitle text="Add recipe" />
       <SubTitle text="Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us." />
       <AddRecipeForm />
