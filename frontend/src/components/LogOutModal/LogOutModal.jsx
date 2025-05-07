@@ -5,26 +5,27 @@ import Button from '../Button/Button';
 import styles from './LogOutModal.module.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useModal } from '../../hooks/useModal';
+import { BeatLoader } from 'react-spinners';
 
-const LogOutModal = ({ onClose }) => {
+const LogOutModal = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.auth);
+  const { closeModal } = useModal();
 
   const handleLogout = async () => {
     try {
-      console.log('🔄 Attempting to logout user...');
       await dispatch(logoutUser()).unwrap();
       toast.success('Logged out successfully');
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      closeModal();
     } catch (error) {
       toast.error(`Logout failed: ${error.message || error}`);
     }
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal isOpen={true} onClose={closeModal}>
+      {' '}
       <div className={styles.container}>
         <h2 className={styles.title}>Log Out</h2>
         <p className={styles.text}>You can always log back in.</p>
@@ -36,13 +37,13 @@ const LogOutModal = ({ onClose }) => {
             onClick={handleLogout}
             disabled={loading}
           >
-            {loading ? 'Logging out...' : 'Log Out'}
+            {loading ? BeatLoader : 'Log Out'}
           </Button>
 
           <Button
             variant="white"
             className={`${styles.modalButton} ${styles.modalButtonSize}`}
-            onClick={onClose}
+            onClick={closeModal}
             disabled={loading}
           >
             Cancel

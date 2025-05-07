@@ -5,24 +5,8 @@
   background-color: var(--white);
 }
 
-.button {
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-
 @media screen and (min-width: 768px) {
   .button {
     padding: 14px 30px;
   }
-}
-.signUp {
-  border: 1px solid var(--gray);
-  border-radius: 30px;
-  color: var(--white);
-  background-color: var(--black);
 }
