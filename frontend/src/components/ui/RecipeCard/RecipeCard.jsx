@@ -9,7 +9,6 @@ const RecipeCard = ({
   onAuthorClick,
   onViewRecipe,
 }) => {
-
   if (!recipe) return null;
 
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
@@ -34,13 +33,17 @@ const RecipeCard = ({
           <div className={styles.wrap}>
             <button
               className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
-              onClick={onFavoriteToggle}
+              onClick={e => {
+                e.stopPropagation(); 
+                onFavoriteToggle();
+              }}
               aria-label="Toggle favorite"
             >
               <svg className={styles.icon}>
                 <use href={`${icons}#heart`} />
               </svg>
             </button>
+
             <button
               className={styles.arrow}
               onClick={onViewRecipe}

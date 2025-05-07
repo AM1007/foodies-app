@@ -1,47 +1,51 @@
 .ingredients {
-  width: 100%;
-  margin-bottom: 24px;
+
+  margin-bottom: 32px;
 }
 .wrap{
   padding: 0;
 }
 .title {
-  font-size: 1.25rem; /* ≈20px */
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 20px;
   color: var(--black);
-  margin-bottom: 16px;
+  line-height: 1.33333;
+  letter-spacing: -0.36px;
   text-transform: uppercase;
 }
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
   gap: 16px;
 }
 
 .item {
   display: flex;
   align-items: center;
-  width: auto; /* auto, щоб не обривати текст */
-  min-width: 178px;
-  height: 90px;
-  gap: 14px; /* точно як на скріншоті */
+
+  min-width: 152px;
+  height: 75px;
+  gap: 10px; 
+
 }
 
 .imageWrapper {
-  width: 90px;
-  height: 90px;
+  width: 75px;
+  height: 75px;
   border: 1px solid var(--gray);
-  border-radius: 12px;
-  padding: 15px; /* точний внутрішній відступ */
+  border-radius: 15px;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .imageWrapper img {
-  width: 100%;
-  height: 100%;
+  width: 55px;
+  height: 55px;
+padding: 10px;
   object-fit: contain;
 }
 
@@ -52,18 +56,23 @@
 }
 
 .name {
-  font-size: 0.875rem; /* ≈14px */
-  font-weight: 600;
+  font-size: 14px; 
+  font-weight: 500;
   color: var(--black);
+  line-height: 1.42857; 
+letter-spacing: -0.28px;
 }
 
 .amount {
-  font-size: 0.75rem; /* ≈12px */
+  font-size: 14px; 
+  font-weight: 500;
+  line-height: 1.42857; 
+letter-spacing: -0.28px;
   color: var(--gray);
 }
 
-/* 📱 Mobile-first адаптація */
-@media (max-width: 480px) {
+
+@media (max-width: 768px) {
   .item {
     width: 100%;
     justify-content: flex-start;

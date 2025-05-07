@@ -1,16 +1,17 @@
 .wrapper {
-    margin-top: 56px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
   }
   .wrap{
     padding: 0;
   }
   .title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 20px;
     color: var(--black);
+    line-height: 1.33333;
+    letter-spacing: -0.36px;
     text-transform: uppercase;
   }
   
@@ -52,4 +53,23 @@
     color: var(--white);
     border-color: var(--black);
   }
+  /* .container {
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+  }
   
+  @media screen and (min-width: 768px) {
+    .container {
+      padding: 0 32px;
+      max-width: 768px;
+    }
+  }
+  
+  @media screen and (min-width: 1440px) {
+    .container {
+      max-width: 1440px;
+      padding: 0 80px;
+    }
+  }
+   */
