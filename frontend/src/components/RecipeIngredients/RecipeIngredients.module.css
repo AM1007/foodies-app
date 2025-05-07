@@ -24,7 +24,6 @@
 .item {
   display: flex;
   align-items: center;
-
   min-width: 152px;
   height: 75px;
   gap: 10px; 
@@ -36,10 +35,10 @@
   height: 75px;
   border: 1px solid var(--gray);
   border-radius: 15px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .imageWrapper img {

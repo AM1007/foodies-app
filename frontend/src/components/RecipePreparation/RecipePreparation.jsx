@@ -30,17 +30,19 @@ const RecipePreparation = ({ preparation, recipeId }) => {
       dispatch(addToFavorites(recipeId));
     }
   };
-
+  const paragraphs = preparation.split('\n\n');
   return (
-    <section className="wrap">
-      <div className={styles.wrapper}>
-        <h3 className={styles.title}>Recipe Preparation</h3>
-        <p className={styles.text}>{preparation}</p>
-        <button onClick={handleToggleFavorite} className={styles.favoriteBtn}>
-          {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        </button>
-      </div>
-    </section>
+<section className="wrap">
+  <div className={styles.wrapper}>
+    <h3 className={styles.title}>Recipe Preparation</h3>
+    {paragraphs.map((para, index) => (
+      <p key={index} className={styles.text}>{para}</p>
+    ))}
+    <button onClick={handleToggleFavorite} className={styles.favoriteBtn}>
+      {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
+    </button>
+  </div>
+</section>
   );
 };
 
