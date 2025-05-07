@@ -25,7 +25,7 @@ const RecipePage = () => {
     <div className="container">
       <PathInfo current={currentRecipe.title} />
       <RecipeInfo recipe={currentRecipe} favoriteRecipes={favoriteRecipes} />
-      <div style={{ marginTop: '120px' }}>
+      <div>
         <PopularRecipes  />
       </div>
     </div>

@@ -20,19 +20,13 @@
 
 
   @media screen and (min-width: 768px) {
-
     .recipeInfo {
-      display: flex;
-      flex-direction: column;
       gap:40px;
     }
 
     .imageBlock img {
-      width: 100%;
       max-width: 704px;
-      height: 400px;
-      border-radius: 16px;
-      object-fit: cover;
+      border-radius: 30px;
     }
   }
 
