@@ -16,17 +16,17 @@ const SignInModal = ({ onClose }) => {
       <div className={styles.container}>
         <h2 className={styles.title}>Sign In</h2>
         <SignInForm onSuccess={onClose} />
-        <p className={styles.switchText}>
-          Don't have an account?{' '}
-          <button
-            type="button"
-            onClick={switchToSignUp}
-            className={styles.switchButton}
-          >
-            Create an account
-          </button>
-        </p>
       </div>
+      <p className={styles.switchText}>
+        Don't have an account?{' '}
+        <button
+          type="button"
+          onClick={switchToSignUp}
+          className={styles.switchButton}
+        >
+          Create an account
+        </button>
+      </p>
     </Modal>
   );
 };

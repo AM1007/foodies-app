@@ -4,10 +4,11 @@
   align-items: flex-start;
   gap: 14px;
   padding-top: 32px;
+  max-width: 283px;
 }
 
 .label {
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--base-fon);
   font-size: 14px;
   font-weight: 500;
 
@@ -37,15 +38,16 @@
 
   border-radius: 30px;
   border: 1px solid var(--gray);
+  width: 100%;
 }
 
 .input:focus {
   outline: none;
-  border: 1px solid #050505;
+  border: 1px solid var(--black);
 }
 
 .input:not(:placeholder-shown) {
-  border: 1px solid #050505;
+  border: 1px solid var(--black);
 }
 
 .inputWrapper {
@@ -118,7 +120,7 @@
     align-items: center;
     gap: 14px;
     padding-top: 40px;
-    width: 400px;
+    max-width: 401px;
   }
 
   .input {
@@ -127,6 +129,7 @@
     justify-content: center;
     align-items: center;
     gap: 225px;
+    width: 100%;
   }
 
   .submitButton {

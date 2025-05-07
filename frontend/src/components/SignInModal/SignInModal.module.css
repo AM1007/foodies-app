@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  max-width: 343px;
 }
 
 .title {
@@ -10,7 +11,6 @@
   font-size: 24px;
   font-weight: 800;
   color: var(--black);
-  /* margin-bottom: 24px; */
   text-align: center;
   text-transform: uppercase;
 }
@@ -19,7 +19,7 @@
   font-family: 'Mulish', sans-serif;
   font-size: 14px;
   color: var(--dark-gray);
-  margin-top: 24px;
+  padding-top: 16px;
   text-align: center;
 }
 
@@ -40,11 +40,12 @@
 
 @media (min-width: 768px) {
   .container {
-    padding: 24px;
+    max-width: 401px;
+    width: 100%;
   }
 
   .title {
-    color: #050505;
+    color: var(--black);
     text-align: center;
     font-family: Mulish;
     font-size: 32px;
@@ -57,6 +58,5 @@
 
   .switchText {
     font-size: 16px;
-    margin-top: 32px;
   }
 }
