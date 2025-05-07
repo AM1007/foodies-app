@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  max-width: 343px;
 }
 
 .title {
@@ -10,7 +11,6 @@
   font-size: 24px;
   font-weight: 800;
   color: var(--black);
-  /* margin-bottom: 24px; */
   text-align: center;
   text-transform: uppercase;
 }
@@ -35,6 +35,10 @@
 }
 
 @media (min-width: 768px) {
+  .container {
+    max-width: 401px;
+  }
+
   .title {
     color: #050505;
     text-align: center;
@@ -49,6 +53,5 @@
 
   .switchText {
     font-size: 16px;
-    margin-top: 32px;
   }
 }

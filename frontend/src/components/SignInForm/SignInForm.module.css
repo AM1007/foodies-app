@@ -4,12 +4,13 @@
   align-items: flex-start;
   gap: 14px;
   padding-top: 32px;
+  max-width: 283px;
 }
 
 .input {
   color: #1a1a1a;
   font-family: Mulish;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 150% */
@@ -21,6 +22,7 @@
 
   border-radius: 30px;
   border: 1px solid var(--gray);
+  width: 100%;
 }
 
 .inputWrapper {
@@ -75,7 +77,7 @@
     align-items: center;
     gap: 14px;
     padding-top: 40px;
-    width: 400px;
+    max-width: 401px;
   }
   .input {
     display: flex;
@@ -83,6 +85,7 @@
     justify-content: center;
     align-items: center;
     gap: 225px;
+    width: 100%;
   }
   .submitButton {
     padding: 14px 115px;
