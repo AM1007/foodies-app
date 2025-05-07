@@ -58,7 +58,7 @@ const UserBar = () => {
           <Button
             className={styles.dropdownItem}
             onClick={() => {
-              navigate('/user');
+              navigate('/users/current');
               setIsDropdownOpen(false);
             }}
           >

@@ -20,33 +20,33 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* <Route
+            <Route
             path="/recipe"
             element={
               <PrivateRoute>
                 <Recipe />
               </PrivateRoute>
             }
-          /> */}
-            {/* <Route
+          />
+            <Route
             path="/recipe/add"
             element={
               <PrivateRoute>
                 <AddRecipe />
               </PrivateRoute>
             }
-          /> */}
+          />
             <Route path="/recipe" element={<Recipe />} />
             <Route path="/recipe/add" element={<AddRecipe />} />
-            <Route path="/user" element={<Profile />} />
-            {/* <Route
-            path="/user/:id"
+            <Route path="/users/current" element={<Profile />} />
+            <Route
+            path="/users/:id"
             element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
             }
-          /> */}
+          />
             <Route path="/recipe/:id" element={<Recipe />} />
             <Route path="*" element={<NotFound />} />
           </Route>
