@@ -2,10 +2,17 @@
   color: var(--black);
   font-size: 28px;
   font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.56px;
   text-transform: uppercase;
+  margin-bottom: 16px;
 }
 @media screen and (min-width: 768px) {
   .title {
     font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+    margin-bottom: 20px;
   }
 }
