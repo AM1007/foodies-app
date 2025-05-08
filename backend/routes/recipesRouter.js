@@ -3,6 +3,7 @@ import recipesControllers from '../controllers/recipesControllers.js';
 import authenticate from '../middlewares/authenticate.js';
 import validateQuery from '../decorators/validateQuery.js';
 import validateBody from '../decorators/validateBody.js';
+import validateNumericId from '../middlewares/validateNumericId.js';
 import recipeSchemas from '../schemas/recipeSchemas.js';
 import { recipeImagesUpload } from '../middlewares/upload.js';
 
@@ -34,7 +35,7 @@ router.get(
   recipesControllers.searchRecipes,
 );
 
-router.get('/:id', recipesControllers.getRecipeById);
+router.get('/:id', validateNumericId, recipesControllers.getRecipeById);
 
 router.post('/:id/favorite', authenticate, recipesControllers.addToFavorites);
 
