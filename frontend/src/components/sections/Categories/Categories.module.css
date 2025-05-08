@@ -32,8 +32,6 @@
 .backButton {
   padding: 10px 20px;
   margin-bottom: 20px;
-  background-color: var(--black);
-  color: var(--white);
   border: none;
   border-radius: 30px;
   font-size: 14px;
