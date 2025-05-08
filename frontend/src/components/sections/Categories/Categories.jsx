@@ -4,6 +4,7 @@ import Subtitle from '../../ui/SubTitle/SubTitle';
 import CategoryList from '../../CategoryList/CategoryList';
 import RecipeList from '../../RecipeList/RecipeList';
 import styles from './Categories.module.css';
+import icons from '../../../icons/sprite.svg';
 
 export default function Categories() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -43,7 +44,15 @@ export default function Categories() {
               onClick={handleBackToCategories}
               className={styles.backButton}
             >
-              Back to Categories
+              <svg
+                className={styles.closeIcon}
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use href={`${icons}#icon-back`} />
+              </svg>
+              Back
             </button>
             <MainTitle
               className={styles.title}

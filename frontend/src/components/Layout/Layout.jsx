@@ -17,7 +17,6 @@ const Layout = () => {
   const { modal, closeModal } = useModal();
   const { isAuthenticated, loading, user } = useSelector(state => state.auth);
 
-  // Використовуємо useRef для відстеження спроб оновлення токена
   const hasAttemptedRef = useRef(false);
 
   useEffect(() => {
