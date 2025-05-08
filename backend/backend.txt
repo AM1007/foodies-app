@@ -1,4 +1,4 @@
-  ├── .env.example
+   ├── .env.example
     ├── .gitignore
     ├── API_DOCUMENTATION.md
     ├── DATABASE.md
@@ -41,7 +41,8 @@
     │   ├── authenticate.js
     │   ├── errorHandler.js
     │   ├── notFoundHandler.js
-    │   └── upload.js
+    │   ├── upload.js
+    │   └── validateNumericId.js
     ├── mockData
     │   ├── areas.json
     │   ├── categories.json
@@ -85,7 +86,13 @@
     │   └── usersServices.js
     ├── swagger
     │   ├── definitions
-    │   │   └── auth.js
+    │   │   ├── areas.js
+    │   │   ├── auth.js
+    │   │   ├── categories.js
+    │   │   ├── ingredients.js
+    │   │   ├── recipes.js
+    │   │   ├── testimonials.js
+    │   │   └── users.js
     │   ├── index.js
     │   ├── schemas
     │   │   ├── area.js

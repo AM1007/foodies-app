@@ -9,6 +9,7 @@ const Navigation = ({
   isMenuOpen,
   setIsMenuOpen,
   BurgerBtn,
+  openModal,
 }) => {
   const generateActiveClass = ({ isActive }) =>
     clsx(
@@ -16,6 +17,13 @@ const Navigation = ({
       isLightTheme ? styles.lightLink : styles.darkLink,
       isActive && (isLightTheme ? styles.lightActive : styles.darkActive),
     );
+
+  const handleAddRecipeClick = e => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      openModal('signin');
+    }
+  };
   return (
     <>
       <nav
@@ -24,14 +32,23 @@ const Navigation = ({
           isLightTheme ? styles.lightNav : styles.darkNav,
         )}
       >
-        <ul className={styles.navList}>
+        <ul
+          className={clsx(
+            styles.navList,
+            !isAuthenticated && styles.navListHidden,
+          )}
+        >
           <li className={styles.navItem}>
             <NavLink className={generateActiveClass} to="/">
               Home
             </NavLink>
           </li>
           <li className={styles.navItem}>
-            <NavLink className={generateActiveClass} to="recipes/add">
+            <NavLink
+              className={generateActiveClass}
+              to="recipes/add"
+              onClick={handleAddRecipeClick}
+            >
               Add recipe
             </NavLink>
           </li>

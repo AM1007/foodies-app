@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaUserAlt } from 'react-icons/fa';
 import css from './UserAvatar.module.css';
 import { updateUserAvatar } from '../../../redux/users/userSlice';
-import { toast } from 'react-toastify';
 import UploadAvatar from '../UploadAvatar/UploadAvatar';
 
 function UserAvatar({
@@ -22,9 +21,9 @@ function UserAvatar({
       formData.append('avatar', file);
       try {
         await dispatch(updateUserAvatar(formData)).unwrap();
-        toast.success('Avatar updated successfully');
+        console.log('Avatar updated successfully');
       } catch (error) {
-        toast.error('Failed to update avatar');
+        console.log(error);
       }
     }
   };

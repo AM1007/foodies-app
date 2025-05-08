@@ -1,7 +1,7 @@
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 32px;
   margin-top: 24px;
   justify-content: flex-start;
 }
@@ -27,22 +27,6 @@
   padding: 0 10px;
 }
 
-.recipePreviewCard {
-  flex: 1 1 calc(33.333% - 24px);
-  max-width: calc(33.333% - 24px);
-  box-sizing: border-box;
-
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.32px;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .userStub {
   flex: 1 1 calc(25% - 24px); /* 4 колонки */
   max-width: calc(25% - 24px);
@@ -61,4 +45,16 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media screen and (min-width: 768px) {
+  .list {
+    gap: 40px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .list {
+    margin-left: 40px;
+  }
 }

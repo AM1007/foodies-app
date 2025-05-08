@@ -19,6 +19,7 @@ const initialState = {
   items: [],
   loading: false,
   error: null,
+  isFetched: false,
 };
 
 const testimonialsSlice = createSlice({
@@ -38,10 +39,12 @@ const testimonialsSlice = createSlice({
       .addCase(fetchTestimonials.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
+        state.isFetched = true;
       })
       .addCase(fetchTestimonials.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.isFetched = false;
       });
   },
 });

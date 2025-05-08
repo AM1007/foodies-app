@@ -20,9 +20,29 @@ button {
   align-items: center;
 }
 
+.tabsContentWrapper {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .userCardWrapper {
+    margin: 40px auto;
+  }
+}
+
 @media screen and (min-width: 1440px) {
   .wrapper {
     display: flex;
     flex-direction: row;
+    margin-top: 40px;
+  }
+
+  .userCardWrapper {
+    margin-top: 0;
+  }
+
+  .tabsContentWrapper {
+    display: flex;
+    flex-direction: column;
   }
 }

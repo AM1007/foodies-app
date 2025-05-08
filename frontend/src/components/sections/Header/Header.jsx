@@ -7,6 +7,7 @@ import BurgerBtn from '../../ui/BurgerBtn/BurgerBtn.jsx';
 import Logo from '../../Logo/Logo.jsx';
 import Navigation from '../../Navigation/Navigation.jsx';
 import { fetchCurrentUser } from '../../../redux/users/userSlice.js';
+import { useModal } from '../../../hooks/useModal.js';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -14,6 +15,7 @@ const Header = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const isHomePage = location.pathname === '/';
+  const { openModal } = useModal();
 
   const headerThemeClass = isHomePage ? styles.darkTheme : styles.lightTheme;
 
@@ -27,31 +29,30 @@ const Header = () => {
   }, [isAuthenticated, user, dispatch]);
 
   return (
-    <section className="container">
-      <header className={`${styles.headerContainer}  ${headerThemeClass}`}>
-        <div className={styles.headerWrapper}>
-          <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
-          <Navigation
-            isLightTheme={!isHomePage}
-            isAuthenticated={isAuthenticated}
-            isMenuOpen={isMenuOpen}
-            setIsMenuOpen={setIsMenuOpen}
-            BurgerBtn={BurgerBtn}
-          />
-          {isAuthenticated ? (
-            <div className={styles.userControls}>
-              <UserBar />
-              <BurgerBtn
-                onClick={() => setIsMenuOpen(true)}
-                isLightTheme={!isHomePage}
-              />
-            </div>
-          ) : (
-            <AuthBar />
-          )}
-        </div>
-      </header>
-    </section>
+    <header className={`${styles.headerContainer}  ${headerThemeClass}`}>
+      <div className={styles.headerWrapper}>
+        <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
+        <Navigation
+          isLightTheme={!isHomePage}
+          isAuthenticated={isAuthenticated}
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          BurgerBtn={BurgerBtn}
+          openModal={openModal}
+        />
+        {isAuthenticated ? (
+          <div className={styles.userControls}>
+            <UserBar />
+            <BurgerBtn
+              onClick={() => setIsMenuOpen(true)}
+              isLightTheme={!isHomePage}
+            />
+          </div>
+        ) : (
+          <AuthBar />
+        )}
+      </div>
+    </header>
   );
 };
 

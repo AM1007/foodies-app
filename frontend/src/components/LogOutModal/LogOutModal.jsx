@@ -3,8 +3,7 @@ import { logoutUser } from '../../redux/users/authSlice';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import styles from './LogOutModal.module.css';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { useModal } from '../../hooks/useModal';
 import { BeatLoader } from 'react-spinners';
 
@@ -16,16 +15,15 @@ const LogOutModal = () => {
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      toast.success('Logged out successfully');
+      console.log('Logged out successfully');
       closeModal();
     } catch (error) {
-      toast.error(`Logout failed: ${error.message || error}`);
+      console.log(`Logout failed: ${error.message || error}`);
     }
   };
 
   return (
     <Modal isOpen={true} onClose={closeModal}>
-      {' '}
       <div className={styles.container}>
         <h2 className={styles.title}>Log Out</h2>
         <p className={styles.text}>You can always log back in.</p>

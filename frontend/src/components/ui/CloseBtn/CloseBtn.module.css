@@ -1,5 +1,14 @@
+.closeBtn {
+  width: auto;
+  cursor: pointer;
+}
 .closeIcon {
   width: 28px;
   height: 28px;
   stroke: var(--white);
+  transition: transform 0.3s ease;
+}
+
+.closeIcon:hover {
+  transform: rotate(90deg) scale(1.1);
 }

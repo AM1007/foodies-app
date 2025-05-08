@@ -4,8 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddRecipeForm.module.css';
 import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto';
@@ -102,7 +100,7 @@ const AddRecipeForm = () => {
         );
 
         if (isAlreadyAdded) {
-          toast.warning('This ingredient is already added');
+          console.log('This ingredient is already added');
           return false;
         }
 
@@ -121,7 +119,7 @@ const AddRecipeForm = () => {
         return true;
       }
     } else {
-      toast.warning('Please select an ingredient and specify the quantity');
+      console.log('Please select an ingredient and specify the quantity');
     }
     return false;
   };
@@ -131,13 +129,20 @@ const AddRecipeForm = () => {
   };
 
   const resetForm = () => {
-    reset();
+    reset({
+      title: '',
+      description: '',
+      categoryId: '',
+      time: 10,
+      instructions: '',
+      photo: null,
+    });
     setRecipeIngredients([]);
   };
 
   const onSubmit = async data => {
     if (recipeIngredients.length === 0) {
-      toast.error('Please add at least one ingredient');
+      console.log('Please add at least one ingredient');
       return;
     }
 
@@ -160,15 +165,15 @@ const AddRecipeForm = () => {
       const resultAction = await dispatch(createRecipe(formData));
 
       if (createRecipe.fulfilled.match(resultAction)) {
-        toast.success('Recipe published successfully!');
+        console.log('Recipe published successfully!');
         navigate('/user');
       } else if (createRecipe.rejected.match(resultAction)) {
         const errorMessage = resultAction.payload || 'Failed to create recipe';
-        toast.error(`Error: ${errorMessage}`);
+        console.log(`Error: ${errorMessage}`);
       }
     } catch (error) {
       console.error('Error creating recipe:', error);
-      toast.error(`Error: ${error.message || 'Failed to create recipe'}`);
+      console.log(`Error: ${error.message || 'Failed to create recipe'}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -185,9 +190,9 @@ const AddRecipeForm = () => {
       />
       <div className={styles.formWrapper}>
         {/* Recipe Title */}
-        <RecipeTitleInput 
-          register={register('title')} 
-          value={title} 
+        <RecipeTitleInput
+          register={register('title')}
+          value={title}
           error={errors.title?.message}
         />
 
@@ -201,41 +206,44 @@ const AddRecipeForm = () => {
           error={errors.description?.message}
         />
 
-        {/* Category */}
-        <Controller
-          name="categoryId"
-          control={control}
-          render={({ field }) => (
-            <div>
-              <DropdownSelector
-                label="Category"
-                options={categories}
-                value={field.value}
-                onChange={field.onChange}
-                placeholder="Select a category"
-              />
-              {errors.categoryId && (
-                <p className={styles.errorMessage}>
-                  {errors.categoryId.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
+        <div className={styles.categoryTime}>
+          {/* Category */}
+          <Controller
+            name="categoryId"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <DropdownSelector
+                  className={styles.selector}
+                  label="Category"
+                  options={categories}
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Select a category"
+                />
+                {errors.categoryId && (
+                  <p className={styles.errorMessage}>
+                    {errors.categoryId.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
 
-        {/* Time */}
-        <Controller
-          name="time"
-          control={control}
-          render={({ field }) => (
-            <div className={styles.timeContainer}>
-              <TimeController value={field.value} onChange={field.onChange} />
-              {errors.time && (
-                <p className={styles.errorMessage}>{errors.time.message}</p>
-              )}
-            </div>
-          )}
-        />
+          {/* Time */}
+          <Controller
+            name="time"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <TimeController value={field.value} onChange={field.onChange} />
+                {errors.time && (
+                  <p className={styles.errorMessage}>{errors.time.message}</p>
+                )}
+              </div>
+            )}
+          />
+        </div>
 
         {/* Ingredient Selector */}
         <IngredientSelector
@@ -252,16 +260,18 @@ const AddRecipeForm = () => {
           />
         )}
 
-        {/* Recipe Instruction */}
-        <TextAreaWithCount
-          label="Recipe preparation"
-          placeholder="Enter recipe"
-          maxLength={2000}
-          register={register}
-          name="instructions"
-          value={instructions}
-          error={errors.instructions?.message}
-        />
+        <div className={styles.instructionsWrap}>
+          {/* Recipe Instruction */}
+          <TextAreaWithCount
+            label="Recipe preparation"
+            placeholder="Enter recipe"
+            maxLength={2000}
+            register={register}
+            name="instructions"
+            value={instructions}
+            error={errors.instructions?.message}
+          />
+        </div>
 
         {/* Form Actions */}
         <div className={styles.actionsGroup}>

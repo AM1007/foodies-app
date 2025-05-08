@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
 import styles from './RecipeFilters.module.css';
 
-import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import { fetchIngredients } from '../../redux/ingredients/ingredientsSlice';
 import { fetchAreas } from '../../redux/areas/areasSlice';
 
-const RecipeFilters = ({ categoryName }) => {
+const RecipeFilters = ({ onFilterChange }) => {
   const dispatch = useDispatch();
 
   const { items: ingredients } = useSelector(state => state.ingredients);
@@ -28,28 +27,16 @@ const RecipeFilters = ({ categoryName }) => {
 
   const handleIngredientChange = ingredientId => {
     setSelectedIngredient(ingredientId);
-
-    dispatch(
-      fetchRecipes({
-        page: 1,
-        category: categoryName,
-        ingredient: ingredientId,
-        region: selectedArea,
-      }),
-    );
+    onFilterChange({
+      ingredient: ingredientId,
+    });
   };
 
   const handleAreaChange = areaId => {
     setSelectedArea(areaId);
-
-    dispatch(
-      fetchRecipes({
-        page: 1,
-        category: categoryName,
-        ingredient: selectedIngredient,
-        region: areaId,
-      }),
-    );
+    onFilterChange({
+      area: areaId,
+    });
   };
 
   return (
