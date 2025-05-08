@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import UserPreview from '../UserPreview/UserPreview';
 import emptyMessages from '../../data/emptyMessages';
@@ -9,13 +9,8 @@ const ListItems = ({ activeTab, items = [] }) => {
     activeTab,
   );
   const isUserTab = ['followers', 'following'].includes(activeTab);
-  const [list, setList] = useState(items);
 
-  const handleRemove = id => {
-    setList(prev => prev.filter(user => user.id !== id));
-  };
-
-  if (!list.length) {
+  if (!items.length) {
     return (
       <div className={styles.empty}>
         {emptyMessages[activeTab] || 'No items to show.'}
@@ -26,19 +21,12 @@ const ListItems = ({ activeTab, items = [] }) => {
   return (
     <div className={styles.list}>
       {isRecipeTab &&
-        list.map(recipe => (
+        items.map(recipe => (
           <RecipePreview key={recipe._id || recipe.id} recipe={recipe} />
         ))}
 
       {isUserTab &&
-        list.map(user => (
-          <UserPreview
-            key={user.id}
-            user={user}
-            type={activeTab}
-            onRemove={handleRemove}
-          />
-        ))}
+        items.map(user => <UserPreview key={user.id} user={user} />)}
     </div>
   );
 };

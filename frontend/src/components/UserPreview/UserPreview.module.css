@@ -1,0 +1,39 @@
+.card {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  max-width: 100%;
+}
+
+.info {
+  margin-right: 16px;
+}
+
+.recipeImageContainer {
+  display: none;
+}
+
+.recipeImage {
+  height: 100px;
+  width: 100px;
+  border-radius: 15px;
+}
+
+.userPreviewAvatar {
+  height: 60px;
+  width: 60px;
+}
+
+@media (min-width: 768px) {
+  .recipeImageContainer {
+    display: flex;
+    width: 436px;
+    gap: 12px;
+    margin-left: 60px;
+  }
+
+  .userPreviewAvatar {
+    height: 85px;
+    width: 85px;
+  }
+}

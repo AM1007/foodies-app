@@ -7,7 +7,6 @@ import PathInfo from '../../components/ui/PathInfo/PathInfo';
 import MainTitle from '../../components/ui/MainTitle/MainTitle';
 import SubTitle from '../../components/ui/SubTitle/SubTitle';
 import Button from '../../components/Button/Button';
-import RecipePreview from '../../components/RecipePreview/RecipePreview';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import TabsList from '../../components/TabsList/TabsList';
 import ListItems from '../../components/ListItems/ListItems';
@@ -60,6 +59,9 @@ const Profile = () => {
   const recipesCount = ownRecipes?.data?.length || 0;
   const favoritesCount = favoriteRecipes?.data?.length || 0;
 
+  const [uniqueFollowers, setUniqueFollowers] = useState([]);
+  const [uniqueFollowing, setUniqueFollowing] = useState([]);
+
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
@@ -81,44 +83,26 @@ const Profile = () => {
   }, [dispatch, isOwnProfile, current?.id, userId]);
 
   useEffect(() => {
-    if (!activeTab) return;
-
-    if (activeTab === 'my-recipes' && isOwnProfile) {
-      dispatch(fetchOwnRecipes());
-    }
-
-    if (activeTab === 'my-favorites' && isOwnProfile) {
-      dispatch(fetchFavoriteRecipes());
-    }
-
-    if (activeTab === 'recipes' && !isOwnProfile && userId) {
-      dispatch(fetchUserRecipes(userId));
-    }
-
     if (activeTab === 'followers') {
-      dispatch(fetchFollowers(userId || current?.id));
+      const mappedFollowers = followers?.followers?.map(follower => ({
+        ...follower,
+        avatar: follower.avatar || 'default_avatar_url_here',
+      }));
+      setUniqueFollowers(mappedFollowers);
     }
 
     if (activeTab === 'following') {
-      dispatch(fetchFollowing(userId || current?.id));
+      const mappedFollowing = following?.response?.map(followingUser => ({
+        ...followingUser,
+        avatar: followingUser.avatar || 'default_avatar_url_here',
+      }));
+      setUniqueFollowing(mappedFollowing);
     }
-  }, [activeTab, dispatch, isOwnProfile, userId, current?.id]);
+  }, [followers, following, activeTab]);
 
   if (userLoading || recipesLoading) return <Loader />;
   if (userError || recipesError)
     return <div>Error: {userError || recipesError}</div>;
-
-  const uniqueFollowers = [
-    ...new Set(followers?.followers?.map(f => f.id)),
-  ].map(id => {
-    return followers?.followers.find(f => f.id === id);
-  });
-
-  const uniqueFollowing = [...new Set(following?.response?.map(f => f.id))].map(
-    id => {
-      return following?.response.find(f => f.id === id);
-    },
-  );
 
   const renderTabContent = () => {
     switch (activeTab) {
