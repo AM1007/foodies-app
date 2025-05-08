@@ -13,10 +13,8 @@ export default function Categories() {
 
   const handleCategoryClick = async categoryName => {
     try {
-      // Set the selected category name
       setSelectedCategory(categoryName);
 
-      // Show recipe list and hide categories
       setShowRecipeList(true);
     } catch (error) {
       toast.error(`Error: ${error.message || 'Something went wrong'}`);
@@ -28,13 +26,13 @@ export default function Categories() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.categoriesContainer}>
       <div className={styles.categoriesWrapper}>
         {!showRecipeList ? (
           <>
             <MainTitle className={styles.title} text="Categories" />
             <Subtitle
-              className={styles.title}
+              className={styles.subTitle}
               text="Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style, and the warm atmosphere of the kitchen."
             />
             <CategoryList onCategoryClick={handleCategoryClick} />
