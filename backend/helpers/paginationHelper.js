@@ -1,4 +1,4 @@
-const getPaginationMetadata = ({ page = 1, limit = 10, count = 0 }) => {
+const getPaginationMetadata = ({ page = 1, limit = 30, count = 0 }) => {
   const currentPage = Number(page);
   const perPage = Number(limit);
 
@@ -17,7 +17,7 @@ const getPaginationMetadata = ({ page = 1, limit = 10, count = 0 }) => {
   };
 };
 
-const getPaginationOptions = ({ page = 1, limit = 10 }) => {
+const getPaginationOptions = ({ page = 1, limit = 30 }) => {
   const validPage = Math.max(1, Number(page));
   const validLimit = Math.min(100, Math.max(1, Number(limit)));
 
