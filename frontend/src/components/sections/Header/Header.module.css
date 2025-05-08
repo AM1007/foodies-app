@@ -10,6 +10,7 @@
 
 .headerContainer {
   width: 100%;
+  padding: 8px 8px 0 8px;
   margin: 0 auto;
   background-color: var(--white);
 }
@@ -17,12 +18,14 @@
 @media screen and (min-width: 768px) {
   .headerContainer {
     max-width: 768px;
+    padding: 16px 16px 0 16px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .headerContainer {
     max-width: 1440px;
+    padding: 20px 20px 0 20px;
   }
 }
 

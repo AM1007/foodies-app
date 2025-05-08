@@ -28,7 +28,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink className={styles.link} to="/add" onClick={onClose}>
+            <NavLink
+              className={styles.link}
+              to="/recipes/add"
+              onClick={onClose}
+            >
               Add recipe
             </NavLink>
           </li>
