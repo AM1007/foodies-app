@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosAPI = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://foodies-app-pke3.onrender.com/api',
 });
 
 const privateEndpoints = [
