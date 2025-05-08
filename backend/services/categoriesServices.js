@@ -4,5 +4,6 @@ const { Category } = models;
 export const getAllCategories = async () => {
   return await Category.findAll({
     attributes: ['id', 'name', 'imageUrl'],
+    order: [['id', 'ASC']],
   });
 };
