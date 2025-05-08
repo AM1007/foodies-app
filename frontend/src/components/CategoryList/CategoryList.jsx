@@ -10,7 +10,7 @@ export default function CategoryList({ onCategoryClick }) {
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' && window.innerWidth >= 1440,
   );
-
+  // temporary comment
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const handleResize = () => {
