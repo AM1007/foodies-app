@@ -1,4 +1,3 @@
-// Categories.jsx
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,21 +41,21 @@ export default function Categories() {
           </>
         ) : (
           <>
-            {/* <MainTitle
+            <MainTitle
               className={styles.title}
               text={selectedCategory || 'Recipes'}
-            /> */}
-            {/* <Subtitle
+            />
+            <Subtitle
               className={styles.title}
               text="Browse our delicious collection"
-            /> */}
+            />
             <button
               onClick={handleBackToCategories}
               className={styles.backButton}
             >
               Back to Categories
             </button>
-            <RecipeList category={selectedCategory} />
+            <RecipeList />
           </>
         )}
       </div>
