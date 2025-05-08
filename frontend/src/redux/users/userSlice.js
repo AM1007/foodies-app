@@ -36,7 +36,7 @@ export const updateUserAvatar = createAsyncThunk(
       const res = await axiosAPI.patch('/users/avatar', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      return res.data; 
+      return res.data;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to update avatar',
@@ -47,16 +47,16 @@ export const updateUserAvatar = createAsyncThunk(
 
 export const fetchFollowers = createAsyncThunk(
   'user/fetchFollowers',
-  async (_, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const res = await axiosAPI.get('/users/followers');
+      const res = await axiosAPI.get(`/users/${userId}/followers`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to fetch followers'
+        err.response?.data?.message || 'Failed to fetch followers',
       );
     }
-  }
+  },
 );
 
 export const fetchFollowing = createAsyncThunk(
@@ -67,10 +67,10 @@ export const fetchFollowing = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to fetch following list'
+        err.response?.data?.message || 'Failed to fetch following list',
       );
     }
-  }
+  },
 );
 
 export const followUser = createAsyncThunk(

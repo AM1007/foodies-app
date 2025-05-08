@@ -48,7 +48,6 @@ const Profile = () => {
     error: recipesError,
   } = useSelector(state => state.recipes);
 
-
   const isOwnProfile = !userId || userId === current?._id;
   const [activeTab, setActiveTab] = useState(
     isOwnProfile ? 'my-recipes' : 'recipes',
@@ -56,30 +55,70 @@ const Profile = () => {
 
   const profileUser = isOwnProfile ? current : selectedUser;
 
-  const followersCount = followers?.response?.length || 0;
+  const followersCount = followers?.followers?.length || 0;
   const followingCount = following?.response?.length || 0;
   const recipesCount = ownRecipes?.data?.length || 0;
   const favoritesCount = favoriteRecipes?.data?.length || 0;
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
+  }, [dispatch]);
 
-    if (!isOwnProfile && userId) {
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+
+    if (isOwnProfile && current?.id) {
+      dispatch(fetchFollowers(current.id));
+      dispatch(fetchFollowing());
+      dispatch(fetchFavoriteRecipes());
+      dispatch(fetchOwnRecipes());
+    } else if (userId) {
       dispatch(fetchUserById(userId));
-      dispatch(fetchUserRecipes(userId));
       dispatch(fetchFollowers(userId));
       dispatch(fetchFollowing(userId));
-    } else {
-      dispatch(fetchFollowers());
-      dispatch(fetchFollowing());
+      dispatch(fetchUserRecipes(userId));
+    }
+  }, [dispatch, isOwnProfile, current?.id, userId]);
+
+  useEffect(() => {
+    if (!activeTab) return;
+
+    if (activeTab === 'my-recipes' && isOwnProfile) {
       dispatch(fetchOwnRecipes());
+    }
+
+    if (activeTab === 'my-favorites' && isOwnProfile) {
       dispatch(fetchFavoriteRecipes());
     }
-  }, [dispatch, userId, isOwnProfile]);
+
+    if (activeTab === 'recipes' && !isOwnProfile && userId) {
+      dispatch(fetchUserRecipes(userId));
+    }
+
+    if (activeTab === 'followers') {
+      dispatch(fetchFollowers(userId || current?.id));
+    }
+
+    if (activeTab === 'following') {
+      dispatch(fetchFollowing(userId || current?.id));
+    }
+  }, [activeTab, dispatch, isOwnProfile, userId, current?.id]);
 
   if (userLoading || recipesLoading) return <Loader />;
   if (userError || recipesError)
     return <div>Error: {userError || recipesError}</div>;
+
+  const uniqueFollowers = [
+    ...new Set(followers?.followers?.map(f => f.id)),
+  ].map(id => {
+    return followers?.followers.find(f => f.id === id);
+  });
+
+  const uniqueFollowing = [...new Set(following?.response?.map(f => f.id))].map(
+    id => {
+      return following?.response.find(f => f.id === id);
+    },
+  );
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -90,9 +129,9 @@ const Profile = () => {
           <ListItems activeTab={activeTab} items={favoriteRecipes?.data} />
         );
       case 'followers':
-        return <ListItems activeTab={activeTab} items={followers?.response} />;
+        return <ListItems activeTab={activeTab} items={uniqueFollowers} />;
       case 'following':
-        return <ListItems activeTab={activeTab} items={following?.response} />;
+        return <ListItems activeTab={activeTab} items={uniqueFollowing} />;
       case 'recipes':
         return <ListItems activeTab={activeTab} items={userRecipes?.data} />;
       default:
@@ -132,7 +171,13 @@ const Profile = () => {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
-          <div>{renderTabContent()}</div>
+          <div>
+            {followers && following ? (
+              renderTabContent()
+            ) : (
+              <div>Loading content...</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
