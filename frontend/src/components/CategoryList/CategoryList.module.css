@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  z-index: 1;
 }
 
 .button {
@@ -68,12 +69,29 @@
 .button:hover {
   background: rgba(255, 255, 255, 0.9);
 }
+.iconButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ffffff33;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.3s;
+  z-index: 2;
+}
+
+.iconButton:hover {
+  border: 1px solid #ffffff66;
+}
 
 .icon {
-  width: 24px;
-  height: 24px;
   stroke: var(--white);
   fill: none;
+  width: 18px;
+  height: 18px;
 }
 
 .allCategories {
@@ -91,6 +109,11 @@
     padding: 0;
     width: 704px;
   }
+  .iconButton {
+    width: 44px;
+    height: 44px;
+  }
+
   .card {
     aspect-ratio: auto;
   }
