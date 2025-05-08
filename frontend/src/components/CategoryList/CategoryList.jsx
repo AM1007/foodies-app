@@ -41,14 +41,14 @@ export default function CategoryList({ onCategoryClick }) {
               <img src={cat.image} alt={cat.name} className={styles.image} />
               <div className={styles.buttonWrap}>
                 <button className={styles.button}>{cat.name}</button>
-                <svg
-                  width="24"
-                  height="24"
-                  className={styles.icon}
+                <div
+                  className={styles.iconButton}
                   onClick={() => handleCategoryClick('All categories')}
                 >
-                  <use href={`${icons}#arrow-up-right`} />
-                </svg>
+                  <svg width="24" height="24" className={styles.icon}>
+                    <use href={`${icons}#arrow-up-right`} />
+                  </svg>
+                </div>
               </div>
             </div>
           ))}
