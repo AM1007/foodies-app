@@ -100,5 +100,9 @@
     <symbol id="minus" viewBox="0 0 16 16">
       <path d="M3.33398 8H12.6673" stroke="#050505" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
+
+    <symbol id="icon-back" viewBox="0 0 32 32">
+      <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.667" d="M25.428 16.001l-18.856-.002M15.999 25.428l-9.427-9.429 9.429-9.427"/>
+    </symbol>
   </defs>
 </svg>
