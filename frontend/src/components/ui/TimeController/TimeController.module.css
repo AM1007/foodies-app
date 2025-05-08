@@ -1,5 +1,6 @@
 .timeControllerWrapper{
   margin: 20px 0;
+  position: relative;
 }
 
 .label {
@@ -32,6 +33,11 @@
   background-color: transparent;
 }
 
+.controlBtn {
+  width: 16px;
+  height: 16px;
+}
+
 .timeValue {
   margin: 0 12px;
   font-size: 14px;
@@ -50,13 +56,9 @@
   color: var(--black);
 }
 
-.dropdownWrapper {
-  position: relative;
-}
-
 .dropdown {
   position: absolute;
-  top: 40px;
+  top: 48px;
   left: 0;
   background: var(--white);
   border: 1px solid var(--gray);
@@ -64,7 +66,7 @@
   padding: 16px 18px;
   border-radius: 15px;
   z-index: 10;
-  width: 345px;
+  width: 343px;
 }
 
 .dropdownItem {
@@ -74,12 +76,31 @@
   letter-spacing: -0.28px;
   cursor: pointer;
   padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  color: var(--red);
 }
 
 @media screen and (min-width: 768px) {
+  .timeControllerWrapper{
+    margin: 0;
+  }
+  .label {
+    margin-bottom: 16px;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+  }
   .timeButton {
     width: 56px;
     height: 56px;
+  }
+
+  .controlBtn {
+    width: 24px;
+    height: 24px;
   }
 
   .timeValue {
@@ -87,5 +108,15 @@
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: -0.32px;
+  }
+  .dropdown{
+    top: 56px;
+    width: 315px;
+  }
+  .dropdownItem {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    padding: 6px 0;
   }
 }

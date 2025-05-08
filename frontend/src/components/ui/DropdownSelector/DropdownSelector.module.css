@@ -1,6 +1,5 @@
 .label {
   color: var(--black);
-  font-size: 16px;
   display: block;
   font-weight: 800;
   letter-spacing: -0.36px;
@@ -12,9 +11,9 @@
   position: relative;
 }
 
-.select, .selectInput {
+.select,
+.selectInput {
   width: 100%;
-  max-width: 343px;
   padding: 14px;
   border: 1px solid var(--gray);
   border-radius: 30px;
@@ -28,11 +27,6 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-}
-
-.selectInput {
-  padding: 0;
-  padding-right: 14px;
 }
 
 .searchInput {
@@ -60,19 +54,14 @@
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 0.3s ease;
   cursor: pointer;
-}
-
-.arrowOpen {
-  transform: rotate(180deg);
 }
 
 .dropdown {
   max-height: calc(2rem * 6);
   overflow-y: auto;
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   position: absolute;
   top: 48px;
   left: 0;
@@ -82,7 +71,7 @@
   padding: 16px 18px;
   border-radius: 15px;
   z-index: 10;
-  width: 345px;
+  width: 100%;
 }
 
 .dropdown::-webkit-scrollbar {
@@ -100,7 +89,7 @@
 }
 
 .dropdownItem:hover {
-  color: var(--accent-color, #E74C3C);
+  color: var(--red);
 }
 
 .noResults {
@@ -111,14 +100,51 @@
   padding: 8px 0;
 }
 
-.container {
-  width: 100%;
-  margin-bottom: 16px;
+@media (max-width: 768px) {
+  .select,
+  .selectInput {
+    max-width: 343px;
+  }
+  .dropdown {
+    max-width: 345px;
+  }
 }
 
-.errorMessage {
-  color: #e74a3b;
-  font-size: 12px;
-  margin-top: 4px;
-  font-weight: 500;
+@media (min-width: 768px) {
+  .label {
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin-bottom: 16px;
+  }
+  .select,
+  .selectInput {
+    padding: 16px 18px;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .searchInput {
+    padding: 16px 18px;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .dropdown {
+    top: 56px;
+  }
+  .dropdownItem {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    padding: 6px 0;
+  }
+  .noResults {
+    font-size: 16px;
+  }
+}
+
+.selectInput {
+  padding: 0;
+  padding-right: 14px;
 }
