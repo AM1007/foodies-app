@@ -131,7 +131,14 @@ const AddRecipeForm = () => {
   };
 
   const resetForm = () => {
-    reset();
+    reset({
+      title: '',
+      description: '',
+      categoryId: '',
+      time: 10,
+      instructions: '',
+      photo: null,
+    });
     setRecipeIngredients([]);
   };
 
@@ -185,9 +192,9 @@ const AddRecipeForm = () => {
       />
       <div className={styles.formWrapper}>
         {/* Recipe Title */}
-        <RecipeTitleInput 
-          register={register('title')} 
-          value={title} 
+        <RecipeTitleInput
+          register={register('title')}
+          value={title}
           error={errors.title?.message}
         />
 
@@ -201,41 +208,44 @@ const AddRecipeForm = () => {
           error={errors.description?.message}
         />
 
-        {/* Category */}
-        <Controller
-          name="categoryId"
-          control={control}
-          render={({ field }) => (
-            <div>
-              <DropdownSelector
-                label="Category"
-                options={categories}
-                value={field.value}
-                onChange={field.onChange}
-                placeholder="Select a category"
-              />
-              {errors.categoryId && (
-                <p className={styles.errorMessage}>
-                  {errors.categoryId.message}
-                </p>
-              )}
-            </div>
-          )}
-        />
+        <div className={styles.categoryTime}>
+          {/* Category */}
+          <Controller
+            name="categoryId"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <DropdownSelector
+                  className={styles.selector}
+                  label="Category"
+                  options={categories}
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Select a category"
+                />
+                {errors.categoryId && (
+                  <p className={styles.errorMessage}>
+                    {errors.categoryId.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
 
-        {/* Time */}
-        <Controller
-          name="time"
-          control={control}
-          render={({ field }) => (
-            <div className={styles.timeContainer}>
-              <TimeController value={field.value} onChange={field.onChange} />
-              {errors.time && (
-                <p className={styles.errorMessage}>{errors.time.message}</p>
-              )}
-            </div>
-          )}
-        />
+          {/* Time */}
+          <Controller
+            name="time"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <TimeController value={field.value} onChange={field.onChange} />
+                {errors.time && (
+                  <p className={styles.errorMessage}>{errors.time.message}</p>
+                )}
+              </div>
+            )}
+          />
+        </div>
 
         {/* Ingredient Selector */}
         <IngredientSelector
@@ -252,16 +262,18 @@ const AddRecipeForm = () => {
           />
         )}
 
-        {/* Recipe Instruction */}
-        <TextAreaWithCount
-          label="Recipe preparation"
-          placeholder="Enter recipe"
-          maxLength={2000}
-          register={register}
-          name="instructions"
-          value={instructions}
-          error={errors.instructions?.message}
-        />
+        <div className={styles.instructionsWrap}>
+          {/* Recipe Instruction */}
+          <TextAreaWithCount
+            label="Recipe preparation"
+            placeholder="Enter recipe"
+            maxLength={2000}
+            register={register}
+            name="instructions"
+            value={instructions}
+            error={errors.instructions?.message}
+          />
+        </div>
 
         {/* Form Actions */}
         <div className={styles.actionsGroup}>
