@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
-import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
@@ -11,7 +10,7 @@ export default function CategoryList({ onCategoryClick }) {
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' && window.innerWidth >= 1440,
   );
-
+  // temporary comment
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const handleResize = () => {
@@ -32,7 +31,7 @@ export default function CategoryList({ onCategoryClick }) {
       }
       onCategoryClick(categoryName);
     } catch (error) {
-      toast.error(
+      console.log(
         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
       );
     }

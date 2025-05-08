@@ -5,6 +5,7 @@ import Layout from './components/Layout/Layout';
 import Loader from './components/Loader/Loader';
 import PrivateRoute from './components/PrivateRoute';
 import { UserProvider } from './context/UserContext';
+import ErrorLogger from './ErrorLogger';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Recipe = lazy(() => import('./pages/Recipe/Recipe'));
@@ -15,6 +16,7 @@ const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 function App() {
   return (
     <UserProvider>
+      <ErrorLogger />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Layout />}>

@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
 
-  aspect-ratio: 340 / 300;
+  aspect-ratio: 340 / 260;
 }
 
 .card:hover {
@@ -74,6 +74,8 @@
   height: 24px;
   stroke: var(--white);
   fill: none;
+  border-radius: 30px;
+  border: 1px solid var(--white);
 }
 
 .allCategories {
@@ -121,6 +123,10 @@
     height: 320px;
     border-radius: 30px;
     font-size: 20px;
+  }
+  .icon {
+    border-radius: 30px;
+    border: 1px solid var(--white);
   }
 }
 

@@ -4,8 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './AddRecipeForm.module.css';
 import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto';
@@ -102,7 +100,7 @@ const AddRecipeForm = () => {
         );
 
         if (isAlreadyAdded) {
-          toast.warning('This ingredient is already added');
+          console.log('This ingredient is already added');
           return false;
         }
 
@@ -121,7 +119,7 @@ const AddRecipeForm = () => {
         return true;
       }
     } else {
-      toast.warning('Please select an ingredient and specify the quantity');
+      console.log('Please select an ingredient and specify the quantity');
     }
     return false;
   };
@@ -144,7 +142,7 @@ const AddRecipeForm = () => {
 
   const onSubmit = async data => {
     if (recipeIngredients.length === 0) {
-      toast.error('Please add at least one ingredient');
+      console.log('Please add at least one ingredient');
       return;
     }
 
@@ -167,15 +165,15 @@ const AddRecipeForm = () => {
       const resultAction = await dispatch(createRecipe(formData));
 
       if (createRecipe.fulfilled.match(resultAction)) {
-        toast.success('Recipe published successfully!');
+        console.log('Recipe published successfully!');
         navigate('/user');
       } else if (createRecipe.rejected.match(resultAction)) {
         const errorMessage = resultAction.payload || 'Failed to create recipe';
-        toast.error(`Error: ${errorMessage}`);
+        console.log(`Error: ${errorMessage}`);
       }
     } catch (error) {
       console.error('Error creating recipe:', error);
-      toast.error(`Error: ${error.message || 'Failed to create recipe'}`);
+      console.log(`Error: ${error.message || 'Failed to create recipe'}`);
     } finally {
       setIsSubmitting(false);
     }
