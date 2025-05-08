@@ -1,7 +1,7 @@
 .subtitle {
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.43; 
+  line-height: 1.43;
   letter-spacing: -0.28px;
   width: 100%;
 }
@@ -15,7 +15,7 @@
   .subtitle {
     color: var(--black);
     font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
   }
 }

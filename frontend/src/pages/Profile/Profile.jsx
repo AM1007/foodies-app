@@ -48,6 +48,7 @@ const Profile = () => {
     error: recipesError,
   } = useSelector(state => state.recipes);
 
+
   const isOwnProfile = !userId || userId === current?._id;
   const [activeTab, setActiveTab] = useState(
     isOwnProfile ? 'my-recipes' : 'recipes',
@@ -125,13 +126,14 @@ const Profile = () => {
           )}
         </div>
 
-        <TabsList
-          isOwnProfile={isOwnProfile}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-
-        <div>{renderTabContent()}</div>
+        <div className={styles.tabsContentWrapper}>
+          <TabsList
+            isOwnProfile={isOwnProfile}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <div>{renderTabContent()}</div>
+        </div>
       </div>
     </div>
   );
