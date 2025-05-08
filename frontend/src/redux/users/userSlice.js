@@ -49,7 +49,7 @@ export const fetchFollowers = createAsyncThunk(
   'user/fetchFollowers',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axiosAPI.get(`/users/${userId}/followers`);
+      const res = await axiosAPI.get(`/users/followers`);
       return res.data;
     } catch (err) {
       return rejectWithValue(

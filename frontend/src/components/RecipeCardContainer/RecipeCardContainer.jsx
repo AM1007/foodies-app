@@ -18,9 +18,11 @@ const RecipeCardContainer = ({ recipe }) => {
 
   const recipeId = recipe._id?.$oid || recipe.id;
 
-  const isFavorite = favoriteRecipes.some(
-    favorite => favorite._id === recipeId || favorite.id === recipeId,
-  );
+  const isFavorite =
+    Array.isArray(favoriteRecipes) &&
+    favoriteRecipes.some(
+      favorite => favorite._id === recipeId || favorite.id === recipeId,
+    );
 
   const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
