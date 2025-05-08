@@ -27,31 +27,29 @@ const Header = () => {
   }, [isAuthenticated, user, dispatch]);
 
   return (
-    <section className="container">
-      <header className={`${styles.headerContainer}  ${headerThemeClass}`}>
-        <div className={styles.headerWrapper}>
-          <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
-          <Navigation
-            isLightTheme={!isHomePage}
-            isAuthenticated={isAuthenticated}
-            isMenuOpen={isMenuOpen}
-            setIsMenuOpen={setIsMenuOpen}
-            BurgerBtn={BurgerBtn}
-          />
-          {isAuthenticated ? (
-            <div className={styles.userControls}>
-              <UserBar />
-              <BurgerBtn
-                onClick={() => setIsMenuOpen(true)}
-                isLightTheme={!isHomePage}
-              />
-            </div>
-          ) : (
-            <AuthBar />
-          )}
-        </div>
-      </header>
-    </section>
+    <header className={`${styles.headerContainer}  ${headerThemeClass}`}>
+      <div className={styles.headerWrapper}>
+        <Logo className={isHomePage ? styles.logoDark : styles.logoLight} />
+        <Navigation
+          isLightTheme={!isHomePage}
+          isAuthenticated={isAuthenticated}
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          BurgerBtn={BurgerBtn}
+        />
+        {isAuthenticated ? (
+          <div className={styles.userControls}>
+            <UserBar />
+            <BurgerBtn
+              onClick={() => setIsMenuOpen(true)}
+              isLightTheme={!isHomePage}
+            />
+          </div>
+        ) : (
+          <AuthBar />
+        )}
+      </div>
+    </header>
   );
 };
 

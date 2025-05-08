@@ -24,7 +24,12 @@ const Navigation = ({
           isLightTheme ? styles.lightNav : styles.darkNav,
         )}
       >
-        <ul className={styles.navList}>
+        <ul
+          className={clsx(
+            styles.navList,
+            !isAuthenticated && styles.navListHidden,
+          )}
+        >
           <li className={styles.navItem}>
             <NavLink className={generateActiveClass} to="/">
               Home

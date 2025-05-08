@@ -16,6 +16,7 @@ const AuthBar = () => {
   return (
     <div className={styles.buttons}>
       <DoubledButton
+        className={styles.button}
         active={activeForm === 'signin' ? 'left' : 'right'}
         onLeftClick={handleLeftClick}
         onRightClick={handleRightClick}
