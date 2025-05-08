@@ -48,7 +48,6 @@ const LogOutModal = () => {
           </Button>
         </div>
       </div>
-      <ToastContainer position="top-center" autoClose={3000} />
     </Modal>
   );
 };

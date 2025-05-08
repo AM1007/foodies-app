@@ -8,7 +8,6 @@ import App from './App.jsx';
 import { ModalProvider } from './context/ModalProvider.jsx';
 import store from '../src/redux/store.js';
 
-// Глобальний обробник помилок
 window.onerror = function (message, source, lineno, colno, error) {
   const errorLog = {
     message,
@@ -19,16 +18,13 @@ window.onerror = function (message, source, lineno, colno, error) {
     time: new Date().toISOString(),
   };
 
-  // Зберігаємо логи в localStorage
   const logs = JSON.parse(localStorage.getItem('error_logs') || '[]');
   logs.push(errorLog);
   localStorage.setItem('error_logs', JSON.stringify(logs));
 
-  // Продовження стандартної обробки помилки
   return false;
 };
 
-// Логування непійманих помилок у Promise
 window.addEventListener('unhandledrejection', function (event) {
   const errorLog = {
     message: `Unhandled Promise Rejection: ${event.reason}`,
