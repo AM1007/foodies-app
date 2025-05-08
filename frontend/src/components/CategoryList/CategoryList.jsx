@@ -1,11 +1,24 @@
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+import { useState, useEffect } from 'react';
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
 import icons from '../../icons/sprite.svg';
 
 export default function CategoryList({ onCategoryClick }) {
   const dispatch = useDispatch();
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' && window.innerWidth >= 1440,
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1440);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleCategoryClick = async (categoryId, categoryName) => {
     try {
@@ -25,40 +38,78 @@ export default function CategoryList({ onCategoryClick }) {
     }
   };
 
+  const rows = Array.from(
+    { length: Math.ceil(categories.length / 3) },
+    (_, i) => categories.slice(i * 3, i * 3 + 3),
+  );
+  const lastRow = rows.length - 1;
+
   return (
-    <section className="container">
+    <section className={styles.categoriesWrapper}>
       <div className={styles.categoryListContainer}>
-        <div className={styles.grid}>
-          {categories.map(cat => (
-            <div
-              key={cat.name}
-              className={`
-                ${styles.card}
-              `}
-              onClick={() => handleCategoryClick(cat.id, cat.name)}
-            >
-              <img src={cat.image} alt={cat.name} className={styles.image} />
-              <div className={styles.buttonWrap}>
-                <button className={styles.button}>{cat.name}</button>
-                <svg
-                  width="24"
-                  height="24"
-                  className={styles.icon}
+        {isDesktop ? (
+          rows.map((row, rowIndex) => (
+            <div key={rowIndex} className={styles.row}>
+              {row.map((cat, idx) => (
+                <div
+                  key={cat.name}
+                  className={`${styles.card} ${
+                    styles[`card-row${rowIndex % 4}-item${idx}`]
+                  }`}
+                  onClick={() => handleCategoryClick(cat.name)}
+                >
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className={styles.image}
+                  />
+                  <div className={styles.buttonWrap}>
+                    <button className={styles.button}>{cat.name}</button>
+                    <svg width="24" height="24" className={styles.icon}>
+                      <use href={`${icons}#arrow-up-right`} />
+                    </svg>
+                  </div>
+                </div>
+              ))}
+              {rowIndex === lastRow && (
+                <div
+                  className={`${styles.card} ${styles.allCategories}`}
                   onClick={() => handleCategoryClick('All categories')}
                 >
-                  <use href={`${icons}#arrow-up-right`} />
-                </svg>
-              </div>
+                  All categories
+                </div>
+              )}
             </div>
-          ))}
-
-          <div
-            className={`${styles.card} ${styles.allCategories}`}
-            onClick={() => handleCategoryClick('All categories')}
-          >
-            All categories
+          ))
+        ) : (
+          <div className={styles.grid}>
+            {categories.map((cat, index) => (
+              <div
+                key={cat.name}
+                className={`${styles.card} ${
+                  styles.wideCard && (index === 2 || index === 7)
+                    ? styles.wideCard
+                    : ''
+                }`}
+                onClick={() => handleCategoryClick(cat.name)}
+              >
+                <img src={cat.image} alt={cat.name} className={styles.image} />
+                <div className={styles.buttonWrap}>
+                  <button className={styles.button}>{cat.name}</button>
+                  <svg width="24" height="24" className={styles.icon}>
+                    <use href={`${icons}#arrow-up-right`} />
+                  </svg>
+                </div>
+              </div>
+            ))}
+            <div
+              className={`${styles.card} ${styles.allCategories}`}
+              onClick={() => handleCategoryClick('All categories')}
+            >
+              All categories
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
