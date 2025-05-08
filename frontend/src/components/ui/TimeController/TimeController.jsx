@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './TimeController.module.css';
+import icons from '../../../icons/sprite.svg';
 
 const presetOptions = [10, 20, 40, 60];
 
@@ -71,10 +72,12 @@ const TimeController = ({
           onClick={decreaseTime}
           disabled={localValue <= minTime}
         >
-          −
+          <svg fill='none' className={styles.controlBtn}>
+            <use href={`${icons}#minus`}/>
+          </svg>
         </button>
 
-        <div className={styles.dropdownWrapper}>
+        <div >
           <button 
             type="button"
             className={`${styles.timeValue} ${wasInteracted ? styles.valueChanged : ''}`}
@@ -103,7 +106,9 @@ const TimeController = ({
           onClick={increaseTime}
           disabled={localValue >= maxTime}
         >
-          +
+          <svg fill='none' className={styles.controlBtn}>
+            <use href={`${icons}#plus`}/>
+          </svg>
         </button>
       </div>
     </div>
