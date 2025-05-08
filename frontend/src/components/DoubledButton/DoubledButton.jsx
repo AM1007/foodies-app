@@ -8,6 +8,7 @@ const DoubledButton = ({
   active = 'right',
   onLeftClick,
   onRightClick,
+  className,
 }) => {
   return (
     <div className={styles.doubledContainer}>
@@ -18,6 +19,7 @@ const DoubledButton = ({
         className={clsx(
           styles.doubledButton,
           active === 'left' && styles.doubledActive,
+          className,
         )}
       >
         {leftLabel}
@@ -29,6 +31,7 @@ const DoubledButton = ({
         className={clsx(
           styles.doubledButton,
           active === 'right' && styles.doubledActive,
+          className,
         )}
       >
         {rightLabel}

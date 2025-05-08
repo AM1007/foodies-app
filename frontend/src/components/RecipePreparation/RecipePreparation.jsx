@@ -32,7 +32,7 @@ const RecipePreparation = ({ preparation, recipeId }) => {
   };
   const paragraphs = preparation.split('\n\n');
   return (
-<section className="wrap">
+<section className="container">
   <div className={styles.wrapper}>
     <h3 className={styles.title}>Recipe Preparation</h3>
     {paragraphs.map((para, index) => (

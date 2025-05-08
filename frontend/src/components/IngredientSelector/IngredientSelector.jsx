@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './IngredientSelector.module.css';
 import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
 import Button from '../Button/Button';
+import icons from '../../icons/sprite.svg';
 
 const IngredientSelector = ({ 
   ingredients, 
@@ -48,7 +49,7 @@ const IngredientSelector = ({
         className={styles.addIngredientButton}
         onClick={handleAddIngredient}
       >
-        Add ingredient<span className={styles.plusIcon}>+</span>
+        Add ingredient<span className={styles.plusIcon}><svg width={20} height={20} fill='none'><use href={`${icons}#plus`}/></svg></span>
       </Button>
     </div>
   );

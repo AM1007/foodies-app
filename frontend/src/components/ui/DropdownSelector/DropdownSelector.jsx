@@ -69,12 +69,10 @@ const DropdownSelector = ({
   const handleOpenDropdown = () => {
     setIsOpen(prev => !prev);
     if (!isOpen) {
-      // Фокусуємось на інпуті після відкриття дропдауна
       setTimeout(() => {
         searchInputRef.current && searchInputRef.current.focus();
       }, 10);
     } else {
-      // При закритті очищаємо пошук
       setSearchTerm('');
       setFilteredOptions(options);
     }
@@ -102,11 +100,11 @@ const DropdownSelector = ({
               onClick={(e) => e.stopPropagation()}
             />
             <span 
-              className={`${styles.arrow} ${styles.arrowOpen}`}
+              className={`${styles.arrow}`}
               onClick={handleOpenDropdown}
             >
-              <svg width="14" height="14" fill="none">
-                <use href={`${icons}#down`} />
+              <svg fill="none">
+                <use href={`${icons}#up`} />
               </svg>
             </span>
           </div>
@@ -117,7 +115,7 @@ const DropdownSelector = ({
           >
             {selectedOption || placeholder}
             <span className={styles.arrow}>
-              <svg width="14" height="14" fill="none">
+              <svg fill="none">
                 <use href={`${icons}#down`} />
               </svg>
             </span>

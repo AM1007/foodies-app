@@ -1,0 +1,11 @@
+.topInfo{
+  width: 100%;
+  max-width: 443px;
+  margin-bottom: 32px;
+}
+
+@media screen and (min-width: 1440px) {
+  .topInfo{
+    margin-bottom: 40px;
+  }
+}

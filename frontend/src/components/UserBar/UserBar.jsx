@@ -14,7 +14,6 @@ const UserBar = () => {
   const user = useMemo(() => userFromState || {}, [userFromState]);
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  console.log(user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { openModal } = useModal();
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const UserBar = () => {
           <Button
             className={styles.dropdownItem}
             onClick={() => {
-              navigate('/user');
+              navigate('/users/current');
               setIsDropdownOpen(false);
             }}
           >

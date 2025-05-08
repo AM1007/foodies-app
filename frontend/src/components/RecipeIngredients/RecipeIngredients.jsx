@@ -2,7 +2,7 @@ import styles from './RecipeIngredients.module.css';
 
 const RecipeIngredients = ({ ingredients, onRemove, removable = false }) => {
   return (
-    <section className="wrap">
+    <section className="container">
       <div className={styles.ingredients}>
         <h3 className={styles.title}>Ingredients</h3>
         <ul className={styles.list}>

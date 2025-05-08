@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './UploadRecipePhoto.module.css';
 import icons from '../../icons/sprite.svg';
 
@@ -9,13 +9,18 @@ const PhotoUploader = ({ onPhotoChange, error }) => {
     const file = e.target.files[0];
     if (file) {
       onPhotoChange(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPhotoPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file);
+      setPhotoPreview(previewUrl);
     }
   };
+  
+  useEffect(() => {
+    return () => {
+      if (photoPreview) {
+        URL.revokeObjectURL(photoPreview);
+      }
+    };
+  }, [photoPreview]);
 
   return (
     <div className={styles.photoUploadWrap}>
@@ -39,7 +44,7 @@ const PhotoUploader = ({ onPhotoChange, error }) => {
           </div>
         )}
       </div>
-      
+
       {!photoPreview && error && <p className={styles.errorMessage}>{error}</p>}
 
       {photoPreview && (

@@ -1,3 +1,6 @@
+.burgerBtn {
+  cursor: pointer;
+}
 @media screen and (min-width: 768px) {
   .burgerBtn {
     display: none;
@@ -6,6 +9,12 @@
 .burgerIcon {
   width: 28px;
   height: 28px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.burgerBtn:hover .burgerIcon {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .burgerLight {

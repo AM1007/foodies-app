@@ -3,15 +3,14 @@
   gap: 30px;
   border-bottom: 1px solid var(--gray);
   margin: 64px 0 32px 0;
-}
-
-@media screen and (min-width: 1440px) {
-  .tabs {
-    height: 0;
-    width: 100%;
-    padding-bottom: 31px;
-    margin: 0 0 0 40px;
-  }
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch; 
+  white-space: nowrap; 
+  padding: 0; 
+  height: auto; 
+  overflow-y: hidden; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
 }
 
 .tab {
@@ -25,6 +24,7 @@
   border: none;
   cursor: pointer;
   padding-bottom: 12px;
+  flex-shrink: 2;
 }
 
 .tab:hover {
@@ -46,6 +46,12 @@
 }
 
 @media screen and (min-width: 1440px) {
+  .tabs {
+    height: 0;
+    width: 100%;
+    padding-bottom: 31px;
+    margin: 0 0 0 40px;
+  }
   .active::after {
     bottom: -21px;
   }

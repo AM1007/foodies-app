@@ -23,7 +23,7 @@ const RecipeMainInfo = ({ title, category, time, description, user }) => {
     : avatar;
 
   return (
-    <section className="wrap">
+    <section className="container">
       <div className={styles.recipeMainInfo}>
         <div className={styles.info}>
           <h2 className={styles.title}>{title}</h2>

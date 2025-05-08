@@ -9,15 +9,15 @@ const Hero = () => {
   // const { isAuthenticated } = useAuth();
 
   return (
-    <section className="container">
-      <div className={styles.heroSection}>
+    <section className={styles.heroSection}>
+      <div className={styles.heroContainer}>
         <div className={styles.textWrapper}>
           <h1 className={styles.title}>Improve Your Culinary Talents</h1>
           <p className={styles.subtitle}>
             Amazing recipes for beginners in the world of cooking, enveloping
             you in the aromas and tastes of various cuisines.
           </p>
-          <Link to="/recipe/add" className={styles.heroButton}>
+          <Link to="/recipes/add" className={styles.heroButton}>
             Add Recipe
           </Link>
         </div>

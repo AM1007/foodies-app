@@ -1,12 +1,12 @@
 import css from './DeleteBtn.module.css';
 
-function DeleteBtn({ to, ariaLabel = 'Go' }) {
+function DeleteBtn({ onClick, ariaLabel = 'Delete recipe' }) {
   return (
     <button
       type="button"
       className={css.deleteBtn}
-      // onClick={handleDelete}
-      aria-label="Видалити рецепт"
+      onClick={onClick}
+      aria-label={ariaLabel}
     >
       <svg viewBox="0 0 24 20" fill="none">
         <path

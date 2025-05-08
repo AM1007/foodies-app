@@ -1,8 +1,8 @@
-.wrap {
+/* .wrap {
   display: flex;
   flex-direction: column;
   padding: 0;
-}
+} */
 .recipeMainInfo {
   padding-top: 0;
   margin-bottom: 32px;
