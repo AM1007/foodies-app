@@ -12,11 +12,9 @@ export default function Categories() {
 
   const handleCategoryClick = async (categoryId, categoryName) => {
     try {
-      // Запам'ятовуємо ID і назву категорії
       setSelectedCategoryId(categoryId);
       setSelectedCategory(categoryName);
 
-      // Show recipe list and hide categories
       setShowRecipeList(true);
     } catch (error) {
       console.log(`Error: ${error.message || 'Something went wrong'}`);
@@ -28,13 +26,13 @@ export default function Categories() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.categoriesContainer}>
       <div className={styles.categoriesWrapper}>
         {!showRecipeList ? (
           <>
             <MainTitle className={styles.title} text="Categories" />
             <Subtitle
-              className={styles.title}
+              className={styles.subTitle}
               text="Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style, and the warm atmosphere of the kitchen."
             />
             <CategoryList onCategoryClick={handleCategoryClick} />
