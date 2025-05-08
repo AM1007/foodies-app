@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshToken, fetchCurrentUser } from '../../redux/users/authSlice';
@@ -12,17 +12,29 @@ import LogOutModal from '../LogOutModal/LogOutModal';
 import { useModal } from '../../hooks/useModal';
 import Loader from '../Loader/Loader';
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 const Layout = () => {
   const dispatch = useDispatch();
   const { modal, closeModal } = useModal();
   const { isAuthenticated, loading, user } = useSelector(state => state.auth);
 
+  // Використовуємо useRef для відстеження спроб оновлення токена
+  const hasAttemptedRef = useRef(false);
+
   useEffect(() => {
+    if (hasAttemptedRef.current) return;
+
     const storedToken = localStorage.getItem('token');
-    if (storedToken && !user && !loading) {
+    const storedRefreshToken = localStorage.getItem('refreshToken');
+
+    if (storedToken && !storedRefreshToken) {
+      console.log('Token exists but no refresh token, removing token');
+      localStorage.removeItem('token');
+      hasAttemptedRef.current = true;
+      return;
+    }
+
+    if (storedToken && storedRefreshToken && !user && !loading) {
+      hasAttemptedRef.current = true;
       dispatch(refreshToken())
         .unwrap()
         .then(() => {
@@ -32,6 +44,8 @@ const Layout = () => {
         })
         .catch(err => {
           console.error('Error refreshing token:', err);
+          localStorage.removeItem('token');
+          localStorage.removeItem('refreshToken');
         });
     }
   }, [dispatch, user, loading]);
@@ -57,8 +71,6 @@ const Layout = () => {
       {modal === 'signup' && <SignUpModal onClose={closeModal} />}
       {modal === 'signin' && <SignInModal onClose={closeModal} />}
       {modal === 'logout' && <LogOutModal onClose={closeModal} />}
-
-      <ToastContainer position="top-center" autoClose={3000} />
     </>
   );
 };

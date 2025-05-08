@@ -35,7 +35,7 @@ const RecipeFilters = ({ onFilterChange }) => {
   const handleAreaChange = areaId => {
     setSelectedArea(areaId);
     onFilterChange({
-      region: areaId,
+      area: areaId,
     });
   };
 

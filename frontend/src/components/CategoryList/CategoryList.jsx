@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
-import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
 import icons from '../../icons/sprite.svg';
@@ -21,18 +21,18 @@ export default function CategoryList({ onCategoryClick }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleCategoryClick = async categoryName => {
+  const handleCategoryClick = async (categoryId, categoryName) => {
     try {
       if (categoryName === 'All categories') {
         await dispatch(fetchRecipes({ page: 1 })).unwrap();
       } else {
         await dispatch(
-          fetchRecipes({ page: 1, category: categoryName }),
+          fetchRecipes({ page: 1, category: categoryId }),
         ).unwrap();
       }
-      onCategoryClick(categoryName);
+      onCategoryClick(categoryId, categoryName);
     } catch (error) {
-      toast.error(
+      console.log(
         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
       );
     }
@@ -47,6 +47,24 @@ export default function CategoryList({ onCategoryClick }) {
   return (
     <section className={styles.categoriesWrapper}>
       <div className={styles.categoryListContainer}>
+
+        <div className={styles.grid}>
+          {categories.map(cat => (
+            <div
+              key={cat.name}
+              className={`
+                ${styles.card}
+              `}
+              onClick={() => handleCategoryClick(cat.id, cat.name)}
+            >
+              <img src={cat.image} alt={cat.name} className={styles.image} />
+              <div className={styles.buttonWrap}>
+                <button className={styles.button}>{cat.name}</button>
+                <svg
+                  width="24"
+                  height="24"
+                  className={styles.icon}
+
         {isDesktop ? (
           rows.map((row, rowIndex) => (
             <div key={rowIndex} className={styles.row}>
@@ -74,6 +92,7 @@ export default function CategoryList({ onCategoryClick }) {
               {rowIndex === lastRow && (
                 <div
                   className={`${styles.card} ${styles.allCategories}`}
+
                   onClick={() => handleCategoryClick('All categories')}
                 >
                   All categories
