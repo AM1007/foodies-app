@@ -46,7 +46,7 @@ const updateRecipeSchema = Joi.object({
 
 const recipeQuerySchema = Joi.object({
   page: Joi.number().min(1).default(1),
-  limit: Joi.number().min(1).max(100).default(10),
+  limit: Joi.number().min(1).max(100).default(30),
   title: Joi.string(),
   category: Joi.number(),
   area: Joi.number(),
