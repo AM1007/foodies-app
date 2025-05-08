@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
-import MainTitle from '../../components/ui/MainTitle/MainTitle';
-import SubTitle from '../../components/ui/SubTitle/SubTitle';
 import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
 import Loader from '../../components/Loader/Loader';
 import RecipeFilters from '../../components/RecipeFilters/RecipeFilters';
 import RecipePagination from '../../components/RecipePagination/RecipePagination';
 
-const RecipeList = ({ category }) => {
+const RecipeList = ({ category = 'Recipes', categoryId = null }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
 
@@ -17,7 +15,7 @@ const RecipeList = ({ category }) => {
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [filters, setFilters] = useState({
-    category: category || '',
+    category: categoryId, // Використовуємо ID категорії замість назви
     ingredient: '',
     region: '',
   });
@@ -37,17 +35,17 @@ const RecipeList = ({ category }) => {
   }, []);
 
   useEffect(() => {
-    if (category !== filters.category) {
-      setFilters(prev => ({ ...prev, category }));
+    if (categoryId !== filters.category) {
+      setFilters(prev => ({ ...prev, category: categoryId }));
       setCurrentPage(1);
     }
-  }, [category]);
+  }, [categoryId]);
 
   useEffect(() => {
     dispatch(
       fetchRecipes({
         page: currentPage,
-        category: filters.category,
+        category: filters.category, // Тепер тут передається ID категорії
         ingredient: filters.ingredient,
         region: filters.region,
       }),
@@ -74,8 +72,6 @@ const RecipeList = ({ category }) => {
 
   return (
     <>
-      <MainTitle text={category} />
-      <SubTitle text="Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires." />
       <div className={styles.wrap}>
         <RecipeFilters onFilterChange={handleFilterChange} />
         <div>

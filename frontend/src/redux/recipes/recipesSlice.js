@@ -3,13 +3,13 @@ import axiosAPI from '../../api/api';
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchAll',
-  async ({ page = 1, category, ingredient, region }, { rejectWithValue }) => {
+  async ({ page = 1, category, ingredient, area }, { rejectWithValue }) => {
     try {
       const params = {};
       if (page) params.page = page;
       if (category && category !== 'All categories') params.category = category;
       if (ingredient) params.ingredient = ingredient;
-      if (region) params.region = region;
+      if (area) params.area = area;
 
       console.log('Fetching recipes with params:', params);
 

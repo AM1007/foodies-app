@@ -7,7 +7,6 @@ import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
-import { toast } from 'react-toastify';
 
 const SignInForm = ({ onSuccess }) => {
   const emailId = useId();
@@ -32,14 +31,14 @@ const SignInForm = ({ onSuccess }) => {
       const currentUser = await dispatch(fetchCurrentUser()).unwrap();
 
       if (currentUser) {
-        toast.success('You have successfully signed in!');
+        console.log('You have successfully signed in!');
       } else {
-        toast.error('Could not fetch user data.');
+        console.log('Could not fetch user data.');
       }
 
       if (onSuccess) setTimeout(onSuccess, 1000);
     } catch (error) {
-      toast.error(error.message || 'Something went wrong');
+      console.log(error.message || 'Something went wrong');
     } finally {
       setSubmitting(false);
     }

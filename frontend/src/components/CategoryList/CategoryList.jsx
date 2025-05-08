@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
-import { toast } from 'react-toastify';
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
 import icons from '../../icons/sprite.svg';
@@ -8,19 +7,19 @@ import icons from '../../icons/sprite.svg';
 export default function CategoryList({ onCategoryClick }) {
   const dispatch = useDispatch();
 
-  const handleCategoryClick = async categoryName => {
+  const handleCategoryClick = async (categoryId, categoryName) => {
     try {
       if (categoryName === 'All categories') {
         await dispatch(fetchRecipes({ page: 1 })).unwrap();
       } else {
         await dispatch(
-          fetchRecipes({ page: 1, category: categoryName }),
+          fetchRecipes({ page: 1, category: categoryId }),
         ).unwrap();
       }
 
-      onCategoryClick(categoryName);
+      onCategoryClick(categoryId, categoryName);
     } catch (error) {
-      toast.error(
+      console.log(
         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
       );
     }
@@ -36,7 +35,7 @@ export default function CategoryList({ onCategoryClick }) {
               className={`
                 ${styles.card}
               `}
-              onClick={() => handleCategoryClick(cat.name)}
+              onClick={() => handleCategoryClick(cat.id, cat.name)}
             >
               <img src={cat.image} alt={cat.name} className={styles.image} />
               <div className={styles.buttonWrap}>
