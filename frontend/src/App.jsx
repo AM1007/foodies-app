@@ -37,6 +37,14 @@ function App() {
                 </PrivateRoute>
               }
             />
+             <Route
+              path="/users/:id"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
             <Route path="/recipes/:id" element={<Recipe />} />
             <Route path="*" element={<NotFound />} />
           </Route>
