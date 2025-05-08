@@ -32,19 +32,17 @@
 .backButton {
   padding: 10px 20px;
   margin-bottom: 20px;
-  background-color: var(--black);
-  color: var(--white);
   border: none;
   border-radius: 30px;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.backButton:hover {
-  background-color: var(--dark-gray);
+.backIcon {
+  stroke: var(--black);
+  fill: var(--black);
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
