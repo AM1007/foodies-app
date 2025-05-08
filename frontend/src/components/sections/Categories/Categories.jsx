@@ -11,15 +11,10 @@ export default function Categories() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [showRecipeList, setShowRecipeList] = useState(false);
 
-  const handleCategoryClick = async (categoryId, categoryName) => {
-    try {
-      setSelectedCategoryId(categoryId);
-      setSelectedCategory(categoryName);
-
-      setShowRecipeList(true);
-    } catch (error) {
-      console.log(`Error: ${error.message || 'Something went wrong'}`);
-    }
+  const handleCategoryClick = (categoryId, categoryName) => {
+    setSelectedCategoryId(categoryId);
+    setSelectedCategory(categoryName);
+    setShowRecipeList(true);
   };
 
   const handleBackToCategories = () => {
@@ -45,14 +40,14 @@ export default function Categories() {
               className={styles.backButton}
             >
               <svg
-                className={styles.closeIcon}
-                width="24"
-                height="24"
+                className={styles.backIcon}
+                width="18"
+                height="18"
                 aria-hidden="true"
               >
                 <use href={`${icons}#icon-back`} />
               </svg>
-              Back
+              <span className={styles.backButtonText}>Back</span>
             </button>
             <MainTitle
               className={styles.title}
