@@ -106,7 +106,7 @@ const TimeController = ({
           onClick={increaseTime}
           disabled={localValue >= maxTime}
         >
-          <svg fill='none' className={styles.controlBtn}>
+          <svg className={styles.controlBtn}>
             <use href={`${icons}#plus`}/>
           </svg>
         </button>

@@ -32,7 +32,9 @@
   cursor: pointer;
   background-color: transparent;
 }
-
+.timeButton:hover {
+  background-color: var(--gray);
+}
 .controlBtn {
   width: 16px;
   height: 16px;

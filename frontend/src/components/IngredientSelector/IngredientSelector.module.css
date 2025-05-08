@@ -22,6 +22,10 @@
   border-bottom: 1px solid var(--gray);
 }
 
+.quantityInput::placeholder {
+  color: var(--gray);
+}
+
 .addIngredientButton {
   display: flex;
   justify-content: center;
@@ -34,13 +38,13 @@
   border-radius: 30px;
   font-size: 14px;
   font-weight: 700;
-  line-height: 20px;
+  line-height: 1.43;
   letter-spacing: -0.28px;
   text-transform: uppercase;
   color: var(--black);
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 }
 
 .addIngredientButton:hover {
@@ -49,18 +53,44 @@
 }
 
 .addIngredientButton:disabled {
-  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .plusIcon {
-  font-size: 16px;
-  margin-left: 4px;
+  width: 20px;
+  height: 20px;
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .ingredientsContainer {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .ingredientsContainer {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .ingredientsContainer {
+    margin-bottom: 40px;
+  }
+  .quantityInput {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .plusIcon {
+    width: 22px;
+    height: 22px;
+  }
+  .addIngredientButton {
+    padding: 16px 32px;
+    border: 1px solid var(--black);
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    margin-bottom: 40px;
   }
 }

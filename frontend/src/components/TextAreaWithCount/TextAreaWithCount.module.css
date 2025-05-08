@@ -17,25 +17,67 @@
   position: relative;
   width: 100%;
   max-width: 343px;
+  border-bottom: 1px solid var(--gray);
 }
 
 .textarea {
   width: 100%;
+  max-width: 270px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
+  line-height: 1.43; 
+  letter-spacing: -0.28px;
   resize: none;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--gray);
   outline: none;
-  color: var(--black);
-  padding: 0 0 16px; 
+  color: var(--gray);
   min-height: 36px; 
   overflow: hidden;
   transition: height 0.2s ease;
   position: relative;
 }
+
+.errorInput {
+  border-bottom: 1px solid var(--red) !important;
+}
+
+.textarea::placeholder {
+  color: var(--gray);
+}
+
+.charCount {
+  position: absolute;
+  right: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+}
+
+.emptyCount {
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+}
+
+.currentCount {
+  color: var(--black);
+}
+
+.maxCount {
+  color: var(--gray);
+}
+
+.errorMessage {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
 @media (min-width: 768px) {
   .inputWrapper {
     max-width: 649px;
@@ -46,47 +88,21 @@
     letter-spacing: -0.4px;
     margin-bottom: 40px;
   }
-}
-@media (min-width: 1440px) {
-  
-}
-
-.errorInput {
-  border-bottom: 1px solid var(--red) !important;
-}
-
-/* Стилі для placeholder */
-.textarea::placeholder {
-  color: var(--gray);
-}
-
-.charCount {
-  position: absolute;
-  right: 0;
-  font-size: 14px;
-}
-
-/* Сірий колір для порожнього значення лічильника */
-.emptyCount {
-  color: var(--gray);
-  font-weight: 400;
-}
-
-/* Чорний колір для поточного значення лічильника, коли є текст */
-.currentCount {
-  color: var(--black);
-  font-weight: 500;
-}
-
-/* Сірий колір для максимального значення */
-.maxCount {
-  color: var(--gray);
-  font-weight: 400;
-}
-
-.errorMessage {
-  color: #e74a3b;
-  font-size: 12px;
-  margin-top: 4px;
-  font-weight: 500;
+  .textarea {
+    max-width: 550px;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    color: var(--black);
+  }
+  .charCount {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
+  .emptyCount {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+  }
 }
