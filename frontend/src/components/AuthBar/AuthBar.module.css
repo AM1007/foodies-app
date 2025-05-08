@@ -5,8 +5,13 @@
   background-color: var(--white);
 }
 
+.button {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
 @media screen and (min-width: 768px) {
   .button {
-    padding: 14px 30px;
+    padding: 14px 28px;
   }
 }
