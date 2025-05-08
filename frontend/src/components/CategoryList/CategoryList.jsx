@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import styles from './CategoryList.module.css';
 import categories from '../../data/categories.js';
@@ -20,19 +21,18 @@ export default function CategoryList({ onCategoryClick }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleCategoryClick = async (categoryId, categoryName) => {
+  const handleCategoryClick = async categoryName => {
     try {
       if (categoryName === 'All categories') {
         await dispatch(fetchRecipes({ page: 1 })).unwrap();
       } else {
         await dispatch(
-          fetchRecipes({ page: 1, category: categoryId }),
+          fetchRecipes({ page: 1, category: categoryName }),
         ).unwrap();
       }
-
-      onCategoryClick(categoryId, categoryName);
+      onCategoryClick(categoryName);
     } catch (error) {
-      console.log(
+      toast.error(
         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
       );
     }
