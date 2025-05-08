@@ -7,43 +7,17 @@
     ├── package.json
     ├── public
         ├── assets
-        │   ├── avatar.png
-        │   └── favicon.svg
+        │   ├── favicon.svg
+        │   ├── logo.svg
+        │   └── quote.svg
         ├── fonts
         │   └── Mulish-Regular.woff2
         └── image
-        │   ├── categories
-        │       ├── beef-1x.png
-        │       ├── beef-2x.png
-        │       ├── breakfast-1x.png
-        │       ├── breakfast-2x.png
-        │       ├── desserts-1x.png
-        │       ├── desserts-2x.png
-        │       ├── goat-1x.png
-        │       ├── goat-2x.png
-        │       ├── lamb-1x.png
-        │       ├── lamb-2x.png
-        │       ├── miscellaneous-1x.png
-        │       ├── miscellaneous-2x.png
-        │       ├── pasta-1x.png
-        │       ├── pasta-2x.png
-        │       ├── pork-1x.png
-        │       ├── pork-2x.png
-        │       ├── seafood-1x.png
-        │       ├── seafood-2x.png
-        │       ├── side-1x.png
-        │       ├── side-2x.png
-        │       ├── starter-1x.png
-        │       ├── starter-2x.png
-        │       ├── vegan-1x.png
-        │       ├── vegan-2x.png
-        │       ├── vegetarian-1x.png
-        │       └── vegetarian-2x.png
         │   └── hero
-        │       ├── dish1-1x.png
-        │       ├── dish1-2x.png
-        │       ├── dish2-1x.png
-        │       └── dish2-2x.png
+        │       ├── image_hero_dish1_1x.png
+        │       ├── image_hero_dish1_2x.png
+        │       ├── image_hero_dish2_1x.png
+        │       └── image_hero_dish2_2x.png
     ├── src
         ├── App.jsx
         ├── api
@@ -57,28 +31,14 @@
         │   │   └── AuthBar.module.css
         │   ├── Button
         │   │   ├── Button.jsx
-        │   │   ├── Button.module.css
-        │   │   └── buttonVariants.module.css
-        │   ├── CategoryList
-        │   │   ├── CategoryList.jsx
-        │   │   └── CategoryList.module.css
-        │   ├── DoubledButton
-        │   │   ├── DoubledButton.jsx
-        │   │   └── DoubledButton.module.css
-        │   ├── IngredientSelector
-        │   │   ├── IngredientSelector.jsx
-        │   │   └── IngredientSelector.module.css
+        │   │   └── Button.module.css
         │   ├── Layout
         │   │   └── Layout.jsx
-        │   ├── ListItems
-        │   │   ├── ListItems.jsx
-        │   │   └── ListItems.module.css
         │   ├── Loader
         │   │   ├── Loader.jsx
         │   │   └── Loader.module.css
         │   ├── LogOutModal
-        │   │   ├── LogOutModal.jsx
-        │   │   └── LogOutModal.module.css
+        │   │   └── LogOutModal.jsx
         │   ├── Logo
         │   │   ├── Logo.jsx
         │   │   └── Logo.module.css
@@ -98,20 +58,11 @@
         │   │   ├── PopularRecipes.jsx
         │   │   └── PopularRecipes.module.css
         │   ├── PrivateRoute.jsx
-        │   ├── RecipeCardContainer
-        │   │   └── RecipeCardContainer.jsx
-        │   ├── RecipeFilters
-        │   │   ├── RecipeFilters.jsx
-        │   │   └── RecipeFilters.module.css
         │   ├── RecipeInfo
-        │   │   ├── RecipeInfo.jsx
-        │   │   └── RecipeInfo.module.css
+        │   │   └── RecipeInfo.jsx
         │   ├── RecipeIngredients
         │   │   ├── RecipeIngredients.jsx
         │   │   └── RecipeIngredients.module.css
-        │   ├── RecipeList
-        │   │   ├── RecipeList.jsx
-        │   │   └── RecipeList.module.css
         │   ├── RecipeMainInfo
         │   │   ├── RecipeMainInfo.jsx
         │   │   └── RecipeMainInfo.module.css
@@ -122,8 +73,7 @@
         │   │   ├── RecipePreview.jsx
         │   │   └── RecipePreview.module.css
         │   ├── SignInForm
-        │   │   ├── SignInForm.jsx
-        │   │   └── SignInForm.module.css
+        │   │   └── SignInForm.jsx
         │   ├── SignInModal
         │   │   ├── SignInModal.jsx
         │   │   └── SignInModal.module.css
@@ -133,18 +83,6 @@
         │   ├── SignUpModal
         │   │   ├── SignUpModal.jsx
         │   │   └── SignUpModal.module.css
-        │   ├── TabsList
-        │   │   ├── TabsList.jsx
-        │   │   └── TabsList.module.css
-        │   ├── TextAreaWithCount
-        │   │   ├── TextAreaWithCount.jsx
-        │   │   └── TextAreaWithCount.module.css
-        │   ├── UploadPecipePhoto
-        │   │   ├── UploadRecipePhoto.jsx
-        │   │   └── UploadRecipePhoto.module.css
-        │   ├── UserBar
-        │   │   ├── UserBar.jsx
-        │   │   └── UserBar.module.css
         │   ├── UserInfo
         │   │   ├── UserInfo.jsx
         │   │   └── UserInfo.module.css
@@ -180,9 +118,6 @@
         │   │   ├── DropdownSelector
         │   │       ├── DropdownSelector.jsx
         │   │       └── DropdownSelector.module.css
-        │   │   ├── HeroImages
-        │   │       ├── HeroImages.jsx
-        │   │       └── HeroImages.module.css
         │   │   ├── MainTitle
         │   │       ├── MainTitle.jsx
         │   │       └── MainTitle.module.css
@@ -192,9 +127,6 @@
         │   │   ├── RecipeCard
         │   │       ├── RecipeCard.jsx
         │   │       └── RecipeCard.module.css
-        │   │   ├── RecipeTitleInput
-        │   │       ├── RecipeTitleInput.jsx
-        │   │       └── RecipeTitleInput.module.css
         │   │   ├── SubTitle
         │   │       ├── SubTitle.jsx
         │   │       └── SubTitle.module.css
@@ -209,32 +141,29 @@
         │   │       └── UserAvatar.module.css
         ├── context
         │   ├── ModalContext.js
-        │   ├── ModalProvider.jsx
-        │   └── UserContext.jsx
+        │   └── ModalProvider.jsx
         ├── data
-        │   ├── categories.js
-        │   ├── emptyMessages.js
-        │   └── socialLinks.js
+        │   ├── socialLinks.js
+        │   └── testimonials.js
         ├── hooks
         │   ├── useAuth.js
         │   ├── useModal.js
         │   └── useScrollLock.js
         ├── icons
-        │   ├── imageNotFound.svg
+        │   ├── quote.svg
         │   └── sprite.svg
         ├── index.css
         ├── main.jsx
         ├── pages
         │   ├── AddRecipe
-        │   │   └── AddRecipePage.jsx
+        │   │   ├── AddRecipePage.jsx
+        │   │   └── AddRecipePage.module.css
         │   ├── Home
         │   │   └── Home.jsx
         │   ├── NotFound
-        │   │   ├── NotFound.jsx
-        │   │   └── NotFound.module.css
+        │   │   └── NotFound.jsx
         │   ├── Profile
-        │   │   ├── Profile.jsx
-        │   │   └── Profile.module.css
+        │   │   └── Profile.jsx
         │   └── Recipe
         │   │   ├── Recipe.jsx
         │   │   └── Recipe.module.css

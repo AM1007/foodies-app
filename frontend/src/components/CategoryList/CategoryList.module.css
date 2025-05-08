@@ -11,6 +11,60 @@
   justify-content: center;
 }
 
+.card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+  display: flex;
+  aspect-ratio: 343 / 250;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.buttonWrap {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.icon {
+  flex-shrink: 0;
+  stroke: var(--white);
+  fill: none;
+  width: 24px;
+  height: 24px;
+}
+
 .allCategories {
   background-color: var(--black);
   color: var(--white);
@@ -38,11 +92,111 @@
     aspect-ratio: 2 / 1;
   }
 
+  .buttonWrap {
+    bottom: 24px;
+    left: 24px;
+    gap: 4px;
+  }
   .allCategories {
     font-size: 20px;
     border-radius: 30px;
   }
 }
+
+/* @media screen and (min-width: 1440px) {
+  .categoryListContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    overflow: hidden;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 325px 325px 590px;
+    grid-template-rows: repeat(4, 369px);
+    gap: 20px;
+    grid-template-areas:
+      'a b c'
+      'd e f'
+      'g h i'
+      'j k l';
+  }
+  .grid > .card:nth-child(1) {
+    grid-area: a;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(2) {
+    grid-area: b;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(3) {
+    grid-area: c;
+    width: 590px;
+  }
+
+  .grid > .card:nth-child(4) {
+    grid-area: d;
+    width: 590px;
+  }
+
+  .grid > .card:nth-child(5) {
+    grid-area: e;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(6) {
+    grid-area: f;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(7) {
+    grid-area: g;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(8) {
+    grid-area: h;
+    width: 590px;
+  }
+
+  .grid > .card:nth-child(9) {
+    grid-area: i;
+    width: 325px;
+  }
+
+  .grid > .card:nth-child(10) {
+    grid-area: j;
+    width: 590px;
+  }
+
+  .buttonWrap {
+    bottom: 24px;
+    left: 24px;
+    gap: 4px;
+  }
+
+  .allCategories {
+    font-size: 20px;
+    border-radius: 30px;
+    width: 325px;
+    height: 369px;
+  }
+} */
 
 @media screen and (min-width: 1440px) {
   .categoryListContainer {
@@ -63,7 +217,14 @@
     height: 100%;
   }
 
-  /* Small cards */
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Маленькі картки */
   .grid > .card:nth-child(1),
   .grid > .card:nth-child(2),
   .grid > .card:nth-child(5),
@@ -76,7 +237,7 @@
     height: 369px;
   }
 
-  /* Large cards */
+  /* Великі картки */
   .grid > .card:nth-child(3),
   .grid > .card:nth-child(4),
   .grid > .card:nth-child(8),
@@ -85,7 +246,7 @@
     height: 369px;
   }
 
-  /* Grid placement */
+  /* Розміщення по сітці */
   .grid > .card:nth-child(1) {
     grid-column: 1;
     grid-row: 1;
@@ -144,6 +305,12 @@
   .grid > .card:nth-child(12) {
     grid-column: 3;
     grid-row: 4;
+  }
+
+  .buttonWrap {
+    bottom: 24px;
+    left: 24px;
+    gap: 4px;
   }
 
   .allCategories {
