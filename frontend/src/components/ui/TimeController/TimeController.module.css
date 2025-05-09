@@ -31,13 +31,22 @@
   font-size: 24px;
   cursor: pointer;
   background-color: transparent;
+  transition: all 0.3s ease;
 }
-.timeButton:hover {
-  background-color: var(--gray);
-}
-.controlBtn {
+
+.timeButton svg {
   width: 16px;
   height: 16px;
+  stroke: var(--black);
+}
+
+.timeButton:hover {
+  transition: stroke 0.5s ease;
+  background-color: var(--black);
+}
+
+.timeButton:hover svg {
+  stroke: var(--white);
 }
 
 .timeValue {
@@ -82,7 +91,7 @@
 }
 
 .dropdownItem:hover {
-  color: var(--red);
+  font-weight: 700;
 }
 
 @media screen and (min-width: 768px) {
@@ -99,8 +108,8 @@
     width: 56px;
     height: 56px;
   }
-
-  .controlBtn {
+  
+  .timeButton svg {
     width: 24px;
     height: 24px;
   }

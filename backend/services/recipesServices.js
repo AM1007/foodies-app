@@ -87,6 +87,13 @@ const getAllRecipes = async (query = {}) => {
 
 const getRecipeById = async recipeId => {
   try {
+
+    const numericId = Number(recipeId);
+    
+    if (isNaN(numericId) || numericId <= 0) {
+      throw HttpError(HTTP_STATUS.BAD_REQUEST, 'Invalid recipe ID');
+    }
+    
     const recipe = await Recipe.findByPk(Number(recipeId), {
       include: [
         { model: Category, as: 'category' },

@@ -11,10 +11,6 @@
   display: none;
 }
 
-.errorInput {
-  border-bottom: 1px solid var(--red) !important;
-}
-
 .errorMessage {
   color: var(--red);
   font-size: 12px;
@@ -48,11 +44,10 @@
   justify-content: center;
   border: 1px solid var(--gray);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
 }
 
 .deleteBtn:hover {
-  color: var(--gray);
   background-color: var(--black);
 }
 
@@ -60,8 +55,12 @@
   stroke: var(--gray);
 }
 
+.deleteBtn:hover svg {
+  stroke: var(--white);
+}
+
 .publishButton {
-  background-color: var(--black);
+  background-color: var(--dark-gray);
   color:var(--white);
   border: none;
   border-radius: 24px;
@@ -73,10 +72,6 @@
   cursor: pointer;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
-}
-
-.publishButton:hover {
-  background-color: var(--black);
 }
 
 @media (min-width: 768px) {

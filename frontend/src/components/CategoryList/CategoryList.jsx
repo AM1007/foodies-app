@@ -1,16 +1,28 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '../../redux/categories/categoriesSlice';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import { useState, useEffect } from 'react';
 import styles from './CategoryList.module.css';
-import categories from '../../data/categories.js';
 import icons from '../../icons/sprite.svg';
+import Loader from '../Loader/Loader';
 
 export default function CategoryList({ onCategoryClick }) {
   const dispatch = useDispatch();
+  const {
+    items: categories,
+    loading,
+    error,
+  } = useSelector(state => state.categories);
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' && window.innerWidth >= 1440,
   );
-  // temporary comment
+  // Додаємо стан для відстеження того, чи всі категорії показано
+  const [showAllCategories, setShowAllCategories] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const handleResize = () => {
@@ -20,16 +32,18 @@ export default function CategoryList({ onCategoryClick }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleCategoryClick = async categoryName => {
+  const handleCategoryClick = async (categoryId, categoryName) => {
     try {
       if (categoryName === 'All categories') {
-        await dispatch(fetchRecipes({ page: 1 })).unwrap();
+        // Замість навігації на всі рецепти, показуємо всі категорії
+        setShowAllCategories(true);
+        return;
       } else {
         await dispatch(
-          fetchRecipes({ page: 1, category: categoryName }),
+          fetchRecipes({ page: 1, category: categoryId }),
         ).unwrap();
+        onCategoryClick(categoryId, categoryName);
       }
-      onCategoryClick(categoryName);
     } catch (error) {
       console.log(
         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
@@ -37,11 +51,24 @@ export default function CategoryList({ onCategoryClick }) {
     }
   };
 
+  if (loading) return <Loader />;
+  if (error) return <div>Помилка завантаження категорій: {error}</div>;
+  if (!categories || categories.length === 0)
+    return <div>Категорії не знайдено</div>;
+
+  // Визначаємо, скільки категорій показувати
+  const limitedCategories = showAllCategories
+    ? categories
+    : categories.slice(0, Math.max(0, categories.length - 4));
+
   const rows = Array.from(
-    { length: Math.ceil(categories.length / 3) },
-    (_, i) => categories.slice(i * 3, i * 3 + 3),
+    { length: Math.ceil(limitedCategories.length / 3) },
+    (_, i) => limitedCategories.slice(i * 3, i * 3 + 3),
   );
   const lastRow = rows.length - 1;
+
+  // Визначаємо, чи показувати "All categories" кнопку
+  const showAllCategoriesButton = !showAllCategories;
 
   return (
     <section className={styles.categoriesWrapper}>
@@ -51,14 +78,17 @@ export default function CategoryList({ onCategoryClick }) {
             <div key={rowIndex} className={styles.row}>
               {row.map((cat, idx) => (
                 <div
-                  key={cat.name}
+                  key={cat.id}
                   className={`${styles.card} ${
                     styles[`card-row${rowIndex % 4}-item${idx}`]
                   }`}
-                  onClick={() => handleCategoryClick(cat.name)}
+                  onClick={() => handleCategoryClick(cat.id, cat.name)}
                 >
                   <img
-                    src={cat.image}
+                    src={
+                      cat.imageUrl ||
+                      `/image/categories/${cat.name.toLowerCase()}-1x.png`
+                    }
                     alt={cat.name}
                     className={styles.image}
                   />
@@ -70,10 +100,10 @@ export default function CategoryList({ onCategoryClick }) {
                   </div>
                 </div>
               ))}
-              {rowIndex === lastRow && (
+              {rowIndex === lastRow && showAllCategoriesButton && (
                 <div
                   className={`${styles.card} ${styles.allCategories}`}
-                  onClick={() => handleCategoryClick('All categories')}
+                  onClick={() => handleCategoryClick(null, 'All categories')}
                 >
                   All categories
                 </div>
@@ -82,17 +112,20 @@ export default function CategoryList({ onCategoryClick }) {
           ))
         ) : (
           <div className={styles.grid}>
-            {categories.map((cat, index) => (
+            {limitedCategories.map(cat => (
               <div
-                key={cat.name}
-                className={`${styles.card} ${
-                  styles.wideCard && (index === 2 || index === 7)
-                    ? styles.wideCard
-                    : ''
-                }`}
-                onClick={() => handleCategoryClick(cat.name)}
+                key={cat.id}
+                className={styles.card}
+                onClick={() => handleCategoryClick(cat.id, cat.name)}
               >
-                <img src={cat.image} alt={cat.name} className={styles.image} />
+                <img
+                  src={
+                    cat.imageUrl ||
+                    `/image/categories/${cat.name.toLowerCase()}-1x.png`
+                  }
+                  alt={cat.name}
+                  className={styles.image}
+                />
                 <div className={styles.buttonWrap}>
                   <button className={styles.button}>{cat.name}</button>
                   <svg width="24" height="24" className={styles.icon}>
@@ -101,15 +134,155 @@ export default function CategoryList({ onCategoryClick }) {
                 </div>
               </div>
             ))}
-            <div
-              className={`${styles.card} ${styles.allCategories}`}
-              onClick={() => handleCategoryClick('All categories')}
-            >
-              All categories
-            </div>
+            {showAllCategoriesButton && (
+              <div
+                className={`${styles.card} ${styles.allCategories}`}
+                onClick={() => handleCategoryClick(null, 'All categories')}
+              >
+                All categories
+              </div>
+            )}
           </div>
         )}
       </div>
     </section>
   );
 }
+
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchCategories } from '../../redux/categories/categoriesSlice';
+// import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+// import { useState, useEffect } from 'react';
+// import styles from './CategoryList.module.css';
+// import icons from '../../icons/sprite.svg';
+// import Loader from '../Loader/Loader';
+
+// export default function CategoryList({ onCategoryClick }) {
+//   const dispatch = useDispatch();
+//   const {
+//     items: categories,
+//     loading,
+//     error,
+//   } = useSelector(state => state.categories);
+//   const [isDesktop, setIsDesktop] = useState(
+//     typeof window !== 'undefined' && window.innerWidth >= 1440,
+//   );
+
+//   useEffect(() => {
+//     dispatch(fetchCategories());
+//   }, [dispatch]);
+
+//   useEffect(() => {
+//     if (typeof window === 'undefined') return;
+//     const handleResize = () => {
+//       setIsDesktop(window.innerWidth >= 1440);
+//     };
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   const handleCategoryClick = async (categoryId, categoryName) => {
+//     try {
+//       if (categoryName === 'All categories') {
+//         await dispatch(fetchRecipes({ page: 1 })).unwrap();
+//         onCategoryClick(null, 'All categories');
+//       } else {
+//         await dispatch(
+//           fetchRecipes({ page: 1, category: categoryId }),
+//         ).unwrap();
+//         onCategoryClick(categoryId, categoryName);
+//       }
+//     } catch (error) {
+//       console.log(
+//         `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
+//       );
+//     }
+//   };
+
+//   if (loading) return <Loader />;
+//   if (error) return <div>Помилка завантаження категорій: {error}</div>;
+//   if (!categories || categories.length === 0)
+//     return <div>Категорії не знайдено</div>;
+
+//   const rows = Array.from(
+//     { length: Math.ceil(categories.length / 3) },
+//     (_, i) => categories.slice(i * 3, i * 3 + 3),
+//   );
+//   const lastRow = rows.length - 1;
+
+//   return (
+//     <section className={styles.categoriesWrapper}>
+//       <div className={styles.categoryListContainer}>
+//         {isDesktop ? (
+//           rows.map((row, rowIndex) => (
+//             <div key={rowIndex} className={styles.row}>
+//               {row.map((cat, idx) => (
+//                 <div
+//                   key={cat.id}
+//                   className={`${styles.card} ${
+//                     styles[`card-row${rowIndex % 4}-item${idx}`]
+//                   }`}
+//                   onClick={() => handleCategoryClick(cat.id, cat.name)}
+//                 >
+//                   <img
+//                     src={
+//                       cat.imageUrl ||
+//                       `/image/categories/${cat.name.toLowerCase()}-1x.png`
+//                     }
+//                     alt={cat.name}
+//                     className={styles.image}
+//                   />
+//                   <div className={styles.buttonWrap}>
+//                     <button className={styles.button}>{cat.name}</button>
+//                     <svg width="24" height="24" className={styles.icon}>
+//                       <use href={`${icons}#arrow-up-right`} />
+//                     </svg>
+//                   </div>
+//                 </div>
+//               ))}
+//               {rowIndex === lastRow && (
+//                 <div
+//                   className={`${styles.card} ${styles.allCategories}`}
+//                   onClick={() => handleCategoryClick(null, 'All categories')}
+//                 >
+//                   All categories
+//                 </div>
+//               )}
+//             </div>
+//           ))
+//         ) : (
+//           <div className={styles.grid}>
+//             {categories.map(cat => (
+//               <div
+//                 key={cat.id}
+//                 className={styles.card}
+//                 onClick={() => handleCategoryClick(cat.id, cat.name)}
+//               >
+//                 <img
+//                   src={
+//                     cat.imageUrl ||
+//                     `/image/categories/${cat.name.toLowerCase()}-1x.png`
+//                   }
+//                   alt={cat.name}
+//                   className={styles.image}
+//                 />
+//                 <div className={styles.buttonWrap}>
+//                   <button className={styles.button}>{cat.name}</button>
+//                   <svg width="24" height="24" className={styles.icon}>
+//                     <use href={`${icons}#arrow-up-right`} />
+//                   </svg>
+//                 </div>
+//               </div>
+//             ))}
+//             <div
+//               className={`${styles.card} ${styles.allCategories}`}
+//               onClick={() => handleCategoryClick(null, 'All categories')}
+//             >
+//               All categories
+//             </div>
+//           </div>
+//         )}
+//       </div>
+//     </section>
+//   );
+// }
