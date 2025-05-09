@@ -12,7 +12,8 @@ const UserPreview = ({
 }) => {
   const [isFollowing, setIsFollowing] = useState(isFollowingInitial);
 
-  const { name, avatar, id, recipes = [] } = user;
+  const { name = 'User', avatar, id, _id, recipes = [] } = user;
+  const userId = id || _id;
 
   const safeAvatar =
     typeof avatar === 'string'
@@ -21,20 +22,35 @@ const UserPreview = ({
 
   const handleFollowToggle = () => {
     setIsFollowing(!isFollowing);
-    if (onFollowToggle) onFollowToggle(id, !isFollowing);
+    if (onFollowToggle) onFollowToggle(userId, !isFollowing);
   };
+
+  if (!userId) {
+    console.warn('UserPreview received user without ID:', user);
+    return null;
+  }
 
   return (
     <div className={css.card}>
-      <Link to={`/users/${id}`} className={css.info}>
-        <UserAvatar src={safeAvatar} alt={name} showUpload={false} className={css.userPreviewAvatar}/>
+      <Link to={`/users/${userId}`} className={css.info}>
+        <UserAvatar
+          src={safeAvatar}
+          alt={`${name}'s avatar`}
+          showUpload={false}
+          isOwnProfile={false}
+          className={css.userPreviewAvatar}
+        />
       </Link>
 
       <div className={css.userDetails}>
         <h3 className={css.name}>{name}</h3>
         <p className={css.recipesCount}>Own recipes: {recipes.length}</p>
 
-        <Button type="button" onClick={handleFollowToggle}>
+        <Button
+          type="button"
+          onClick={handleFollowToggle}
+          variant={isFollowing ? 'inactive' : 'dark'}
+        >
           {isFollowing ? 'Following' : 'Follow'}
         </Button>
       </div>
@@ -42,8 +58,8 @@ const UserPreview = ({
       <div className={css.recipeImageContainer}>
         {recipes.slice(0, 4).map(recipe => (
           <Link
-            key={recipe.id}
-            to={`/recipes/${recipe.id}`}
+            key={recipe.id || recipe._id}
+            to={`/recipes/${recipe.id || recipe._id}`}
             className={css.recipeLink}
           >
             <img
@@ -55,7 +71,7 @@ const UserPreview = ({
         ))}
       </div>
 
-      <ArrowBtn to={`/users/${id}`} ariaLabel={`Go to ${name}'s profile`} />
+      <ArrowBtn to={`/users/${userId}`} ariaLabel={`Go to ${name}'s profile`} />
     </div>
   );
 };

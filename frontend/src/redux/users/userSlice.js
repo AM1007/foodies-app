@@ -19,9 +19,20 @@ export const fetchUserById = createAsyncThunk(
   'user/fetchUserById',
   async (userId, { rejectWithValue }) => {
     try {
+      console.log(`Fetching user with ID: ${userId}`);
       const res = await axiosAPI.get(`/users/${userId}`);
-      return res.data.user;
+      console.log('User data fetched:', res.data);
+
+      if (res.data.user) {
+        return res.data.user;
+      } else if (res.data.id || res.data._id) {
+        return res.data;
+      } else {
+        console.error('Unexpected API response format:', res.data);
+        return rejectWithValue('Invalid user data format received');
+      }
     } catch (err) {
+      console.error('Error fetching user:', err);
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch user data',
       );
@@ -49,8 +60,19 @@ export const fetchFollowers = createAsyncThunk(
   'user/fetchFollowers',
   async (userId, { rejectWithValue }) => {
     try {
+      if (!userId) {
+        return rejectWithValue('User ID is required to fetch followers');
+      }
+
       const res = await axiosAPI.get(`/users/${userId}/followers`);
-      return res.data;
+
+      if (res.data && res.data.followers) {
+        return res.data.followers;
+      } else if (Array.isArray(res.data)) {
+        return res.data;
+      } else {
+        return [];
+      }
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch followers',
@@ -64,7 +86,14 @@ export const fetchFollowing = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axiosAPI.get('/users/following');
-      return res.data;
+
+      if (res.data && res.data.response) {
+        return res.data.response;
+      } else if (Array.isArray(res.data)) {
+        return res.data;
+      } else {
+        return [];
+      }
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch following list',
@@ -120,7 +149,6 @@ const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-
       .addCase(fetchCurrentUser.pending, state => {
         state.loading = true;
         state.error = null;
@@ -140,11 +168,13 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false;
+        console.log('Setting selected user:', action.payload);
         state.selected = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        console.error('Failed to fetch user:', action.payload);
       })
 
       .addCase(updateUserAvatar.fulfilled, (state, action) => {
@@ -152,19 +182,32 @@ const userSlice = createSlice({
           state.current.avatar = action.payload.avatar;
         }
       })
-
+      .addCase(fetchFollowers.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchFollowers.fulfilled, (state, action) => {
+        state.loading = false;
         state.followers = action.payload;
       })
       .addCase(fetchFollowers.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
+        state.followers = [];
       })
 
+      .addCase(fetchFollowing.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchFollowing.fulfilled, (state, action) => {
+        state.loading = false;
         state.following = action.payload;
       })
       .addCase(fetchFollowing.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
+        state.following = [];
       })
 
       .addCase(followUser.fulfilled, (state, action) => {

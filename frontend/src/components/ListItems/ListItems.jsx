@@ -10,7 +10,9 @@ const ListItems = ({ activeTab, items = [] }) => {
   );
   const isUserTab = ['followers', 'following'].includes(activeTab);
 
-  if (!items.length) {
+  const processedItems = Array.isArray(items) ? items : items?.data || [];
+
+  if (!processedItems.length) {
     return (
       <div className={styles.empty}>
         {emptyMessages[activeTab] || 'No items to show.'}
@@ -21,12 +23,18 @@ const ListItems = ({ activeTab, items = [] }) => {
   return (
     <div className={styles.list}>
       {isRecipeTab &&
-        items.map(recipe => (
-          <RecipePreview key={recipe._id || recipe.id} recipe={recipe} />
+        processedItems.map(recipe => (
+          <RecipePreview
+            key={recipe._id || recipe.id}
+            recipe={recipe}
+            activeTab={activeTab}
+          />
         ))}
 
       {isUserTab &&
-        items.map(user => <UserPreview key={user.id} user={user} />)}
+        processedItems.map(user => (
+          <UserPreview key={user._id || user.id} user={user} />
+        ))}
     </div>
   );
 };

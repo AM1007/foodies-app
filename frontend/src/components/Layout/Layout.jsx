@@ -18,43 +18,70 @@ const Layout = () => {
   const { isAuthenticated, loading, user } = useSelector(state => state.auth);
 
   const hasAttemptedRef = useRef(false);
+  const authInProgressRef = useRef(false);
 
+  // Single authentication attempt with debouncing mechanism
   useEffect(() => {
-    if (hasAttemptedRef.current) return;
-
+    // Prevent multiple auth attempts
+    if (hasAttemptedRef.current || authInProgressRef.current) return;
+    
     const storedToken = localStorage.getItem('token');
     const storedRefreshToken = localStorage.getItem('refreshToken');
 
-    if (storedToken && !storedRefreshToken) {
-      console.log('Token exists but no refresh token, removing token');
-      localStorage.removeItem('token');
+    if (!storedToken || !storedRefreshToken) {
+      // Clear partial auth state
+      if (storedToken && !storedRefreshToken) {
+        console.log('Token exists but no refresh token, removing token');
+        localStorage.removeItem('token');
+      }
+      
       hasAttemptedRef.current = true;
       return;
     }
 
+    // If we have both tokens but no user and not currently loading
     if (storedToken && storedRefreshToken && !user && !loading) {
-      hasAttemptedRef.current = true;
+      // Mark that we're handling auth
+      authInProgressRef.current = true;
+      
       dispatch(refreshToken())
         .unwrap()
         .then(() => {
           if (!user) {
-            dispatch(fetchCurrentUser());
+            dispatch(fetchCurrentUser())
+              .finally(() => {
+                authInProgressRef.current = false;
+              });
+          } else {
+            authInProgressRef.current = false;
           }
         })
         .catch(err => {
           console.error('Error refreshing token:', err);
           localStorage.removeItem('token');
           localStorage.removeItem('refreshToken');
+          authInProgressRef.current = false;
         });
+      
+      hasAttemptedRef.current = true;
     }
   }, [dispatch, user, loading]);
 
+  // Only fetch user if authenticated and no user loaded yet
   useEffect(() => {
-    if (isAuthenticated && !user) {
-      dispatch(fetchCurrentUser());
+    // Avoid unnecessary API calls when we already have a user
+    // or when we're not authenticated
+    if (isAuthenticated && !user && !authInProgressRef.current) {
+      authInProgressRef.current = true;
+      
+      dispatch(fetchCurrentUser())
+        .finally(() => {
+          authInProgressRef.current = false;
+        });
     }
   }, [isAuthenticated, user, dispatch]);
 
+  // Close authentication modals when user becomes authenticated
   useEffect(() => {
     if (isAuthenticated && (modal === 'signin' || modal === 'signup')) {
       closeModal();

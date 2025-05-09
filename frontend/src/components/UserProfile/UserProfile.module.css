@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.userCardWrapper {
+  width: 100%;
+  max-width: 394px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 40px;
+  max-height: 408px;
+}
+
+button {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabsContentWrapper {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .userCardWrapper {
+    margin: 40px auto;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+  }
+
+  .userCardWrapper {
+    margin-top: 0;
+  }
+
+  .tabsContentWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
