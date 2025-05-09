@@ -7,29 +7,13 @@
   max-width: 283px;
 }
 
-.label {
-  font-family: var(--base-fon);
-  font-size: 14px;
-  font-weight: 500;
-
-  display: flex;
-  align-items: center;
-
-  color: var(--gray);
-
-  font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.28px;
-}
-
 .input {
   color: #1a1a1a;
   font-family: Mulish;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 24px; /* 150% */
   letter-spacing: -0.32px;
 
   display: flex;
@@ -71,14 +55,17 @@
   font-size: 12px;
   color: var(--red);
   margin-top: 4px;
-  padding-left: 8px;
+  padding-left: 4px;
 }
 
-.formError {
+.error {
   color: var(--red);
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: -8px;
+  font-size: 12px;
+}
+
+.inputError {
+  border: 1px solid var(--red);
+  color: var(--red);
 }
 
 .passwordWrapper {
@@ -117,13 +104,13 @@
   .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 14px;
     padding-top: 40px;
     max-width: 401px;
   }
 
   .input {
+    font-size: 16px;
     display: flex;
     padding: 16px 200px 16px 18px;
     justify-content: center;
