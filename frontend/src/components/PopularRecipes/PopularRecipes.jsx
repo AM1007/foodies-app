@@ -3,7 +3,9 @@ import RecipeCardContainer from '../RecipeCardContainer/RecipeCardContainer';
 import { useSelector } from 'react-redux';
 
 const PopularRecipes = () => {
-  const { loading, error, popularRecipes } = useSelector(state => state.recipes);
+  const { loading, error, popularRecipes } = useSelector(
+    state => state.recipes,
+  );
 
   if (loading) {
     return <p className={styles.message}>Loading popular recipes...</p>;
@@ -16,7 +18,6 @@ const PopularRecipes = () => {
   }
 
   return (
-    <section className="container">
     <div className={styles.popular}>
       <h3 className={styles.title}>Popular Recipes</h3>
       <ul className={styles.list}>
@@ -27,7 +28,6 @@ const PopularRecipes = () => {
         ))}
       </ul>
     </div>
-    </section>
   );
 };
 
