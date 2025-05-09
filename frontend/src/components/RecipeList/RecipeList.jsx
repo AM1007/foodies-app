@@ -73,7 +73,9 @@ const RecipeList = ({ category = 'Recipes', categoryId = null }) => {
   return (
     <>
       <div className={styles.wrap}>
-        <RecipeFilters onFilterChange={handleFilterChange} />
+        <div className={styles.filterWrapper}>
+          <RecipeFilters onFilterChange={handleFilterChange} />
+        </div>
         <div>
           {loading && (
             <div className={styles.loaderWrapper}>
