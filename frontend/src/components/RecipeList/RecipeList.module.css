@@ -5,6 +5,12 @@
   }
 }
 
+@media screen and (min-width: 1440px) {
+  .filterWrapper {
+    width: 330px;
+  }
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
