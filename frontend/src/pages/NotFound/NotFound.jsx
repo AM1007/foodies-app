@@ -5,11 +5,7 @@ import imageNotFound from '../../icons/imageNotFound.svg';
 const NotFound = () => {
   return (
     <div className={`container ${styles.wrapper}`}>
-      <img
-        className={styles.imageNotFound}
-        src={imageNotFound}
-        alt="Not found"
-      />
+      <img className={styles.image} src={imageNotFound} alt="Not found" />
       <Link to={`/`}></Link>
     </div>
   );
