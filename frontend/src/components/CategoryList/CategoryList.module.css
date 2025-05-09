@@ -72,10 +72,14 @@
 .icon {
   width: 24px;
   height: 24px;
-  stroke: var(--white);
+  stroke: rgba(255, 255, 255, 0.7);
   fill: none;
   border-radius: 30px;
-  border: 1px solid var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.icon:hover {
+  stroke: rgba(255, 255, 255, 0.9);
 }
 
 .allCategories {
