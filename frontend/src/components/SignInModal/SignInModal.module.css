@@ -37,11 +37,10 @@
 @media (min-width: 768px) {
   .container {
     max-width: 401px;
-    width: 100%;
   }
 
   .title {
-    color: var(--black);
+    color: #050505;
     text-align: center;
     font-family: Mulish;
     font-size: 32px;

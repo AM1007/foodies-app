@@ -50,80 +50,81 @@ const SignInForm = ({ onSuccess }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, isValid, dirty }) => (
+      {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
-          <div className={styles.formGroup}>
-            <label htmlFor={emailId} className={styles.visuallyHidden}></label>
-            <div className={styles.inputWrapper}>
-              <Field
-                id={emailId}
-                name="email"
-                type="email"
-                required
-                placeholder="Email*"
-                className={styles.input}
-              />
-            </div>
-            <ErrorMessage
+          <label htmlFor={emailId} className={styles.visuallyHidden}></label>
+          <div className={styles.inputWrapper}>
+            <Field
+              id={emailId}
               name="email"
-              component="div"
-              className={styles.error}
+              type="email"
+              required
+              placeholder="Email*"
+              className={[
+                styles.input,
+                touched.email && errors.email && styles.inputError,
+              ]
+                .filter(Boolean)
+                .join(' ')}
             />
           </div>
+          <ErrorMessage name="email" component="div" className={styles.error} />
 
-          <div className={styles.formGroup}>
-            <label
-              htmlFor={passwordId}
-              className={styles.visuallyHidden}
-            ></label>
-            <div className={styles.inputWrapper}>
-              <Field
-                id={passwordId}
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                required
-                placeholder="Password*"
-                className={styles.input}
-              />
-              {showPassword ? (
-                <svg
-                  className={styles.eyeIcon}
-                  aria-hidden="true"
-                  onClick={() => setShowPassword(false)}
-                >
-                  <use href={`${icons}#eye-off`} />
-                </svg>
-              ) : (
-                <svg
-                  className={styles.eyeIcon}
-                  aria-hidden="true"
-                  onClick={() => setShowPassword(true)}
-                >
-                  <use href={`${icons}#eye`} />
-                </svg>
-              )}
-            </div>
-            <ErrorMessage
+          <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
+          <div className={styles.inputWrapper}>
+            <Field
+              id={passwordId}
               name="password"
-              component="div"
-              className={styles.error}
+              type={showPassword ? 'text' : 'password'}
+              required
+              placeholder="Password*"
+              className={[
+                styles.input,
+                touched.password && errors.password && styles.inputError,
+              ]
+                .filter(Boolean)
+                .join(' ')}
             />
+            {showPassword ? (
+              <svg
+                className={styles.eyeIcon}
+                aria-hidden="true"
+                onClick={() => setShowPassword(false)}
+              >
+                <use href={`${icons}#eye-off`} />
+              </svg>
+            ) : (
+              <svg
+                className={styles.eyeIcon}
+                aria-hidden="true"
+                onClick={() => setShowPassword(true)}
+              >
+                <use href={`${icons}#eye`} />
+              </svg>
+            )}
           </div>
+          <ErrorMessage
+            name="password"
+            component="div"
+            className={styles.error}
+          />
 
           {error && <div className={styles.error}>{error}</div>}
 
-          <Button
-            type="submit"
-            className={styles.submitButton}
-            variant={
-              !isValid || !dirty || isSubmitting || loading
-                ? 'inactive'
-                : 'dark'
-            }
-            disabled={!isValid || !dirty || isSubmitting || loading}
-          >
-            {loading || isSubmitting ? 'Signing in...' : 'Sign in'}
-          </Button>
+          <div className={styles.buttonWrapper}>
+            <Button
+              type="submit"
+              className={styles.submitButton}
+              variant={
+                !isValid || !dirty || isSubmitting || loading
+                  ? 'inactive'
+                  : 'dark'
+              }
+              disabled={!isValid || !dirty || isSubmitting || loading}
+            >
+              {loading || isSubmitting ? 'Signing in...' : 'Sign in'}
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>
