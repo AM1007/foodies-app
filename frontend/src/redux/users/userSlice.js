@@ -120,11 +120,17 @@ export const unfollowUser = createAsyncThunk(
   'user/unfollowUser',
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axiosAPI.post(`/users/${userId}/unfollow`);
-      return res.data;
-    } catch (error) {
+      console.log(`Sending unfollow request for user ${userId}`);
+      const res = await axiosAPI.post(`/users/${userId}/unfollow`);
+      console.log('Unfollow response:', res.data);
+      return {
+        userId,
+        response: res.data,
+      };
+    } catch (err) {
+      console.error('Error in unfollowUser action:', err.response || err);
       return rejectWithValue(
-        error.response?.data?.message || 'Failed to unfollow user',
+        err.response?.data?.message || 'Failed to unfollow user',
       );
     }
   },
@@ -215,9 +221,10 @@ const userSlice = createSlice({
       })
 
       .addCase(unfollowUser.fulfilled, (state, action) => {
-        state.following = state.following.filter(
-          user => user._id !== action.meta.arg,
-        );
+        state.following = state.following.filter(user => {
+          const userId = action.payload.userId;
+          return user._id !== userId && user.id !== userId;
+        });
       });
   },
 });

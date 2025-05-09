@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
@@ -55,14 +55,61 @@ const Profile = () => {
   const [uniqueFollowing, setUniqueFollowing] = useState([]);
 
   const [localFollowingIds, setLocalFollowingIds] = useState([]);
+  const recentlyFollowedIds = useRef([]);
+  const recentlyUnfollowedIds = useRef([]);
 
   const [localFavoritesCount, setLocalFavoritesCount] = useState(0);
   const [localFollowingCount, setLocalFollowingCount] = useState(0);
   const [localFollowersCount, setLocalFollowersCount] = useState(0);
 
+  const needToUpdateFollowingRef = useRef(false);
+
+  const updateUniqueFollowing = useCallback(() => {
+    if (!following || !Array.isArray(following)) return;
+
+    let mappedFollowing = following.map(followingUser => ({
+      ...followingUser,
+      id: followingUser.id || followingUser._id,
+      name: followingUser.name || 'User',
+      avatar: followingUser.avatar || null,
+      recipes: followingUser.recipes || [],
+    }));
+
+    mappedFollowing = mappedFollowing.filter(
+      user =>
+        !recentlyUnfollowedIds.current.includes(user.id) &&
+        !recentlyUnfollowedIds.current.includes(user._id),
+    );
+
+    let followersToAdd = [];
+    if (uniqueFollowers && uniqueFollowers.length > 0) {
+      followersToAdd = uniqueFollowers.filter(
+        follower =>
+          (recentlyFollowedIds.current.includes(follower.id) ||
+            recentlyFollowedIds.current.includes(follower._id)) &&
+          !mappedFollowing.some(
+            f => f.id === follower.id || f._id === follower._id,
+          ),
+      );
+    }
+
+    setUniqueFollowing([...mappedFollowing, ...followersToAdd]);
+
+    needToUpdateFollowingRef.current = false;
+  }, [following, uniqueFollowers]);
+
   useEffect(() => {
     setActiveTab(isOwnProfile ? 'my-recipes' : 'recipes');
   }, [location.pathname, isOwnProfile]);
+
+  useEffect(() => {
+    if (
+      activeTab === 'following' &&
+      (following || needToUpdateFollowingRef.current)
+    ) {
+      updateUniqueFollowing();
+    }
+  }, [activeTab, following, updateUniqueFollowing]);
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
@@ -86,7 +133,6 @@ const Profile = () => {
         .map(user => user._id || user.id)
         .filter(Boolean);
       setLocalFollowingIds(followingIds);
-
       setLocalFollowingCount(following.length);
     }
   }, [following]);
@@ -141,57 +187,79 @@ const Profile = () => {
 
       setUniqueFollowers(mappedFollowers);
     }
-
-    if (activeTab === 'following' && following) {
-      const mappedFollowing = Array.isArray(following)
-        ? following.map(followingUser => ({
-            ...followingUser,
-            id: followingUser.id || followingUser._id,
-            name: followingUser.name || 'User',
-            avatar: followingUser.avatar || null,
-            recipes: followingUser.recipes || [],
-          }))
-        : [];
-
-      setUniqueFollowing(mappedFollowing);
-    }
-  }, [followers, following, activeTab]);
+  }, [followers, activeTab]);
 
   const handleFollowToggle = useCallback(
     (userId, shouldFollow) => {
+      console.log(
+        `Profile handling follow toggle: ${userId}, should follow: ${shouldFollow}`,
+      );
+
       if (shouldFollow) {
-        setLocalFollowingIds(prev => [...prev, userId]);
+        setLocalFollowingIds(prev => {
+          if (!prev.includes(userId)) {
+            return [...prev, userId];
+          }
+          return prev;
+        });
+
+        recentlyFollowedIds.current = [...recentlyFollowedIds.current, userId];
+
+        recentlyUnfollowedIds.current = recentlyUnfollowedIds.current.filter(
+          id => id !== userId,
+        );
 
         setLocalFollowingCount(prev => prev + 1);
+
+        needToUpdateFollowingRef.current = true;
 
         dispatch(followUser(userId))
           .unwrap()
           .then(() => {
             console.log(`Successfully followed user ${userId}`);
+            dispatch(fetchFollowing());
           })
           .catch(error => {
             console.error(`Failed to follow user ${userId}:`, error);
-      
+
             setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-       
+
+            recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
+              id => id !== userId,
+            );
+
             setLocalFollowingCount(prev => Math.max(0, prev - 1));
           });
       } else {
-        
         setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-       
+
+        recentlyUnfollowedIds.current = [
+          ...recentlyUnfollowedIds.current,
+          userId,
+        ];
+
+        recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
+          id => id !== userId,
+        );
+
         setLocalFollowingCount(prev => Math.max(0, prev - 1));
+
+        needToUpdateFollowingRef.current = true;
 
         dispatch(unfollowUser(userId))
           .unwrap()
           .then(() => {
             console.log(`Successfully unfollowed user ${userId}`);
+            dispatch(fetchFollowing());
           })
           .catch(error => {
             console.error(`Failed to unfollow user ${userId}:`, error);
-            
+
             setLocalFollowingIds(prev => [...prev, userId]);
-            
+
+            recentlyUnfollowedIds.current =
+              recentlyUnfollowedIds.current.filter(id => id !== userId);
+
             setLocalFollowingCount(prev => prev + 1);
           });
       }
@@ -199,16 +267,22 @@ const Profile = () => {
     [dispatch],
   );
 
-  
   const handleUnfollowFromList = useCallback(
     (userId, shouldFollow) => {
       if (!shouldFollow) {
-        
         setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-        
+
+        recentlyUnfollowedIds.current = [
+          ...recentlyUnfollowedIds.current,
+          userId,
+        ];
+
+        recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
+          id => id !== userId,
+        );
+
         setLocalFollowingCount(prev => Math.max(0, prev - 1));
 
-      
         setUniqueFollowing(prev =>
           prev.filter(user => user.id !== userId && user._id !== userId),
         );
@@ -217,14 +291,17 @@ const Profile = () => {
           .unwrap()
           .then(() => {
             console.log(`Successfully unfollowed user ${userId}`);
+            dispatch(fetchFollowing());
           })
           .catch(error => {
             console.error(`Failed to unfollow user ${userId}:`, error);
-            
+
             setLocalFollowingIds(prev => [...prev, userId]);
-         
+
+            recentlyUnfollowedIds.current =
+              recentlyUnfollowedIds.current.filter(id => id !== userId);
+
             setLocalFollowingCount(prev => prev + 1);
-            
           });
       }
     },
@@ -232,7 +309,6 @@ const Profile = () => {
   );
 
   const profileUser = isOwnProfile ? current : selected;
-
 
   const followersCount = localFollowersCount;
   const followingCount = localFollowingCount;

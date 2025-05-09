@@ -37,16 +37,9 @@ const ListItems = ({
   const [localItems, setLocalItems] = useState(processedItems);
   const [deletingItemIds, setDeletingItemIds] = useState([]);
 
-  const [localFollowingIdsState, setLocalFollowingIdsState] =
-    useState(localFollowingIds);
-
   useEffect(() => {
     setLocalItems(processedItems);
   }, [processedItems]);
-
-  useEffect(() => {
-    setLocalFollowingIdsState(localFollowingIds);
-  }, [localFollowingIds]);
 
   const displayItems = localItems;
 
@@ -109,21 +102,10 @@ const ListItems = ({
         `Toggle follow for user ${userId}, shouldFollow: ${shouldFollow}`,
       );
 
-      if (shouldFollow) {
-        setLocalFollowingIdsState(prev => {
-          if (!prev.includes(userId)) {
-            return [...prev, userId];
-          }
-          return prev;
-        });
-      } else {
-        setLocalFollowingIdsState(prev => prev.filter(id => id !== userId));
-
-        if (activeTab === 'following') {
-          setLocalItems(prevItems =>
-            prevItems.filter(user => user.id !== userId && user._id !== userId),
-          );
-        }
+      if (activeTab === 'following' && !shouldFollow) {
+        setLocalItems(prevItems =>
+          prevItems.filter(user => user.id !== userId && user._id !== userId),
+        );
       }
 
       if (onFollowToggle && typeof onFollowToggle === 'function') {
@@ -173,7 +155,8 @@ const ListItems = ({
 
           const isFollowedByMe =
             activeTab === 'following' ||
-            localFollowingIdsState.includes(userId);
+            (Array.isArray(localFollowingIds) &&
+              localFollowingIds.includes(userId));
 
           return (
             <UserPreview
@@ -181,7 +164,7 @@ const ListItems = ({
               user={user}
               activeTab={activeTab}
               isFollowedByMe={isFollowedByMe}
-              localFollowingIds={localFollowingIdsState}
+              localFollowingIds={localFollowingIds}
               onFollowToggle={handleUserFollowToggle}
             />
           );
