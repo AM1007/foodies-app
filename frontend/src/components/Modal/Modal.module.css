@@ -20,6 +20,12 @@
   fill: none;
   stroke: var(--black);
 }
+
+.closeIcon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
 .closeButton {
   position: absolute;
   top: 1rem;
