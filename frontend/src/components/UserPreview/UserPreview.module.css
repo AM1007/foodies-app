@@ -24,6 +24,12 @@
   width: 60px;
 }
 
+.unfollowHover {
+  color: white !important;
+
+  opacity: 1 !important;
+}
+
 @media (min-width: 768px) {
   .recipeImageContainer {
     display: flex;

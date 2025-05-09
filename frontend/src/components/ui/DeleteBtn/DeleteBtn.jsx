@@ -1,12 +1,13 @@
 import css from './DeleteBtn.module.css';
 
-function DeleteBtn({ onClick, ariaLabel = 'Delete recipe' }) {
+function DeleteBtn({ onClick, ariaLabel = 'Delete recipe', disabled = false }) {
   return (
     <button
       type="button"
-      className={css.deleteBtn}
+      className={`${css.deleteBtn} ${disabled ? css.disabled : ''}`}
       onClick={onClick}
       aria-label={ariaLabel}
+      disabled={disabled}
     >
       <svg viewBox="0 0 24 20" fill="none">
         <path
