@@ -8,34 +8,34 @@ import App from './App.jsx';
 import { ModalProvider } from './context/ModalProvider.jsx';
 import store from '../src/redux/store.js';
 
-window.onerror = function (message, source, lineno, colno, error) {
-  const errorLog = {
-    message,
-    source,
-    lineno,
-    colno,
-    stack: error?.stack || 'No stack trace',
-    time: new Date().toISOString(),
-  };
+// window.onerror = function (message, source, lineno, colno, error) {
+//   const errorLog = {
+//     message,
+//     source,
+//     lineno,
+//     colno,
+//     stack: error?.stack || 'No stack trace',
+//     time: new Date().toISOString(),
+//   };
 
-  const logs = JSON.parse(localStorage.getItem('error_logs') || '[]');
-  logs.push(errorLog);
-  localStorage.setItem('error_logs', JSON.stringify(logs));
+//   const logs = JSON.parse(localStorage.getItem('error_logs') || '[]');
+//   logs.push(errorLog);
+//   localStorage.setItem('error_logs', JSON.stringify(logs));
 
-  return false;
-};
+//   return false;
+// };
 
-window.addEventListener('unhandledrejection', function (event) {
-  const errorLog = {
-    message: `Unhandled Promise Rejection: ${event.reason}`,
-    stack: event.reason?.stack || 'No stack trace',
-    time: new Date().toISOString(),
-  };
+// window.addEventListener('unhandledrejection', function (event) {
+//   const errorLog = {
+//     message: `Unhandled Promise Rejection: ${event.reason}`,
+//     stack: event.reason?.stack || 'No stack trace',
+//     time: new Date().toISOString(),
+//   };
 
-  const logs = JSON.parse(localStorage.getItem('error_logs') || '[]');
-  logs.push(errorLog);
-  localStorage.setItem('error_logs', JSON.stringify(logs));
-});
+//   const logs = JSON.parse(localStorage.getItem('error_logs') || '[]');
+//   logs.push(errorLog);
+//   localStorage.setItem('error_logs', JSON.stringify(logs));
+// });
 
 console.info(
   '%c ',

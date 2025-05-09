@@ -49,7 +49,7 @@ export default function Categories() {
               text={selectedCategory || 'Recipes'}
             />
             <Subtitle
-              className={styles.title}
+              className={styles.subTitle}
               text="Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires."
             />
             <RecipeList
