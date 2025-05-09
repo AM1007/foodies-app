@@ -43,24 +43,37 @@
   text-transform: uppercase;
   color: var(--black);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.5s ease;
   margin-bottom: 32px;
+}
+.addIngredientButton svg{
+  
+  stroke: var(--black);
 }
 
 .addIngredientButton:hover {
   color: var(--white);
   background-color: var(--black);
 }
+.addIngredientButton:hover svg {
+  transition: stroke 0.5s ease;
+  stroke: var(--white);
+}
 
 .addIngredientButton:disabled {
   cursor: not-allowed;
 }
 
-.plusIcon {
-  width: 20px;
-  height: 20px;
+.addIngredientButton:disabled:hover {
+  background-color: var(--gray);
 }
 
+.errorMessage {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
 @media screen and (max-width: 767px) {
   .ingredientsContainer {
     grid-template-columns: 1fr;
@@ -81,7 +94,7 @@
     line-height: 1.5;
     letter-spacing: -0.32px;
   }
-  .plusIcon {
+  .addIngredientButton svg {
     width: 22px;
     height: 22px;
   }
