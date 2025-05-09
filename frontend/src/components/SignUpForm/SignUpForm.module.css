@@ -68,6 +68,11 @@
   color: var(--red);
 }
 
+.inputError:focus,
+.inputError:not(:placeholder-shown) {
+  border-color: var(--red) !important;
+}
+
 .passwordWrapper {
   position: relative;
   width: 100%;

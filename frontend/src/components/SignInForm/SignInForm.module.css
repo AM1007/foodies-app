@@ -39,6 +39,11 @@
   color: var(--red);
 }
 
+.inputError:focus,
+.inputError:not(:placeholder-shown) {
+  border-color: var(--red) !important;
+}
+
 .inputWrapper {
   position: relative;
 }
