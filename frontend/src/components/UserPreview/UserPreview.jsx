@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import css from './UserPreview.module.css';
 import UserAvatar from '../ui/UserAvatar/UserAvatar';
 import Button from '../Button/Button';
@@ -7,22 +8,51 @@ import ArrowBtn from '../ui/ArrowBtn/ArrowBtn';
 
 const UserPreview = ({
   user = {},
-  isFollowingInitial = false,
+  activeTab,
   onFollowToggle,
 }) => {
-  const [isFollowing, setIsFollowing] = useState(isFollowingInitial);
+  const navigate = useNavigate();
+  const currentUser = useSelector(state => state.user.current);
+  
+  const initialFollowState = activeTab === 'following' ? true : false;
+  const [isFollowing, setIsFollowing] = useState(initialFollowState);
 
   const { name = 'User', avatar, id, _id, recipes = [] } = user;
-  const userId = id || _id;
-
+  const userId = id || _id; 
+  
+  
+  const isCurrentUser = currentUser && 
+    (currentUser._id === userId || currentUser.id === userId);
+  
+  
   const safeAvatar =
     typeof avatar === 'string'
       ? avatar.replace(/^"|"$/g, '') || 'default_avatar_url_here'
       : 'default_avatar_url_here';
 
+  
+  useEffect(() => {
+    setIsFollowing(activeTab === 'following');
+  }, [activeTab]);
+
   const handleFollowToggle = () => {
-    setIsFollowing(!isFollowing);
-    if (onFollowToggle) onFollowToggle(userId, !isFollowing);
+    
+    const newFollowState = !isFollowing;
+    setIsFollowing(newFollowState);
+    
+    
+    if (onFollowToggle) {
+      onFollowToggle(userId, newFollowState);
+    }
+  };
+  
+  
+  const handleUserClick = (e) => {
+    
+    if (isCurrentUser) {
+      e.preventDefault(); 
+      navigate('/users/current');
+    }
   };
 
   if (!userId) {
@@ -32,10 +62,14 @@ const UserPreview = ({
 
   return (
     <div className={css.card}>
-      <Link to={`/users/${userId}`} className={css.info}>
-        <UserAvatar
-          src={safeAvatar}
-          alt={`${name}'s avatar`}
+      <Link 
+        to={isCurrentUser ? '/users/current' : `/users/${userId}`} 
+        className={css.info}
+        onClick={handleUserClick}
+      >
+        <UserAvatar 
+          src={safeAvatar} 
+          alt={`${name}'s avatar`} 
           showUpload={false}
           isOwnProfile={false}
           className={css.userPreviewAvatar}
@@ -46,13 +80,15 @@ const UserPreview = ({
         <h3 className={css.name}>{name}</h3>
         <p className={css.recipesCount}>Own recipes: {recipes.length}</p>
 
-        <Button
-          type="button"
-          onClick={handleFollowToggle}
-          variant={isFollowing ? 'inactive' : 'dark'}
-        >
-          {isFollowing ? 'Following' : 'Follow'}
-        </Button>
+        {!isCurrentUser && (
+          <Button 
+            type="button" 
+            onClick={handleFollowToggle}
+            variant={isFollowing ? 'inactive' : 'dark'}
+          >
+            {isFollowing ? 'Following' : 'Follow'}
+          </Button>
+        )}
       </div>
 
       <div className={css.recipeImageContainer}>
@@ -71,7 +107,11 @@ const UserPreview = ({
         ))}
       </div>
 
-      <ArrowBtn to={`/users/${userId}`} ariaLabel={`Go to ${name}'s profile`} />
+      <ArrowBtn 
+        to={isCurrentUser ? '/users/current' : `/users/${userId}`} 
+        ariaLabel={`Go to ${name}'s profile`}
+        onClick={handleUserClick}
+      />
     </div>
   );
 };
