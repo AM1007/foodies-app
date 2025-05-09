@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import {
   addToFavorites,
   removeFromFavorites,
+  fetchFavoriteRecipes, 
 } from '../../redux/recipes/recipesSlice';
 import { useModal } from '../../hooks/useModal';
 import styles from './RecipePreparation.module.css';
@@ -10,46 +10,55 @@ import styles from './RecipePreparation.module.css';
 const RecipePreparation = ({ preparation = '', recipeId }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(state => state.auth);
-  const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
+  const favoriteRecipesFromState = useSelector(state => state.recipes.favoriteRecipes);
   const { openModal } = useModal();
 
-  const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
+  const favoriteRecipes = Array.isArray(favoriteRecipesFromState)
+    ? favoriteRecipesFromState
+    : (favoriteRecipesFromState?.data || []);
 
-  useEffect(() => {
-    const isFavoriteInList =
-      Array.isArray(favoriteRecipes) &&
-      favoriteRecipes.some(
-        fav => fav?._id === recipeId || fav?.id === recipeId,
-      );
-    setIsRecipeFavorite(isFavoriteInList);
-  }, [favoriteRecipes, recipeId]);
+  const isRecipeFavorite = favoriteRecipes.some(
+    fav => fav?._id === recipeId || fav?.id === recipeId
+  );
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e) => {
+    e.preventDefault?.();
+    e.stopPropagation?.();
+
     if (!isAuthenticated) {
       openModal('signin');
       return;
     }
+
     if (isRecipeFavorite) {
-      dispatch(removeFromFavorites(recipeId));
+      dispatch(removeFromFavorites(recipeId)).then(() => {
+        dispatch(fetchFavoriteRecipes()); 
+      });
     } else {
-      dispatch(addToFavorites(recipeId));
+      dispatch(addToFavorites(recipeId)).then(() => {
+        dispatch(fetchFavoriteRecipes()); 
+      });
     }
   };
 
   const paragraphs = preparation ? preparation.split('\n\n') : [];
 
   return (
-      <div className={styles.wrapper}>
-        <h3 className={styles.title}>Recipe Preparation</h3>
-        {paragraphs.map((para, index) => (
-          <p key={index} className={styles.text}>
-            {para}
-          </p>
-        ))}
-        <button onClick={handleToggleFavorite} className={styles.favoriteBtn}>
-          {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        </button>
-      </div>
+    <div className={styles.wrapper}>
+      <h3 className={styles.title}>Recipe Preparation</h3>
+      {paragraphs.map((para, index) => (
+        <p key={index} className={styles.text}>
+          {para}
+        </p>
+      ))}
+      <button
+        type="button"
+        onClick={handleToggleFavorite}
+        className={styles.favoriteBtn}
+      >
+        {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      </button>
+    </div>
   );
 };
 
