@@ -25,6 +25,25 @@
   width: 100%;
 }
 
+.input:focus {
+  outline: none;
+  border: 1px solid var(--black);
+}
+
+.input:not(:placeholder-shown) {
+  border: 1px solid var(--black);
+}
+
+.inputError {
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.inputError:focus,
+.inputError:not(:placeholder-shown) {
+  border-color: var(--red) !important;
+}
+
 .inputWrapper {
   position: relative;
 }
@@ -42,10 +61,39 @@
   stroke: var(--black);
 }
 
-.closeButton {
+.error {
+  font-size: 12px;
+  color: var(--red);
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+.error {
+  color: var(--red);
+  font-size: 12px;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.passwordToggle {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--gray);
+  transition: color 0.3s;
+}
+
+.buttonWrapper {
+  margin-top: 16px;
+  width: 100%;
 }
 
 .submitButton {
@@ -57,29 +105,17 @@
   line-height: 20px;
 }
 
-.inputWrapper {
-  width: 100%;
-}
-
-.input:focus {
-  outline: none;
-  border: 1px solid #050505;
-}
-
-.input:not(:placeholder-shown) {
-  border: 1px solid #050505;
-}
-
 @media (min-width: 768px) {
   .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 14px;
     padding-top: 40px;
     max-width: 401px;
   }
+
   .input {
+    font-size: 16px;
     display: flex;
     padding: 16px 200px 16px 18px;
     justify-content: center;
@@ -87,6 +123,7 @@
     gap: 225px;
     width: 100%;
   }
+
   .submitButton {
     padding: 14px 115px;
     font-size: 16px;

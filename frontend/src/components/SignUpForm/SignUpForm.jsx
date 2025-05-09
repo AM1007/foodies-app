@@ -55,7 +55,7 @@ export default function SignUpForm({ onSuccess }) {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, isValid, dirty }) => (
+      {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
           <label htmlFor={nameId} className={styles.visuallyHidden}></label>
           <div className={styles.inputWrapper}>
@@ -63,8 +63,13 @@ export default function SignUpForm({ onSuccess }) {
               id={nameId}
               name="name"
               required
-              className={styles.input}
               placeholder="Name*"
+              className={[
+                styles.input,
+                touched.name && errors.name && styles.inputError,
+              ]
+                .filter(Boolean)
+                .join(' ')}
             />
           </div>
           <ErrorMessage name="name" component="div" className={styles.error} />
@@ -77,7 +82,12 @@ export default function SignUpForm({ onSuccess }) {
               type="email"
               required
               placeholder="Email*"
-              className={styles.input}
+              className={[
+                styles.input,
+                touched.email && errors.email && styles.inputError,
+              ]
+                .filter(Boolean)
+                .join(' ')}
             />
           </div>
           <ErrorMessage name="email" component="div" className={styles.error} />
@@ -90,7 +100,12 @@ export default function SignUpForm({ onSuccess }) {
               type={showPassword ? 'text' : 'password'}
               required
               placeholder="Password*"
-              className={styles.input}
+              className={[
+                styles.input,
+                touched.password && errors.password && styles.inputError,
+              ]
+                .filter(Boolean)
+                .join(' ')}
             />
             {showPassword ? (
               <svg

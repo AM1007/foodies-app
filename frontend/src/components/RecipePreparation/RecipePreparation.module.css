@@ -1,12 +1,5 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 551px;
-}
-/* .wrap {
-  padding: 0;
-} */
+
+
 .title {
   font-size: 18px;
   font-weight: 800;
@@ -49,6 +42,8 @@
   color: var(--white);
   border-color: var(--black);
 }
+
+
 @media (min-width: 768px) {
   .wrapper{
     max-width: 704px;
