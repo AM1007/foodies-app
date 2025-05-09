@@ -22,6 +22,25 @@
   height: 20px;
   fill: var(--black);
 }
+
+.socialLink:hover,
+.socialLink:focus {
+  background-color: var(--dark-gray);
+  border-color: var(--white);
+  transform: scale(1.05);
+}
+
+.socialLink:hover svg,
+.socialLink:focus svg {
+  fill: var(--white);
+}
+
+.socialLink svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--black);
+}
+
 @media (min-width: 768px) {
   .socialList {
     gap: 16px;
