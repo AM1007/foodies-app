@@ -10,9 +10,13 @@ function UserAvatar({
   isOwnProfile = true,
   showUpload = true,
   className = '',
+  src = null,
+  alt = 'User avatar',
 }) {
   const dispatch = useDispatch();
-  const avatar = useSelector(state => state.user.current?.avatar);
+  const currentUserAvatar = useSelector(state => state.user.current?.avatar);
+
+  const avatarSrc = src || (isOwnProfile ? currentUserAvatar : null);
 
   const handleAvatarChange = async e => {
     const file = e.target.files[0];
@@ -39,10 +43,10 @@ function UserAvatar({
   return (
     <div className={css.avatarOuterWrapper}>
       <div className={`${css.avatarWrapper} ${avatarClass}`}>
-        {avatar ? (
+        {avatarSrc ? (
           <img
-            src={avatar}
-            alt="User avatar"
+            src={avatarSrc}
+            alt={alt}
             className={`${css.avatarImage} ${className}`}
           />
         ) : (

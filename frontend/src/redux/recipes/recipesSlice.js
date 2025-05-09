@@ -46,10 +46,23 @@ export const fetchUserRecipes = createAsyncThunk(
   'recipes/fetchUserRecipes',
   async (userId, { rejectWithValue }) => {
     try {
+      console.log(`Fetching recipes for user ID ${userId}`);
       const response = await axiosAPI.get(`/users/${userId}`);
+      console.log('User recipes response:', response.data);
 
-      return response.data.recipes;
+      if (response.data.recipes) {
+        return response.data.recipes;
+      } else if (response.data.user && response.data.user.recipes) {
+        return response.data.user.recipes;
+      } else {
+        console.warn(
+          'Unexpected API response format for user recipes:',
+          response.data,
+        );
+        return [];
+      }
     } catch (err) {
+      console.error('Error fetching user recipes:', err);
       return rejectWithValue(
         err.response?.data?.message || 'Failed to fetch user recipes',
       );
@@ -205,16 +218,18 @@ const recipesSlice = createSlice({
 
       .addCase(fetchUserRecipes.pending, state => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchUserRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-
+        console.log('Setting user recipes:', action.payload);
         state.userRecipes = action.payload;
       })
       .addCase(fetchUserRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        state.userRecipes = [];
       })
 
       .addCase(fetchPopularRecipes.pending, state => {
