@@ -7,23 +7,21 @@ import Loader from '../../components/Loader/Loader';
 import RecipeFilters from '../../components/RecipeFilters/RecipeFilters';
 import RecipePagination from '../../components/RecipePagination/RecipePagination';
 
-const RecipeList = ({ category = 'Recipes', categoryId = null }) => {
+const RecipeList = ({ categoryId = null }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [filters, setFilters] = useState({
-    category: categoryId, // Використовуємо ID категорії замість назви
+    category: categoryId,
     ingredient: '',
-    region: '',
+    area: '',
   });
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setWindowWidth(width);
       setItemsPerPage(width >= 768 ? 12 : 8);
     };
 
@@ -45,9 +43,9 @@ const RecipeList = ({ category = 'Recipes', categoryId = null }) => {
     dispatch(
       fetchRecipes({
         page: currentPage,
-        category: filters.category, // Тепер тут передається ID категорії
+        category: filters.category,
         ingredient: filters.ingredient,
-        region: filters.region,
+        area: filters.area,
       }),
     );
   }, [dispatch, currentPage, filters]);
