@@ -39,12 +39,7 @@ export default function Categories() {
               onClick={handleBackToCategories}
               className={styles.backButton}
             >
-              <svg
-                className={styles.backIcon}
-                width="18"
-                height="18"
-                aria-hidden="true"
-              >
+              <svg className={styles.backIcon} aria-hidden="true">
                 <use href={`${icons}#icon-back`} />
               </svg>
               <span className={styles.backButtonText}>Back</span>

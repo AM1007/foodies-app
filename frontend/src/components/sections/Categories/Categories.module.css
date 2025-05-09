@@ -30,14 +30,37 @@
 }
 
 .backButton {
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
   border: none;
-  border-radius: 30px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .backButton {
+    font-size: 14px;
+  }
+}
+
+.backIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .backIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.backButtonText {
+  margin-left: 6px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
