@@ -1,6 +1,14 @@
 .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 375px;
   width: 100%;
+  padding: 150px 0;
+}
+
+.image {
+  width: 300px;
 }
 
 @media (min-width: 768px) {
@@ -8,14 +16,18 @@
     max-width: 704px;
     width: 100%;
   }
+
+  .image {
+    width: 400px;
+  }
 }
 @media (min-width: 1440px) {
   .wrapper {
     max-width: 1280px;
     width: 100%;
   }
-  .imageNotFound {
-    width: 50%;
-    padding-left: 80px;
+
+  .image {
+    width: 520px;
   }
 }
