@@ -39,7 +39,6 @@ const RecipePreparation = ({ preparation = '', recipeId }) => {
   const paragraphs = preparation ? preparation.split('\n\n') : [];
 
   return (
-    <section className="container">
       <div className={styles.wrapper}>
         <h3 className={styles.title}>Recipe Preparation</h3>
         {paragraphs.map((para, index) => (
@@ -51,7 +50,6 @@ const RecipePreparation = ({ preparation = '', recipeId }) => {
           {isRecipeFavorite ? 'Remove from favorites' : 'Add to favorites'}
         </button>
       </div>
-    </section>
   );
 };
 
