@@ -6,6 +6,7 @@ import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button.jsx';
 import styles from './SignUpForm.module.css';
+import { toast } from 'react-hot-toast';
 
 export default function SignUpForm({ onSuccess }) {
   const dispatch = useDispatch();
@@ -40,10 +41,10 @@ export default function SignUpForm({ onSuccess }) {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await dispatch(registerUser(values)).unwrap();
-      console.log('You have successfully signed up!');
+      toast.success('You have successfully signed up!');
       setTimeout(() => onSuccess(), 1000);
     } catch {
-      console.log(error || 'Something went wrong');
+      toast.error(error || 'Something went wrong');
     } finally {
       setSubmitting(false);
     }
