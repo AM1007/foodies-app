@@ -287,6 +287,11 @@ const recipesSlice = createSlice({
       })
       .addCase(addToFavorites.fulfilled, (state, action) => {
         state.loading = false;
+
+        if (!Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = [];
+        }
+
         state.favoriteRecipes.push(action.payload);
       })
       .addCase(addToFavorites.rejected, (state, action) => {
@@ -299,25 +304,37 @@ const recipesSlice = createSlice({
       })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {
         state.loading = false;
-        state.favoriteRecipes = state.favoriteRecipes.filter(
-          recipe => recipe._id !== action.payload,
-        );
+
+        if (Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = state.favoriteRecipes.filter(
+            recipe =>
+              recipe._id !== action.payload && recipe.id !== action.payload,
+          );
+        }
       })
       .addCase(removeFromFavorites.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      .addCase(fetchFavoriteRecipes.pending, state => {
-        state.loading = true;
-      })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.favoriteRecipes = action.payload;
-      })
-      .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+
+        if (Array.isArray(action.payload)) {
+          state.favoriteRecipes = action.payload;
+        } else if (
+          action.payload &&
+          action.payload.data &&
+          Array.isArray(action.payload.data)
+        ) {
+          state.favoriteRecipes = action.payload.data;
+        } else {
+          state.favoriteRecipes = [];
+          console.warn(
+            'Unexpected format for favorite recipes:',
+            action.payload,
+          );
+        }
       });
   },
 });
