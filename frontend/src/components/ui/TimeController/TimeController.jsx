@@ -7,7 +7,7 @@ const presetOptions = [10, 20, 40, 60];
 const TimeController = ({ 
   value, 
   onChange, 
-  minTime = 5, 
+  minTime = 1, 
   maxTime = 180, 
   step = 1, 
   label = 'Cooking Time',
@@ -106,7 +106,7 @@ const TimeController = ({
           onClick={increaseTime}
           disabled={localValue >= maxTime}
         >
-          <svg className={styles.controlBtn}>
+          <svg fill='none'>
             <use href={`${icons}#plus`}/>
           </svg>
         </button>

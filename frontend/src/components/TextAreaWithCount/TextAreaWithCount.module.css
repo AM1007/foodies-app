@@ -38,10 +38,6 @@
   position: relative;
 }
 
-.errorInput {
-  border-bottom: 1px solid var(--red) !important;
-}
-
 .textarea::placeholder {
   color: var(--gray);
 }

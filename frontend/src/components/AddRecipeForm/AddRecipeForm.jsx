@@ -32,10 +32,7 @@ const schema = yup.object().shape({
     .required('Description is required')
     .max(200, 'Description cannot exceed 200 characters'),
   categoryId: yup.string().required('Category is required'),
-  time: yup
-    .number()
-    .required('Cooking time is required')
-    .min(1, 'Minimum cooking time is 1 minute'),
+  time: yup.number().required('Cooking time is required'),
   instructions: yup
     .string()
     .required('Recipe instructions are required')
@@ -57,6 +54,7 @@ const AddRecipeForm = () => {
 
   const [recipeIngredients, setRecipeIngredients] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ingredientsError, setIngredientsError] = useState(null);
 
   const {
     register,
@@ -87,6 +85,12 @@ const AddRecipeForm = () => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (recipeIngredients.length > 0) {
+      setIngredientsError(null);
+    }
+  }, [recipeIngredients]);
+
   const handlePhotoChange = file => {
     setValue('photo', file);
   };
@@ -100,7 +104,7 @@ const AddRecipeForm = () => {
         );
 
         if (isAlreadyAdded) {
-          console.log('This ingredient is already added');
+          console.warn('This ingredient is already added');
           return false;
         }
 
@@ -109,23 +113,28 @@ const AddRecipeForm = () => {
           ingredientId,
           name: ingredient.name,
           amount: quantity,
-          image: ingredient.thumb || ingredient.image || '/placeholder.png',
+          img: ingredient.thumb || ingredient.img || '/placeholder.png',
         };
 
         setRecipeIngredients(prevIngredients => [
           ...prevIngredients,
           newIngredient,
         ]);
+
+        setIngredientsError(null);
+
         return true;
       }
     } else {
-      console.log('Please select an ingredient and specify the quantity');
+      console.warn('Please select an ingredient and specify the quantity');
     }
     return false;
   };
 
   const handleRemoveIngredient = id => {
-    setRecipeIngredients(recipeIngredients.filter(ing => ing.id !== id));
+    setRecipeIngredients(prevIngredients =>
+      prevIngredients.filter(ing => ing.id !== id),
+    );
   };
 
   const resetForm = () => {
@@ -138,11 +147,12 @@ const AddRecipeForm = () => {
       photo: null,
     });
     setRecipeIngredients([]);
+    setIngredientsError(null);
   };
 
   const onSubmit = async data => {
     if (recipeIngredients.length === 0) {
-      console.log('Please add at least one ingredient');
+      setIngredientsError('At least one ingredient is required');
       return;
     }
 
@@ -169,11 +179,10 @@ const AddRecipeForm = () => {
         navigate('/user');
       } else if (createRecipe.rejected.match(resultAction)) {
         const errorMessage = resultAction.payload || 'Failed to create recipe';
-        console.log(`Error: ${errorMessage}`);
+        console.error(`Error: ${errorMessage}`);
       }
     } catch (error) {
       console.error('Error creating recipe:', error);
-      console.log(`Error: ${error.message || 'Failed to create recipe'}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -250,6 +259,9 @@ const AddRecipeForm = () => {
           ingredients={ingredients}
           onAddIngredient={handleAddIngredient}
         />
+        {ingredientsError && (
+          <p className={styles.errorMessage}>{ingredientsError}</p>
+        )}
 
         {/* Recipe Ingredients */}
         {recipeIngredients.length > 0 && (

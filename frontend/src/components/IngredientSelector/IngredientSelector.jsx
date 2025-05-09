@@ -6,7 +6,8 @@ import icons from '../../icons/sprite.svg';
 
 const IngredientSelector = ({ 
   ingredients, 
-  onAddIngredient 
+  onAddIngredient ,
+  error,
 }) => {
   const [selectedIngredient, setSelectedIngredient] = useState('');
   const [ingredientQuantity, setIngredientQuantity] = useState('');
@@ -49,8 +50,10 @@ const IngredientSelector = ({
         className={styles.addIngredientButton}
         onClick={handleAddIngredient}
       >
-        Add ingredient<span className={styles.plusIcon}><svg width={20} height={20} fill='none'><use href={`${icons}#plus`}/></svg></span>
+        Add ingredient
+        <svg width={20} height={20} fill='none'><use href={`${icons}#plus`}/></svg>
       </Button>
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };

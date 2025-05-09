@@ -30,10 +30,6 @@
   color: var(--gray);
 }
 
-.errorInput {
-  border-bottom: 1px solid var(--red) !important;
-}
-
 .errorMessage {
   color: var(--red);
   font-size: 12px;
