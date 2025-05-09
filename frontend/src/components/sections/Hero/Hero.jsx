@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../../hooks/useModal.js';
 // import { useAuth } from '../../../hooks/useAuth';
 import HeroImages from '../../ui/HeroImages/HeroImages.jsx';
