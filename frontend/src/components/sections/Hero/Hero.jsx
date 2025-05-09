@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { useModal } from '../../../hooks/useModal.js';
 // import { useAuth } from '../../../hooks/useAuth';
 import HeroImages from '../../ui/HeroImages/HeroImages.jsx';
 
@@ -7,7 +9,17 @@ import styles from './Hero.module.css';
 const Hero = () => {
   // const navigate = useNavigate();
   // const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const { openModal } = useModal();
+  const { isAuthenticated = false } = useSelector(state => state.auth || {});
 
+  const handleAddRecipeClick = () => {
+    if (isAuthenticated) {
+      navigate('/recipes/add');
+    } else {
+      openModal('signin');
+    }
+  };
   return (
     <section className={styles.heroSection}>
       <div className={styles.heroContainer}>
@@ -17,9 +29,9 @@ const Hero = () => {
             Amazing recipes for beginners in the world of cooking, enveloping
             you in the aromas and tastes of various cuisines.
           </p>
-          <Link to="/recipes/add" className={styles.heroButton}>
+          <button className={styles.heroButton} onClick={handleAddRecipeClick}>
             Add Recipe
-          </Link>
+          </button>
         </div>
 
         <HeroImages />
