@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
@@ -54,6 +54,12 @@ const Profile = () => {
   const [uniqueFollowers, setUniqueFollowers] = useState([]);
   const [uniqueFollowing, setUniqueFollowing] = useState([]);
 
+  const [localFollowingIds, setLocalFollowingIds] = useState([]);
+
+  const [localFavoritesCount, setLocalFavoritesCount] = useState(0);
+  const [localFollowingCount, setLocalFollowingCount] = useState(0);
+  const [localFollowersCount, setLocalFollowersCount] = useState(0);
+
   useEffect(() => {
     setActiveTab(isOwnProfile ? 'my-recipes' : 'recipes');
   }, [location.pathname, isOwnProfile]);
@@ -73,6 +79,33 @@ const Profile = () => {
       navigate('/users/current', { replace: true });
     }
   }, [id, current, navigate]);
+
+  useEffect(() => {
+    if (following && Array.isArray(following)) {
+      const followingIds = following
+        .map(user => user._id || user.id)
+        .filter(Boolean);
+      setLocalFollowingIds(followingIds);
+
+      setLocalFollowingCount(following.length);
+    }
+  }, [following]);
+
+  useEffect(() => {
+    setLocalFavoritesCount(
+      favoriteRecipes?.data?.length || favoriteRecipes?.length || 0,
+    );
+  }, [favoriteRecipes]);
+
+  useEffect(() => {
+    if (followers && Array.isArray(followers)) {
+      setLocalFollowersCount(followers.length);
+    }
+  }, [followers]);
+
+  const handleFavoriteRemoved = useCallback(() => {
+    setLocalFavoritesCount(prev => Math.max(0, prev - 1));
+  }, []);
 
   useEffect(() => {
     if (!current) return;
@@ -124,57 +157,93 @@ const Profile = () => {
     }
   }, [followers, following, activeTab]);
 
-  const handleFollowToggle = (userId, shouldFollow) => {
-    if (shouldFollow) {
-      dispatch(followUser(userId))
-        .unwrap()
-        .then(() => {
-          console.log(`Successfully followed user ${userId}`);
-        })
-        .catch(error => {
-          console.error(`Failed to follow user ${userId}:`, error);
-        });
-    } else {
-      dispatch(unfollowUser(userId))
-        .unwrap()
-        .then(() => {
-          console.log(`Successfully unfollowed user ${userId}`);
-        })
-        .catch(error => {
-          console.error(`Failed to unfollow user ${userId}:`, error);
-        });
-    }
-  };
+  const handleFollowToggle = useCallback(
+    (userId, shouldFollow) => {
+      if (shouldFollow) {
+        setLocalFollowingIds(prev => [...prev, userId]);
 
-  const handleUnfollowFromList = (userId, shouldFollow) => {
-    if (!shouldFollow) {
-      dispatch(unfollowUser(userId))
-        .unwrap()
-        .then(() => {
-          console.log(`Successfully unfollowed user ${userId}`);
+        setLocalFollowingCount(prev => prev + 1);
 
-          setUniqueFollowing(prev =>
-            prev.filter(user => user.id !== userId && user._id !== userId),
-          );
-        })
-        .catch(error => {
-          console.error(`Failed to unfollow user ${userId}:`, error);
-        });
-    }
-  };
+        dispatch(followUser(userId))
+          .unwrap()
+          .then(() => {
+            console.log(`Successfully followed user ${userId}`);
+          })
+          .catch(error => {
+            console.error(`Failed to follow user ${userId}:`, error);
+      
+            setLocalFollowingIds(prev => prev.filter(id => id !== userId));
+       
+            setLocalFollowingCount(prev => Math.max(0, prev - 1));
+          });
+      } else {
+        
+        setLocalFollowingIds(prev => prev.filter(id => id !== userId));
+       
+        setLocalFollowingCount(prev => Math.max(0, prev - 1));
+
+        dispatch(unfollowUser(userId))
+          .unwrap()
+          .then(() => {
+            console.log(`Successfully unfollowed user ${userId}`);
+          })
+          .catch(error => {
+            console.error(`Failed to unfollow user ${userId}:`, error);
+            
+            setLocalFollowingIds(prev => [...prev, userId]);
+            
+            setLocalFollowingCount(prev => prev + 1);
+          });
+      }
+    },
+    [dispatch],
+  );
+
+  
+  const handleUnfollowFromList = useCallback(
+    (userId, shouldFollow) => {
+      if (!shouldFollow) {
+        
+        setLocalFollowingIds(prev => prev.filter(id => id !== userId));
+        
+        setLocalFollowingCount(prev => Math.max(0, prev - 1));
+
+      
+        setUniqueFollowing(prev =>
+          prev.filter(user => user.id !== userId && user._id !== userId),
+        );
+
+        dispatch(unfollowUser(userId))
+          .unwrap()
+          .then(() => {
+            console.log(`Successfully unfollowed user ${userId}`);
+          })
+          .catch(error => {
+            console.error(`Failed to unfollow user ${userId}:`, error);
+            
+            setLocalFollowingIds(prev => [...prev, userId]);
+         
+            setLocalFollowingCount(prev => prev + 1);
+            
+          });
+      }
+    },
+    [dispatch],
+  );
 
   const profileUser = isOwnProfile ? current : selected;
 
-  const followersCount = followers?.length || 0;
-  const followingCount = following?.length || 0;
+
+  const followersCount = localFollowersCount;
+  const followingCount = localFollowingCount;
+
   const recipesCount = isOwnProfile
     ? ownRecipes?.data?.length || ownRecipes?.length || 0
     : userRecipes?.data?.length ||
       userRecipes?.length ||
       profileUser?.recipes?.length ||
       0;
-  const favoritesCount =
-    favoriteRecipes?.data?.length || favoriteRecipes?.length || 0;
+  const favoritesCount = localFavoritesCount;
 
   if (userLoading || recipesLoading) return <Loader />;
 
@@ -188,17 +257,13 @@ const Profile = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'my-recipes':
-        return (
-          <ListItems
-            activeTab={activeTab}
-            items={ownRecipes?.data || ownRecipes || []}
-          />
-        );
+        return <ListItems activeTab={activeTab} items={ownRecipes} />;
       case 'my-favorites':
         return (
           <ListItems
             activeTab={activeTab}
-            items={favoriteRecipes?.data || favoriteRecipes || []}
+            items={favoriteRecipes}
+            onFavoriteRemoved={handleFavoriteRemoved}
           />
         );
       case 'followers':
@@ -207,6 +272,7 @@ const Profile = () => {
             activeTab={activeTab}
             items={uniqueFollowers || []}
             onFollowToggle={handleFollowToggle}
+            localFollowingIds={localFollowingIds}
           />
         );
       case 'following':
@@ -215,15 +281,11 @@ const Profile = () => {
             activeTab={activeTab}
             items={uniqueFollowing || []}
             onFollowToggle={handleUnfollowFromList}
+            localFollowingIds={localFollowingIds}
           />
         );
       case 'recipes':
-        return (
-          <ListItems
-            activeTab={activeTab}
-            items={userRecipes?.data || userRecipes || []}
-          />
-        );
+        return <ListItems activeTab={activeTab} items={userRecipes} />;
       default:
         return null;
     }

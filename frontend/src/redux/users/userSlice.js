@@ -120,11 +120,11 @@ export const unfollowUser = createAsyncThunk(
   'user/unfollowUser',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await axiosAPI.delete(`/users/${userId}/follow`);
+      const response = await axiosAPI.post(`/users/${userId}/unfollow`);
       return res.data;
-    } catch (err) {
+    } catch (error) {
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to unfollow user',
+        error.response?.data?.message || 'Failed to unfollow user',
       );
     }
   },
