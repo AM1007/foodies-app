@@ -1,29 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Profile.module.css';
 import { useModal } from '../../hooks/useModal';
-import PathInfo from '../../components/ui/PathInfo/PathInfo';
-import MainTitle from '../../components/ui/MainTitle/MainTitle';
-import SubTitle from '../../components/ui/SubTitle/SubTitle';
-import Button from '../../components/Button/Button';
-import UserInfo from '../../components/UserInfo/UserInfo';
-import TabsList from '../../components/TabsList/TabsList';
-import ListItems from '../../components/ListItems/ListItems';
 import Loader from '../../components/Loader/Loader';
-
 import {
   fetchCurrentUser,
   fetchUserById,
   fetchFollowers,
   fetchFollowing,
 } from '../../redux/users/userSlice';
-
 import {
   fetchOwnRecipes,
   fetchFavoriteRecipes,
   fetchUserRecipes,
 } from '../../redux/recipes/recipesSlice';
+import UserProfile from '../../components/UserProfile/UserProfile';
+import ListItems from '../../components/ListItems/ListItems';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -51,7 +43,6 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState(
     isOwnProfile ? 'my-recipes' : 'recipes',
   );
-
   const profileUser = isOwnProfile ? current : selectedUser;
 
   const followersCount = followers?.followers?.length || 0;
@@ -124,47 +115,20 @@ const Profile = () => {
   };
 
   return (
-    <div className="container">
-      <PathInfo current="Profile" />
-      <MainTitle text="Profile" />
-      <SubTitle text="Reveal your culinary art, share your favorite recipe, and create gastronomic masterpieces with us." />
-
-      <div className={styles.wrapper}>
-        <div className={styles.userCardWrapper}>
-          {profileUser ? (
-            <UserInfo
-              user={profileUser}
-              isOwnProfile={isOwnProfile}
-              followersCount={followersCount}
-              followingCount={followingCount}
-              recipesCount={recipesCount}
-              favoritesCount={favoritesCount}
-            />
-          ) : (
-            <div>No user data available.</div>
-          )}
-
-          {isOwnProfile && (
-            <Button onClick={() => openModal('logout')}>Log Out</Button>
-          )}
-        </div>
-
-        <div className={styles.tabsContentWrapper}>
-          <TabsList
-            isOwnProfile={isOwnProfile}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
-          <div>
-            {followers && following ? (
-              renderTabContent()
-            ) : (
-              <div>Loading content...</div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    <UserProfile
+      profileUser={profileUser}
+      isOwnProfile={isOwnProfile}
+      followersCount={followersCount}
+      followingCount={followingCount}
+      recipesCount={recipesCount}
+      favoritesCount={favoritesCount}
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+      uniqueFollowers={uniqueFollowers}
+      uniqueFollowing={uniqueFollowing}
+      renderTabContent={renderTabContent}
+      openModal={openModal}
+    />
   );
 };
 
