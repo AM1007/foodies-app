@@ -1,22 +1,17 @@
-.wrapper {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
 .cooking {
-  position: relative;
-  margin: 0 auto;
-  top: 0;
-  width: 600px;
-  height: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--container-size);
+  height: var(--container-size);
   overflow: hidden;
 }
 
 .bubble {
   position: absolute;
   border-radius: 100%;
-  box-shadow: 0 0 2px var(--gray);
+  box-shadow: var(--bubble-shadow);
   opacity: 0;
 }
 
@@ -25,8 +20,8 @@
   left: 58%;
   width: 20px;
   height: 20px;
-  background-color: var(--dark-gray);
-  animation: bubble 2s cubic-bezier(0.53, 0.16, 0.39, 0.96) infinite;
+  background-color: var(--bubble-yellow);
+  animation: var(--bubble-animation);
 }
 
 .bubble:nth-child(2) {
@@ -34,7 +29,7 @@
   left: 52%;
   width: 16px;
   height: 16px;
-  background-color: #3d3d3d;
+  background-color: var(--bubble-dark);
   animation: bubble 2s ease-in-out 0.35s infinite;
 }
 
@@ -43,7 +38,7 @@
   left: 50%;
   width: 12px;
   height: 12px;
-  background-color: var(--black);
+  background-color: var(--bubble-yellow);
   animation: bubble 1.5s cubic-bezier(0.53, 0.16, 0.39, 0.96) 0.55s infinite;
 }
 
@@ -52,7 +47,7 @@
   left: 56%;
   width: 10px;
   height: 10px;
-  background-color: #2b2b2b;
+  background-color: var(--bubble-black);
   animation: bubble 1.8s cubic-bezier(0.53, 0.16, 0.39, 0.96) 0.9s infinite;
 }
 
@@ -61,7 +56,16 @@
   left: 63%;
   width: 9px;
   height: 9px;
-  background-color: #242424;
+  background-color: var(--bubble-yellow);
+  animation: bubble 1.6s ease-in-out 1s infinite;
+}
+
+.bubble:nth-child(6) {
+  margin-top: 22px;
+  left: 55%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--bubble-deep);
   animation: bubble 1.6s ease-in-out 1s infinite;
 }
 
@@ -91,7 +95,7 @@
   width: 35%;
   height: 20%;
   background-color: transparent;
-  border-top: 8px solid var(--dark-gray);
+  border-top: 8px solid var(--pan-color);
   border-left: 8px solid transparent;
   border-radius: 100%;
   transform: rotate(20deg) rotateX(0deg) scale(1.3, 0.9);
@@ -103,14 +107,14 @@
   right: 30%;
   width: 50%;
   height: 8%;
-  background-color: var(--dark-gray);
-  border-radius: 0 0 22px 22px;
+  background-color: var(--pan-color);
+  border-radius: 0 0 1.4em 1.4em;
   transform-origin: -15% 0;
 }
 
 .pancake {
   position: absolute;
-  top: 144px;
+  top: 24%;
   width: 100%;
   height: 100%;
   transform: rotateX(85deg);
@@ -119,12 +123,12 @@
 
 .pastry {
   position: absolute;
-  bottom: 156px;
+  bottom: 26%;
   right: 37%;
   width: 40%;
   height: 45%;
-  background-color: var(--dark-gray);
-  box-shadow: 0 0 3px 0 var(--dark-gray);
+  background-color: var(--bubble-yellow);
+  box-shadow: 0 0 3px 0 var(--bubble-yellow);
   border-radius: 100%;
   transform-origin: -20% 0;
   animation: fly 2.1s ease-in-out infinite;
@@ -132,15 +136,15 @@
 
 @keyframes jump {
   0% {
-    top: 144px;
+    top: 24%;
     transform: rotateX(85deg);
   }
   25% {
-    top: 60px;
+    top: 10%;
     transform: rotateX(0deg);
   }
   50% {
-    top: 180px;
+    top: 30%;
     transform: rotateX(85deg);
   }
   75% {
@@ -165,7 +169,9 @@
   55% {
     transform: rotate(27deg);
   }
-  83.3%,
+  83.3% {
+    transform: rotate(0deg);
+  }
   100% {
     transform: rotate(0deg);
   }
@@ -185,21 +191,21 @@
 
 @keyframes fly {
   0% {
-    bottom: 156px;
+    bottom: 26%;
     transform: rotate(0deg);
   }
   10% {
-    bottom: 240px;
+    bottom: 40%;
   }
   50% {
-    bottom: 156px;
+    bottom: 26%;
     transform: rotate(-190deg);
   }
   80% {
-    bottom: 240px;
+    bottom: 40%;
   }
   100% {
-    bottom: 156px;
+    bottom: 26%;
     transform: rotate(0deg);
   }
 }
