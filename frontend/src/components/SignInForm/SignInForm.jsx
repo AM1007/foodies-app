@@ -51,8 +51,7 @@ const SignInForm = ({ onSuccess }) => {
       }
     } catch (error) {
       toast.error(
-        error.message ||
-          'Authentication Email or password is wrong. Please try again.',
+        error.message || 'Email or password is wrong. Please try again.',
       );
       if (error.includes('Password must be at least 6 characters')) {
         setFieldError('password', 'Password must be at least 6 characters');
@@ -142,7 +141,7 @@ const SignInForm = ({ onSuccess }) => {
 
           {serverError && !errors.email && !errors.password && (
             <div className={styles.serverError}>
-              'Authentication Email or password is wrong. Please try again.'
+              Email or password is wrong. Please try again.
             </div>
           )}
 
