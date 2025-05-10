@@ -27,24 +27,11 @@
   padding: 0 10px;
 }
 
-.userStub {
-  flex: 1 1 calc(25% - 24px); /* 4 колонки */
-  max-width: calc(25% - 24px);
-  padding: 16px;
-  background-color: var(--background-light);
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.32px;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.list[data-tab='followers'] > div:not(:last-child),
+.list[data-tab='following'] > div:not(:last-child) {
+  border-bottom: 1px solid var(--light-gray);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 @media screen and (min-width: 768px) {

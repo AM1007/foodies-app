@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import UserInfo from '../UserInfo/UserInfo';
 import TabsList from '../TabsList/TabsList';
-import { followUser, unfollowUser } from '../../redux/users/userSlice';
+import {
+  followUser,
+  unfollowUser,
+  fetchFollowers,
+} from '../../redux/users/userSlice';
 import css from './UserProfile.module.css';
 
 const UserProfile = ({
@@ -21,7 +25,7 @@ const UserProfile = ({
   const dispatch = useDispatch();
   const { following } = useSelector(state => state.user);
   const [isFollowing, setIsFollowing] = useState(false);
-
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     if (profileUser && following && !isOwnProfile) {
@@ -33,7 +37,6 @@ const UserProfile = ({
     }
   }, [following, profileUser, isOwnProfile]);
 
-
   const handleFollowToggle = () => {
     if (!profileUser) return;
 
@@ -44,6 +47,9 @@ const UserProfile = ({
         .unwrap()
         .then(() => {
           setIsFollowing(false);
+          dispatch(fetchFollowers(userId));
+
+          dispatch(fetchFollowing());
         })
         .catch(error => {
           console.error('Failed to unfollow:', error);
@@ -53,6 +59,9 @@ const UserProfile = ({
         .unwrap()
         .then(() => {
           setIsFollowing(true);
+          dispatch(fetchFollowers(userId));
+
+          dispatch(fetchFollowing());
         })
         .catch(error => {
           console.error('Failed to follow:', error);
@@ -60,46 +69,57 @@ const UserProfile = ({
     }
   };
 
+  const handleMouseEnter = () => {
+    if (isFollowing) {
+      setIsHovering(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
   return (
-    <div className="container">
-      <div className={css.wrapper}>
-        <div className={css.userCardWrapper}>
-          {profileUser ? (
-            <UserInfo
-              user={profileUser}
-              isOwnProfile={isOwnProfile}
-              followersCount={followersCount}
-              followingCount={followingCount}
-              recipesCount={recipesCount}
-              favoritesCount={favoritesCount}
-            />
-          ) : (
-            <div>No user data available.</div>
-          )}
-
-          
-          {isOwnProfile ? (
-            <Button onClick={() => openModal('logout')}>Log Out</Button>
-          ) : (
-            profileUser && (
-              <Button
-                onClick={handleFollowToggle}
-                variant={isFollowing ? 'inactive' : 'dark'}
-              >
-                {isFollowing ? 'Following' : 'Follow'}
-              </Button>
-            )
-          )}
-        </div>
-
-        <div className={css.tabsContentWrapper}>
-          <TabsList
+    <div className={css.wrapper}>
+      <div className={css.userCardWrapper}>
+        {profileUser ? (
+          <UserInfo
+            user={profileUser}
             isOwnProfile={isOwnProfile}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            followersCount={followersCount}
+            followingCount={followingCount}
+            recipesCount={recipesCount}
+            favoritesCount={favoritesCount}
           />
-          <div>{renderTabContent()}</div>
-        </div>
+        ) : (
+          <div>No user data available.</div>
+        )}
+
+        {isOwnProfile ? (
+          <Button onClick={() => openModal('logout')}>Log Out</Button>
+        ) : (
+          profileUser && (
+            <Button
+              onClick={handleFollowToggle}
+              variant={isFollowing ? 'following' : 'follow'}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className={isFollowing && isHovering ? css.unfollowHover : ''}
+              style={{ cursor: 'pointer' }}
+            >
+              {isFollowing ? (isHovering ? 'Unfollow' : 'FOLLOWING') : 'FOLLOW'}
+            </Button>
+          )
+        )}
+      </div>
+
+      <div className={css.tabsContentWrapper}>
+        <TabsList
+          isOwnProfile={isOwnProfile}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+        <div>{renderTabContent()}</div>
       </div>
     </div>
   );

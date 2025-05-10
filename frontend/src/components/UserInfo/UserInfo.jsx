@@ -18,7 +18,7 @@ const UserInfo = ({
         src={avatar}
         alt={`${name}'s avatar`}
       />
-      <h2>{name}</h2>
+      <h2 className={css.name}>{name}</h2>
 
       <ul className={css.userStats}>
         <li className={css.userStatItem}>

@@ -124,7 +124,7 @@ const ListItems = ({
   }
 
   return (
-    <div className={styles.list}>
+    <div className={styles.list} data-tab={activeTab}>
       {isRecipeTab &&
         displayItems.map(recipe => {
           const recipeId = recipe.id || recipe._id;
