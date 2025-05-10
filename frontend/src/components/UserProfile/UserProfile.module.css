@@ -13,19 +13,20 @@
   max-height: 408px;
 }
 
-button {
+.button {
   width: 100%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .tabsContentWrapper {
   width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1440px) {
   .userCardWrapper {
     margin: 40px auto;
   }
