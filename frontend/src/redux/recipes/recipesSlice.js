@@ -276,7 +276,7 @@ const recipesSlice = createSlice({
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        
+
         state.ownRecipes = Array.isArray(state.ownRecipes)
           ? state.ownRecipes.filter(
               recipe =>
