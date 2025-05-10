@@ -8,12 +8,12 @@
 }
 
 .input {
-  color: #1a1a1a;
+  color: var(--dark-gray);
   font-family: Mulish;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 150% */
+  line-height: 1.5;
   letter-spacing: -0.32px;
 
   display: flex;

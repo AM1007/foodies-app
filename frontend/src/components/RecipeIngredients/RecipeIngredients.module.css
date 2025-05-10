@@ -82,7 +82,7 @@
 }
 
 .removeButton:hover {
-  color: #e74a3b;
+  color: var(--red);
 }
 
 @media (min-width: 768px) {
@@ -113,12 +113,12 @@
   }
 
   .name {
-    font-size: 16px;
+    font-size: var(--base-font-size);
     line-height: 1.5;
     letter-spacing: -0.32px;
   }
   .amount {
-    font-size: 16px;
+    font-size: var(--base-font-size);
     line-height: 1.5;
     letter-spacing: -0.32px;
   

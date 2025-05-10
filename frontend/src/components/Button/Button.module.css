@@ -5,7 +5,7 @@
   gap: 10px;
 
   border-radius: 30px;
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--base-font);
   font-style: normal;
   font-weight: 700;
   text-transform: uppercase;

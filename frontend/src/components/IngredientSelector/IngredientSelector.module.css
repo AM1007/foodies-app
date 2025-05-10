@@ -89,7 +89,7 @@
     margin-bottom: 40px;
   }
   .quantityInput {
-    font-size: 16px;
+    font-size: var(--base-font-size);
     line-height: 1.5;
     letter-spacing: -0.32px;
   }
@@ -100,7 +100,7 @@
   .addIngredientButton {
     padding: 16px 32px;
     border: 1px solid var(--black);
-    font-size: 16px;
+    font-size: var(--base-font-size);
     line-height: 1.5;
     letter-spacing: -0.32px;
     margin-bottom: 40px;

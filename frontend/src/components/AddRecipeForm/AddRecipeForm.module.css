@@ -3,11 +3,11 @@
   flex-direction: column;
 }
 
-.formWrapper{
+.formWrapper {
   margin-top: 32px;
 }
 
-.form h3{
+.form h3 {
   display: none;
 }
 
@@ -18,7 +18,7 @@
   font-weight: 500;
 }
 
-.selector{
+.selector {
   margin-top: 32px;
 }
 
@@ -62,7 +62,7 @@
 .publishButton {
   width: 124px;
   background-color: var(--dark-gray);
-  color:var(--white);
+  color: var(--white);
   border: none;
   border-radius: 24px;
   padding: 14px 32px;
@@ -81,17 +81,16 @@
     flex-direction: column;
   }
 
-  .formWrapper{
+  .formWrapper {
     margin-top: 80px;
     width: 649px;
   }
-  .categoryTime{
+  .categoryTime {
     margin: 60px 0 60px;
     display: flex;
     gap: 20px;
-
   }
-  .selector{
+  .selector {
     margin-top: 0;
     width: 315px;
   }
@@ -106,18 +105,17 @@
   }
   .deleteBtn {
     width: 56px;
-    height:56px;
+    height: 56px;
     padding: 16px;
   }
   .publishButton {
     width: 146px;
     padding: 16px 39px;
-    font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
-  border-radius: 30px;
+    font-size: var(--base-font-size);
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    border-radius: 30px;
   }
-  
 }
 @media (min-width: 1440px) {
   .form {
@@ -126,7 +124,7 @@
     gap: 80px;
   }
 
-  .formWrapper{
+  .formWrapper {
     margin-top: 0;
   }
 }
