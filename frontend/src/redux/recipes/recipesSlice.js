@@ -295,7 +295,25 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addToFavorites.pending, state => {
+      .addCase(addToFavorites.pending, (state, action) => {
+        const recipeId = action.meta.arg;
+
+        if (recipeId) {
+          const recipe = state.recipes?.find(
+            r => r._id === recipeId || r.id === recipeId,
+          );
+
+          if (recipe && Array.isArray(state.favoriteRecipes)) {
+            const alreadyExists = state.favoriteRecipes.some(
+              fav => fav._id === recipeId || fav.id === recipeId,
+            );
+
+            if (!alreadyExists) {
+              state.favoriteRecipes.push(recipe);
+            }
+          }
+        }
+
         state.error = null;
       })
       .addCase(addToFavorites.fulfilled, (state, action) => {
@@ -321,7 +339,15 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(removeFromFavorites.pending, state => {
+      .addCase(removeFromFavorites.pending, (state, action) => {
+        const recipeId = action.meta.arg;
+
+        if (recipeId && Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = state.favoriteRecipes.filter(
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+          );
+        }
+
         state.error = null;
       })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {

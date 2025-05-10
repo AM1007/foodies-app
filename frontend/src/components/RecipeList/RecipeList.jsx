@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+import {
+  fetchRecipes,
+  fetchFavoriteRecipes,
+} from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
 import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
 import Loader from '../../components/Loader/Loader';
@@ -11,6 +14,7 @@ import React from 'react';
 const RecipeList = React.memo(({ categoryId = null }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -22,6 +26,12 @@ const RecipeList = React.memo(({ categoryId = null }) => {
 
   const listRef = useRef();
   const prevHeightRef = useRef(0);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchFavoriteRecipes());
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     const handleResize = () => {
