@@ -1,6 +1,7 @@
 import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
 import avatar from '/assets/avatar.png';
+import { Link } from 'react-router-dom'; 
 
 const RecipeCard = ({
   recipe,
@@ -14,10 +15,14 @@ const RecipeCard = ({
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
     ? recipe.user.avatar
     : avatar;
+    
+  const recipeId = recipe.id || recipe._id;
 
   return (
     <div className={styles.card}>
-      <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+      <Link to={`/recipes/${recipeId}`} className={styles.imageLink}>
+        <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+      </Link>
       <div className={styles.content}>
         <h4 className={styles.title}>{recipe.title}</h4>
         <p className={styles.description}>{recipe.description}</p>
@@ -34,7 +39,7 @@ const RecipeCard = ({
             <button
               className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
               onClick={e => {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 onFavoriteToggle();
               }}
               aria-label="Toggle favorite"
