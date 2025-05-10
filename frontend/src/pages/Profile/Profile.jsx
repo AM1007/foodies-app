@@ -122,7 +122,6 @@ const Profile = () => {
       (id === current._id || id === current.id) &&
       id !== 'current'
     ) {
-      console.log('Redirecting to /users/current');
       navigate('/users/current', { replace: true });
     }
   }, [id, current, navigate]);
@@ -170,6 +169,7 @@ const Profile = () => {
       dispatch(fetchUserById(id));
       dispatch(fetchFollowers(id));
       dispatch(fetchUserRecipes(id));
+      dispatch(fetchFollowing());
     }
   }, [dispatch, isOwnProfile, current, id]);
 
@@ -191,10 +191,6 @@ const Profile = () => {
 
   const handleFollowToggle = useCallback(
     (userId, shouldFollow) => {
-      console.log(
-        `Profile handling follow toggle: ${userId}, should follow: ${shouldFollow}`,
-      );
-
       if (shouldFollow) {
         setLocalFollowingIds(prev => {
           if (!prev.includes(userId)) {
@@ -204,62 +200,41 @@ const Profile = () => {
         });
 
         recentlyFollowedIds.current = [...recentlyFollowedIds.current, userId];
-
         recentlyUnfollowedIds.current = recentlyUnfollowedIds.current.filter(
           id => id !== userId,
         );
-
         setLocalFollowingCount(prev => prev + 1);
-
         needToUpdateFollowingRef.current = true;
 
         dispatch(followUser(userId))
           .unwrap()
-          .then(() => {
-            console.log(`Successfully followed user ${userId}`);
-            dispatch(fetchFollowing());
-          })
           .catch(error => {
             console.error(`Failed to follow user ${userId}:`, error);
-
             setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-
             recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
               id => id !== userId,
             );
-
             setLocalFollowingCount(prev => Math.max(0, prev - 1));
           });
       } else {
         setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-
         recentlyUnfollowedIds.current = [
           ...recentlyUnfollowedIds.current,
           userId,
         ];
-
         recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
           id => id !== userId,
         );
-
         setLocalFollowingCount(prev => Math.max(0, prev - 1));
-
         needToUpdateFollowingRef.current = true;
 
         dispatch(unfollowUser(userId))
           .unwrap()
-          .then(() => {
-            console.log(`Successfully unfollowed user ${userId}`);
-            dispatch(fetchFollowing());
-          })
           .catch(error => {
             console.error(`Failed to unfollow user ${userId}:`, error);
-
             setLocalFollowingIds(prev => [...prev, userId]);
-
             recentlyUnfollowedIds.current =
               recentlyUnfollowedIds.current.filter(id => id !== userId);
-
             setLocalFollowingCount(prev => prev + 1);
           });
       }
@@ -271,36 +246,25 @@ const Profile = () => {
     (userId, shouldFollow) => {
       if (!shouldFollow) {
         setLocalFollowingIds(prev => prev.filter(id => id !== userId));
-
         recentlyUnfollowedIds.current = [
           ...recentlyUnfollowedIds.current,
           userId,
         ];
-
         recentlyFollowedIds.current = recentlyFollowedIds.current.filter(
           id => id !== userId,
         );
-
         setLocalFollowingCount(prev => Math.max(0, prev - 1));
-
         setUniqueFollowing(prev =>
           prev.filter(user => user.id !== userId && user._id !== userId),
         );
 
         dispatch(unfollowUser(userId))
           .unwrap()
-          .then(() => {
-            console.log(`Successfully unfollowed user ${userId}`);
-            dispatch(fetchFollowing());
-          })
           .catch(error => {
             console.error(`Failed to unfollow user ${userId}:`, error);
-
             setLocalFollowingIds(prev => [...prev, userId]);
-
             recentlyUnfollowedIds.current =
               recentlyUnfollowedIds.current.filter(id => id !== userId);
-
             setLocalFollowingCount(prev => prev + 1);
           });
       }
@@ -331,40 +295,70 @@ const Profile = () => {
   }
 
   const renderTabContent = () => {
+    const tabKey = `tab-content-${activeTab}`;
+
+    let content;
     switch (activeTab) {
       case 'my-recipes':
-        return <ListItems activeTab={activeTab} items={ownRecipes} />;
-      case 'my-favorites':
-        return (
+        content = (
           <ListItems
+            key={tabKey}
+            activeTab={activeTab}
+            items={ownRecipes}
+            isOwnProfile={isOwnProfile}
+          />
+        );
+        break;
+      case 'my-favorites':
+        content = (
+          <ListItems
+            key={tabKey}
             activeTab={activeTab}
             items={favoriteRecipes}
             onFavoriteRemoved={handleFavoriteRemoved}
+            isOwnProfile={isOwnProfile}
           />
         );
+        break;
       case 'followers':
-        return (
+        content = (
           <ListItems
+            key={tabKey}
             activeTab={activeTab}
             items={uniqueFollowers || []}
             onFollowToggle={handleFollowToggle}
             localFollowingIds={localFollowingIds}
+            isOwnProfile={isOwnProfile}
           />
         );
+        break;
       case 'following':
-        return (
+        content = (
           <ListItems
+            key={tabKey}
             activeTab={activeTab}
             items={uniqueFollowing || []}
             onFollowToggle={handleUnfollowFromList}
             localFollowingIds={localFollowingIds}
+            isOwnProfile={isOwnProfile}
           />
         );
+        break;
       case 'recipes':
-        return <ListItems activeTab={activeTab} items={userRecipes} />;
+        content = (
+          <ListItems
+            key={tabKey}
+            activeTab={activeTab}
+            items={userRecipes}
+            isOwnProfile={isOwnProfile}
+          />
+        );
+        break;
       default:
-        return null;
+        content = null;
     }
+
+    return <div className="tab-content-wrapper">{content}</div>;
   };
 
   return (

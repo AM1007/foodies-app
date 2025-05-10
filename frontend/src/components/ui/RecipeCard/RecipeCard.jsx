@@ -2,6 +2,7 @@ import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
 import avatar from '/assets/avatar.png';
 import { Link } from 'react-router-dom'; 
+import React from 'react';
 
 const RecipeCard = ({
   recipe,
@@ -65,4 +66,4 @@ const RecipeCard = ({
   );
 };
 
-export default RecipeCard;
+export default React.memo(RecipeCard);

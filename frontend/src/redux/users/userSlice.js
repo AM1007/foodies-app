@@ -19,9 +19,9 @@ export const fetchUserById = createAsyncThunk(
   'user/fetchUserById',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log(`Fetching user with ID: ${userId}`);
+
       const res = await axiosAPI.get(`/users/${userId}`);
-      console.log('User data fetched:', res.data);
+
 
       if (res.data.user) {
         return res.data.user;
@@ -104,9 +104,24 @@ export const fetchFollowing = createAsyncThunk(
 
 export const followUser = createAsyncThunk(
   'user/followUser',
-  async (userId, { rejectWithValue }) => {
+  async (userId, { rejectWithValue, getState }) => {
     try {
       const res = await axiosAPI.post(`/users/${userId}/follow`);
+
+      if (!res.data || (!res.data._id && !res.data.id)) {
+        const state = getState();
+        const selectedUser = state.user.selected;
+
+        if (
+          selectedUser &&
+          (selectedUser._id === userId || selectedUser.id === userId)
+        ) {
+          return { ...selectedUser, id: selectedUser._id || selectedUser.id };
+        }
+
+        return { id: userId, _id: userId };
+      }
+
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -120,9 +135,9 @@ export const unfollowUser = createAsyncThunk(
   'user/unfollowUser',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log(`Sending unfollow request for user ${userId}`);
+
       const res = await axiosAPI.post(`/users/${userId}/unfollow`);
-      console.log('Unfollow response:', res.data);
+
       return {
         userId,
         response: res.data,
@@ -174,7 +189,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false;
-        console.log('Setting selected user:', action.payload);
+   
         state.selected = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
@@ -217,9 +232,26 @@ const userSlice = createSlice({
       })
 
       .addCase(followUser.fulfilled, (state, action) => {
-        state.following.push(action.payload);
+        const followedUser = action.payload;
 
-        if (state.selected) {
+        if (!followedUser) return;
+
+        const userId = followedUser._id || followedUser.id;
+
+        if (!userId) return;
+
+        const alreadyFollowing = state.following.some(
+          user => user._id === userId || user.id === userId,
+        );
+
+        if (!alreadyFollowing) {
+          state.following.push(followedUser);
+        }
+
+        if (
+          state.selected &&
+          (state.selected._id === userId || state.selected.id === userId)
+        ) {
           if (state.selected.followerCount !== undefined) {
             state.selected.followerCount += 1;
           }

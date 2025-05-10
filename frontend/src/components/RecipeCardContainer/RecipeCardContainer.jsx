@@ -7,38 +7,44 @@ import {
 } from '../../redux/recipes/recipesSlice';
 import { useModal } from '../../hooks/useModal';
 import RecipeCard from '../ui/RecipeCard/RecipeCard';
+import React from 'react';
 
 const RecipeCardContainer = ({ recipe }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(state => state.auth);
-  const favoriteRecipesFromState = useSelector(state => state.recipes.favoriteRecipes);
+  const favoriteRecipesFromState = useSelector(
+    state => state.recipes.favoriteRecipes,
+  );
   const { openModal } = useModal();
 
   if (!recipe || (!recipe.id && !recipe._id)) return null;
 
-  const recipeId = recipe._id?.$oid || recipe.id;
+  const recipeId = recipe._id?.$oid || recipe.id || recipe._id;
+
 
   const favoriteRecipes = Array.isArray(favoriteRecipesFromState)
     ? favoriteRecipesFromState
-    : (favoriteRecipesFromState?.data || []);
+    : favoriteRecipesFromState?.data || [];
 
   const isFavorite = favoriteRecipes.some(
-    favorite => favorite?._id === recipeId || favorite?.id === recipeId
+    favorite => favorite?._id === recipeId || favorite?.id === recipeId,
   );
 
-  const handleFavoriteToggle = ()=> {
-
+  const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
       openModal('signin');
       return;
     }
+
     if (isFavorite) {
       dispatch(removeFromFavorites(recipeId)).then(() => {
+    
         dispatch(fetchFavoriteRecipes());
       });
     } else {
       dispatch(addToFavorites(recipeId)).then(() => {
+     
         dispatch(fetchFavoriteRecipes());
       });
     }

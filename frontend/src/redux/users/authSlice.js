@@ -24,7 +24,6 @@ const processAuthResponse = response => {
   }
 
   if (response.token) {
-    console.log('Processing the login response:', response);
 
     if (response.refreshToken) {
       localStorage.setItem('refreshToken', response.refreshToken);

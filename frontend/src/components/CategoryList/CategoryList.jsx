@@ -43,9 +43,7 @@ export default function CategoryList({ onCategoryClick }) {
         onCategoryClick(categoryId, categoryName);
       }
     } catch (error) {
-      console.log(
-        `Failed to fetch recipes: ${error.message || 'Unknown error'}`,
-      );
+ 
     }
   };
 

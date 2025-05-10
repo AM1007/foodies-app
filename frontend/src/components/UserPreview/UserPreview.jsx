@@ -24,11 +24,10 @@ const UserPreview = ({
     Array.isArray(localFollowingIds) && localFollowingIds.includes(userId);
 
   const pendingActionRef = useRef(false);
-
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isFollowing, setIsFollowing] = useState(
     initialIsFollowedByMe || isInFollowingIds,
   );
-
   const [isHovering, setIsHovering] = useState(false);
 
   const { name = 'User', avatar, recipes = [] } = user;
@@ -47,18 +46,21 @@ const UserPreview = ({
   }, [initialIsFollowedByMe, isInFollowingIds]);
 
   const handleFollowToggle = () => {
+    if (isProcessing) return;
+
     const newFollowState = !isFollowing;
-
-    pendingActionRef.current = true;
-
+    setIsProcessing(true);
     setIsFollowing(newFollowState);
     setIsHovering(false);
+
+    pendingActionRef.current = true;
 
     if (onFollowToggle && typeof onFollowToggle === 'function') {
       onFollowToggle(userId, newFollowState);
 
       setTimeout(() => {
         pendingActionRef.current = false;
+        setIsProcessing(false);
       }, 2000);
     }
   };
@@ -81,7 +83,6 @@ const UserPreview = ({
   };
 
   if (!userId) {
-    console.warn('UserPreview received user without ID:', user);
     return null;
   }
 
@@ -115,8 +116,15 @@ const UserPreview = ({
             }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            disabled={isProcessing}
           >
-            {isFollowing ? (isHovering ? 'Unfollow' : 'FOLLOWING') : 'FOLLOW'}
+            {isProcessing
+              ? 'Processing...'
+              : isFollowing
+              ? isHovering
+                ? 'Unfollow'
+                : 'FOLLOWING'
+              : 'FOLLOW'}
           </Button>
         )}
       </div>
@@ -148,4 +156,4 @@ const UserPreview = ({
   );
 };
 
-export default UserPreview;
+export default React.memo(UserPreview);

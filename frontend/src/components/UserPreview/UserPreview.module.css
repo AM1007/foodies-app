@@ -77,6 +77,10 @@
     width: 85px;
   }
 
+  .userDetails {
+    width: 144px;
+  }
+
   .userActions {
     margin-left: 46px;
   }
@@ -85,5 +89,13 @@
 @media (min-width: 1440px) {
   .recipeLink:nth-child(4) {
     display: block;
+  }
+
+  .recipeImage {
+    transition: transform 0.4s ease;
+  }
+
+  .recipeLink:hover .recipeImage {
+    transform: scale(1.05);
   }
 }

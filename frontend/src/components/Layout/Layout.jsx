@@ -29,7 +29,7 @@ const Layout = () => {
 
     if (!storedToken || !storedRefreshToken) {
       if (storedToken && !storedRefreshToken) {
-        console.log('Token exists but no refresh token, removing token');
+
         localStorage.removeItem('token');
       }
 

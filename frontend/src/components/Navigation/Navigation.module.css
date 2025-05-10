@@ -58,7 +58,11 @@
 }
 .lightLink:hover,
 .darkLink:hover {
+  border: 1px solid var(--gray);
+  border-radius: 30px;
   transform: scale(1.05);
+  color: var(--black);
+  background-color: var(--white);
 }
 
 .lightActive {
