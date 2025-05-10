@@ -157,19 +157,15 @@
   fill: none;
   stroke: var(--white);
 }
-.heart:hover {
-  .heart:hover {
-    background-color: var(--black);
-    border-color: var(--black);
-  }
-  .arrow:hover {
-    background-color: var(--black);
-    border-color: var(--black);
-  }
-  .heart:hover svg,
-  .arrow:hover svg {
-    stroke: var(--white);
-  }
+.heart:hover,
+.arrow:hover {
+  background-color: var(--black);
+  border-color: var(--black);
+}
+
+.heart:hover svg,
+.arrow:hover svg {
+  stroke: var(--white);
 }
 
 @media (min-width: 1440px) {
