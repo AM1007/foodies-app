@@ -11,11 +11,11 @@ export const fetchRecipes = createAsyncThunk(
       if (ingredient) params.ingredient = ingredient;
       if (area) params.area = area;
 
-      console.log('Fetching recipes with params:', params);
+  
 
       const response = await axiosAPI.get('/recipes', { params });
 
-      console.log('Recipes fetched successfully:', response.data);
+
 
       return response.data;
     } catch (err) {
@@ -46,9 +46,9 @@ export const fetchUserRecipes = createAsyncThunk(
   'recipes/fetchUserRecipes',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log(`Fetching recipes for user ID ${userId}`);
+
       const response = await axiosAPI.get(`/users/${userId}`);
-      console.log('User recipes response:', response.data);
+
 
       if (response.data.recipes) {
         return response.data.recipes;
@@ -223,7 +223,6 @@ const recipesSlice = createSlice({
       .addCase(fetchUserRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        console.log('Setting user recipes:', action.payload);
         state.userRecipes = action.payload;
       })
       .addCase(fetchUserRecipes.rejected, (state, action) => {

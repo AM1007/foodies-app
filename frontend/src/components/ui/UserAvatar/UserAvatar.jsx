@@ -24,9 +24,8 @@ function UserAvatar({
       formData.append('avatar', file);
       try {
         await dispatch(updateUserAvatar(formData)).unwrap();
-        console.log('Avatar updated successfully');
+
       } catch (error) {
-        console.log(error);
       }
     }
   };

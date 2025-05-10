@@ -98,7 +98,7 @@ const ListItems = ({
         onFollowToggle(userId, shouldFollow);
       }
     },
-    [activeTab, onFollowToggle],
+    [onFollowToggle],
   );
 
   if (!paginatedItems.length) {
@@ -165,4 +165,4 @@ const ListItems = ({
   );
 };
 
-export default ListItems;
+export default React.memo(ListItems);
