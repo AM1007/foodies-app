@@ -3,7 +3,6 @@ import styles from './Loader.module.css';
 const Loader = () => {
   return (
     <div className={styles.wrapper}>
-      {/* <h1 className={styles.title}>Loading...</h1> */}
       <div className={styles.cooking}>
         <div className={styles.bubble}></div>
         <div className={styles.bubble}></div>

@@ -26,7 +26,7 @@ const UserInfo = ({
           <span className={css.statValue}>{email}</span>
         </li>
         <li className={css.userStatItem}>
-          <span className={css.statLabel}>Recipes:</span>
+          <span className={css.statLabel}>Added recipes:</span>
           <span className={css.statValue}>{recipesCount || 0}</span>
         </li>
 
@@ -40,10 +40,12 @@ const UserInfo = ({
           <span className={css.statLabel}>Followers:</span>
           <span className={css.statValue}>{followersCount || 0}</span>
         </li>
-        <li className={css.userStatItem}>
-          <span className={css.statLabel}>Following:</span>
-          <span className={css.statValue}>{followingCount || 0}</span>
-        </li>
+        {isOwnProfile && (
+          <li className={css.userStatItem}>
+            <span className={css.statLabel}>Following:</span>
+            <span className={css.statValue}>{followingCount || 0}</span>
+          </li>
+        )}
       </ul>
     </div>
   );
