@@ -49,14 +49,14 @@ const signInUser = async userData => {
   const { email, password } = userData;
   const user = await findUser({ email });
 
+  if (!user) {
+    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
+  }
+
   const userResponse = {
     id: user.id,
     email: user.email,
   };
-
-  if (!user) {
-    throw HttpError(HTTP_STATUS.UNAUTHORIZED, 'Email or password is wrong');
-  }
 
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {
