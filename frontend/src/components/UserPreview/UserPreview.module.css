@@ -90,4 +90,12 @@
   .recipeLink:nth-child(4) {
     display: block;
   }
+
+  .recipeImage {
+    transition: transform 0.4s ease;
+  }
+
+  .recipeLink:hover .recipeImage {
+    transform: scale(1.05);
+  }
 }
