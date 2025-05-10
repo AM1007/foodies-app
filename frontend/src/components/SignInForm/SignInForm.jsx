@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, resetAuthError } from '../../redux/users/authSlice';
@@ -7,6 +7,7 @@ import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
+import { toast } from 'react-hot-toast';
 
 const SignInForm = ({ onSuccess }) => {
   const emailId = useId();
@@ -16,12 +17,10 @@ const SignInForm = ({ onSuccess }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState(null);
 
-  // Очищення помилок Redux при розмонтуванні компонента
   useEffect(() => {
     return () => dispatch(resetAuthError());
   }, [dispatch]);
 
-  // Синхронізація помилок з Redux state
   useEffect(() => {
     if (reduxError) {
       setServerError(reduxError);
@@ -32,35 +31,31 @@ const SignInForm = ({ onSuccess }) => {
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
   });
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      // Очищення попередніх помилок
       setServerError(null);
 
-      // Виклик дії логіну з Redux
       const result = await dispatch(loginUser(values)).unwrap();
 
       if (result && result.token) {
-        // Отримання даних поточного користувача
         await dispatch(fetchCurrentUser()).unwrap();
-
-        // Закриття модального вікна ТІЛЬКИ після успішного входу
+        toast.success('Successfully signed in!');
         if (onSuccess) {
           setTimeout(onSuccess, 1000);
         }
       }
     } catch (error) {
-      // Обробка спеціальних помилок валідації з бекенду
+      toast.error(error || 'Authentication failed. Please try again.');
       if (error.includes('Password must be at least 6 characters')) {
         setFieldError('password', 'Password must be at least 6 characters');
       } else if (error.includes('Email or password is wrong')) {
-        // Встановлюємо загальне повідомлення для невірних облікових даних
-        setServerError('Email or password is incorrect');
+        setFieldError('email', 'Email or password is incorrect');
       } else {
-        // Встановлення помилки в локальний стан для інших типів помилок
         setServerError(error || 'Authentication failed. Please try again.');
       }
       console.error('Login error:', error);
@@ -77,68 +72,73 @@ const SignInForm = ({ onSuccess }) => {
     >
       {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
-          {/* Email Field */}
-          <label htmlFor={emailId} className={styles.visuallyHidden}>
-            Email
-          </label>
-          <div className={styles.inputWrapper}>
-            <Field
-              id={emailId}
+          <div className={styles.inputWithError}>
+            <label htmlFor={emailId} className={styles.visuallyHidden}>
+              Email
+            </label>
+            <div className={styles.inputWrapper}>
+              <Field
+                id={emailId}
+                name="email"
+                type="email"
+                required
+                placeholder="Email*"
+                className={`${styles.input} ${
+                  touched.email && errors.email ? styles.inputError : ''
+                }`}
+              />
+            </div>
+            <ErrorMessage
               name="email"
-              type="email"
-              required
-              placeholder="Email*"
-              className={`${styles.input} ${
-                touched.email && errors.email ? styles.inputError : ''
-              }`}
+              component="div"
+              className={styles.error}
             />
           </div>
-          <ErrorMessage name="email" component="div" className={styles.error} />
 
-          {/* Password Field */}
-          <label htmlFor={passwordId} className={styles.visuallyHidden}>
-            Password
-          </label>
-          <div className={styles.inputWrapper}>
-            <Field
-              id={passwordId}
+          <div className={styles.inputWithError}>
+            <label htmlFor={passwordId} className={styles.visuallyHidden}>
+              Password
+            </label>
+            <div className={styles.inputWrapper}>
+              <Field
+                id={passwordId}
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Password*"
+                className={`${styles.input} ${
+                  touched.password && errors.password ? styles.inputError : ''
+                }`}
+              />
+              {showPassword ? (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(false)}
+                >
+                  <use href={`${icons}#eye-off`} />
+                </svg>
+              ) : (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(true)}
+                >
+                  <use href={`${icons}#eye`} />
+                </svg>
+              )}
+            </div>
+            <ErrorMessage
               name="password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              placeholder="Password*"
-              className={`${styles.input} ${
-                touched.password && errors.password ? styles.inputError : ''
-              }`}
+              component="div"
+              className={styles.error}
             />
-            {/* Toggle Password Visibility */}
-            {showPassword ? (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(false)}
-              >
-                <use href={`${icons}#eye-off`} />
-              </svg>
-            ) : (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(true)}
-              >
-                <use href={`${icons}#eye`} />
-              </svg>
-            )}
           </div>
-          <ErrorMessage
-            name="password"
-            component="div"
-            className={styles.error}
-          />
 
-          {/* Server-side Error Display */}
-          {serverError && <div className={styles.error}>{serverError}</div>}
+          {serverError && !errors.email && !errors.password && (
+            <div className={styles.serverError}>{serverError}</div>
+          )}
 
-          {/* Submit Button */}
           <div className={styles.buttonWrapper}>
             <Button
               type="submit"
