@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipes } from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
 import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
 import Loader from '../../components/Loader/Loader';
 import RecipeFilters from '../../components/RecipeFilters/RecipeFilters';
-import RecipePagination from '../../components/RecipePagination/RecipePagination';
+import Pagination from '../Pagination/Pagination';
 
 const RecipeList = ({ categoryId = null }) => {
   const dispatch = useDispatch();
@@ -19,6 +19,8 @@ const RecipeList = ({ categoryId = null }) => {
     area: '',
   });
 
+  const listRef = useRef();
+
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -26,7 +28,6 @@ const RecipeList = ({ categoryId = null }) => {
     };
 
     handleResize();
-
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
@@ -42,67 +43,67 @@ const RecipeList = ({ categoryId = null }) => {
   useEffect(() => {
     dispatch(
       fetchRecipes({
-        page: currentPage,
         category: filters.category,
         ingredient: filters.ingredient,
         area: filters.area,
       }),
     );
-  }, [dispatch, currentPage, filters]);
+  }, [dispatch, filters]);
 
   const handleFilterChange = newFilters => {
     setFilters(prev => ({ ...prev, ...newFilters }));
     setCurrentPage(1);
   };
 
-  const totalPages = recipes ? Math.ceil(recipes.length / itemsPerPage) : 0;
-
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const indexOfLastRecipe = currentPage * itemsPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - itemsPerPage;
+
   const currentRecipes = recipes
     ? recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
     : [];
 
-  return (
-    <>
-      <div className={styles.wrap}>
-        <div className={styles.filterWrapper}>
-          <RecipeFilters onFilterChange={handleFilterChange} />
-        </div>
-        <div>
-          {loading && (
-            <div className={styles.loaderWrapper}>
-              <Loader />
-            </div>
-          )}
-          {error && <p className={styles.errorMessage}>{error}</p>}
-          <div className={styles.wrapper}>
-            {currentRecipes && currentRecipes.length > 0
-              ? currentRecipes.map(recipe => (
-                  <RecipeCardContainer key={recipe.id} recipe={recipe} />
-                ))
-              : !loading && (
-                  <div className={styles.emptyState}>
-                    <p>No recipes found for this category. Try another one!</p>
-                  </div>
-                )}
-          </div>
+  const totalPages = recipes ? Math.ceil(recipes.length / itemsPerPage) : 0;
 
-          {totalPages > 1 && (
-            <RecipePagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
-          )}
-        </div>
+  return (
+    <div className={styles.wrap}>
+      <div className={styles.filterWrapper}>
+        <RecipeFilters onFilterChange={handleFilterChange} />
       </div>
-    </>
+
+      <div>
+        {loading && (
+          <div className={styles.loaderWrapper}>
+            <Loader />
+          </div>
+        )}
+
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
+        <div className={styles.wrapper} ref={listRef}>
+          {currentRecipes.length > 0
+            ? currentRecipes.map(recipe => (
+                <RecipeCardContainer key={recipe.id} recipe={recipe} />
+              ))
+            : !loading && (
+                <div className={styles.emptyState}>
+                  <p>No recipes found for this category. Try another one!</p>
+                </div>
+              )}
+        </div>
+
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -246,12 +246,10 @@ const recipesSlice = createSlice({
       .addCase(createRecipe.pending, state => {
         state.loading = true;
       })
-      // .addCase(createRecipe.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.ownRecipes.push(action.payload);
-      // })
+
       .addCase(createRecipe.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         if (Array.isArray(state.ownRecipes)) {
           state.ownRecipes.push(action.payload);
         } else if (state.ownRecipes?.data) {
@@ -265,7 +263,10 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(deleteRecipe.pending, state => {})
+      .addCase(deleteRecipe.pending, state => {
+        state.loading = false;
+        state.error = null;
+      })
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.loading = false;
         state.ownRecipes = Array.isArray(state.ownRecipes)
@@ -317,7 +318,10 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(removeFromFavorites.pending, state => {})
+      .addCase(removeFromFavorites.pending, state => {
+        state.loading = false;
+        state.error = null;
+      })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {
         state.loading = false;
 
