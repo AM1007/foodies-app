@@ -247,9 +247,19 @@ const recipesSlice = createSlice({
       .addCase(createRecipe.pending, state => {
         state.loading = true;
       })
+      // .addCase(createRecipe.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.ownRecipes.push(action.payload);
+      // })
       .addCase(createRecipe.fulfilled, (state, action) => {
         state.loading = false;
-        state.ownRecipes.push(action.payload);
+        if (Array.isArray(state.ownRecipes)) {
+          state.ownRecipes.push(action.payload);
+        } else if (state.ownRecipes?.data) {
+          state.ownRecipes.data.push(action.payload);
+        } else {
+          state.ownRecipes = { data: [action.payload] };
+        }
       })
       .addCase(createRecipe.rejected, (state, action) => {
         state.loading = false;

@@ -7,16 +7,26 @@ import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
-import { toast } from 'react-hot-toast';
 
 const SignInForm = ({ onSuccess }) => {
   const emailId = useId();
   const passwordId = useId();
   const dispatch = useDispatch();
-  const { error, loading } = useSelector(state => state.auth);
+  const { loading, error: reduxError } = useSelector(state => state.auth);
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
-  useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
+  // Очищення помилок Redux при розмонтуванні компонента
+  useEffect(() => {
+    return () => dispatch(resetAuthError());
+  }, [dispatch]);
+
+  // Синхронізація помилок з Redux state
+  useEffect(() => {
+    if (reduxError) {
+      setServerError(reduxError);
+    }
+  }, [reduxError]);
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -25,21 +35,35 @@ const SignInForm = ({ onSuccess }) => {
     password: Yup.string().required('Password is required'),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      await dispatch(loginUser(values)).unwrap();
+      // Очищення попередніх помилок
+      setServerError(null);
 
-      const currentUser = await dispatch(fetchCurrentUser()).unwrap();
+      // Виклик дії логіну з Redux
+      const result = await dispatch(loginUser(values)).unwrap();
 
-      if (currentUser) {
-        toast.success('You have successfully signed in!');
-      } else {
-        toast.error('Could not fetch user data.');
+      if (result && result.token) {
+        // Отримання даних поточного користувача
+        await dispatch(fetchCurrentUser()).unwrap();
+
+        // Закриття модального вікна ТІЛЬКИ після успішного входу
+        if (onSuccess) {
+          setTimeout(onSuccess, 1000);
+        }
       }
-
-      if (onSuccess) setTimeout(onSuccess, 1000);
     } catch (error) {
-      console.log(error.message || 'Something went wrong');
+      // Обробка спеціальних помилок валідації з бекенду
+      if (error.includes('Password must be at least 6 characters')) {
+        setFieldError('password', 'Password must be at least 6 characters');
+      } else if (error.includes('Email or password is wrong')) {
+        // Встановлюємо загальне повідомлення для невірних облікових даних
+        setServerError('Email or password is incorrect');
+      } else {
+        // Встановлення помилки в локальний стан для інших типів помилок
+        setServerError(error || 'Authentication failed. Please try again.');
+      }
+      console.error('Login error:', error);
     } finally {
       setSubmitting(false);
     }
@@ -53,7 +77,10 @@ const SignInForm = ({ onSuccess }) => {
     >
       {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
-          <label htmlFor={emailId} className={styles.visuallyHidden}></label>
+          {/* Email Field */}
+          <label htmlFor={emailId} className={styles.visuallyHidden}>
+            Email
+          </label>
           <div className={styles.inputWrapper}>
             <Field
               id={emailId}
@@ -61,17 +88,17 @@ const SignInForm = ({ onSuccess }) => {
               type="email"
               required
               placeholder="Email*"
-              className={[
-                styles.input,
-                touched.email && errors.email && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={`${styles.input} ${
+                touched.email && errors.email ? styles.inputError : ''
+              }`}
             />
           </div>
           <ErrorMessage name="email" component="div" className={styles.error} />
 
-          <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
+          {/* Password Field */}
+          <label htmlFor={passwordId} className={styles.visuallyHidden}>
+            Password
+          </label>
           <div className={styles.inputWrapper}>
             <Field
               id={passwordId}
@@ -79,13 +106,11 @@ const SignInForm = ({ onSuccess }) => {
               type={showPassword ? 'text' : 'password'}
               required
               placeholder="Password*"
-              className={[
-                styles.input,
-                touched.password && errors.password && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={`${styles.input} ${
+                touched.password && errors.password ? styles.inputError : ''
+              }`}
             />
+            {/* Toggle Password Visibility */}
             {showPassword ? (
               <svg
                 className={styles.eyeIcon}
@@ -110,8 +135,10 @@ const SignInForm = ({ onSuccess }) => {
             className={styles.error}
           />
 
-          {error && <div className={styles.error}>{error}</div>}
+          {/* Server-side Error Display */}
+          {serverError && <div className={styles.error}>{serverError}</div>}
 
+          {/* Submit Button */}
           <div className={styles.buttonWrapper}>
             <Button
               type="submit"
