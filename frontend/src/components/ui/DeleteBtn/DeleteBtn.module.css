@@ -17,9 +17,11 @@
   cursor: pointer;
 }
 
-svg {
+.icon {
   height: 16px;
   width: 16px;
+  stroke: currentColor;
+  fill: none;
 }
 
 @media screen and (min-width: 768px) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './UserAvatar.module.css';
 import { updateUserAvatar } from '../../../redux/users/userSlice';
+import UploadAvatar from '../UploadAvatar/UploadAvatar';
 
 function UserAvatar({
   avatarType = 'user',
@@ -62,6 +63,7 @@ function UserAvatar({
 
       {isOwnProfile && showUpload && (
         <label className={css.avatarInputWrapper}>
+          <UploadAvatar />
           <input
             type="file"
             accept="image/*"
