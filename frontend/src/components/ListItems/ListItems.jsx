@@ -48,7 +48,7 @@ const ListItems = ({
       setDeletingItemIds(prev => [...prev, recipeId]);
 
       await dispatch(deleteRecipe(recipeId)).unwrap();
-      console.log(`Recipe ${recipeId} deleted successfully`);
+
 
       setLocalItems(prev =>
         prev.filter(item => item.id !== recipeId && item._id !== recipeId),
@@ -71,7 +71,7 @@ const ListItems = ({
       setDeletingItemIds(prev => [...prev, recipeId]);
 
       await dispatch(removeFromFavorites(recipeId)).unwrap();
-      console.log(`Recipe ${recipeId} removed from favorites`);
+
 
       setLocalItems(prev =>
         prev.filter(item => item.id !== recipeId && item._id !== recipeId),
@@ -98,21 +98,11 @@ const ListItems = ({
 
   const handleUserFollowToggle = useCallback(
     (userId, shouldFollow) => {
-      console.log(
-        `Toggle follow for user ${userId}, shouldFollow: ${shouldFollow}`,
-      );
-
-      if (activeTab === 'following' && !shouldFollow) {
-        setLocalItems(prevItems =>
-          prevItems.filter(user => user.id !== userId && user._id !== userId),
-        );
-      }
-
       if (onFollowToggle && typeof onFollowToggle === 'function') {
         onFollowToggle(userId, shouldFollow);
       }
     },
-    [activeTab, onFollowToggle],
+    [onFollowToggle],
   );
 
   if (!displayItems.length) {
@@ -173,4 +163,4 @@ const ListItems = ({
   );
 };
 
-export default ListItems;
+export default React.memo(ListItems);

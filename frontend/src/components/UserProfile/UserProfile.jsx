@@ -26,45 +26,60 @@ const UserProfile = ({
   const { following } = useSelector(state => state.user);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     if (profileUser && following && !isOwnProfile) {
       const userId = profileUser._id || profileUser.id;
-      const alreadyFollowing = following.some(
-        user => user._id === userId || user.id === userId,
-      );
+
+      const alreadyFollowing =
+        Array.isArray(following) &&
+        following.some(followedUser => {
+          const followedId = followedUser._id || followedUser.id;
+          return followedId === userId;
+        });
+
       setIsFollowing(alreadyFollowing);
     }
   }, [following, profileUser, isOwnProfile]);
 
   const handleFollowToggle = () => {
-    if (!profileUser) return;
+    if (!profileUser || isProcessing) return;
 
     const userId = profileUser._id || profileUser.id;
+    setIsProcessing(true);
 
     if (isFollowing) {
+      setIsFollowing(false);
+
       dispatch(unfollowUser(userId))
         .unwrap()
         .then(() => {
           setIsFollowing(false);
           dispatch(fetchFollowers(userId));
-
-          dispatch(fetchFollowing());
         })
         .catch(error => {
           console.error('Failed to unfollow:', error);
+          setIsFollowing(true);
+        })
+        .finally(() => {
+          setIsProcessing(false);
         });
     } else {
+      setIsFollowing(true);
+
       dispatch(followUser(userId))
         .unwrap()
         .then(() => {
           setIsFollowing(true);
           dispatch(fetchFollowers(userId));
-
-          dispatch(fetchFollowing());
         })
         .catch(error => {
           console.error('Failed to follow:', error);
+          setIsFollowing(false);
+        })
+        .finally(() => {
+          setIsProcessing(false);
         });
     }
   };
@@ -96,7 +111,9 @@ const UserProfile = ({
         )}
 
         {isOwnProfile ? (
-          <Button className={css.button} onClick={() => openModal('logout')}>Log Out</Button>
+          <Button className={css.button} onClick={() => openModal('logout')}>
+            Log Out
+          </Button>
         ) : (
           profileUser && (
             <Button
@@ -105,9 +122,16 @@ const UserProfile = ({
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
               className={isFollowing && isHovering ? css.unfollowHover : ''}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: isProcessing ? 'wait' : 'pointer' }}
+              disabled={isProcessing}
             >
-              {isFollowing ? (isHovering ? 'Unfollow' : 'FOLLOWING') : 'FOLLOW'}
+              {isProcessing
+                ? 'Processing...'
+                : isFollowing
+                ? isHovering
+                  ? 'Unfollow'
+                  : 'FOLLOWING'
+                : 'FOLLOW'}
             </Button>
           )
         )}
@@ -119,10 +143,10 @@ const UserProfile = ({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-        <div>{renderTabContent()}</div>
+        <div className={css.tabContentContainer}>{renderTabContent()}</div>
       </div>
     </div>
   );
 };
 
-export default UserProfile;
+export default React.memo(UserProfile);
