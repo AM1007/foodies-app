@@ -85,6 +85,7 @@ export const createRecipe = createAsyncThunk(
       const response = await axiosAPI.post('/recipes', recipeData);
       return response.data;
     } catch (err) {
+      console.error('Error creating recipe:', err.response?.data || err.message);
       return rejectWithValue(
         err.response?.data?.message || 'Failed to create recipe',
       );
@@ -97,6 +98,12 @@ export const deleteRecipe = createAsyncThunk(
   async (recipeId, { rejectWithValue }) => {
     try {
       await axiosAPI.delete(`/recipes/${recipeId}`);
+      try {
+        await axiosAPI.delete(`/recipes/${recipeId}/favorite`);
+      } catch (favoriteErr) {
+        console.warn('Failed to remove from favorites:', favoriteErr);
+      }
+      
       return recipeId;
     } catch (err) {
       return rejectWithValue(
@@ -200,9 +207,11 @@ const recipesSlice = createSlice({
 
       .addCase(fetchRecipeDetails.pending, state => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchRecipeDetails.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         state.currentRecipe = action.payload;
       })
       .addCase(fetchRecipeDetails.rejected, (state, action) => {
@@ -217,6 +226,7 @@ const recipesSlice = createSlice({
       .addCase(fetchUserRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        console.log('Setting user recipes:', action.payload);
         state.userRecipes = action.payload;
       })
       .addCase(fetchUserRecipes.rejected, (state, action) => {
@@ -227,9 +237,11 @@ const recipesSlice = createSlice({
 
       .addCase(fetchPopularRecipes.pending, state => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchPopularRecipes.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         state.popularRecipes = action.payload;
       })
       .addCase(fetchPopularRecipes.rejected, (state, action) => {
@@ -239,11 +251,11 @@ const recipesSlice = createSlice({
 
       .addCase(createRecipe.pending, state => {
         state.loading = true;
+        state.error = null;
       })
-
       .addCase(createRecipe.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
+        state.error = null; 
         if (Array.isArray(state.ownRecipes)) {
           state.ownRecipes.push(action.payload);
         } else if (state.ownRecipes?.data) {
@@ -258,11 +270,13 @@ const recipesSlice = createSlice({
       })
 
       .addCase(deleteRecipe.pending, state => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
+        
         state.ownRecipes = Array.isArray(state.ownRecipes)
           ? state.ownRecipes.filter(
               recipe =>
@@ -277,6 +291,24 @@ const recipesSlice = createSlice({
               ),
             }
           : [];
+          
+        if (Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = state.favoriteRecipes.filter(
+            recipe =>
+              recipe._id !== action.payload && recipe.id !== action.payload,
+          );
+        } else if (
+          state.favoriteRecipes?.data &&
+          Array.isArray(state.favoriteRecipes.data)
+        ) {
+          state.favoriteRecipes = {
+            ...state.favoriteRecipes,
+            data: state.favoriteRecipes.data.filter(
+              recipe =>
+                recipe._id !== action.payload && recipe.id !== action.payload,
+            ),
+          };
+        }
       })
       .addCase(deleteRecipe.rejected, (state, action) => {
         state.loading = false;
@@ -285,9 +317,11 @@ const recipesSlice = createSlice({
 
       .addCase(fetchOwnRecipes.pending, state => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchOwnRecipes.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         state.ownRecipes = action.payload;
       })
       .addCase(fetchOwnRecipes.rejected, (state, action) => {
@@ -295,77 +329,51 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addToFavorites.pending, (state, action) => {
-        const recipeId = action.meta.arg;
-
-        if (recipeId) {
-          const recipe = state.recipes?.find(
-            r => r._id === recipeId || r.id === recipeId,
-          );
-
-          if (recipe && Array.isArray(state.favoriteRecipes)) {
-            const alreadyExists = state.favoriteRecipes.some(
-              fav => fav._id === recipeId || fav.id === recipeId,
-            );
-
-            if (!alreadyExists) {
-              state.favoriteRecipes.push(recipe);
-            }
-          }
-        }
-
+      .addCase(addToFavorites.pending, state => {
+        state.loading = true;
         state.error = null;
       })
       .addCase(addToFavorites.fulfilled, (state, action) => {
-        const newFavorite = action.payload;
+        state.loading = false;
+        state.error = null;
 
-        if (!newFavorite) return;
-
-        if (Array.isArray(state.favoriteRecipes)) {
-          if (
-            !state.favoriteRecipes.some(
-              recipe =>
-                recipe._id === newFavorite._id || recipe.id === newFavorite.id,
-            )
-          ) {
-            state.favoriteRecipes.push(newFavorite);
-          }
-        } else {
-          state.favoriteRecipes = [newFavorite];
+        if (!Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = [];
         }
+
+        state.favoriteRecipes.push(action.payload);
       })
       .addCase(addToFavorites.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      .addCase(removeFromFavorites.pending, (state, action) => {
-        const recipeId = action.meta.arg;
-
-        if (recipeId && Array.isArray(state.favoriteRecipes)) {
-          state.favoriteRecipes = state.favoriteRecipes.filter(
-            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
-          );
-        }
-
+      .addCase(removeFromFavorites.pending, state => {
+        state.loading = true;
         state.error = null;
       })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {
-        const recipeId = action.meta.arg;
-
-        if (!recipeId) return;
+        state.loading = false;
+        state.error = null;
 
         if (Array.isArray(state.favoriteRecipes)) {
           state.favoriteRecipes = state.favoriteRecipes.filter(
-            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+            recipe =>
+              recipe._id !== action.payload && recipe.id !== action.payload,
           );
         } else if (
           state.favoriteRecipes?.data &&
           Array.isArray(state.favoriteRecipes.data)
         ) {
-          state.favoriteRecipes.data = state.favoriteRecipes.data.filter(
-            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
-          );
+          state.favoriteRecipes = {
+            ...state.favoriteRecipes,
+            data: state.favoriteRecipes.data.filter(
+              recipe =>
+                recipe._id !== action.payload && recipe.id !== action.payload,
+            ),
+          };
+        } else {
+          state.favoriteRecipes = [];
         }
       })
       .addCase(removeFromFavorites.rejected, (state, action) => {
@@ -373,8 +381,13 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
+      .addCase(fetchFavoriteRecipes.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
 
         if (Array.isArray(action.payload)) {
           state.favoriteRecipes = action.payload;
@@ -391,6 +404,10 @@ const recipesSlice = createSlice({
             action.payload,
           );
         }
+      })
+      .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
