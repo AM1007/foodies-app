@@ -14,11 +14,13 @@ const AddRecipePage = () => {
   };
 
   return (
-    <div className="container">
-      <div className={styles.topInfo}>
+    <div className={`container ${styles.recipePageWrapper}`}>
+      <div className={styles.recipePageInfo}>
         <PathInfo current="Add recipe" onHomeClick={handleHome} />
-        <MainTitle text="Add recipe" />
-        <SubTitle text="Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us." />
+        <div className={styles.subTitle}>
+          <MainTitle text="Add recipe" />
+          <SubTitle text="Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us." />
+        </div>
       </div>
       <AddRecipeForm />
     </div>
