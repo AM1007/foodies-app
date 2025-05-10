@@ -122,7 +122,6 @@ const Profile = () => {
       (id === current._id || id === current.id) &&
       id !== 'current'
     ) {
-
       navigate('/users/current', { replace: true });
     }
   }, [id, current, navigate]);
@@ -302,7 +301,12 @@ const Profile = () => {
     switch (activeTab) {
       case 'my-recipes':
         content = (
-          <ListItems key={tabKey} activeTab={activeTab} items={ownRecipes} />
+          <ListItems
+            key={tabKey}
+            activeTab={activeTab}
+            items={ownRecipes}
+            isOwnProfile={isOwnProfile}
+          />
         );
         break;
       case 'my-favorites':
@@ -312,6 +316,7 @@ const Profile = () => {
             activeTab={activeTab}
             items={favoriteRecipes}
             onFavoriteRemoved={handleFavoriteRemoved}
+            isOwnProfile={isOwnProfile}
           />
         );
         break;
@@ -323,6 +328,7 @@ const Profile = () => {
             items={uniqueFollowers || []}
             onFollowToggle={handleFollowToggle}
             localFollowingIds={localFollowingIds}
+            isOwnProfile={isOwnProfile}
           />
         );
         break;
@@ -334,12 +340,18 @@ const Profile = () => {
             items={uniqueFollowing || []}
             onFollowToggle={handleUnfollowFromList}
             localFollowingIds={localFollowingIds}
+            isOwnProfile={isOwnProfile}
           />
         );
         break;
       case 'recipes':
         content = (
-          <ListItems key={tabKey} activeTab={activeTab} items={userRecipes} />
+          <ListItems
+            key={tabKey}
+            activeTab={activeTab}
+            items={userRecipes}
+            isOwnProfile={isOwnProfile}
+          />
         );
         break;
       default:

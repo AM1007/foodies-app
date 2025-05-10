@@ -148,9 +148,28 @@
   stroke: var(--black);
 }
 
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
 .heart.active {
   background-color: var(--black);
   border-color: var(--black);
+  animation: heartBeat 1s ease-in-out;
 }
 
 .heart.active svg {
@@ -172,5 +191,13 @@
   .icon {
     width: 18px;
     height: 18px;
+  }
+
+  .image {
+    transition: transform 0.4s ease;
+  }
+
+  .imageLink:hover .image {
+    transform: scale(1.05);
   }
 }
