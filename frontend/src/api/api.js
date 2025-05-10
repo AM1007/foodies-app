@@ -4,12 +4,12 @@ const axiosAPI = axios.create({
   baseURL: 'https://foodies-app-pke3.onrender.com/api',
 });
 
-
 const privateEndpoints = [
   '/auth/logout',
   '/users/current',
   '/users/avatar',
-  '/users/', 
+  '/users/',
+  '/recipes',
   '/recipes/own',
   '/recipes/favorites',
 ];
@@ -18,13 +18,14 @@ axiosAPI.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
 
-    
-    const isPrivateEndpoint = privateEndpoints.some(endpoint =>
-      config.url.includes(endpoint) ||
-      config.url.match(/\/users\/\w+$/) !== null ||
-      config.url.match(/\/users\/\w+\/followers$/) !== null ||
-      config.url.match(/\/recipes\/\w+\/favorite/) !== null ||
-      (config.method !== 'get' && config.url.match(/\/recipes\/\w+$/) !== null)
+    const isPrivateEndpoint = privateEndpoints.some(
+      endpoint =>
+        config.url.includes(endpoint) ||
+        config.url.match(/\/users\/\w+$/) !== null ||
+        config.url.match(/\/users\/\w+\/followers$/) !== null ||
+        config.url.match(/\/recipes\/\w+\/favorite/) !== null ||
+        (config.method !== 'get' &&
+          config.url.match(/\/recipes\/\w+$/) !== null),
     );
 
     if (token && isPrivateEndpoint) {
@@ -55,14 +56,14 @@ axiosAPI.interceptors.response.use(
 
         localStorage.setItem('token', token);
 
-        
-        const isPrivateEndpoint = privateEndpoints.some(endpoint =>
-          originalRequest.url.includes(endpoint) ||
-          originalRequest.url.match(/\/users\/\w+$/) !== null ||
-          originalRequest.url.match(/\/users\/\w+\/followers$/) !== null ||
-          originalRequest.url.match(/\/recipes\/\w+\/favorite/) !== null ||
-          (originalRequest.method !== 'get' &&
-            originalRequest.url.match(/\/recipes\/\w+$/) !== null)
+        const isPrivateEndpoint = privateEndpoints.some(
+          endpoint =>
+            originalRequest.url.includes(endpoint) ||
+            originalRequest.url.match(/\/users\/\w+$/) !== null ||
+            originalRequest.url.match(/\/users\/\w+\/followers$/) !== null ||
+            originalRequest.url.match(/\/recipes\/\w+\/favorite/) !== null ||
+            (originalRequest.method !== 'get' &&
+              originalRequest.url.match(/\/recipes\/\w+$/) !== null),
         );
 
         if (isPrivateEndpoint) {

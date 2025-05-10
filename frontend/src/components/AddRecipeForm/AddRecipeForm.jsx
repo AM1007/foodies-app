@@ -20,6 +20,7 @@ import Loader from '../Loader/Loader';
 import { createRecipe } from '../../redux/recipes/recipesSlice';
 import { fetchCategories } from '../../redux/categories/categoriesSlice';
 import { fetchIngredients } from '../../redux/ingredients/ingredientsSlice';
+import { fetchAreas } from '../../redux/areas/areasSlice';
 
 const schema = yup.object().shape({
   title: yup
@@ -82,6 +83,13 @@ const AddRecipeForm = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchAreas());
+  }, [dispatch]);
+
+  const { items: areas } = useSelector(state => state.areas);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
     dispatch(fetchIngredients());
   }, [dispatch]);
 
@@ -104,7 +112,6 @@ const AddRecipeForm = () => {
         );
 
         if (isAlreadyAdded) {
-          console.warn('This ingredient is already added');
           return false;
         }
 
@@ -125,8 +132,6 @@ const AddRecipeForm = () => {
 
         return true;
       }
-    } else {
-      console.warn('Please select an ingredient and specify the quantity');
     }
     return false;
   };
@@ -151,6 +156,11 @@ const AddRecipeForm = () => {
   };
 
   const onSubmit = async data => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
     if (recipeIngredients.length === 0) {
       setIngredientsError('At least one ingredient is required');
       return;
@@ -165,24 +175,26 @@ const AddRecipeForm = () => {
       formData.append('categoryId', data.categoryId);
       formData.append('time', data.time);
       formData.append('instructions', data.instructions);
-      formData.append('photo', data.photo);
+      formData.append('thumb', data.photo);
+
+      const areaId = areas && areas.length > 0 ? areas[0].id : 1;
+      formData.append('areaId', areaId);
 
       recipeIngredients.forEach((ingredient, index) => {
-        formData.append(`ingredients[${index}][id]`, ingredient.ingredientId);
-        formData.append(`ingredients[${index}][quantity]`, ingredient.amount);
+        formData.append(
+          `ingredients[${index}][ingredientId]`,
+          ingredient.ingredientId,
+        );
+        formData.append(`ingredients[${index}][measure]`, ingredient.amount);
       });
 
       const resultAction = await dispatch(createRecipe(formData));
 
       if (createRecipe.fulfilled.match(resultAction)) {
-        console.log('Recipe published successfully!');
-        navigate('/user');
-      } else if (createRecipe.rejected.match(resultAction)) {
-        const errorMessage = resultAction.payload || 'Failed to create recipe';
-        console.error(`Error: ${errorMessage}`);
+        navigate('/users/current');
       }
     } catch (error) {
-      console.error('Error creating recipe:', error);
+      // Обробка помилки
     } finally {
       setIsSubmitting(false);
     }

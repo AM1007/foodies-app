@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/users/authSlice';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import styles from './LogOutModal.module.css';
@@ -9,6 +10,7 @@ import { toast } from 'react-hot-toast';
 
 const LogOutModal = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading } = useSelector(state => state.auth);
   const { closeModal } = useModal();
 
@@ -17,6 +19,7 @@ const LogOutModal = () => {
       await dispatch(logoutUser()).unwrap();
       toast.success('Logged out successfully');
       closeModal();
+      navigate('/');
     } catch (error) {
       toast.error(`Logout failed: ${error.message || error}`);
     }
