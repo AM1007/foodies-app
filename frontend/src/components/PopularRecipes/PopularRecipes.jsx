@@ -18,6 +18,7 @@ const PopularRecipes = () => {
   }
 
   return (
+
     <div className={styles.popular}>
       <h3 className={styles.title}>Popular Recipes</h3>
       <ul className={styles.list}>
@@ -28,6 +29,7 @@ const PopularRecipes = () => {
         ))}
       </ul>
     </div>
+
   );
 };
 
