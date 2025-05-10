@@ -4,16 +4,44 @@ import models from '../db/associations.js';
 import HttpError from '../helpers/HttpError.js';
 import { HTTP_STATUS } from '../constants/httpStatus.js';
 import jwtHelpers from '../helpers/jwt.js';
-import { token } from 'morgan';
-
+import { userNameRegexp } from '../constants/auth.js';
 const { User } = models;
 
 const findUser = async query => await User.findOne({ where: query });
 
+const validateUserName = userName => {
+  if (!userName) {
+    return { vaild: false, message: 'Username is required' };
+  }
+  if (userName.length < 3 || userName.length > 30) {
+    return {
+      valid: false,
+      message: 'Name must be between 3 and 30 characters',
+    };
+  }
+  if (!userNameRegexp.test(userName)) {
+    return {
+      valid: false,
+      message:
+        'Name should only contain letters, numbers, underscores, hyphens, dots and commas',
+    };
+  }
+  return { valid: true };
+};
+
 const registerUser = async userData => {
   const { email, password, name } = userData;
 
+  const sanitizedName = name.trim();
+
+  const validatedName = validateUserName(sanitizedName);
+
+  if (!validatedName.valid) {
+    throw HttpError(HTTP_STATUS.BAD_REQUEST, validatedName.message);
+  }
+
   const existingUser = await findUser({ email });
+
   if (existingUser) {
     throw HttpError(HTTP_STATUS.CONFLICT, 'Email already in use');
   }
@@ -23,7 +51,7 @@ const registerUser = async userData => {
   const avatarURL = gravatar.url(email, { s: '250', d: 'mp' }, true);
 
   const newUser = await User.create({
-    name,
+    name: sanitizedName,
     email,
     password: hashedPassword,
     avatar: avatarURL,
