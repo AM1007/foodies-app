@@ -37,7 +37,7 @@ userRouter.get(
 userRouter.patch(
   '/avatar',
   authenticate,
-  upload.single('avatar'),
+  upload,
   usersControllers.updateAvatarController,
 );
 
