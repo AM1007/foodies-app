@@ -75,24 +75,6 @@
   transition: background-color 0.2s ease;
 }
 
-.successMessage {
-  background-color: var(--white);
-  color: green;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border-left: 4px solid green;
-}
-
-.errorNotification {
-  background-color: #ffebee;
-  color: var(--red);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border-left: 4px solid var(--red);
-}
-
 @media (min-width: 768px) {
   .form {
     display: flex;
