@@ -96,7 +96,7 @@ const UserProfile = ({
         )}
 
         {isOwnProfile ? (
-          <Button onClick={() => openModal('logout')}>Log Out</Button>
+          <Button className={css.button} onClick={() => openModal('logout')}>Log Out</Button>
         ) : (
           profileUser && (
             <Button
