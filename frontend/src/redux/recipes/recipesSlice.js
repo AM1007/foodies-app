@@ -98,6 +98,12 @@ export const deleteRecipe = createAsyncThunk(
   async (recipeId, { rejectWithValue }) => {
     try {
       await axiosAPI.delete(`/recipes/${recipeId}`);
+      try {
+        await axiosAPI.delete(`/recipes/${recipeId}/favorite`);
+      } catch (favoriteErr) {
+        console.warn('Failed to remove from favorites:', favoriteErr);
+      }
+      
       return recipeId;
     } catch (err) {
       return rejectWithValue(
@@ -270,6 +276,7 @@ const recipesSlice = createSlice({
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+
         state.ownRecipes = Array.isArray(state.ownRecipes)
           ? state.ownRecipes.filter(
               recipe =>
@@ -284,6 +291,24 @@ const recipesSlice = createSlice({
               ),
             }
           : [];
+          
+        if (Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = state.favoriteRecipes.filter(
+            recipe =>
+              recipe._id !== action.payload && recipe.id !== action.payload,
+          );
+        } else if (
+          state.favoriteRecipes?.data &&
+          Array.isArray(state.favoriteRecipes.data)
+        ) {
+          state.favoriteRecipes = {
+            ...state.favoriteRecipes,
+            data: state.favoriteRecipes.data.filter(
+              recipe =>
+                recipe._id !== action.payload && recipe.id !== action.payload,
+            ),
+          };
+        }
       })
       .addCase(deleteRecipe.rejected, (state, action) => {
         state.loading = false;

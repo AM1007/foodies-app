@@ -73,7 +73,6 @@ axiosAPI.interceptors.response.use(
         return axiosAPI(originalRequest);
       } catch (refreshError) {
         localStorage.removeItem('token');
-        window.location.href = '/';
         return Promise.reject(refreshError);
       }
     }

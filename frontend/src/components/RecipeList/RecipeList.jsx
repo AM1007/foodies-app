@@ -1,15 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchRecipes } from '../../redux/recipes/recipesSlice';
+import {
+  fetchRecipes,
+  fetchFavoriteRecipes,
+} from '../../redux/recipes/recipesSlice';
 import styles from './RecipeList.module.css';
 import RecipeCardContainer from '../../components/RecipeCardContainer/RecipeCardContainer';
 import Loader from '../../components/Loader/Loader';
 import RecipeFilters from '../../components/RecipeFilters/RecipeFilters';
 import Pagination from '../Pagination/Pagination';
+import React from 'react';
 
-const RecipeList = ({ categoryId = null }) => {
+const RecipeList = React.memo(({ categoryId = null }) => {
   const dispatch = useDispatch();
   const { recipes, loading, error } = useSelector(state => state.recipes);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -20,6 +25,13 @@ const RecipeList = ({ categoryId = null }) => {
   });
 
   const listRef = useRef();
+  const prevHeightRef = useRef(0);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchFavoriteRecipes());
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,6 +53,10 @@ const RecipeList = ({ categoryId = null }) => {
   }, [categoryId]);
 
   useEffect(() => {
+    if (listRef.current) {
+      prevHeightRef.current = listRef.current.offsetHeight;
+    }
+
     dispatch(
       fetchRecipes({
         category: filters.category,
@@ -57,6 +73,10 @@ const RecipeList = ({ categoryId = null }) => {
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
+
+    if (listRef.current) {
+      listRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const indexOfLastRecipe = currentPage * itemsPerPage;
@@ -67,6 +87,8 @@ const RecipeList = ({ categoryId = null }) => {
     : [];
 
   const totalPages = recipes ? Math.ceil(recipes.length / itemsPerPage) : 0;
+
+  const minHeight = prevHeightRef.current > 0 ? prevHeightRef.current : 400;
 
   return (
     <div className={styles.wrap}>
@@ -83,10 +105,17 @@ const RecipeList = ({ categoryId = null }) => {
 
         {error && <p className={styles.errorMessage}>{error}</p>}
 
-        <div className={styles.wrapper} ref={listRef}>
+        <div
+          className={styles.wrapper}
+          ref={listRef}
+          style={{ minHeight: loading ? minHeight : 'auto' }}
+        >
           {currentRecipes.length > 0
             ? currentRecipes.map(recipe => (
-                <RecipeCardContainer key={recipe.id} recipe={recipe} />
+                <RecipeCardContainer
+                  key={recipe.id || recipe._id}
+                  recipe={recipe}
+                />
               ))
             : !loading && (
                 <div className={styles.emptyState}>
@@ -105,6 +134,6 @@ const RecipeList = ({ categoryId = null }) => {
       </div>
     </div>
   );
-};
+});
 
 export default RecipeList;

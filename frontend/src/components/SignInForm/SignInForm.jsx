@@ -50,15 +50,19 @@ const SignInForm = ({ onSuccess }) => {
         }
       }
     } catch (error) {
-      toast.error(error || 'Authentication failed. Please try again.');
+      toast.error(
+        error.message || 'Email or password is wrong. Please try again.',
+      );
       if (error.includes('Password must be at least 6 characters')) {
         setFieldError('password', 'Password must be at least 6 characters');
       } else if (error.includes('Email or password is wrong')) {
         setFieldError('email', 'Email or password is incorrect');
       } else {
-        setServerError(error || 'Authentication failed. Please try again.');
+        setServerError(
+          error || 'Email or password is wrong. Please try again.',
+        );
       }
-      console.error('Login error:', error);
+      // toast.error('Login error:', error);
     } finally {
       setSubmitting(false);
     }
@@ -136,7 +140,9 @@ const SignInForm = ({ onSuccess }) => {
           </div>
 
           {serverError && !errors.email && !errors.password && (
-            <div className={styles.serverError}>{serverError}</div>
+            <div className={styles.serverError}>
+              Email or password is wrong. Please try again.
+            </div>
           )}
 
           <div className={styles.buttonWrapper}>

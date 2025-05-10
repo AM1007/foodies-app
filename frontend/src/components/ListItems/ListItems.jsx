@@ -16,6 +16,7 @@ const ListItems = ({
   onFollowToggle,
   onFavoriteRemoved,
   localFollowingIds = [],
+  isOwnProfile = true,
 }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.recipes);
@@ -101,12 +102,22 @@ const ListItems = ({
     [onFollowToggle],
   );
 
+  const getEmptyMessage = () => {
+    if (!isOwnProfile) {
+      if (activeTab === 'recipes' || activeTab === 'my-recipes') {
+        return emptyMessages['other-recipes'];
+      } else if (activeTab === 'followers') {
+        return emptyMessages['other-followers'];
+      } else if (activeTab === 'following') {
+        return emptyMessages['other-following'];
+      }
+    }
+
+    return emptyMessages[activeTab] || 'No items to show.';
+  };
+
   if (!paginatedItems.length) {
-    return (
-      <div className={styles.empty}>
-        {emptyMessages[activeTab] || 'No items to show.'}
-      </div>
-    );
+    return <div className={styles.empty}>{getEmptyMessage()}</div>;
   }
 
   return (
