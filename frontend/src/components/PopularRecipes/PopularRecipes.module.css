@@ -1,8 +1,6 @@
 .popular {
   margin-top: 64px;
   margin-bottom: 64px;
-
-
 }
 
 .title {
@@ -17,15 +15,13 @@
 
 .list {
   display: grid;
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 @media screen and (min-width: 768px) {
   .popular {
     margin-top: 100px;
     margin-bottom: 100px;
-
-
   }
   .title {
     font-size: 24px;
@@ -38,9 +34,7 @@
     column-gap: 20px;
     row-gap: 40px;
   }
-
 }
-
 
 @media (min-width: 1440px) {
   .list {
@@ -48,7 +42,3 @@
     gap: 24px;
   }
 }
-
-
-
-
