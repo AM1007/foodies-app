@@ -17,12 +17,13 @@ export default function SignUpForm({ onSuccess }) {
   const passwordId = useId();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      setServerError(error);
     }
   }, [error]);
 
@@ -40,11 +41,13 @@ export default function SignUpForm({ onSuccess }) {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
+      setServerError(null);
       await dispatch(registerUser(values)).unwrap();
       toast.success('You have successfully signed up!');
       setTimeout(() => onSuccess(), 1000);
-    } catch {
-      toast.error(error || 'Something went wrong');
+    } catch (error) {
+      setServerError(error || 'Something went wrong');
+      toast.error(serverError);
     } finally {
       setSubmitting(false);
     }
@@ -58,81 +61,81 @@ export default function SignUpForm({ onSuccess }) {
     >
       {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
-          <label htmlFor={nameId} className={styles.visuallyHidden}></label>
-          <div className={styles.inputWrapper}>
+          <div className={styles.inputWithError}>
             <Field
               id={nameId}
               name="name"
               required
               placeholder="Name*"
-              className={[
-                styles.input,
-                touched.name && errors.name && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={`${styles.input} ${
+                touched.name && errors.name ? styles.inputError : ''
+              }`}
+            />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className={styles.error}
             />
           </div>
-          <ErrorMessage name="name" component="div" className={styles.error} />
 
-          <label htmlFor={emailId} className={styles.visuallyHidden}></label>
-          <div className={styles.inputWrapper}>
+          <div className={styles.inputWithError}>
             <Field
               id={emailId}
               name="email"
               type="email"
               required
               placeholder="Email*"
-              className={[
-                styles.input,
-                touched.email && errors.email && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={`${styles.input} ${
+                touched.email && errors.email ? styles.inputError : ''
+              }`}
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
             />
           </div>
-          <ErrorMessage name="email" component="div" className={styles.error} />
 
-          <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
-          <div className={styles.inputWrapper}>
-            <Field
-              id={passwordId}
+          <div className={styles.inputWithError}>
+            <div className={styles.inputWrapper}>
+              <Field
+                id={passwordId}
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Password*"
+                className={`${styles.input} ${
+                  touched.password && errors.password ? styles.inputError : ''
+                }`}
+              />
+              {showPassword ? (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(false)}
+                >
+                  <use href={`${icons}#eye-off`} />
+                </svg>
+              ) : (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(true)}
+                >
+                  <use href={`${icons}#eye`} />
+                </svg>
+              )}
+            </div>
+            <ErrorMessage
               name="password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              placeholder="Password*"
-              className={[
-                styles.input,
-                touched.password && errors.password && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              component="div"
+              className={styles.error}
             />
-            {showPassword ? (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(false)}
-              >
-                <use href={`${icons}#eye-off`} />
-              </svg>
-            ) : (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(true)}
-              >
-                <use href={`${icons}#eye`} />
-              </svg>
-            )}
           </div>
-          <ErrorMessage
-            name="password"
-            component="div"
-            className={styles.error}
-          />
 
-          {error && <div className={styles.error}>{error}</div>}
+          {serverError && (
+            <div className={styles.serverError}>{serverError}</div>
+          )}
 
           <div className={styles.buttonWrapper}>
             <Button
