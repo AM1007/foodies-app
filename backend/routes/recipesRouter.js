@@ -5,7 +5,8 @@ import validateQuery from '../decorators/validateQuery.js';
 import validateBody from '../decorators/validateBody.js';
 import validateNumericId from '../middlewares/validateNumericId.js';
 import recipeSchemas from '../schemas/recipeSchemas.js';
-import { recipeImagesUpload } from '../middlewares/upload.js';
+import { recipeImagesUpload, processRecipeImages } from '../middlewares/upload.js';
+
 
 const router = express.Router();
 
@@ -49,6 +50,7 @@ router.post(
   '/',
   authenticate,
   recipeImagesUpload,
+  processRecipeImages,
   recipesControllers.createRecipe,
 );
 

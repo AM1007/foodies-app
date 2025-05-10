@@ -275,6 +275,12 @@ const AddRecipeForm = () => {
 
     try {
       setIsSubmitting(true);
+
+      console.log('Photo file:', data.photo ? {
+        name: data.photo.name, 
+        type: data.photo.type, 
+        size: data.photo.size
+      } : 'No file selected');
       
       const loadingToast = toast.loading('Submitting your recipe...');
 
@@ -284,7 +290,7 @@ const AddRecipeForm = () => {
       formData.append('categoryId', data.categoryId);
       formData.append('time', data.time);
       formData.append('instructions', data.instructions);
-      formData.append('thumb', data.photo);
+      formData.append('photo', data.photo);
 
       const areaId = areas && areas.length > 0 ? areas[0].id : 1;
       formData.append('areaId', areaId);
