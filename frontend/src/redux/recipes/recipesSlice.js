@@ -11,11 +11,7 @@ export const fetchRecipes = createAsyncThunk(
       if (ingredient) params.ingredient = ingredient;
       if (area) params.area = area;
 
-  
-
       const response = await axiosAPI.get('/recipes', { params });
-
-
 
       return response.data;
     } catch (err) {
@@ -46,9 +42,7 @@ export const fetchUserRecipes = createAsyncThunk(
   'recipes/fetchUserRecipes',
   async (userId, { rejectWithValue }) => {
     try {
-
       const response = await axiosAPI.get(`/users/${userId}`);
-
 
       if (response.data.recipes) {
         return response.data.recipes;
@@ -302,16 +296,25 @@ const recipesSlice = createSlice({
       })
 
       .addCase(addToFavorites.pending, state => {
-        state.loading = true;
+        state.error = null;
       })
       .addCase(addToFavorites.fulfilled, (state, action) => {
-        state.loading = false;
+        const newFavorite = action.payload;
 
-        if (!Array.isArray(state.favoriteRecipes)) {
-          state.favoriteRecipes = [];
+        if (!newFavorite) return;
+
+        if (Array.isArray(state.favoriteRecipes)) {
+          if (
+            !state.favoriteRecipes.some(
+              recipe =>
+                recipe._id === newFavorite._id || recipe.id === newFavorite.id,
+            )
+          ) {
+            state.favoriteRecipes.push(newFavorite);
+          }
+        } else {
+          state.favoriteRecipes = [newFavorite];
         }
-
-        state.favoriteRecipes.push(action.payload);
       })
       .addCase(addToFavorites.rejected, (state, action) => {
         state.loading = false;
@@ -319,30 +322,24 @@ const recipesSlice = createSlice({
       })
 
       .addCase(removeFromFavorites.pending, state => {
-        state.loading = false;
         state.error = null;
       })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {
-        state.loading = false;
+        const recipeId = action.meta.arg;
+
+        if (!recipeId) return;
 
         if (Array.isArray(state.favoriteRecipes)) {
           state.favoriteRecipes = state.favoriteRecipes.filter(
-            recipe =>
-              recipe._id !== action.payload && recipe.id !== action.payload,
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
           );
         } else if (
           state.favoriteRecipes?.data &&
           Array.isArray(state.favoriteRecipes.data)
         ) {
-          state.favoriteRecipes = {
-            ...state.favoriteRecipes,
-            data: state.favoriteRecipes.data.filter(
-              recipe =>
-                recipe._id !== action.payload && recipe.id !== action.payload,
-            ),
-          };
-        } else {
-          state.favoriteRecipes = [];
+          state.favoriteRecipes.data = state.favoriteRecipes.data.filter(
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+          );
         }
       })
       .addCase(removeFromFavorites.rejected, (state, action) => {

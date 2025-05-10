@@ -3,44 +3,72 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addToFavorites,
   removeFromFavorites,
-  fetchFavoriteRecipes,
 } from '../../redux/recipes/recipesSlice';
 import { useModal } from '../../hooks/useModal';
 import RecipeCard from '../ui/RecipeCard/RecipeCard';
+import React, { useState, useEffect } from 'react';
 
 const RecipeCardContainer = ({ recipe }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(state => state.auth);
-  const favoriteRecipesFromState = useSelector(state => state.recipes.favoriteRecipes);
+  const favoriteRecipesFromState = useSelector(
+    state => state.recipes.favoriteRecipes,
+  );
   const { openModal } = useModal();
+
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!recipe || (!recipe.id && !recipe._id)) return null;
 
-  const recipeId = recipe._id?.$oid || recipe.id;
+  const recipeId = recipe._id?.$oid || recipe.id || recipe._id;
 
-  const favoriteRecipes = Array.isArray(favoriteRecipesFromState)
-    ? favoriteRecipesFromState
-    : (favoriteRecipesFromState?.data || []);
+  useEffect(() => {
+    const favoriteRecipes = Array.isArray(favoriteRecipesFromState)
+      ? favoriteRecipesFromState
+      : favoriteRecipesFromState?.data || [];
 
-  const isFavorite = favoriteRecipes.some(
-    favorite => favorite?._id === recipeId || favorite?.id === recipeId
-  );
+    const isRecipeFavorite = favoriteRecipes.some(
+      favorite => favorite?._id === recipeId || favorite?.id === recipeId,
+    );
 
-  const handleFavoriteToggle = ()=> {
+    setIsFavorite(isRecipeFavorite);
+  }, [favoriteRecipesFromState, recipeId]);
 
+  const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
       openModal('signin');
       return;
     }
+
+    if (isProcessing) return;
+
+    setIsProcessing(true);
+
+    setIsFavorite(!isFavorite);
+
     if (isFavorite) {
-      dispatch(removeFromFavorites(recipeId)).then(() => {
-        dispatch(fetchFavoriteRecipes());
-      });
+      dispatch(removeFromFavorites(recipeId))
+        .unwrap()
+        .catch(error => {
+          console.error('Failed to remove from favorites:', error);
+          setIsFavorite(true);
+        })
+        .finally(() => {
+          setIsProcessing(false);
+        });
     } else {
-      dispatch(addToFavorites(recipeId)).then(() => {
-        dispatch(fetchFavoriteRecipes());
-      });
+      dispatch(addToFavorites(recipeId))
+        .unwrap()
+        .catch(error => {
+          // Revert on error
+          console.error('Failed to add to favorites:', error);
+          setIsFavorite(false);
+        })
+        .finally(() => {
+          setIsProcessing(false);
+        });
     }
   };
 
@@ -65,4 +93,11 @@ const RecipeCardContainer = ({ recipe }) => {
   );
 };
 
-export default RecipeCardContainer;
+function areEqual(prevProps, nextProps) {
+  return (
+    prevProps.recipe.id === nextProps.recipe.id &&
+    prevProps.recipe._id === nextProps.recipe._id
+  );
+}
+
+export default React.memo(RecipeCardContainer, areEqual);
