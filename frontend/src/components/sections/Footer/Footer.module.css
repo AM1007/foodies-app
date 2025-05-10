@@ -1,6 +1,6 @@
 .footer {
   max-width: 375px;
-  margin: 0 auto;
+  margin: 100px auto 0 auto;
   background-color: var(--white);
   padding: 40px 0;
 }
@@ -57,6 +57,7 @@
 @media (min-width: 1440px) {
   .footer {
     max-width: 1440px;
+    margin-top: 120px;
   }
   .wrapper {
     padding: 0 80px 40px;

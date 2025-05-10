@@ -1,10 +1,12 @@
-import { FaPlus } from 'react-icons/fa';
 import css from './UploadAvatar.module.css';
+import icons from '../../../icons/sprite.svg';
 
 function UploadAvatar({ onClick, className = '' }) {
   return (
     <div className={`${css.uploadIcon} ${className}`} onClick={onClick}>
-      <FaPlus className={css.icon} />
+      <svg className={css.icon}>
+        <use href={`${icons}#plus`} />
+      </svg>
     </div>
   );
 }

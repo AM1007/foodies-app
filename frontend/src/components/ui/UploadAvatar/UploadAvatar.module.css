@@ -18,6 +18,8 @@
 .icon {
   width: 16px;
   height: 16px;
+  stroke: currentColor;
+  fill: none;
 }
 
 @media (min-width: 768px) {

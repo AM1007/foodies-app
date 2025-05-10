@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
+import variantStyles from '../Button/buttonVariants.module.css';
 import css from './UserPreview.module.css';
 import UserAvatar from '../ui/UserAvatar/UserAvatar';
 import Button from '../Button/Button';
@@ -107,12 +109,14 @@ const UserPreview = ({
           <Button
             type="button"
             onClick={handleFollowToggle}
-            variant={isFollowing ? 'secondary' : 'dark'}
+            variant={isFollowing ? 'following' : 'follow'}
+            className={
+              isFollowing && isHovering ? variantStyles.unfollowHover : ''
+            }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={isFollowing && isHovering ? css.unfollowHover : ''}
           >
-            {isFollowing ? (isHovering ? 'Unfollow' : 'Following') : 'Follow'}
+            {isFollowing ? (isHovering ? 'Unfollow' : 'FOLLOWING') : 'FOLLOW'}
           </Button>
         )}
       </div>
@@ -133,11 +137,13 @@ const UserPreview = ({
         ))}
       </div>
 
-      <ArrowBtn
-        to={isCurrentUser ? '/users/current' : `/users/${userId}`}
-        ariaLabel={`Go to ${name}'s profile`}
-        onClick={handleUserClick}
-      />
+      <div className={css.userActions}>
+        <ArrowBtn
+          to={isCurrentUser ? '/users/current' : `/users/${userId}`}
+          ariaLabel={`Go to ${name}'s profile`}
+          onClick={handleUserClick}
+        />
+      </div>
     </div>
   );
 };

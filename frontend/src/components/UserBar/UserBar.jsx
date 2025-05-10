@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; 
 import Button from '../Button/Button';
 import UserAvatar from '../ui/UserAvatar/UserAvatar';
 import { fetchCurrentUser } from '../../redux/users/userSlice';
@@ -18,12 +18,18 @@ const UserBar = () => {
   const { openModal } = useModal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation(); 
 
   useEffect(() => {
     if (isAuthenticated && !user) {
       dispatch(fetchCurrentUser());
     }
   }, [isAuthenticated, user, dispatch]);
+
+
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [location.pathname]);
 
   if (!isAuthenticated || !user) return null;
 
@@ -65,7 +71,10 @@ const UserBar = () => {
           </Button>
           <Button
             className={styles.dropdownItem}
-            onClick={() => openModal('logout')}
+            onClick={() => {
+              openModal('logout');
+              setIsDropdownOpen(false); 
+            }}
           >
             Log out{' '}
             <svg className={styles.icon} width="18" height="18">

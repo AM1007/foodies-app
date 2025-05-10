@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, resetAuthError } from '../../redux/users/authSlice';
@@ -7,38 +7,58 @@ import icons from '../../icons/sprite.svg';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import styles from './SignInForm.module.css';
+import { toast } from 'react-hot-toast';
 
 const SignInForm = ({ onSuccess }) => {
   const emailId = useId();
   const passwordId = useId();
   const dispatch = useDispatch();
-  const { error, loading } = useSelector(state => state.auth);
+  const { loading, error: reduxError } = useSelector(state => state.auth);
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
-  useEffect(() => () => dispatch(resetAuthError()), [dispatch]);
+  useEffect(() => {
+    return () => dispatch(resetAuthError());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (reduxError) {
+      setServerError(reduxError);
+    }
+  }, [reduxError]);
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
-      await dispatch(loginUser(values)).unwrap();
+      setServerError(null);
 
-      const currentUser = await dispatch(fetchCurrentUser()).unwrap();
+      const result = await dispatch(loginUser(values)).unwrap();
 
-      if (currentUser) {
-        console.log('You have successfully signed in!');
-      } else {
-        console.log('Could not fetch user data.');
+      if (result && result.token) {
+        await dispatch(fetchCurrentUser()).unwrap();
+        toast.success('Successfully signed in!');
+        if (onSuccess) {
+          setTimeout(onSuccess, 1000);
+        }
       }
-
-      if (onSuccess) setTimeout(onSuccess, 1000);
     } catch (error) {
-      console.log(error.message || 'Something went wrong');
+      toast.error(error || 'Authentication failed. Please try again.');
+      if (error.includes('Password must be at least 6 characters')) {
+        setFieldError('password', 'Password must be at least 6 characters');
+      } else if (error.includes('Email or password is wrong')) {
+        setFieldError('email', 'Email or password is incorrect');
+      } else {
+        setServerError(error || 'Authentication failed. Please try again.');
+      }
+      console.error('Login error:', error);
     } finally {
       setSubmitting(false);
     }
@@ -52,64 +72,72 @@ const SignInForm = ({ onSuccess }) => {
     >
       {({ isSubmitting, isValid, dirty, errors, touched }) => (
         <Form className={styles.form}>
-          <label htmlFor={emailId} className={styles.visuallyHidden}></label>
-          <div className={styles.inputWrapper}>
-            <Field
-              id={emailId}
+          <div className={styles.inputWithError}>
+            <label htmlFor={emailId} className={styles.visuallyHidden}>
+              Email
+            </label>
+            <div className={styles.inputWrapper}>
+              <Field
+                id={emailId}
+                name="email"
+                type="email"
+                required
+                placeholder="Email*"
+                className={`${styles.input} ${
+                  touched.email && errors.email ? styles.inputError : ''
+                }`}
+              />
+            </div>
+            <ErrorMessage
               name="email"
-              type="email"
-              required
-              placeholder="Email*"
-              className={[
-                styles.input,
-                touched.email && errors.email && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              component="div"
+              className={styles.error}
             />
           </div>
-          <ErrorMessage name="email" component="div" className={styles.error} />
 
-          <label htmlFor={passwordId} className={styles.visuallyHidden}></label>
-          <div className={styles.inputWrapper}>
-            <Field
-              id={passwordId}
+          <div className={styles.inputWithError}>
+            <label htmlFor={passwordId} className={styles.visuallyHidden}>
+              Password
+            </label>
+            <div className={styles.inputWrapper}>
+              <Field
+                id={passwordId}
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Password*"
+                className={`${styles.input} ${
+                  touched.password && errors.password ? styles.inputError : ''
+                }`}
+              />
+              {showPassword ? (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(false)}
+                >
+                  <use href={`${icons}#eye-off`} />
+                </svg>
+              ) : (
+                <svg
+                  className={styles.eyeIcon}
+                  aria-hidden="true"
+                  onClick={() => setShowPassword(true)}
+                >
+                  <use href={`${icons}#eye`} />
+                </svg>
+              )}
+            </div>
+            <ErrorMessage
               name="password"
-              type={showPassword ? 'text' : 'password'}
-              required
-              placeholder="Password*"
-              className={[
-                styles.input,
-                touched.password && errors.password && styles.inputError,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              component="div"
+              className={styles.error}
             />
-            {showPassword ? (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(false)}
-              >
-                <use href={`${icons}#eye-off`} />
-              </svg>
-            ) : (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(true)}
-              >
-                <use href={`${icons}#eye`} />
-              </svg>
-            )}
           </div>
-          <ErrorMessage
-            name="password"
-            component="div"
-            className={styles.error}
-          />
 
-          {error && <div className={styles.error}>{error}</div>}
+          {serverError && !errors.email && !errors.password && (
+            <div className={styles.serverError}>{serverError}</div>
+          )}
 
           <div className={styles.buttonWrapper}>
             <Button

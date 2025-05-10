@@ -16,11 +16,7 @@ const processAuthResponse = response => {
     throw new Error('Invalid response received from API');
   }
 
-  console.log('Received response from API:', response);
-
   if (response.message === 'Registration successful' && response.user) {
-    console.log('Processing the registration response:', response);
-
     return {
       token: response.token || null,
       user: response.user,
@@ -83,11 +79,12 @@ export const loginUser = createAsyncThunk(
 
       return processedData;
     } catch (err) {
-      console.log(
-        '❌ Login failed:',
-        err.response?.data?.message || 'Login failed',
-      );
-      return rejectWithValue(err.response?.data?.message || 'Login error');
+      // Детальніше обробляємо помилки
+      const errorMessage = err.response?.data?.message || 'Login failed';
+      console.log('❌ Login failed:', errorMessage);
+
+      // Повертаємо конкретне повідомлення про помилку з бекенду
+      return rejectWithValue(errorMessage);
     }
   },
 );

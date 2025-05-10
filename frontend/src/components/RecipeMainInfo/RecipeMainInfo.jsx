@@ -15,44 +15,40 @@ const RecipeMainInfo = ({ title, category, time, description, user }) => {
     if (!isAuthenticated) {
       openModal('signin');
     } else {
-      navigate(`/user/${user.id}`);
+      navigate(`/users/${user.id}`);
     }
   };
-  const avatarUrl = user?.avatar?.startsWith('http')
-    ? user.avatar
-    : avatar;
+  const avatarUrl = user?.avatar?.startsWith('http') ? user.avatar : avatar;
 
   return (
-      <div className={styles.recipeMainInfo}>
-        <div className={styles.info}>
-          <h2 className={styles.title}>{title}</h2>
-          <div className={styles.category}>
-            <span>{category}</span>
-            <span>{time} min</span>
-          </div>
-          <p className={styles.description}>{description}</p>
-          <div className={styles.authorBlock}>
-            <img
-              // src={user?.avatar ?? '/placeholder.jpg'}
-              src={avatarUrl}
-              alt={user && user.name ? user.name : 'Anonymous'}
-
-              className={styles.authorImage}
-            />
-            <div className={styles.authorText}>
-              <span className={styles.authorLabel}>Created by:</span>
-              <button
-                type="button"
-                onClick={handleAuthorClick}
-                className={styles.authorName}
-              >
-                {user && user.name ? user.name : 'Anonymous'}
-
-              </button>
-            </div>
+    <div className={styles.recipeMainInfo}>
+      <div className={styles.info}>
+        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.category}>
+          <span>{category}</span>
+          <span>{time} min</span>
+        </div>
+        <p className={styles.description}>{description}</p>
+        <div className={styles.authorBlock}>
+          <img
+            // src={user?.avatar ?? '/placeholder.jpg'}
+            src={avatarUrl}
+            alt={user && user.name ? user.name : 'Anonymous'}
+            className={styles.authorImage}
+          />
+          <div className={styles.authorText}>
+            <span className={styles.authorLabel}>Created by:</span>
+            <button
+              type="button"
+              onClick={handleAuthorClick}
+              className={styles.authorName}
+            >
+              {user && user.name ? user.name : 'Anonymous'}
+            </button>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

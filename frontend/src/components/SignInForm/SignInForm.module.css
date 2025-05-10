@@ -64,13 +64,20 @@
 .error {
   font-size: 12px;
   color: var(--red);
-  margin-top: 4px;
-  padding-left: 4px;
+  margin-top: 2px;
+  padding-left: 2px;
 }
 
 .error {
   color: var(--red);
   font-size: 12px;
+}
+
+.serverError {
+  font-size: 12px;
+  color: var(--red);
+  /* margin-top: 2px;
+  padding-left: 2px; */
 }
 
 .passwordWrapper {

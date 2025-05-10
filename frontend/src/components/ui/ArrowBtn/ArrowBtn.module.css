@@ -1,6 +1,6 @@
 .arrowBtnLink {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid var(--gray);
   background-color: var(--white);
@@ -8,7 +8,16 @@
   align-items: center;
   justify-content: center;
   color: var(--dark-gray);
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.arrowBtnLink a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: inherit;
 }
 
 .arrowBtnLink:hover {
@@ -16,9 +25,11 @@
   color: var(--white);
 }
 
-svg {
+.icon {
   height: 16px;
   width: 16px;
+  stroke: currentColor;
+  fill: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -27,7 +38,7 @@ svg {
     height: 42px;
   }
 
-  svg {
+  .icon {
     height: 18px;
     width: 18px;
   }

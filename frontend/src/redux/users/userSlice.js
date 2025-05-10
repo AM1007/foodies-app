@@ -218,13 +218,32 @@ const userSlice = createSlice({
 
       .addCase(followUser.fulfilled, (state, action) => {
         state.following.push(action.payload);
+
+        if (state.selected) {
+          if (state.selected.followerCount !== undefined) {
+            state.selected.followerCount += 1;
+          }
+        }
       })
 
       .addCase(unfollowUser.fulfilled, (state, action) => {
+        const userId = action.payload.userId;
+
         state.following = state.following.filter(user => {
-          const userId = action.payload.userId;
           return user._id !== userId && user.id !== userId;
         });
+
+        if (
+          state.selected &&
+          (state.selected._id === userId || state.selected.id === userId)
+        ) {
+          if (
+            state.selected.followerCount !== undefined &&
+            state.selected.followerCount > 0
+          ) {
+            state.selected.followerCount -= 1;
+          }
+        }
       });
   },
 });
