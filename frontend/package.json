@@ -21,6 +21,7 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.2",
     "react-hot-toast": "^2.5.2",
+    "react-paginate": "^8.3.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3",
     "react-slick": "^0.30.3",
