@@ -60,6 +60,7 @@
 }
 
 .publishButton {
+  width: 124px;
   background-color: var(--dark-gray);
   color:var(--white);
   border: none;
@@ -72,6 +73,24 @@
   cursor: pointer;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
+}
+
+.successMessage {
+  background-color: var(--white);
+  color: green;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid green;
+}
+
+.errorNotification {
+  background-color: #ffebee;
+  color: var(--red);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--red);
 }
 
 @media (min-width: 768px) {
@@ -109,6 +128,7 @@
     padding: 16px;
   }
   .publishButton {
+    width: 146px;
     padding: 16px 39px;
     font-size: 16px;
   line-height: 1.5;

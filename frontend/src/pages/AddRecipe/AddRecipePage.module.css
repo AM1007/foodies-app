@@ -1,11 +1,32 @@
-.topInfo{
+.recipePageWrapper {
+  max-width: 343px;
+}
+
+.recipePageInfo{
   width: 100%;
   max-width: 443px;
   margin-bottom: 32px;
 }
 
+.subTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+@media screen and (min-width: 768px) {
+  .recipePageWrapper {
+    max-width: 768px;
+  }
+}
+
 @media screen and (min-width: 1440px) {
+  .recipePageWrapper {
+  max-width: 1440px;
+}
   .topInfo{
     margin-bottom: 40px;
   }
+  .subTitle {
+  gap: 20px;
+}
 }
