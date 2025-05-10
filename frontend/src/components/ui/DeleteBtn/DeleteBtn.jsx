@@ -1,4 +1,5 @@
 import css from './DeleteBtn.module.css';
+import icons from '../../../icons/sprite.svg';
 
 function DeleteBtn({ onClick, ariaLabel = 'Delete recipe', disabled = false }) {
   return (
@@ -9,12 +10,8 @@ function DeleteBtn({ onClick, ariaLabel = 'Delete recipe', disabled = false }) {
       aria-label={ariaLabel}
       disabled={disabled}
     >
-      <svg viewBox="0 0 24 20" fill="none">
-        <path
-          d="M3 6h18M8 6V4h8v2m1 0v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6h10z"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
+      <svg className={css.icon}>
+        <use href={`${icons}#trash`} />
       </svg>
     </button>
   );

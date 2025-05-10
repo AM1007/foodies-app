@@ -36,6 +36,8 @@
 
 .inputWrapper {
   position: relative;
+  align-items: center;
+  width: 100%;
 }
 
 .eyeIcon {
@@ -46,7 +48,6 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  flex-shrink: 0;
   fill: none;
   stroke: var(--black);
 }
@@ -54,13 +55,13 @@
 .error {
   font-size: 12px;
   color: var(--red);
-  margin-top: 4px;
-  padding-left: 4px;
 }
 
-.error {
-  color: var(--red);
+.serverError {
   font-size: 12px;
+  color: var(--red);
+  margin-top: 2px;
+  padding-left: 2px;
 }
 
 .inputError {

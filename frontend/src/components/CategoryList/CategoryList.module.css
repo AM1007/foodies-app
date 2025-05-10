@@ -1,9 +1,9 @@
 .categoriesWrapper {
   padding: 0;
-  width: 343px;
+  width: 100%;
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 .categoryListContainer {
   margin: 0 auto;
@@ -27,8 +27,8 @@
   transition: transform 0.3s;
   display: flex;
   flex-direction: column;
-
-  aspect-ratio: 340 / 260;
+  max-width: 100%;
+  aspect-ratio: 17 / 8;
 }
 
 .card:hover {
@@ -108,7 +108,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-top: 40px;
-    width: 100%;
+    max-width: 90%;
   }
   .card {
     height: 320px;
@@ -116,7 +116,8 @@
   .grid > .card:nth-child(3),
   .grid > .card:nth-child(8) {
     grid-column: span 2;
-    height: 320px;
+    height: 340px;
+    max-width: 100%;
   }
   .buttonWrap {
     bottom: 24px;
@@ -124,9 +125,10 @@
     gap: 4px;
   }
   .allCategories {
-    height: 320px;
-    border-radius: 30px;
+    height: 340px;
     font-size: 20px;
+    border-radius: 30px;
+    flex: 1 1 25%;
   }
   .icon {
     border-radius: 30px;
@@ -142,7 +144,7 @@
   .categoryListContainer {
     max-width: 1280px;
     margin: 0 auto;
-    /* width: 100%; */
+    width: 100%;
   }
   .row {
     display: flex;
@@ -154,12 +156,14 @@
   .card {
     border-radius: 20px;
     overflow: hidden;
-    height: 340px;
+    height: 320px;
+    max-width: 110%;
   }
   .allCategories {
-    height: 340px;
+    height: 360px;
     font-size: 20px;
     border-radius: 30px;
+    max-width: 110%;
   }
   .card-row0-item0,
   .card-row0-item1 {
@@ -199,12 +203,19 @@
 .card {
   border-radius: 20px;
   overflow: hidden;
-  height: 300px;
+  height: 340px;
 }
 .allCategories {
-  height: 300px;
-  font-size: 20px;
-  border-radius: 30px;
+  background-color: var(--black);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 20px;
+  height: 340px;
+  flex: 1 1 25%;
 }
 .card-row0-item0,
 .card-row0-item1 {

@@ -7,16 +7,16 @@
 }
 
 .recipePreviewCardImage {
-  width: 75px;
-  height: 75px;
   object-fit: cover;
   border-radius: 15px;
   flex-shrink: 0;
-  margin-right: 10px;
 }
 
 .imageLink {
   cursor: pointer;
+  width: 75px;
+  height: 75px;
+  margin-right: 10px;
 }
 
 .recipePreviewCardContent {
@@ -68,7 +68,7 @@
     max-width: 704px;
   }
 
-  .recipePreviewCardImage {
+  .imageLink {
     width: 100px;
     height: 100px;
     margin-right: 16px;
@@ -99,7 +99,7 @@
     max-width: 846px;
   }
 
-  .recipePreviewCardImage {
+  .imageLink {
     width: 120px;
     height: 120px;
   }

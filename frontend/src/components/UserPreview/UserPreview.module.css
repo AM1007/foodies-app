@@ -3,13 +3,32 @@
   width: 100%;
   align-items: flex-start;
   max-width: 100%;
+  position: relative;
+  padding-right: 60px;
+  box-sizing: border-box;
 }
 
 .info {
   margin-right: 16px;
 }
 
+.name {
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.recipesCount {
+  color: var(--gray);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
 .recipeImageContainer {
+  display: none;
+}
+
+.recipeLink {
   display: none;
 }
 
@@ -24,22 +43,47 @@
   width: 60px;
 }
 
-.unfollowHover {
-  color: white !important;
+.followButton {
+  font-weight: 600;
+  text-transform: uppercase;
+  min-width: 90px;
+  margin-top: 8px;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
 
-  opacity: 1 !important;
+.userActions {
+  margin-left: auto;
+  position: absolute;
+  right: 14px;
+  top: 0;
 }
 
 @media (min-width: 768px) {
   .recipeImageContainer {
     display: flex;
-    width: 436px;
     gap: 12px;
     margin-left: 60px;
+  }
+
+  .recipeLink:nth-child(-n + 3) {
+    display: block;
   }
 
   .userPreviewAvatar {
     height: 85px;
     width: 85px;
+  }
+
+  .userActions {
+    margin-left: 46px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .recipeLink:nth-child(4) {
+    display: block;
   }
 }

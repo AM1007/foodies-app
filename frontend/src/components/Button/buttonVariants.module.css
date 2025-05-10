@@ -37,3 +37,32 @@
   cursor: not-allowed;
   opacity: 0.8;
 }
+
+.follow,
+.following {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--black);
+  border: 1px solid var(--gray);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.24px;
+  min-width: 90px;
+  text-align: center;
+}
+
+.follow:hover,
+.following:hover {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+@media screen and (min-width: 768px) {
+  .follow,
+  .following {
+    font-size: 14px;
+    min-width: 110px;
+    padding: 10px 20px;
+  }
+}

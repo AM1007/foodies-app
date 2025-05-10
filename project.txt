@@ -1,0 +1,395 @@
+├── .github
+    ├── CODEOWNERS
+    └── pull_request_template.md
+├── .gitignore
+├── .prettierrc
+├── LICENSE
+├── README.md
+├── backend
+    ├── .env.example
+    ├── .gitignore
+    ├── API_DOCUMENTATION.md
+    ├── DATABASE.md
+    ├── README.md
+    ├── app.js
+    ├── backend.txt
+    ├── constants
+    │   ├── auth.js
+    │   └── httpStatus.js
+    ├── controllers
+    │   ├── areasControllers.js
+    │   ├── authControllers.js
+    │   ├── categoriesControllers.js
+    │   ├── ingredientsControllers.js
+    │   ├── recipesControllers.js
+    │   ├── testimonialControllers.js
+    │   └── usersControllers.js
+    ├── db
+    │   ├── associations.js
+    │   ├── models
+    │   │   ├── Area.js
+    │   │   ├── Category.js
+    │   │   ├── Favorite.js
+    │   │   ├── Follower.js
+    │   │   ├── Ingredient.js
+    │   │   ├── Recipe.js
+    │   │   ├── RecipeIngredient.js
+    │   │   ├── Testimonial.js
+    │   │   └── User.js
+    │   └── sequelize.js
+    ├── decorators
+    │   ├── ctrlWrapper.js
+    │   ├── validateBody.js
+    │   └── validateQuery.js
+    ├── helpers
+    │   ├── HttpError.js
+    │   ├── jwt.js
+    │   └── paginationHelper.js
+    ├── middlewares
+    │   ├── authenticate.js
+    │   ├── errorHandler.js
+    │   ├── notFoundHandler.js
+    │   ├── upload.js
+    │   └── validateNumericId.js
+    ├── mockData
+    │   ├── areas.json
+    │   ├── categories.json
+    │   ├── ingredients.json
+    │   ├── recipes.json
+    │   ├── testimonials.json
+    │   └── users.json
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    │   ├── avatars
+    │   │   └── .gitkeep
+    │   └── recipeImages
+    │   │   └── .gitkeep
+    ├── routes
+    │   ├── areasRouter.js
+    │   ├── authRouter.js
+    │   ├── categoriesRouter.js
+    │   ├── ingredientsRouter.js
+    │   ├── recipesRouter.js
+    │   ├── testimonialRouter.js
+    │   └── usersRouter.js
+    ├── schemas
+    │   ├── authSchemas.js
+    │   └── recipeSchemas.js
+    ├── scripts
+    │   ├── seedAreas.js
+    │   ├── seedCategories.js
+    │   ├── seedIngredients.js
+    │   ├── seedRecipes.js
+    │   ├── seedTestimonials.js
+    │   ├── seedUsers.js
+    │   └── updateCategoryImages.js
+    ├── services
+    │   ├── areasServices.js
+    │   ├── authServices.js
+    │   ├── categoriesServices.js
+    │   ├── cloudinary.js
+    │   ├── ingredientsServices.js
+    │   ├── recipesServices.js
+    │   ├── testimonialServices.js
+    │   └── usersServices.js
+    ├── swagger
+    │   ├── definitions
+    │   │   ├── areas.js
+    │   │   ├── auth.js
+    │   │   ├── categories.js
+    │   │   ├── ingredients.js
+    │   │   ├── recipes.js
+    │   │   ├── testimonials.js
+    │   │   └── users.js
+    │   ├── index.js
+    │   ├── schemas
+    │   │   ├── area.js
+    │   │   ├── category.js
+    │   │   ├── components.js
+    │   │   ├── ingredient.js
+    │   │   ├── recipe.js
+    │   │   ├── testimonial.js
+    │   │   └── user.js
+    │   └── swagger.js
+    ├── tech_task.md
+    └── temp
+    │   ├── 10_Miscellaneous.webp
+    │   ├── 11_Pasta.webp
+    │   ├── 12_Breakfast.webp
+    │   ├── 13_Side.webp
+    │   ├── 14_Goat.webp
+    │   ├── 15_Soup.webp
+    │   ├── 1_Seafood.webp
+    │   ├── 2_Lamb.webp
+    │   ├── 3_Starter.webp
+    │   ├── 4_Chicken.webp
+    │   ├── 5_Beef.webp
+    │   ├── 6_Dessert.webp
+    │   ├── 7_Vegan.webp
+    │   ├── 8_Pork.webp
+    │   └── 9_Vegetarian.webp
+└── frontend
+    ├── .gitignore
+    ├── README.md
+    ├── eslint.config.js
+    ├── frontend.txt
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+        ├── assets
+        │   ├── avatar.png
+        │   └── favicon.svg
+        ├── fonts
+        │   └── Mulish-Regular.woff2
+        └── image
+        │   ├── categories
+        │       ├── beef-1x.png
+        │       ├── beef-2x.png
+        │       ├── breakfast-1x.png
+        │       ├── breakfast-2x.png
+        │       ├── desserts-1x.png
+        │       ├── desserts-2x.png
+        │       ├── goat-1x.png
+        │       ├── goat-2x.png
+        │       ├── lamb-1x.png
+        │       ├── lamb-2x.png
+        │       ├── miscellaneous-1x.png
+        │       ├── miscellaneous-2x.png
+        │       ├── pasta-1x.png
+        │       ├── pasta-2x.png
+        │       ├── pork-1x.png
+        │       ├── pork-2x.png
+        │       ├── seafood-1x.png
+        │       ├── seafood-2x.png
+        │       ├── side-1x.png
+        │       ├── side-2x.png
+        │       ├── starter-1x.png
+        │       ├── starter-2x.png
+        │       ├── vegan-1x.png
+        │       ├── vegan-2x.png
+        │       ├── vegetarian-1x.png
+        │       └── vegetarian-2x.png
+        │   └── hero
+        │       ├── dish1-1x.png
+        │       ├── dish1-2x.png
+        │       ├── dish2-1x.png
+        │       └── dish2-2x.png
+    ├── src
+        ├── App.jsx
+        ├── api
+        │   └── api.js
+        ├── components
+        │   ├── AddRecipeForm
+        │   │   ├── AddRecipeForm.jsx
+        │   │   └── AddRecipeForm.module.css
+        │   ├── AuthBar
+        │   │   ├── AuthBar.jsx
+        │   │   └── AuthBar.module.css
+        │   ├── Button
+        │   │   ├── Button.jsx
+        │   │   ├── Button.module.css
+        │   │   └── buttonVariants.module.css
+        │   ├── CategoryList
+        │   │   ├── CategoryList.jsx
+        │   │   └── CategoryList.module.css
+        │   ├── DoubledButton
+        │   │   ├── DoubledButton.jsx
+        │   │   └── DoubledButton.module.css
+        │   ├── IngredientSelector
+        │   │   ├── IngredientSelector.jsx
+        │   │   └── IngredientSelector.module.css
+        │   ├── Layout
+        │   │   └── Layout.jsx
+        │   ├── ListItems
+        │   │   ├── ListItems.jsx
+        │   │   └── ListItems.module.css
+        │   ├── Loader
+        │   │   ├── Loader.jsx
+        │   │   └── Loader.module.css
+        │   ├── LogOutModal
+        │   │   ├── LogOutModal.jsx
+        │   │   └── LogOutModal.module.css
+        │   ├── Logo
+        │   │   ├── Logo.jsx
+        │   │   └── Logo.module.css
+        │   ├── MobileMenu
+        │   │   ├── MobileMenu.jsx
+        │   │   └── MobileMenu.module.css
+        │   ├── Modal
+        │   │   ├── Modal.jsx
+        │   │   └── Modal.module.css
+        │   ├── Navigation
+        │   │   ├── Navigation.jsx
+        │   │   └── Navigation.module.css
+        │   ├── NetworkLinks
+        │   │   ├── NetworkLinks.jsx
+        │   │   └── NetworkLinks.module.css
+        │   ├── PopularRecipes
+        │   │   ├── PopularRecipes.jsx
+        │   │   └── PopularRecipes.module.css
+        │   ├── PrivateRoute.jsx
+        │   ├── RecipeCardContainer
+        │   │   └── RecipeCardContainer.jsx
+        │   ├── RecipeFilters
+        │   │   ├── RecipeFilters.jsx
+        │   │   └── RecipeFilters.module.css
+        │   ├── RecipeInfo
+        │   │   ├── RecipeInfo.jsx
+        │   │   └── RecipeInfo.module.css
+        │   ├── RecipeIngredients
+        │   │   ├── RecipeIngredients.jsx
+        │   │   └── RecipeIngredients.module.css
+        │   ├── RecipeList
+        │   │   ├── RecipeList.jsx
+        │   │   └── RecipeList.module.css
+        │   ├── RecipeMainInfo
+        │   │   ├── RecipeMainInfo.jsx
+        │   │   └── RecipeMainInfo.module.css
+        │   ├── RecipePagination
+        │   │   ├── RecipePagination.jsx
+        │   │   └── RecipePagination.module.css
+        │   ├── RecipePreparation
+        │   │   ├── RecipePreparation.jsx
+        │   │   └── RecipePreparation.module.css
+        │   ├── RecipePreview
+        │   │   ├── RecipePreview.jsx
+        │   │   └── RecipePreview.module.css
+        │   ├── SignInForm
+        │   │   ├── SignInForm.jsx
+        │   │   └── SignInForm.module.css
+        │   ├── SignInModal
+        │   │   ├── SignInModal.jsx
+        │   │   └── SignInModal.module.css
+        │   ├── SignUpForm
+        │   │   ├── SignUpForm.jsx
+        │   │   └── SignUpForm.module.css
+        │   ├── SignUpModal
+        │   │   ├── SignUpModal.jsx
+        │   │   └── SignUpModal.module.css
+        │   ├── TabsList
+        │   │   ├── TabsList.jsx
+        │   │   └── TabsList.module.css
+        │   ├── TextAreaWithCount
+        │   │   ├── TextAreaWithCount.jsx
+        │   │   └── TextAreaWithCount.module.css
+        │   ├── UploadPecipePhoto
+        │   │   ├── UploadRecipePhoto.jsx
+        │   │   └── UploadRecipePhoto.module.css
+        │   ├── UserBar
+        │   │   ├── UserBar.jsx
+        │   │   └── UserBar.module.css
+        │   ├── UserInfo
+        │   │   ├── UserInfo.jsx
+        │   │   └── UserInfo.module.css
+        │   ├── sections
+        │   │   ├── Categories
+        │   │   │   ├── Categories.jsx
+        │   │   │   └── Categories.module.css
+        │   │   ├── Footer
+        │   │   │   ├── Footer.jsx
+        │   │   │   └── Footer.module.css
+        │   │   ├── Header
+        │   │   │   ├── Header.jsx
+        │   │   │   └── Header.module.css
+        │   │   ├── Hero
+        │   │   │   ├── Hero.jsx
+        │   │   │   └── Hero.module.css
+        │   │   └── Testimonials
+        │   │   │   ├── Testimonials.jsx
+        │   │   │   └── Testimonials.module.css
+        │   └── ui
+        │   │   ├── ArrowBtn
+        │   │       ├── ArrowBtn.jsx
+        │   │       └── ArrowBtn.module.css
+        │   │   ├── BurgerBtn
+        │   │       ├── BurgerBtn.jsx
+        │   │       └── BurgerBtn.module.css
+        │   │   ├── CloseBtn
+        │   │       ├── CloseBtn.jsx
+        │   │       └── CloseBtn.module.css
+        │   │   ├── DeleteBtn
+        │   │       ├── DeleteBtn.jsx
+        │   │       └── DeleteBtn.module.css
+        │   │   ├── DropdownSelector
+        │   │       ├── DropdownSelector.jsx
+        │   │       └── DropdownSelector.module.css
+        │   │   ├── HeroImages
+        │   │       ├── HeroImages.jsx
+        │   │       └── HeroImages.module.css
+        │   │   ├── MainTitle
+        │   │       ├── MainTitle.jsx
+        │   │       └── MainTitle.module.css
+        │   │   ├── PathInfo
+        │   │       ├── PathInfo.jsx
+        │   │       └── PathInfo.module.css
+        │   │   ├── RecipeCard
+        │   │       ├── RecipeCard.jsx
+        │   │       └── RecipeCard.module.css
+        │   │   ├── RecipeTitleInput
+        │   │       ├── RecipeTitleInput.jsx
+        │   │       └── RecipeTitleInput.module.css
+        │   │   ├── SubTitle
+        │   │       ├── SubTitle.jsx
+        │   │       └── SubTitle.module.css
+        │   │   ├── TimeController
+        │   │       ├── TimeController.jsx
+        │   │       └── TimeController.module.css
+        │   │   ├── UploadAvatar
+        │   │       ├── UploadAvatar.jsx
+        │   │       └── UploadAvatar.module.css
+        │   │   └── UserAvatar
+        │   │       ├── UserAvatar.jsx
+        │   │       └── UserAvatar.module.css
+        ├── context
+        │   ├── ModalContext.js
+        │   ├── ModalProvider.jsx
+        │   └── UserContext.jsx
+        ├── data
+        │   ├── categories.js
+        │   ├── emptyMessages.js
+        │   └── socialLinks.js
+        ├── hooks
+        │   ├── useAuth.js
+        │   ├── useModal.js
+        │   └── useScrollLock.js
+        ├── icons
+        │   ├── imageNotFound.svg
+        │   └── sprite.svg
+        ├── index.css
+        ├── main.jsx
+        ├── pages
+        │   ├── AddRecipe
+        │   │   ├── AddRecipePage.jsx
+        │   │   └── AddRecipePage.module.css
+        │   ├── Home
+        │   │   └── Home.jsx
+        │   ├── NotFound
+        │   │   ├── NotFound.jsx
+        │   │   └── NotFound.module.css
+        │   ├── Profile
+        │   │   ├── Profile.jsx
+        │   │   └── Profile.module.css
+        │   └── Recipe
+        │   │   ├── Recipe.jsx
+        │   │   └── Recipe.module.css
+        └── redux
+        │   ├── areas
+        │       └── areasSlice.js
+        │   ├── categories
+        │       └── categoriesSlice.js
+        │   ├── ingredients
+        │       └── ingredientsSlice.js
+        │   ├── recipes
+        │       └── recipesSlice.js
+        │   ├── redux.md
+        │   ├── store.js
+        │   ├── testimonials
+        │       └── testimonialsSlice.js
+        │   └── users
+        │       ├── authSlice.js
+        │       └── userSlice.js
+    ├── tech_task_front.md
+    ├── vercel.json
+    └── vite.config.js

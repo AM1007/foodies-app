@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 343px;
+  width: 100%;
   height: 100%;
   padding: 30px 54px;
   gap: 16px;
@@ -24,6 +24,10 @@
 
 .avatarInput {
   margin-top: 8px;
+}
+
+.name {
+  text-transform: uppercase;
 }
 
 .userStats {
@@ -64,7 +68,7 @@
     font-weight: 500;
     margin-right: 8px;
   }
-  
+
   .statValue {
     font-weight: 700;
     font-size: 16px;

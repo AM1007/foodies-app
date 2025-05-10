@@ -1,12 +1,17 @@
-/* .container{
-    margin: 0 auto;
-} */
+.pageWrapper {
+  width: 100%;
+  max-width: 343px;
+  margin: 0 auto;
+}
 
-/* .pageWrapper {
-    display: flex;
-    justify-content: center;
+@media screen and (min-width: 768px) {
+  .pageWrapper {
+    max-width: 704px;
   }
-  .pageWrapper .container {
-    max-width: 768px;
+}
+
+@media screen and (min-width: 1440px) {
+  .pageWrapper {
+    max-width: 1280px;
   }
-   */
+}

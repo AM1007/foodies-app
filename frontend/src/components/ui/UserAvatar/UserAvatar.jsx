@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaUserAlt } from 'react-icons/fa';
 import css from './UserAvatar.module.css';
 import { updateUserAvatar } from '../../../redux/users/userSlice';
 import UploadAvatar from '../UploadAvatar/UploadAvatar';
@@ -51,7 +50,13 @@ function UserAvatar({
           />
         ) : (
           <div className={css.avatarIconWrapper}>
-            <FaUserAlt />
+            {currentUserAvatar ? (
+              <img
+                src={currentUserAvatar}
+                alt="User avatar"
+                className={css.icon}
+              />
+            ) : null}
           </div>
         )}
       </div>

@@ -46,8 +46,7 @@
   transition: all 0.5s ease;
   margin-bottom: 32px;
 }
-.addIngredientButton svg{
-  
+.addIngredientButton svg {
   stroke: var(--black);
 }
 

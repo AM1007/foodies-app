@@ -1,24 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../redux/users/authSlice';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import styles from './LogOutModal.module.css';
 
 import { useModal } from '../../hooks/useModal';
-import { BeatLoader } from 'react-spinners';
+import { toast } from 'react-hot-toast';
 
 const LogOutModal = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading } = useSelector(state => state.auth);
   const { closeModal } = useModal();
 
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      console.log('Logged out successfully');
+      toast.success('Logged out successfully');
       closeModal();
+      navigate('/');
     } catch (error) {
-      console.log(`Logout failed: ${error.message || error}`);
+      toast.error(`Logout failed: ${error.message || error}`);
     }
   };
 
