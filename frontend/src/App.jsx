@@ -5,6 +5,7 @@ import Layout from './components/Layout/Layout';
 import Loader from './components/Loader/Loader';
 import PrivateRoute from './components/PrivateRoute';
 import { UserProvider } from './context/UserContext';
+import ScrollTopButton from './components/ScrollToTop/ScrollToTop';
 // import ErrorLogger from './ErrorLogger';
 
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -49,6 +50,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        <ScrollTopButton />
       </Suspense>
     </UserProvider>
   );
