@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
 import styles from './RecipeFilters.module.css';
+import React from 'react';
 
 import { fetchIngredients } from '../../redux/ingredients/ingredientsSlice';
 import { fetchAreas } from '../../redux/areas/areasSlice';
@@ -60,4 +61,4 @@ const RecipeFilters = ({ onFilterChange }) => {
   );
 };
 
-export default RecipeFilters;
+export default React.memo(RecipeFilters);

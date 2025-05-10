@@ -11,11 +11,7 @@ export const fetchRecipes = createAsyncThunk(
       if (ingredient) params.ingredient = ingredient;
       if (area) params.area = area;
 
-  
-
       const response = await axiosAPI.get('/recipes', { params });
-
-
 
       return response.data;
     } catch (err) {
@@ -46,9 +42,7 @@ export const fetchUserRecipes = createAsyncThunk(
   'recipes/fetchUserRecipes',
   async (userId, { rejectWithValue }) => {
     try {
-
       const response = await axiosAPI.get(`/users/${userId}`);
-
 
       if (response.data.recipes) {
         return response.data.recipes;
@@ -301,48 +295,77 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addToFavorites.pending, state => {
-        state.loading = true;
-      })
-      .addCase(addToFavorites.fulfilled, (state, action) => {
-        state.loading = false;
+      .addCase(addToFavorites.pending, (state, action) => {
+        const recipeId = action.meta.arg;
 
-        if (!Array.isArray(state.favoriteRecipes)) {
-          state.favoriteRecipes = [];
+        if (recipeId) {
+          const recipe = state.recipes?.find(
+            r => r._id === recipeId || r.id === recipeId,
+          );
+
+          if (recipe && Array.isArray(state.favoriteRecipes)) {
+            const alreadyExists = state.favoriteRecipes.some(
+              fav => fav._id === recipeId || fav.id === recipeId,
+            );
+
+            if (!alreadyExists) {
+              state.favoriteRecipes.push(recipe);
+            }
+          }
         }
 
-        state.favoriteRecipes.push(action.payload);
+        state.error = null;
+      })
+      .addCase(addToFavorites.fulfilled, (state, action) => {
+        const newFavorite = action.payload;
+
+        if (!newFavorite) return;
+
+        if (Array.isArray(state.favoriteRecipes)) {
+          if (
+            !state.favoriteRecipes.some(
+              recipe =>
+                recipe._id === newFavorite._id || recipe.id === newFavorite.id,
+            )
+          ) {
+            state.favoriteRecipes.push(newFavorite);
+          }
+        } else {
+          state.favoriteRecipes = [newFavorite];
+        }
       })
       .addCase(addToFavorites.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      .addCase(removeFromFavorites.pending, state => {
-        state.loading = false;
+      .addCase(removeFromFavorites.pending, (state, action) => {
+        const recipeId = action.meta.arg;
+
+        if (recipeId && Array.isArray(state.favoriteRecipes)) {
+          state.favoriteRecipes = state.favoriteRecipes.filter(
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+          );
+        }
+
         state.error = null;
       })
       .addCase(removeFromFavorites.fulfilled, (state, action) => {
-        state.loading = false;
+        const recipeId = action.meta.arg;
+
+        if (!recipeId) return;
 
         if (Array.isArray(state.favoriteRecipes)) {
           state.favoriteRecipes = state.favoriteRecipes.filter(
-            recipe =>
-              recipe._id !== action.payload && recipe.id !== action.payload,
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
           );
         } else if (
           state.favoriteRecipes?.data &&
           Array.isArray(state.favoriteRecipes.data)
         ) {
-          state.favoriteRecipes = {
-            ...state.favoriteRecipes,
-            data: state.favoriteRecipes.data.filter(
-              recipe =>
-                recipe._id !== action.payload && recipe.id !== action.payload,
-            ),
-          };
-        } else {
-          state.favoriteRecipes = [];
+          state.favoriteRecipes.data = state.favoriteRecipes.data.filter(
+            recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+          );
         }
       })
       .addCase(removeFromFavorites.rejected, (state, action) => {
