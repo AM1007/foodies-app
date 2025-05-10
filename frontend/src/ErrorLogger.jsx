@@ -5,7 +5,6 @@ const ErrorLogger = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Оновлюємо логи кожні 2 секунди
     const intervalId = setInterval(() => {
       const storedLogs = JSON.parse(localStorage.getItem('error_logs') || '[]');
       setLogs(storedLogs);

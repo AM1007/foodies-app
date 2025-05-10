@@ -1,6 +1,6 @@
 export const useAuth = () => {
   return {
-    isAuthenticated: false, // або true
+    isAuthenticated: false,
     user: null,
   };
 };

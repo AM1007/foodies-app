@@ -31,7 +31,6 @@ const RecipeMainInfo = ({ title, category, time, description, user }) => {
         <p className={styles.description}>{description}</p>
         <div className={styles.authorBlock}>
           <img
-            // src={user?.avatar ?? '/placeholder.jpg'}
             src={avatarUrl}
             alt={user && user.name ? user.name : 'Anonymous'}
             className={styles.authorImage}

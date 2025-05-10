@@ -1,4 +1,3 @@
-import React from 'react';
 import Modal from '../Modal/Modal';
 import SignInForm from '../SignInForm/SignInForm';
 import { useModal } from '../../hooks/useModal';

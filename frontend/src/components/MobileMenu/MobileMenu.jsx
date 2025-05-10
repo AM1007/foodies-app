@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { motion } from 'framer-motion'; // Переконайтеся, що цей імпорт є
+import { motion } from 'framer-motion'; 
 import Logo from '../Logo/Logo';
 import CloseBtn from '../ui/CloseBtn/CloseBtn';
 import useScrollLock from '../../hooks/useScrollLock';
@@ -9,7 +9,6 @@ import styles from './MobileMenu.module.css';
 const MobileMenu = ({ isOpen, onClose }) => {
   useScrollLock(isOpen);
 
-  // Створіть компонент MotionDiv для використання замість motion.div
   const MotionDiv = motion.div;
 
   return (

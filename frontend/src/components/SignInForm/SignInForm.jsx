@@ -62,7 +62,6 @@ const SignInForm = ({ onSuccess }) => {
           error || 'Email or password is wrong. Please try again.',
         );
       }
-      // toast.error('Login error:', error);
     } finally {
       setSubmitting(false);
     }

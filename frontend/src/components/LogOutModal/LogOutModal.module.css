@@ -8,13 +8,13 @@
 }
 
 .title {
-  color: #050505;
+  color: var(--black);
   text-align: center;
   font-family: var(--base-font);
   font-size: 28px;
   font-style: normal;
   font-weight: 800;
-  line-height: 32px;
+  line-height: 1.14;
   letter-spacing: -0.56px;
   text-transform: uppercase;
   padding-bottom: 16px;
@@ -27,7 +27,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 1.43;
   letter-spacing: -0.28px;
   padding-bottom: 32px;
 }
@@ -47,7 +47,7 @@
   justify-content: center;
   padding: 14px 50px;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.43;
 }
 
 .modalButtonSize {
@@ -78,22 +78,21 @@
     transform: translateX(-50%);
     font-size: 32px;
     font-weight: 800;
-    line-height: 40px;
+    line-height: 1.32;
     color: var(--black);
     text-transform: uppercase;
     width: 400px;
   }
 
   .text {
-    color: #1a1a1a;
+    color: var(--dark-gray);
     text-align: center;
 
-    /* Desktop _tablet/Main */
-    font-family: Mulish;
-    font-size: 16px;
+    font-family:  var(--base-font);
+    font-size: var(--base-font-size);
     font-style: normal;
     font-weight: 500;
-    line-height: 24px; /* 150% */
+    line-height: 1.5;
     letter-spacing: -0.32px;
     padding-bottom: 0;
   }

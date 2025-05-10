@@ -54,12 +54,12 @@
     letter-spacing: -0.4px;
   }
   .text {
-    font-size: 16px;
+    font-size: var(--base-font-size);
     line-height: 1.5;
     color: var(--dark-gray);
   }
   .favoriteBtn {
-    font-size: 16px;
+    font-size: var(--base-font-size);
     padding: 16px 32px;
     border: 1px solid var(--gray);
     line-height: 1.5;

@@ -40,7 +40,7 @@
   }
 
   .title {
-    color: #050505;
+    color: var(--black);
     text-align: center;
     font-family: Mulish;
     font-size: 32px;

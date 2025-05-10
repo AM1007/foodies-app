@@ -78,11 +78,9 @@ export const loginUser = createAsyncThunk(
 
       return processedData;
     } catch (err) {
-      // Детальніше обробляємо помилки
       const errorMessage = err.response?.data?.message || 'Login failed';
       console.log('❌ Login failed:', errorMessage);
 
-      // Повертаємо конкретне повідомлення про помилку з бекенду
       return rejectWithValue(errorMessage);
     }
   },
