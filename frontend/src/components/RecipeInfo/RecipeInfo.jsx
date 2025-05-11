@@ -20,7 +20,7 @@ const RecipeInfo = ({ recipe, favoriteRecipes = [] }) => {
   return (
     <div className={styles.recipeInfo}>
       <div className={styles.imageBlock}>
-        <img src={recipe.thumb || '/placeholder.jpg'} alt={recipe.title} />
+        <img src={recipe.preview || '/placeholder.jpg'} alt={recipe.title} />
       </div>
       <div className={styles.detailsBlock}>
         <RecipeMainInfo
