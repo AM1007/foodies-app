@@ -7,7 +7,6 @@ import DeleteBtn from '../ui/DeleteBtn/DeleteBtn';
 function RecipePreview({ recipe, onDelete, activeTab, isDeleting }) {
   const [isVisible, setIsVisible] = useState(true);
 
-  console.log("recipe.preview", recipe.preview)
   const recipeId = recipe.id || recipe._id;
 
   const handleDelete = async () => {
