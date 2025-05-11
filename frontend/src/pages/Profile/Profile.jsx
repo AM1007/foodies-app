@@ -152,7 +152,12 @@ const Profile = () => {
 
   const handleFavoriteRemoved = useCallback(() => {
     setLocalFavoritesCount(prev => Math.max(0, prev - 1));
-  }, []);
+    if (isOwnProfile && current) {
+      setTimeout(() => {
+        dispatch(fetchFavoriteRecipes());
+      }, 300);
+    }
+  }, [dispatch, isOwnProfile, current]);
 
   useEffect(() => {
     if (!current) return;
@@ -366,7 +371,7 @@ const Profile = () => {
   return (
     <div className="container">
       <PathInfo current="Profile" />
-      <div className = {styles.titleWrapper}>
+      <div className={styles.titleWrapper}>
         <MainTitle
           text={isOwnProfile ? 'Profile' : `${profileUser?.name}'s Profile`}
         />
