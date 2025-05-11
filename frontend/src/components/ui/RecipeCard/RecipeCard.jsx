@@ -1,7 +1,7 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
-import { Link } from 'react-router-dom';
-import React from 'react';
 
 const RecipeCard = ({
   recipe,
@@ -19,7 +19,6 @@ const RecipeCard = ({
   const recipeId = recipe.id || recipe._id;
 
   const handleFavoriteClick = e => {
-    // зупиняємо дефолтну навігацію та будь-яку обробку вище
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();

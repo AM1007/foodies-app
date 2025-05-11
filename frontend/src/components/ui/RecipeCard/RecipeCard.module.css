@@ -1,7 +1,7 @@
 .card {
   background-color: var(--white);
   border-radius: 16px;
-  width: 100%;
+  width: 342px;
 }
 
 @media screen and (min-width: 768px) {
@@ -18,7 +18,7 @@
 
 .image {
   height: 230px;
-  width: 100%;
+  width: 342px;
   object-fit: cover;
   border-radius: 16px;
 }
