@@ -4,14 +4,13 @@ import RecipePreparation from '../RecipePreparation/RecipePreparation';
 import styles from './RecipeInfo.module.css';
 
 const RecipeInfo = ({ recipe, favoriteRecipes = [] }) => {
-
   const recipeId = recipe?._id?.$oid || recipe?._id || recipe?.id;
-  
 
-  const isRecipeFavorite = Array.isArray(favoriteRecipes) && favoriteRecipes.some(
-    favorite => favorite?._id === recipeId || favorite?.id === recipeId
-  );
-
+  const isRecipeFavorite =
+    Array.isArray(favoriteRecipes) &&
+    favoriteRecipes.some(
+      favorite => favorite?._id === recipeId || favorite?.id === recipeId,
+    );
 
   if (!recipe) {
     return <div>Recipe information not available</div>;
@@ -20,7 +19,10 @@ const RecipeInfo = ({ recipe, favoriteRecipes = [] }) => {
   return (
     <div className={styles.recipeInfo}>
       <div className={styles.imageBlock}>
-        <img src={recipe.preview || '/placeholder.jpg'} alt={recipe.title} />
+        <img
+          src={recipe.preview || recipe.thumb || '/placeholder.jpg'}
+          alt={recipe.title}
+        />
       </div>
       <div className={styles.detailsBlock}>
         <RecipeMainInfo
@@ -40,7 +42,8 @@ const RecipeInfo = ({ recipe, favoriteRecipes = [] }) => {
               amount:
                 ingredient?.RecipeIngredient?.measure ||
                 ingredient?.through?.measure ||
-                ingredient.measure || 'n/a',
+                ingredient.measure ||
+                'n/a',
             })) || []
           }
         />
