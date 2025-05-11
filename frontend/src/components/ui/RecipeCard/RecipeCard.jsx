@@ -18,6 +18,14 @@ const RecipeCard = ({
 
   const recipeId = recipe.id || recipe._id;
 
+  const handleFavoriteClick = e => {
+    // зупиняємо дефолтну навігацію та будь-яку обробку вище
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    onFavoriteToggle?.();
+  };
+
   return (
     <div className={styles.card}>
       <Link to={`/recipes/${recipeId}`} className={styles.imageLink}>
@@ -27,7 +35,11 @@ const RecipeCard = ({
         <h4 className={styles.title}>{recipe.title}</h4>
         <p className={styles.description}>{recipe.description}</p>
         <div className={styles.wrapper}>
-          <button className={styles.author} onClick={onAuthorClick}>
+          <button
+            type="button"
+            className={styles.author}
+            onClick={onAuthorClick}
+          >
             <img
               src={avatarUrl}
               alt={recipe.user?.name || 'Anonymous'}
@@ -37,11 +49,10 @@ const RecipeCard = ({
           </button>
           <div className={styles.wrap}>
             <button
+              type="button"
               className={`${styles.heart} ${isFavorite ? styles.active : ''}`}
-              onClick={e => {
-                e.stopPropagation();
-                onFavoriteToggle();
-              }}
+              onMouseDown={e => e.preventDefault()}
+              onClick={handleFavoriteClick}
               aria-label="Toggle favorite"
             >
               <svg className={styles.icon}>
@@ -50,6 +61,7 @@ const RecipeCard = ({
             </button>
 
             <button
+              type="button"
               className={styles.arrow}
               onClick={onViewRecipe}
               aria-label="View recipe"
