@@ -30,15 +30,7 @@ const RecipeCardContainer = ({ recipe }) => {
     favorite => favorite?._id === recipeId || favorite?.id === recipeId,
   );
 
-  const handleFavoriteToggle = e => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
-    }
-
-    e.currentTarget.blur();
-
+  const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
       openModal('signin');
       return;
@@ -63,13 +55,7 @@ const RecipeCardContainer = ({ recipe }) => {
     if (recipe.user?.id) navigate(`/users/${recipe.user.id}`);
   };
 
-  const handleViewRecipe = e => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    navigate(`/recipes/${recipeId}`);
-  };
+  const handleViewRecipe = () => navigate(`/recipes/${recipeId}`);
 
   return (
     <RecipeCard
@@ -82,4 +68,4 @@ const RecipeCardContainer = ({ recipe }) => {
   );
 };
 
-export default React.memo(RecipeCardContainer);
+export default RecipeCardContainer;
