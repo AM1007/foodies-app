@@ -54,25 +54,25 @@
   color: var(--white);
   background-color: var(--black);
 }
+
+.addIngredientButtonInactive:hover {
+  background-color: var(--gray);
+}
+
 .addIngredientButton:hover svg {
   transition: stroke 0.5s ease;
   stroke: var(--white);
 }
 
-.addIngredientButton:disabled {
-  cursor: not-allowed;
-}
-
-.addIngredientButton:disabled:hover {
-  background-color: var(--gray);
-}
-
 .errorMessage {
+  position: absolute;
   color: var(--red);
   font-size: 12px;
   margin-top: 4px;
   font-weight: 500;
 }
+
+
 @media screen and (max-width: 767px) {
   .ingredientsContainer {
     grid-template-columns: 1fr;
