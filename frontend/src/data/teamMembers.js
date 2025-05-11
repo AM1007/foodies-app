@@ -1,12 +1,13 @@
 import image from '/public/assets/avatar.png';
 import avatarHanna from '/image/team/02-hanna.webp';
 import avatarViktor from '/image/team/05-viktor.webp';
+import avatarAndrew from '/image/team/01_andrew.webp';
 
 const teamMembers = [
   {
     name: 'Andrew Motko',
     role: 'Team Lead',
-    img: image,
+    img: avatarAndrew,
     linkedin: 'https://www.linkedin.com/in/motko/',
     github: 'https://github.com/AM1007',
   },
