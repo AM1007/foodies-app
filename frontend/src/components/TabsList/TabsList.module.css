@@ -6,7 +6,7 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   white-space: nowrap;
-  padding: 0;
+   
   height: auto;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -14,6 +14,7 @@
 }
 
 .tab {
+   padding-bottom: 14px;
   position: relative;
   color: var(--gray);
   font-size: 18px;
@@ -23,7 +24,6 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding-bottom: 12px;
   flex-shrink: 2;
   justify-content: flex-start;
 }
@@ -55,7 +55,6 @@
 @media screen and (min-width: 1440px) {
   .tabs {
     width: 100%;
-    padding-bottom: 14px;
     margin: 0 0 0 40px;
   }
   .active::after {

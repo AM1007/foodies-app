@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import styles from './AddRecipePage.module.css';
 import PathInfo from '../../components/ui/PathInfo/PathInfo';
 import MainTitle from '../../components/ui/MainTitle/MainTitle';
 import SubTitle from '../../components/ui/SubTitle/SubTitle';
 import AddRecipeForm from '../../components/AddRecipeForm/AddRecipeForm';
+import styles from './AddRecipePage.module.css';
 
 const AddRecipePage = () => {
   const navigate = useNavigate();

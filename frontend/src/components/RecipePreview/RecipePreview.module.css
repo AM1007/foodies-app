@@ -1,12 +1,15 @@
 .recipePreviewCard {
   width: 100%;
+  height: 100px;
   display: flex;
   align-items: flex-start;
   background-color: var(--white);
   max-width: 100%;
+  gap: 10px;
 }
 
 .recipePreviewCardImage {
+  transition: transform 0.4s ease;
   object-fit: cover;
   border-radius: 15px;
   flex-shrink: 0;
@@ -14,9 +17,6 @@
 
 .imageLink {
   cursor: pointer;
-  width: 75px;
-  height: 75px;
-  margin-right: 10px;
 }
 
 .recipePreviewCardContent {
@@ -66,12 +66,7 @@
 @media screen and (min-width: 768px) {
   .recipePreviewCard {
     max-width: 704px;
-  }
-
-  .imageLink {
-    width: 100px;
-    height: 100px;
-    margin-right: 16px;
+    gap: 16px;
   }
 
   .recipePreviewCardInfo {
@@ -92,6 +87,10 @@
   .recipePreviewCardActions {
     margin-left: 32px;
   }
+
+  .imageLink:hover .recipePreviewCardImage {
+    transform: scale(1.05);
+  }
 }
 
 @media screen and (min-width: 1440px) {
@@ -99,22 +98,9 @@
     max-width: 846px;
   }
 
-  .imageLink {
-    width: 120px;
-    height: 120px;
-  }
-
   .recipePreviewCardInfo {
     width: 350px;
     gap: 12px;
-  }
-
-  .recipePreviewCardImage {
-    transition: transform 0.4s ease;
-  }
-
-  .imageLink:hover .recipePreviewCardImage {
-    transform: scale(1.05);
   }
 
   .recipePreviewCardActions {

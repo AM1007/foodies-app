@@ -1,3 +1,8 @@
+.avatarOuterWrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .avatarWrapper {
   display: flex;
   justify-content: center;
@@ -43,20 +48,6 @@
   height: 50%;
 }
 
-.avatarOuterWrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.avatarWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  overflow: hidden; 
-  position: relative;
-}
-
 .avatarInputWrapper {
   position: absolute;
   bottom: 0;
@@ -78,7 +69,6 @@
 .avatarInput {
   display: none;
 }
-
 
 @media (min-width: 768px) {
   .userAvatar {

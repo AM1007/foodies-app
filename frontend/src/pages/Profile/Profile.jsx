@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
 import Loader from '../../components/Loader/Loader';
+import PathInfo from '../../components/ui/PathInfo/PathInfo';
 import MainTitle from '../../components/ui/MainTitle/MainTitle';
 import SubTitle from '../../components/ui/SubTitle/SubTitle';
 import {
@@ -20,6 +21,7 @@ import {
 } from '../../redux/recipes/recipesSlice';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import ListItems from '../../components/ListItems/ListItems';
+import styles from './Profile.module.css';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -363,10 +365,13 @@ const Profile = () => {
 
   return (
     <div className="container">
-      <MainTitle
-        text={isOwnProfile ? 'My Profile' : `${profileUser?.name}'s Profile`}
-      />
-      <SubTitle text="Reveal your culinary art, share your favorite recipe, and create gastronomic masterpieces with us." />
+      <PathInfo current="Profile" />
+      <div className = {styles.titleWrapper}>
+        <MainTitle
+          text={isOwnProfile ? 'Profile' : `${profileUser?.name}'s Profile`}
+        />
+        <SubTitle text="Reveal your culinary art, share your favorite recipe, and create gastronomic masterpieces with us." />
+      </div>
       <UserProfile
         profileUser={profileUser}
         isOwnProfile={isOwnProfile}

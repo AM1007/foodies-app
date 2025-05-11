@@ -5,7 +5,7 @@
 
 .userCardWrapper {
   width: 100%;
-  max-width: 394px;
+  max-width: 375px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -26,8 +26,9 @@
   width: 100%;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (min-width: 768px) {
   .userCardWrapper {
+    max-width: 394px;
     margin: 40px auto;
   }
 }

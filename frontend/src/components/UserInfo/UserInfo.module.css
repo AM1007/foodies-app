@@ -58,7 +58,7 @@
 
 @media (min-width: 768px) {
   .userInfo {
-    width: 394px;
+    max-width: 394px;
     gap: 20px;
   }
 
@@ -72,7 +72,7 @@
   .statValue {
     font-weight: 700;
     font-size: 16px;
-    color: var(--gray);
+    color: var(--black);
     font-size: 14px;
     line-height: 1.43;
   }

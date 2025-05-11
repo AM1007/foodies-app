@@ -56,7 +56,13 @@
   composes: link;
   color: var(--white);
 }
-.lightLink:hover,
+.lightLink:hover{
+  border-radius: 30px;
+  transform: scale(1.05);
+  color: var(--white);
+  background-color: var(--black);
+}
+
 .darkLink:hover {
   border: 1px solid var(--gray);
   border-radius: 30px;
