@@ -10,6 +10,8 @@
 
 .headerContainer {
   width: 100%;
+  min-width: 320px;
+  max-width: 375px;
   padding: 8px 8px 0 8px;
   margin: 0 auto;
   background-color: var(--white);

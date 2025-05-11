@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 import css from './UserAvatar.module.css';
 import { updateUserAvatar } from '../../../redux/users/userSlice';
 import UploadAvatar from '../UploadAvatar/UploadAvatar';
@@ -24,8 +25,10 @@ function UserAvatar({
       formData.append('avatar', file);
       try {
         await dispatch(updateUserAvatar(formData)).unwrap();
-
+        toast.success('Avatar updated successfully!');
       } catch (error) {
+        console.error('Error updating avatar:', error);
+        toast.error('Failed to update avatar. Please try again.');
       }
     }
   };

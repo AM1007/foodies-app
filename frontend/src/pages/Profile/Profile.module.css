@@ -1,0 +1,11 @@
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .titleWrapper {
+  gap: 20px;
+}
+}

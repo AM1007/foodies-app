@@ -1,5 +1,7 @@
 .heroSection {
   width: 100%;
+  min-width: 320px;
+  max-width: 375px;
   padding: 0 8px;
   margin: 0 auto;
 }

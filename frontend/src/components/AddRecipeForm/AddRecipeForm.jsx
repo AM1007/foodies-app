@@ -4,9 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast'; 
+import toast from 'react-hot-toast';
 
-import styles from './AddRecipeForm.module.css';
 import PhotoUploader from '../UploadPecipePhoto/UploadRecipePhoto';
 import RecipeTitleInput from '../ui/RecipeTitleInput/RecipeTitleInput';
 import DropdownSelector from '../ui/DropdownSelector/DropdownSelector';
@@ -22,6 +21,7 @@ import { createRecipe } from '../../redux/recipes/recipesSlice';
 import { fetchCategories } from '../../redux/categories/categoriesSlice';
 import { fetchIngredients } from '../../redux/ingredients/ingredientsSlice';
 import { fetchAreas } from '../../redux/areas/areasSlice';
+import styles from './AddRecipeForm.module.css';
 
 const DRAFT_STORAGE_KEY = 'recipe_draft';
 const RESTORE_ASKED_KEY = 'draft_restore_asked';
@@ -43,7 +43,9 @@ const schema = yup.object().shape({
     .required('Recipe instructions are required')
     .max(2000, 'Instructions cannot exceed 2000 characters'),
   photo: yup.mixed().required('Recipe photo is required'),
-  ingredients: yup.boolean().oneOf([true], 'At least one ingredient is required')
+  ingredients: yup
+    .boolean()
+    .oneOf([true], 'At least one ingredient is required'),
 });
 
 const AddRecipeForm = () => {
@@ -71,9 +73,9 @@ const AddRecipeForm = () => {
       time: 10,
       instructions: '',
       photo: null,
-      ingredients: false
+      ingredients: false,
     },
-    mode: 'onSubmit'
+    mode: 'onSubmit',
   });
 
   const {
@@ -86,7 +88,7 @@ const AddRecipeForm = () => {
     watch,
     setError,
     clearErrors,
-    getValues
+    getValues,
   } = methods;
 
   const title = watch('title');
@@ -96,13 +98,18 @@ const AddRecipeForm = () => {
   const instructions = watch('instructions');
 
   const saveDraft = useCallback(() => {
-    if (!title && !description && !instructions && recipeIngredients.length === 0) {
+    if (
+      !title &&
+      !description &&
+      !instructions &&
+      recipeIngredients.length === 0
+    ) {
       return;
     }
-    
+
     try {
       const formValues = getValues();
-      
+
       const draftData = {
         title: formValues.title,
         description: formValues.description,
@@ -110,9 +117,9 @@ const AddRecipeForm = () => {
         time: formValues.time,
         instructions: formValues.instructions,
         recipeIngredients: recipeIngredients,
-        savedAt: new Date().toISOString()
+        savedAt: new Date().toISOString(),
       };
-      
+
       localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draftData));
     } catch (e) {
       console.error('Failed to save draft:', e);
@@ -124,18 +131,21 @@ const AddRecipeForm = () => {
       const savedDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
       if (savedDraft) {
         const draftData = JSON.parse(savedDraft);
-        
+
         setValue('title', draftData.title || '');
         setValue('description', draftData.description || '');
         setValue('categoryId', draftData.categoryId || '');
         setValue('time', draftData.time || 10);
         setValue('instructions', draftData.instructions || '');
-        
-        if (draftData.recipeIngredients && draftData.recipeIngredients.length > 0) {
+
+        if (
+          draftData.recipeIngredients &&
+          draftData.recipeIngredients.length > 0
+        ) {
           setRecipeIngredients(draftData.recipeIngredients);
           setValue('ingredients', true);
         }
-        
+
         toast.success('Recipe draft restored successfully');
       }
     } catch (e) {
@@ -148,19 +158,19 @@ const AddRecipeForm = () => {
     dispatch(fetchCategories());
     dispatch(fetchAreas());
     dispatch(fetchIngredients());
-    
+
     const savedDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
     const alreadyAskedInSession = sessionStorage.getItem(RESTORE_ASKED_KEY);
-    
+
     if (savedDraft && !alreadyAskedInSession) {
       try {
         JSON.parse(savedDraft);
         sessionStorage.setItem(RESTORE_ASKED_KEY, 'true');
-        
+
         const confirmRestore = window.confirm(
-          'We found a saved draft of your recipe. Would you like to restore it?'
+          'We found a saved draft of your recipe. Would you like to restore it?',
         );
-        
+
         if (confirmRestore) {
           restoreDraft();
         }
@@ -184,7 +194,16 @@ const AddRecipeForm = () => {
     if (isDirty || recipeIngredients.length > 0) {
       saveDraft();
     }
-  }, [title, description, categoryId, time, instructions, recipeIngredients, isDirty, saveDraft]);
+  }, [
+    title,
+    description,
+    categoryId,
+    time,
+    instructions,
+    recipeIngredients,
+    isDirty,
+    saveDraft,
+  ]);
 
   const handlePhotoChange = file => {
     setValue('photo', file);
@@ -204,7 +223,7 @@ const AddRecipeForm = () => {
         if (isAlreadyAdded) {
           setError('ingredients', {
             type: 'manual',
-            message: 'This ingredient is already added'
+            message: 'This ingredient is already added',
           });
           toast.error('This ingredient is already added');
           return false;
@@ -231,7 +250,7 @@ const AddRecipeForm = () => {
     } else {
       setError('ingredients', {
         type: 'manual',
-        message: 'Please select an ingredient and specify the quantity'
+        message: 'Please select an ingredient and specify the quantity',
       });
       toast.error('Please select an ingredient and specify the quantity');
     }
@@ -241,7 +260,7 @@ const AddRecipeForm = () => {
   const handleRemoveIngredient = id => {
     const updatedIngredients = recipeIngredients.filter(ing => ing.id !== id);
     setRecipeIngredients(updatedIngredients);
-    
+
     if (updatedIngredients.length === 0) {
       setValue('ingredients', false, { shouldValidate: false });
     }
@@ -255,14 +274,14 @@ const AddRecipeForm = () => {
       time: 10,
       instructions: '',
       photo: null,
-      ingredients: false
+      ingredients: false,
     });
     setRecipeIngredients([]);
     clearErrors();
-    
+
     localStorage.removeItem(DRAFT_STORAGE_KEY);
     sessionStorage.removeItem(RESTORE_ASKED_KEY);
-    
+
     toast.success('Form reset successfully');
   };
 
@@ -276,12 +295,17 @@ const AddRecipeForm = () => {
     try {
       setIsSubmitting(true);
 
-      console.log('Photo file:', data.photo ? {
-        name: data.photo.name, 
-        type: data.photo.type, 
-        size: data.photo.size
-      } : 'No file selected');
-      
+      console.log(
+        'Photo file:',
+        data.photo
+          ? {
+              name: data.photo.name,
+              type: data.photo.type,
+              size: data.photo.size,
+            }
+          : 'No file selected',
+      );
+
       const loadingToast = toast.loading('Submitting your recipe...');
 
       const formData = new FormData();
@@ -309,10 +333,10 @@ const AddRecipeForm = () => {
 
       if (createRecipe.fulfilled.match(resultAction)) {
         toast.success('Recipe published successfully!');
-        
+
         localStorage.removeItem(DRAFT_STORAGE_KEY);
         sessionStorage.removeItem(RESTORE_ASKED_KEY);
-        
+
         setTimeout(() => {
           navigate('/users/current');
         }, 1500);
@@ -385,7 +409,10 @@ const AddRecipeForm = () => {
               control={control}
               render={({ field }) => (
                 <div>
-                  <TimeController value={field.value} onChange={field.onChange} />
+                  <TimeController
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
                   {errors.time && (
                     <p className={styles.errorMessage}>{errors.time.message}</p>
                   )}
