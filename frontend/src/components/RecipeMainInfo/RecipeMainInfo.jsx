@@ -2,7 +2,6 @@ import styles from './RecipeMainInfo.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useModal } from '../../hooks/useModal';
-import avatar from '/assets/avatar.png';
 
 const RecipeMainInfo = ({ title, category, time, description, user }) => {
   const { isAuthenticated } = useSelector(state => state.auth);
@@ -18,7 +17,8 @@ const RecipeMainInfo = ({ title, category, time, description, user }) => {
       navigate(`/users/${user.id}`);
     }
   };
-  const avatarUrl = user?.avatar?.startsWith('http') ? user.avatar : avatar;
+
+  const avatarUrl = user?.avatar?.startsWith('http') ? user.avatar : null;
 
   return (
     <div className={styles.recipeMainInfo}>
