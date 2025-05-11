@@ -1,8 +1,6 @@
 import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
-import avatar from '/assets/avatar.png';
-import { Link } from 'react-router-dom'; 
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const RecipeCard = ({
   recipe,
@@ -15,8 +13,8 @@ const RecipeCard = ({
 
   const avatarUrl = recipe.user?.avatar?.startsWith('http')
     ? recipe.user.avatar
-    : avatar;
-    
+    : null;
+
   const recipeId = recipe.id || recipe._id;
 
   return (
