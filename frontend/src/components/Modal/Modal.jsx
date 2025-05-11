@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import icons from '../../icons/sprite.svg';
 
-export default function Modal({ isOpen, onClose, children }) {
+export default function Modal({
+  isOpen,
+  onClose,
+  children,
+  overlayClassName,
+  modalClassName,
+}) {
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.key === 'Escape') onClose();
@@ -24,10 +30,17 @@ export default function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className={styles.overlay} role="dialog" aria-modal="true">
+    <div
+      className={`${styles.overlay} ${overlayClassName || ''}`}
+      role="dialog"
+      aria-modal="true"
+    >
       <div className={styles.backdrop} onClick={onClose} />
 
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+      <div
+        className={`${styles.modal} ${modalClassName || ''}`}
+        onClick={e => e.stopPropagation()}
+      >
         <button
           type="button"
           className={styles.closeButton}

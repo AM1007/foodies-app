@@ -1,4 +1,6 @@
 import image from '/public/assets/avatar.png';
+import avatarHanna from '/image/team/02-hanna.webp';
+import avatarViktor from '/image/team/05-viktor.webp';
 
 const teamMembers = [
   {
@@ -11,7 +13,7 @@ const teamMembers = [
   {
     name: 'Hanna Komrakova',
     role: 'Team Lead',
-    img: image,
+    img: avatarHanna,
     linkedin: '',
     github: '',
   },
@@ -32,7 +34,7 @@ const teamMembers = [
   {
     name: 'Viktor Svertoka',
     role: 'Front End Developer',
-    img: image,
+    img: avatarViktor,
     linkedin: 'https://www.linkedin.com/in/viktorsvertoka/',
     github: 'https://github.com/ViktorSvertoka',
   },
