@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useModal } from '../../../hooks/useModal.js';
 import HeroImages from '../../ui/HeroImages/HeroImages.jsx';
-
 import styles from './Hero.module.css';
 
 const Hero = () => {
@@ -21,11 +21,23 @@ const Hero = () => {
     <section className={styles.heroSection}>
       <div className={styles.heroContainer}>
         <div className={styles.textWrapper}>
-          <h1 className={styles.title}>Improve Your Culinary Talents</h1>
-          <p className={styles.subtitle}>
+          <motion.h1
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className={styles.title}
+          >
+            Improve Your Culinary Talents
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            className={styles.subtitle}
+          >
             Amazing recipes for beginners in the world of cooking, enveloping
             you in the aromas and tastes of various cuisines.
-          </p>
+          </motion.p>
           <button className={styles.heroButton} onClick={handleAddRecipeClick}>
             Add Recipe
           </button>
