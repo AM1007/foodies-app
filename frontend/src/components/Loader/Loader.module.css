@@ -6,6 +6,8 @@
   width: var(--container-size);
   height: var(--container-size);
   overflow: hidden;
+  z-index: 999999;
+  pointer-events: none;
 }
 
 .bubble {
