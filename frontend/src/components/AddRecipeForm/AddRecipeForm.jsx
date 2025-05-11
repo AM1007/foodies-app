@@ -399,9 +399,6 @@ const AddRecipeForm = () => {
             ingredients={ingredients}
             onAddIngredient={handleAddIngredient}
           />
-          {errors.ingredients && (
-            <p className={styles.errorMessage}>{errors.ingredients.message}</p>
-          )}
 
           {/* Recipe Ingredients */}
           {recipeIngredients.length > 0 && (
