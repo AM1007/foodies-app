@@ -1,6 +1,7 @@
 import styles from './RecipeCard.module.css';
 import icons from '../../../icons/sprite.svg';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 const RecipeCard = ({
   recipe,
