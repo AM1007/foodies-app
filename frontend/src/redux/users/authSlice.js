@@ -1,14 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosAPI from '../../api/api';
-
-const setToken = token => {
-  localStorage.setItem('token', token);
-};
-
-const clearToken = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('refreshToken');
-};
+import { setTokens, clearTokens } from '../../api/auth';
 
 const processAuthResponse = response => {
   if (!response || typeof response !== 'object') {
@@ -19,18 +11,15 @@ const processAuthResponse = response => {
   if (response.message === 'Registration successful' && response.user) {
     return {
       token: response.token || null,
+      refreshToken: response.refreshToken || null,
       user: response.user,
     };
   }
 
   if (response.token) {
-
-    if (response.refreshToken) {
-      localStorage.setItem('refreshToken', response.refreshToken);
-    }
-
     return {
       token: response.token,
+      refreshToken: response.refreshToken || null,
       user: response.user || null,
     };
   }
@@ -49,7 +38,10 @@ export const registerUser = createAsyncThunk(
       const processedData = processAuthResponse(res.data);
 
       if (processedData.token) {
-        setToken(processedData.token);
+        setTokens({
+          accessToken: processedData.token,
+          refreshToken: processedData.refreshToken,
+        });
       }
 
       return processedData;
@@ -74,7 +66,10 @@ export const loginUser = createAsyncThunk(
       console.log('✅ Login successful, received token');
       const processedData = processAuthResponse(res.data);
 
-      setToken(processedData.token);
+      setTokens({
+        accessToken: processedData.token,
+        refreshToken: processedData.refreshToken,
+      });
 
       return processedData;
     } catch (err) {
@@ -93,14 +88,14 @@ export const logoutUser = createAsyncThunk(
       console.log('🔄 Sending logout request...');
       await axiosAPI.post('/auth/logout');
       console.log('✅ Logout API call successful');
-      clearToken();
+      clearTokens();
       return null;
     } catch (err) {
       console.log(
         '❌ Logout API call failed:',
         err.response?.data?.message || 'Logout failed',
       );
-      clearToken();
+      clearTokens();
       return rejectWithValue(err.response?.data?.message || 'Exit error');
     }
   },
@@ -121,7 +116,11 @@ export const refreshToken = createAsyncThunk(
       });
 
       const processedData = processAuthResponse(res.data);
-      setToken(processedData.token);
+
+      setTokens({
+        accessToken: processedData.token,
+        refreshToken: processedData.refreshToken,
+      });
 
       if (!processedData.user) {
         try {
@@ -134,7 +133,7 @@ export const refreshToken = createAsyncThunk(
 
       return processedData;
     } catch (err) {
-      clearToken();
+      clearTokens();
       return rejectWithValue(
         err.response?.data?.message || 'Token refresh error',
       );
