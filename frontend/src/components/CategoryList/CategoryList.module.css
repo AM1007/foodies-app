@@ -1,14 +1,13 @@
 .categoriesWrapper {
-  padding: 0;
   width: 100%;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .categoryListContainer {
-  margin: 0 auto;
-  justify-items: center;
   width: 100%;
+  margin: 0 auto;
 }
 
 .grid {
@@ -18,229 +17,48 @@
   width: 100%;
 }
 
-.card {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  aspect-ratio: 17 / 8;
-}
-
-.card:hover {
-  transform: scale(1.03);
-}
-
-.image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.buttonWrap {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.button {
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 30px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--black);
-  transition: background 0.3s;
-}
-
-.button:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  stroke: rgba(255, 255, 255, 0.7);
-  fill: none;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-}
-
-.icon:hover {
-  stroke: rgba(255, 255, 255, 0.9);
-}
-
-.allCategories {
-  background-color: var(--black);
-  color: var(--white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .categoriesWrapper {
-    padding: 0;
-    width: 704px;
-  }
-  .card {
-    aspect-ratio: auto;
+    max-width: 704px;
   }
   .categoryListContainer {
     min-width: 343px;
-    margin: 0 auto;
   }
+
   .grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-top: 40px;
-    max-width: 90%;
   }
-  .card {
-    height: 320px;
-  }
-  .grid > .card:nth-child(3),
-  .grid > .card:nth-child(8) {
-    grid-column: span 2;
-    height: 340px;
-    max-width: 100%;
-  }
-  .buttonWrap {
-    bottom: 24px;
-    left: 24px;
-    gap: 4px;
-  }
-  .allCategories {
-    height: 340px;
-    font-size: 20px;
-    border-radius: 30px;
-    flex: 1 1 25%;
-  }
-  .icon {
-    border-radius: 30px;
-    border: 1px solid var(--white);
+
+  .grid > *:nth-child(3),
+  .grid > *:nth-child(8) {
+    grid-column: 1 / -1;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .categoriesWrapper {
-    padding: 0;
-    width: 1280px;
+    max-width: 1280px;
   }
   .categoryListContainer {
     max-width: 1280px;
-    margin: 0 auto;
-    width: 100%;
   }
+
   .row {
     display: flex;
-    align-items: flex-start;
     gap: 20px;
     margin-bottom: 20px;
-    width: 100%;
   }
-  .card {
-    border-radius: 20px;
-    overflow: hidden;
-    height: 320px;
-    max-width: 110%;
+
+  .row > * {
+    flex: 1;
   }
-  .allCategories {
-    height: 360px;
-    font-size: 20px;
-    border-radius: 30px;
-    max-width: 110%;
-  }
-  .card-row0-item0,
-  .card-row0-item1 {
-    flex: 1 1 25%;
-  }
-  .card-row0-item2 {
-    flex: 2 1 50%;
-  }
-  .card-row1-item0 {
-    flex: 2 1 50%;
-  }
-  .card-row1-item1,
-  .card-row1-item2 {
-    flex: 1 1 25%;
-  }
-  .card-row2-item0,
-  .card-row2-item2 {
-    flex: 1 1 25%;
-  }
-  .card-row2-item1 {
-    flex: 2 1 50%;
-  }
+
+  .card-row0-item2,
+  .card-row1-item0,
+  .card-row2-item1,
   .card-row3-item0 {
-    flex: 2 1 50%;
+    flex: 2;
   }
-  .card-row3-item1,
-  .card-row3-item2 {
-    flex: 1 1 25%;
-  }
-}
-.row {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-.card {
-  border-radius: 20px;
-  overflow: hidden;
-  height: 340px;
-}
-.allCategories {
-  background-color: var(--black);
-  color: var(--white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  font-weight: 600;
-  border-radius: 20px;
-  height: 340px;
-  flex: 1 1 25%;
-}
-.card-row0-item0,
-.card-row0-item1 {
-  flex: 1 1 25%;
-}
-.card-row0-item2 {
-  flex: 2 1 50%;
-}
-.card-row1-item0 {
-  flex: 2 1 50%;
-}
-.card-row1-item1,
-.card-row1-item2 {
-  flex: 1 1 25%;
-}
-.card-row2-item0,
-.card-row2-item2 {
-  flex: 1 1 25%;
-}
-.card-row2-item1 {
-  flex: 2 1 50%;
-}
-.card-row3-item0 {
-  flex: 2 1 50%;
-}
-.card-row3-item1,
-.card-row3-item2 {
-  flex: 1 1 25%;
 }
