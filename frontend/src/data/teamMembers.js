@@ -1,0 +1,81 @@
+const teamMembers = [
+  {
+    name: 'Andrew Motko',
+    role: 'Team Lead',
+    img: 'andrew_motko.jpg',
+    linkedin: 'https://www.linkedin.com/in/motko/',
+    github: 'https://github.com/AM1007',
+  },
+  {
+    name: 'Hanna Komrakova',
+    role: 'Team Lead',
+    img: '',
+    linkedin: '',
+    github: '',
+  },
+  {
+    name: 'Yevhenii Datsenko',
+    role: 'Scrum Master',
+    img: 'yevheni-datsenko.jpg',
+    linkedin: 'https://www.linkedin.com/in/yevhenii-datsenko/',
+    github: 'https://github.com/yevheniidatsenko',
+  },
+  {
+    name: 'Yana Shapka',
+    role: 'Front End Developer',
+    img: '',
+    linkedin: '',
+    github: '',
+  },
+  {
+    name: 'Viktor Svertoka',
+    role: 'Front End Developer',
+    img: 'viktor_svertoka.jpg',
+    linkedin: 'https://www.linkedin.com/in/viktorsvertoka/',
+    github: 'https://github.com/ViktorSvertoka',
+  },
+  {
+    name: 'Tetiana Zorii',
+    role: 'Front End Developer',
+    img: 'tetiana_zorii.jpg',
+    linkedin: 'https://www.linkedin.com/in/zorii-tetiana',
+    github: 'https://github.com/TiZorii',
+  },
+  {
+    name: 'Liudmyla Sovetovs',
+    role: 'Front End Developer',
+    img: '',
+    linkedin: '',
+    github: '',
+  },
+  {
+    name: 'Yuliia Nazymko',
+    role: 'Front End Developer',
+    img: 'yuliia_nazymko.jpg',
+    linkedin: 'https://www.linkedin.com/in/yuliia-nazymko/',
+    github: 'https://github.com/YNazymko12',
+  },
+  {
+    name: 'Alex Kryvosheyin',
+    role: 'Front End Developer',
+    img: '',
+    linkedin: '',
+    github: '',
+  },
+  {
+    name: 'Lesia Soloviova',
+    role: 'Front End Developer',
+    img: 'lesia_soloviova.jpg',
+    linkedin: 'http://www.linkedin.com/in/lesia-soloviova',
+    github: 'https://github.com/LesiaUKR',
+  },
+  {
+    name: 'Alina Riabova',
+    role: 'Front End Developer',
+    img: 'alina_riabova.jpg',
+    linkedin: 'http://www.linkedin.com/in/alina-ryabova',
+    github: 'https://github.com/AlinaRyabova',
+  },
+];
+
+export default teamMembers;

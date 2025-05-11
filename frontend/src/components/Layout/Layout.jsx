@@ -9,13 +9,14 @@ import Footer from '../sections/Footer/Footer';
 import SignUpModal from '../SignUpModal/SignUpModal';
 import SignInModal from '../SignInModal/SignInModal';
 import LogOutModal from '../LogOutModal/LogOutModal';
+import TeamModal from '../TeamModal/TeamModal';
 import { useModal } from '../../hooks/useModal';
 import Loader from '../Loader/Loader';
 import { Toaster } from 'react-hot-toast';
 
 const Layout = () => {
   const dispatch = useDispatch();
-  const { modal, closeModal } = useModal();
+  const { modal, openModal, closeModal } = useModal();
   const { isAuthenticated, loading, user } = useSelector(state => state.auth);
 
   const hasAttemptedRef = useRef(false);
@@ -29,7 +30,6 @@ const Layout = () => {
 
     if (!storedToken || !storedRefreshToken) {
       if (storedToken && !storedRefreshToken) {
-
         localStorage.removeItem('token');
       }
 
@@ -82,12 +82,13 @@ const Layout = () => {
     <>
       <Header />
       <main>{loading ? <Loader /> : <Outlet />}</main>
-      <Footer />
+      <Footer openModal={openModal} />
       <Toaster position="top-center" reverseOrder={false} />
 
       {modal === 'signup' && <SignUpModal onClose={closeModal} />}
       {modal === 'signin' && <SignInModal onClose={closeModal} />}
       {modal === 'logout' && <LogOutModal onClose={closeModal} />}
+      {modal === 'team' && <TeamModal onClose={closeModal} />}
     </>
   );
 };

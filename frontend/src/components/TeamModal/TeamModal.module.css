@@ -1,0 +1,118 @@
+.wrapper {
+  width: 320px;
+  margin: 0 auto;
+  padding: 25px 15px 20px;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    width: 580px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .wrapper {
+    width: 1200px;
+    padding: 30px;
+  }
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.item {
+  cursor: initial;
+  border-radius: 10px;
+  padding-bottom: 5px;
+  transition: all var(--transition-dur-and-func);
+}
+
+.item:hover,
+.item:focus {
+  transform: scale(1.1);
+}
+
+.wrap {
+  overflow: hidden;
+}
+
+.img {
+  overflow: hidden;
+  object-fit: cover;
+  margin-bottom: 5px;
+  width: 200px;
+  height: 180px;
+}
+
+.box {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.member {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.role {
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(244, 244, 244, 0.6);
+  margin-bottom: 10px;
+}
+
+.linkLinkedin {
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10%;
+  margin-right: 10px;
+  background-color: transparent;
+  fill: rgba(244, 244, 244, 0.6);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--transition-dur-and-func);
+}
+
+.linkLinkedinActive:hover,
+.linkLinkedinActive:focus {
+  fill: var(--white);
+  transform: scale(1.1);
+}
+
+.linkGithub {
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  fill: rgba(244, 244, 244, 0.6);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--transition-dur-and-func);
+}
+
+.linkGithubActive:hover,
+.linkGithubActive:focus {
+  fill: var(--white);
+  transform: scale(1.1);
+}
