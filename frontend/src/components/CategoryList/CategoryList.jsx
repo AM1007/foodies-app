@@ -13,6 +13,7 @@ export default function CategoryList({ onCategoryClick }) {
     loading,
     error,
   } = useSelector(state => state.categories);
+
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' && window.innerWidth >= 1440,
   );
@@ -32,25 +33,20 @@ export default function CategoryList({ onCategoryClick }) {
   }, []);
 
   const handleCategoryClick = async (categoryId, categoryName) => {
-    try {
-      if (categoryName === 'All categories') {
-        setShowAllCategories(true);
-        return;
-      } else {
-        await dispatch(
-          fetchRecipes({ page: 1, category: categoryId }),
-        ).unwrap();
-        onCategoryClick(categoryId, categoryName);
-      }
-    } catch (error) {
- 
+    if (categoryName === 'All categories') {
+      setShowAllCategories(true);
+      return;
     }
+
+    await dispatch(fetchRecipes({ page: 1, category: categoryId })).unwrap();
+    onCategoryClick(categoryId, categoryName);
   };
 
   if (loading) return <Loader />;
-  if (error) return <div>Помилка завантаження категорій: {error}</div>;
-  if (!categories || categories.length === 0)
-    return <div>Категорії не знайдено</div>;
+  if (error) return <div>Error loading categories: {error}</div>;
+  if (!categories || categories.length === 0) {
+    return <div>Categories not found</div>;
+  }
 
   const limitedCategories = showAllCategories
     ? categories
@@ -61,7 +57,6 @@ export default function CategoryList({ onCategoryClick }) {
     (_, i) => limitedCategories.slice(i * 3, i * 3 + 3),
   );
   const lastRow = rows.length - 1;
-
   const showAllCategoriesButton = !showAllCategories;
 
   return (

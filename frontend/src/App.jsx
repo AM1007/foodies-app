@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Loader from './components/Loader/Loader';
 import PrivateRoute from './components/PrivateRoute';
-import { UserProvider } from './context/UserContext';
+import { UserProvider } from './context/UserProvider';
 import ScrollTopButton from './components/ScrollToTop/ScrollToTop';
 // import ErrorLogger from './ErrorLogger';
 
