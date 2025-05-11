@@ -37,8 +37,6 @@ const RecipeCardContainer = ({ recipe }) => {
       e.nativeEvent.stopImmediatePropagation();
     }
 
-    e.currentTarget.blur();
-
     if (!isAuthenticated) {
       openModal('signin');
       return;
