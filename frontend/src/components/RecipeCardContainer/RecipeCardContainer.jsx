@@ -30,13 +30,7 @@ const RecipeCardContainer = ({ recipe }) => {
     favorite => favorite?._id === recipeId || favorite?.id === recipeId,
   );
 
-  const handleFavoriteToggle = e => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
-    }
-
+  const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
       openModal('signin');
       return;

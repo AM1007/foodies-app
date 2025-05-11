@@ -69,12 +69,18 @@ const ListItems = ({
   };
 
   const handleRemoveFromFavorites = async recipeId => {
+    setLocalItems(prev => {
+      const updatedItems = prev.filter(item => {
+        const itemId = item.id || item._id;
+        return itemId !== recipeId;
+      });
+      return updatedItems;
+    });
     try {
       setDeletingItemIds(prev => [...prev, recipeId]);
       await dispatch(removeFromFavorites(recipeId)).unwrap();
-      setLocalItems(prev =>
-        prev.filter(item => item.id !== recipeId && item._id !== recipeId),
-      );
+      
+
       if (typeof onFavoriteRemoved === 'function') {
         onFavoriteRemoved();
       }

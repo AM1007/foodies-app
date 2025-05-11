@@ -11,12 +11,15 @@ function RecipePreview({ recipe, onDelete, activeTab, isDeleting }) {
 
   const handleDelete = async () => {
     if (isDeleting) return;
+    setIsVisible(false);
 
     try {
-      await onDelete?.(recipeId);
-      setIsVisible(false);
+      if (typeof onDelete === 'function') {
+        await onDelete(recipeId);
+      }
     } catch (error) {
-      console.error('Error processing action:', error);
+      console.error('Error deleting recipe:', error);
+      setIsVisible(true);
     }
   };
 
