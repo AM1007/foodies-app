@@ -1,5 +1,5 @@
 import styles from './TeamModal.module.css';
-// import sprite from '../../assets/sprite.svg';
+import sprite from '../../icons/sprite.svg';
 import teamMembers from '../../data/teamMembers';
 import Modal from '../Modal/Modal';
 
@@ -7,25 +7,19 @@ const TeamModal = ({ onClose }) => {
   return (
     <Modal isOpen={true} onClose={onClose}>
       <div className={styles.wrapper}>
-        <button className={styles.closeBtn} type="button" onClick={onClose}>
-          {/* <svg className={styles.closeIcon} width="20" height="20">
-            <use href={`${sprite}#icon-cross-closed`} />
-          </svg> */}
-        </button>
-        <h2 className={styles.title}>DEV TITANS TEAM</h2>
+        <h2 className={styles.title}>Space Raccoons Team</h2>
         <ul className={styles.list}>
-          {teamMembers.map(({ name, role, img, img2x, linkedin, github }) => (
+          {teamMembers.map(({ name, role, img, linkedin, github }) => (
             <li key={name} className={styles.item}>
               <div className={styles.wrap}>
                 <img
                   className={styles.img}
                   loading="lazy"
                   src={img}
-                  srcSet={`${img2x} 2x`}
                   alt={name}
                 />
               </div>
-              {/* <div className={styles.box}>
+              <div className={styles.box}>
                 <h2 className={styles.member}>{name}</h2>
                 <p className={styles.role}>{role}</p>
                 <a
@@ -48,7 +42,7 @@ const TeamModal = ({ onClose }) => {
                     <use href={`${sprite}#icon-github`} />
                   </svg>
                 </a>
-              </div> */}
+              </div>
             </li>
           ))}
         </ul>
