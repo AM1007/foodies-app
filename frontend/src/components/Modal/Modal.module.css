@@ -1,8 +1,8 @@
 .modal {
   position: relative;
 
-  width: 90%;
-  max-width: 320px;
+  /* width: 90%;
+  max-width: 320px; */
 
   display: inline-flex;
   padding: 60px 30px;
@@ -59,6 +59,7 @@
 .contentWrapper {
   margin-top: 1rem;
 }
+
 @media (min-width: 768px) {
   .modal {
     display: inline-flex;
@@ -66,7 +67,7 @@
     justify-content: center;
     align-items: center;
     gap: 40px;
-    max-width: 560px;
+    /* max-width: 560px; */
 
     border-radius: 30px;
     background: var(--white);
