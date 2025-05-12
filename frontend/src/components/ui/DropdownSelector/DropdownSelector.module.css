@@ -105,6 +105,33 @@
   padding: 8px 0;
 }
 
+.selectControls {
+  display: flex;
+  align-items: center;
+}
+
+.clearButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-right: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clearIcon {
+  width: 14px;
+  height: 14px;
+  stroke: var(--gray);
+  transition: stroke 0.2s ease;
+}
+
+.clearButton:hover .clearIcon {
+  stroke: var(--red);
+}
+
 @media (max-width: 768px) {
   .select,
   .selectInput {
@@ -112,6 +139,10 @@
   }
   .dropdown {
     max-width: 345px;
+  }
+  .clearIcon {
+    width: 16px;
+    height: 16px;
   }
 }
 
