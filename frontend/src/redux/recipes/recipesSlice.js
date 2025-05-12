@@ -387,8 +387,8 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // тут🤔
       .addCase(fetchFavoriteRecipes.pending, state => {
-        state.loading = true;
         state.error = null;
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
