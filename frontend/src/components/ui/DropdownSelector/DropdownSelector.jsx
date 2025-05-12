@@ -52,6 +52,12 @@ const DropdownSelector = ({
     setFilteredOptions(options);
   };
 
+  const handleClear = (e) => {
+    e.stopPropagation(); // Запобігаємо відкриттю dropdown
+    onChange(''); // Скидаємо значення
+    setIsPlaceholderActive(true);
+  };
+
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -114,11 +120,28 @@ const DropdownSelector = ({
             onClick={handleOpenDropdown}
           >
             {selectedOption || placeholder}
-            <span className={styles.arrow}>
-              <svg fill="none">
-                <use href={`${icons}#down`} />
-              </svg>
-            </span>
+            
+            <div className={styles.selectControls}>
+              {/* Кнопка очищення, показується тільки коли є обране значення */}
+              {!isPlaceholderActive && (
+                <button 
+                  type="button"
+                  className={styles.clearButton}
+                  onClick={handleClear}
+                  aria-label="Clear selection"
+                >
+                  <svg fill="none" className={styles.clearIcon}>
+                    <use href={`${icons}#close`} />
+                  </svg>
+                </button>
+              )}
+              
+              <span className={styles.arrow}>
+                <svg fill="none">
+                  <use href={`${icons}#down`} />
+                </svg>
+              </span>
+            </div>
           </div>
         )}
         
