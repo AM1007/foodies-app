@@ -53,8 +53,8 @@ const DropdownSelector = ({
   };
 
   const handleClear = (e) => {
-    e.stopPropagation(); // Запобігаємо відкриттю dropdown
-    onChange(''); // Скидаємо значення
+    e.stopPropagation(); 
+    onChange(''); 
     setIsPlaceholderActive(true);
   };
 
@@ -122,7 +122,6 @@ const DropdownSelector = ({
             {selectedOption || placeholder}
             
             <div className={styles.selectControls}>
-              {/* Кнопка очищення, показується тільки коли є обране значення */}
               {!isPlaceholderActive && (
                 <button 
                   type="button"
