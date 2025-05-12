@@ -20,7 +20,7 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100vw;
+    width: 99vw;
     height: 1px;
     background-color: var(--light-gray);
   }
