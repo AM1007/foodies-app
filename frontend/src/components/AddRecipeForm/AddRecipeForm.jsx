@@ -286,70 +286,61 @@ const AddRecipeForm = () => {
   };
 
   const onSubmit = async data => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error('You are not logged in. Please log in to create a recipe.');
-      return;
-    }
+  const token = localStorage.getItem('token');
+  if (!token) {
+    toast.error('You are not logged in. Please log in to create a recipe.');
+    return;
+  }
+  
+  if (isSubmitting) {
+    return;
+  }
 
-    try {
-      setIsSubmitting(true);
+  try {
+    setIsSubmitting(true);
 
-      console.log(
-        'Photo file:',
-        data.photo
-          ? {
-              name: data.photo.name,
-              type: data.photo.type,
-              size: data.photo.size,
-            }
-          : 'No file selected',
+    const loadingToast = toast.loading('Submitting your recipe...');
+
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description || '');
+    formData.append('categoryId', data.categoryId);
+    formData.append('time', data.time);
+    formData.append('instructions', data.instructions);
+    formData.append('photo', data.photo);
+
+    const areaId = areas && areas.length > 0 ? areas[0].id : 1;
+    formData.append('areaId', areaId);
+
+    recipeIngredients.forEach((ingredient, index) => {
+      formData.append(
+        `ingredients[${index}][ingredientId]`,
+        ingredient.ingredientId,
       );
+      formData.append(`ingredients[${index}][measure]`, ingredient.amount);
+    });
 
-      const loadingToast = toast.loading('Submitting your recipe...');
+    const resultAction = await dispatch(createRecipe(formData));
 
-      const formData = new FormData();
-      formData.append('title', data.title);
-      formData.append('description', data.description || '');
-      formData.append('categoryId', data.categoryId);
-      formData.append('time', data.time);
-      formData.append('instructions', data.instructions);
-      formData.append('photo', data.photo);
+    toast.dismiss(loadingToast);
 
-      const areaId = areas && areas.length > 0 ? areas[0].id : 1;
-      formData.append('areaId', areaId);
+    if (createRecipe.fulfilled.match(resultAction)) {
+      toast.success('Recipe published successfully!');
 
-      recipeIngredients.forEach((ingredient, index) => {
-        formData.append(
-          `ingredients[${index}][ingredientId]`,
-          ingredient.ingredientId,
-        );
-        formData.append(`ingredients[${index}][measure]`, ingredient.amount);
-      });
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
+      sessionStorage.removeItem(RESTORE_ASKED_KEY);
 
-      const resultAction = await dispatch(createRecipe(formData));
-
-      toast.dismiss(loadingToast);
-
-      if (createRecipe.fulfilled.match(resultAction)) {
-        toast.success('Recipe published successfully!');
-
-        localStorage.removeItem(DRAFT_STORAGE_KEY);
-        sessionStorage.removeItem(RESTORE_ASKED_KEY);
-
-        setTimeout(() => {
-          navigate('/users/current');
-        }, 1500);
-      } else if (createRecipe.rejected.match(resultAction)) {
-        const errorMessage = resultAction.payload || 'Failed to create recipe';
-        toast.error(`Error: ${errorMessage}`);
-      }
-    } catch (error) {
-      toast.error(`Error: ${error.message || 'Failed to create recipe'}`);
-    } finally {
+      navigate('/users/current');
+    } else if (createRecipe.rejected.match(resultAction)) {
+      const errorMessage = resultAction.payload || 'Failed to create recipe';
+      toast.error(`Error: ${errorMessage}`);
       setIsSubmitting(false);
     }
-  };
+  } catch (error) {
+    toast.error(`Error: ${error.message || 'Failed to create recipe'}`);
+    setIsSubmitting(false);
+  }
+};
 
   if (categoriesLoading || ingredientsLoading) return <Loader />;
 

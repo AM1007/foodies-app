@@ -224,7 +224,6 @@ const recipesSlice = createSlice({
       .addCase(fetchUserRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        console.log('Setting user recipes:', action.payload);
         state.userRecipes = action.payload;
       })
       .addCase(fetchUserRecipes.rejected, (state, action) => {
@@ -267,25 +266,39 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(deleteRecipe.pending, state => {
-        state.loading = true;
+      .addCase(deleteRecipe.pending, (state, action) => {
+        const recipeId = action.meta.arg;
+        state.ownRecipes = Array.isArray(state.ownRecipes)
+          ? state.ownRecipes.filter(
+              recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+            )
+          : state.ownRecipes?.data
+          ? {
+              ...state.ownRecipes,
+              data: state.ownRecipes.data.filter(
+                recipe => recipe._id !== recipeId && recipe.id !== recipeId,
+              ),
+            }
+          : [];
+        
         state.error = null;
       })
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
 
+        const recipeId = action.payload;
         state.ownRecipes = Array.isArray(state.ownRecipes)
           ? state.ownRecipes.filter(
               recipe =>
-                recipe._id !== action.payload && recipe.id !== action.payload,
+                recipe._id !== recipeId && recipe.id !== recipeId,
             )
           : state.ownRecipes?.data
           ? {
               ...state.ownRecipes,
               data: state.ownRecipes.data.filter(
                 recipe =>
-                  recipe._id !== action.payload && recipe.id !== action.payload,
+                  recipe._id !== recipeId && recipe.id !== recipeId,
               ),
             }
           : [];
@@ -387,7 +400,6 @@ const recipesSlice = createSlice({
         state.error = action.payload;
       })
 
-      // тут🤔
       .addCase(fetchFavoriteRecipes.pending, state => {
         state.error = null;
       })
